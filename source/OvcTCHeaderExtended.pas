@@ -42,8 +42,8 @@ unit OvcTCHeaderExtended;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, SysUtils, Graphics, Classes, Controls, OvcTCmmn, OvcTCell, OvcTCStr, OvcMisc, ovctchdr;
+  System.UITypes, Windows, SysUtils, Graphics, Classes, Controls, OvcTCmmn, OvcTCell,
+  OvcTCStr, OvcMisc, ovctchdr;
 
 type
   TOvcTCColHeadExtendedInfoItem = class(TCollectionItem)

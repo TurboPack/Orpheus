@@ -48,8 +48,7 @@ interface
 
 uses
   Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
-  {$IFDEF VERSION6} Variants, {$ENDIF}
-  OvcData, OvcIntl, OvcRLbl, OvcStr, OvcUser, OvcDate, OvcMisc;
+  Variants, OvcData, OvcIntl, OvcRLbl, OvcStr, OvcUser, OvcDate, OvcMisc;
 
 type
   TPictureLabelDataType =
@@ -206,11 +205,9 @@ type
 
   TOvcPictureLabel = class(TOvcCustomPictureLabel)
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Alignment default taLeftJustify;
     property AutoSize;
@@ -876,7 +873,7 @@ begin
     varDate     : SetAsDate(Value);
     varBoolean  : SetAsBoolean(Value);
     varString   : SetAsString(Value);
-{$IFDEF UNICODE}varUString  : SetAsString(Value);{$ENDIF}
+    varUString  : SetAsString(Value);
   end;
 end;
 

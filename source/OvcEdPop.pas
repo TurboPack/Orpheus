@@ -80,10 +80,8 @@ type
     {internal methods}
     function GetButtonWidth : Integer;
 
-{$IFDEF VERSION4}
     procedure CMDialogKey(var Msg : TCMDialogKey);
       message CM_DIALOGKEY;
-{$ENDIF}
 
   protected
     procedure CreateParams(var Params : TCreateParams);
@@ -319,7 +317,6 @@ begin
   end;
 end;
 
-{$IFDEF VERSION4}
 procedure TOvcEdPopup.CMDialogKey(var Msg : TCMDialogKey);
 begin
   if PopupActive then begin
@@ -332,7 +329,5 @@ begin
   end else
     inherited;
 end;
-{$ENDIF}
-
 
 end.

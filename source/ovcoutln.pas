@@ -42,16 +42,13 @@ unit ovcoutln;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Messages, SysUtils,
+  System.UITypes, Windows, Classes, Controls, Forms, Graphics, Messages, SysUtils,
   OvcBase, OvcMisc, OvcVLB, OvcDlm, StdCtrls;
 
 const
   ChildIndent = 17;
 type
-  {$IFDEF VERSIONXE3}
   TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
 
   TOvcOlNodeStyle = (osPlain, osRadio, osCheck);
   TOvcOlNodeMode  = (omPreload, omDynamicLoad, omDynamic);
@@ -366,15 +363,9 @@ type
     property Node[Index: LongInt]: TOvcOutlineNode read GetNode;
     procedure LoadFromFile(const FileName : string);
     procedure LoadFromStream(Stream : TStream);
-    {$IFDEF UNICODE}
     procedure LoadFromText(const FileName : string; Encoding: TEncoding = nil);
-    {$ELSE}
-    procedure LoadFromText(const FileName : string);
-    {$ENDIF}
     procedure SaveAsText(const FileName : string); overload;
-    {$IFDEF UNICODE}
     procedure SaveAsText(const FileName: string; Encoding: TEncoding); overload;
-    {$ENDIF}
     procedure SaveToFile(const FileName : string);
     procedure SaveToStream(Stream : TStream);
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
@@ -410,11 +401,9 @@ type
 
   TOvcOutline = class(TOvcCustomOutline)
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AfterEnter;
     property AfterExit;
     property Align;
@@ -479,10 +468,7 @@ type
 implementation
 
 uses
-{$IFDEF VERSIONXE5UP}
-  System.Types,
-{$ENDIF}
-WideStrUtils;
+  System.Types, WideStrUtils;
 
 var
   BrushBitmap : TBitmap;
@@ -1659,7 +1645,6 @@ begin
   inherited Notification(AComponent, Operation);
 end;
 
-{$IFDEF UNICODE}
 procedure TOvcCustomOutline.LoadFromText(const FileName: string; Encoding: TEncoding = nil);
 var
   S : TStreamReader;
@@ -1720,75 +1705,6 @@ begin
     S.Free;
   end;
 end;
-{$ELSE}
-procedure TOvcCustomOutline.LoadFromText(const FileName: string);
-var
-  S : TFileStream;
-  Ln : AnsiString;
-  CurLevel : Integer;
-  Eoln : Boolean;
-
-  procedure NextLine;
-  var
-    Ch : AnsiChar;
-  begin
-    CurLevel := 0;
-    Eoln := False;
-    Ln := '';
-    while (S.Position < S.Size) and not Eoln do begin
-      S.Read(Ch, 1);
-      case Ch of
-      #13 :
-        begin
-          S.Read(Ch, 1); {skip LF}
-          Eoln := True;
-        end;
-      #9 :
-        inc(CurLevel);
-      else
-        Ln := Ln + Ch;
-      end;
-    end;
-  end;
-
-  procedure LoadLevel(Parent : TOvcOutlineNode; S : TFileStream; Level : Integer);
-  var
-    NewNode : TOvcOutlineNode;
-  begin
-    NewNode := nil;
-    repeat
-      if Ln = '' then
-        NextLine;
-      if Ln = '' then
-        exit;
-      if CurLevel < Level then
-        exit
-      else if CurLevel > Level then begin
-        LoadLevel(NewNode, S, Level + 1);
-        if (CurLevel < Level) then
-          exit;
-      end else begin
-        NewNode := Nodes.AddChild(Parent, Ln);
-        Ln := '';
-      end;
-    until false;
-  end;
-
-begin
-  S := TFileStream.Create(FileName, fmOpenRead or fmShareDenyWrite);
-  try
-    Clear;
-    BeginUpdate;
-    try
-      LoadLevel(nil, S, 0);
-    finally
-      EndUpdate;
-    end;
-  finally
-    S.Free;
-  end;
-end;
-{$ENDIF}
 
 { new}
 function TOvcCustomOutline.CalcMaxWidth: Integer;
@@ -2337,13 +2253,12 @@ procedure TOvcCustomOutline.LoadFromStream(Stream: TStream);
   var
     I : LongInt;
     NewNode : TOvcOutlineNode;
-    S: {$IFDEF UNICODE}RawByteString{$ELSE}AnsiString{$ENDIF};
+    S: RawByteString;
   begin
     Stream.Read(I, sizeof(I));
     SetLength(S, I);
     Stream.Read(PAnsiChar(S)^, I);
 
-    {$IFDEF UNICODE}
     if HasUTF8BOM(S) then
     begin
       Delete(S, 1, Length(sUTF8BOMString));
@@ -2351,7 +2266,6 @@ procedure TOvcCustomOutline.LoadFromStream(Stream: TStream);
     end
     else
       SetCodePage(S, GetACP, False);
-    {$ENDIF}
 
     NewNode := Nodes.AddChild(Parent, string(S));
     Stream.Read(I, sizeof(I));
@@ -2380,7 +2294,6 @@ begin
   LoadLevel(Stream, nil);
 end;
 
-{$IFDEF UNICODE}
 procedure TOvcCustomOutline.SaveAsText(const FileName: string;
   Encoding: TEncoding);
 
@@ -2425,7 +2338,6 @@ begin
     S.Free;
   end;
 end;
-{$ENDIF}
 
 procedure TOvcCustomOutline.SaveToFile(const FileName: string);
 var
@@ -2445,15 +2357,10 @@ procedure TOvcCustomOutline.SaveToStream(Stream: TStream);
   var
     I : LongInt;
     Node: TOvcOutlineNode;
-    Txt: {$IFDEF UNICODE}UTF8String{$ELSE}AnsiString{$ENDIF};
+    Txt: UTF8String;
   begin
-{$IFDEF UNICODE}
     Txt := UTF8String(ParentNode.Text);
-{$ELSE}
-    Txt := ParentNode.Text;
-{$ENDIF}
     I := Length(Txt);
-    {$IFDEF UNICODE}
     if HasExtendCharacter(Txt) then
     begin
       Inc(I, 3);
@@ -2462,7 +2369,6 @@ procedure TOvcCustomOutline.SaveToStream(Stream: TStream);
       Stream.Write(PAnsiChar(Txt)^, I - Length(sUTF8BOMString));
     end
     else
-    {$ENDIF}
     begin
       Stream.Write(I, sizeof(i));
       Stream.Write(PAnsiChar(Txt)^, I);

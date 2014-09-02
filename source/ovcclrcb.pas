@@ -42,9 +42,8 @@ unit ovcclrcb;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
-  OvcCmbx, OvcConst, OvcData {$IFDEF VERSION2010}, Themes{$ENDIF};
+  System.UITypes, System.Types, Windows, Classes, Controls, Forms, Graphics, Menus,
+  Messages, StdCtrls, OvcCmbx, OvcConst, OvcData, Themes;
 
 type
   TOvcCustomColorComboBox = class(TOvcBaseComboBox)
@@ -80,17 +79,15 @@ type
     destructor Destroy; override;
     procedure DrawItem(Index : Integer; Rect : TRect; State : TOwnerDrawState);
       override;
-{$IFDEF VERSION2010}procedure DrawItemThemed(DC: HDC; Details: TThemedElementDetails; Index: Integer; Rect: TRect); override;{$ENDIF}
+    procedure DrawItemThemed(DC: HDC; Details: TThemedElementDetails; Index: Integer; Rect: TRect); override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer); override;
   end;
 
   TOvcColorComboBox = class(TOvcCustomColorComboBox)
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Color;
     property Ctl3D;
@@ -145,16 +142,10 @@ implementation
 uses
   SysUtils;
 
-{$IFDEF VERSION2010}
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
-{$ENDIF}
 
 procedure TOvcCustomColorComboBox.CalculateBoxWidth;
 var
@@ -251,7 +242,6 @@ var
   S  : string;
 begin
   // Done in DrawItem Themed if visual styles are enabled (otherwise flashing white rectangle when switching focus to another control)
-{$IFDEF VERSION2010}
   if ThemesEnabled and CheckWin32Version(6, 0) and (odComboBoxEdit in State) then
   begin
     Canvas.Pen.Color := clBlack;
@@ -259,7 +249,6 @@ begin
     Canvas.Handle;
     Exit;
   end;
-{$ENDIF}  
 
   {get selected color and text to display}
   if Index > -1 then begin
@@ -279,11 +268,7 @@ begin
     Canvas.Pen.Color := Canvas.Brush.Color;
     Canvas.Rectangle(Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
     Inc(Rect.Left);
-{$IFDEF UNICODE}
     DrawText(Canvas.Handle, S, Length(S), Rect, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
-{$ELSE}
-    DrawText(Canvas.Handle, PAnsiChar(S), Length(S), Rect, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
-{$ENDIF}
   end;
 
   Canvas.Pen.Color := Font.Color;
@@ -297,7 +282,7 @@ begin
   Canvas.Handle;
 end;
 
-{$IFDEF VERSION2010}procedure TOvcCustomColorComboBox.DrawItemThemed(DC: HDC;
+procedure TOvcCustomColorComboBox.DrawItemThemed(DC: HDC;
   Details: TThemedElementDetails; Index: Integer; Rect: TRect);
 var
   BC : TColor;
@@ -326,11 +311,7 @@ begin
       Canvas.Brush.Style := bsClear;
 //      Canvas.Rectangle(Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
 //      Inc(Rect.Left);
-  {$IFDEF UNICODE}
       DrawText(Canvas.Handle, S, Length(S), Rect, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
-  {$ELSE}
-      DrawText(Canvas.Handle, PAnsiChar(S), Length(S), Rect, DT_LEFT or DT_VCENTER or DT_SINGLELINE);
-  {$ENDIF}
     end;
 
     Canvas.Pen.Color := Font.Color;
@@ -345,7 +326,7 @@ begin
   finally
     Canvas.Free;
   end;
-end;{$ENDIF}
+end;
 
 function TOvcCustomColorComboBox.GetSelectedColor : TColor;
 begin

@@ -83,11 +83,9 @@ type
       read FDirComboBox
       write FDirComboBox;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Color;
     property Ctl3D;

@@ -42,8 +42,7 @@ interface
 
 uses
   Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
-  StdCtrls, SysUtils, {$IFDEF VERSION4} MultiMon, {$ENDIF} OvcBase, OvcCalc,
-  OvcEdPop, OvcMisc;
+  StdCtrls, SysUtils, MultiMon, OvcBase, OvcCalc, OvcEdPop, OvcMisc;
 
 type
   TOvcCustomNumberEdit = class(TOvcEdPopup)
@@ -136,11 +135,9 @@ type
   TOvcNumberEdit = class(TOvcCustomNumberEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec;
     property AutoSelect;
@@ -465,10 +462,8 @@ procedure TOvcCustomNumberEdit.PopupOpen;
 var
   P       : TPoint;
   R       : TRect;
-  {$IFDEF VERSION4}
   F       : TCustomForm;
   MonInfo : TMonitorInfo;
-  {$ENDIF}
 begin
   if FCalculator.Visible then
     Exit;  {already popped up, exit}
@@ -487,7 +482,6 @@ begin
 
   {determine the proper position}
   SystemParametersInfo(SPI_GETWORKAREA, 0, @R, 0);
-  {$IFDEF VERSION4}
   F := GetParentForm(Self);
   if Assigned(F) then begin
     FillChar(MonInfo, SizeOf(MonInfo), #0);
@@ -495,7 +489,6 @@ begin
     GetMonitorInfo(F.Monitor.Handle, @MonInfo);
     R := MonInfo.rcWork;
   end;
-  {$ENDIF}
   if FPopupAnchor = paLeft then
     P := ClientToScreen(Point(-3, Height-4))
   else {paRight}

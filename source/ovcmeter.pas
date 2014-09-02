@@ -144,10 +144,8 @@ type
     property UsedImage;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Font;
     property ParentFont;

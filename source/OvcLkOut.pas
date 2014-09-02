@@ -365,8 +365,8 @@ type
     procedure RemoveItem(AFolderIndex, AItemIndex : Integer);
     procedure RenameFolder(AFolderIndex : Integer);
     procedure RenameItem(AFolderIndex, AItemIndex : Integer);
-    procedure RestoreState(const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
-    procedure SaveState(const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
+    procedure RestoreState(const Section : string = '');
+    procedure SaveState(const Section : string = '');
 
     property ActiveItem : Integer
       read FActiveItem;
@@ -508,11 +508,9 @@ type
       write FOnMouseOverItem;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property Controller;
@@ -543,10 +541,8 @@ type
 
 implementation
 
-{$IFDEF VERSIONXE5UP}
 uses
   System.Types, System.UITypes;
-{$ENDIF}
 
 const
   lobTimerInterval = 200;
@@ -2190,7 +2186,7 @@ begin
 end;
 
 
-procedure TOvcLookOutBar.RestoreState(const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
+procedure TOvcLookOutBar.RestoreState(const Section : string = '');
 var
   F, FC       : Integer;
   I, IC       : Integer;
@@ -2236,7 +2232,7 @@ begin
 end;
 
 
-procedure TOvcLookOutBar.SaveState(const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
+procedure TOvcLookOutBar.SaveState(const Section : string = '');
 var
   F           : Integer;
   I           : Integer;

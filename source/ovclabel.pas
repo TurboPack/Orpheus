@@ -216,9 +216,7 @@ type
     property About;
     property Align;
     property Alignment;
-    {$IFDEF VERSION 4}
     property Anchors;
-    {$ENDIF}
     property Appearance;
     property Caption;
     property Color;

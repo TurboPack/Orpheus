@@ -41,9 +41,8 @@ unit ovcprcbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Printers,
-  ExtCtrls, OvcCmbx, OvcMisc{$IFNDEF VERSION5}, StdCtrls{$ENDIF};
+  System.UITypes, Windows, Messages, SysUtils, Classes, Graphics, Controls, Printers,
+  ExtCtrls, OvcCmbx, OvcMisc, StdCtrls;
 
 type
   TOvcPrinterComboBox = class(TOvcBaseComboBox)

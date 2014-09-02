@@ -69,9 +69,7 @@ type
     InternalSize : LongInt;
     ItemsPerPage : LongInt;
     DeletedList : Pointer;
-{$IFDEF OvcDlmDebug}
     OwnerThread : DWord;
-{$ENDIF}
   protected
     procedure NewPage;
   public
@@ -822,13 +820,13 @@ end;
 
 function TOvcLiteCache.GetKeySlot(Index: Integer): Pointer;
 begin
-  Result := {$IFDEF UNICODE}@PByte{$ELSE}@PAnsiChar{$ENDIF}(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))];
+  Result := @PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))];
 end;
 
 function TOvcLiteCache.GetTimeStamp(Index: Integer): LongInt;
 begin
   Result := LongInt(Pointer(@
-    {$IFDEF UNICODE}PByte{$ELSE}PAnsiChar{$ENDIF}(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))
+    PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))
       + sizeof(Pointer) + FValueSize])^);
 end;
 
@@ -851,7 +849,7 @@ end;
 
 function TOvcLiteCache.GetValueSlot(Index: Integer): Pointer;
 begin
-  Result := {$IFDEF UNICODE}@PByte{$ELSE}@PAnsiChar{$ENDIF}(Buffer)[Index * (sizeof(Pointer)
+  Result := @PByte(Buffer)[Index * (sizeof(Pointer)
     + FValueSize + sizeof(LongInt)) + sizeof(Pointer)];
 end;
 
@@ -869,7 +867,7 @@ end;
 procedure TOvcLiteCache.SetTimeStamp(Index: Integer; const Value: LongInt);
 begin
   LongInt(Pointer(@
-    {$IFDEF UNICODE}PByte{$ELSE}PAnsiChar{$ENDIF}(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))
+    PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))
       + sizeof(Pointer) + FValueSize])^)
       := Value;
 end;
@@ -1020,9 +1018,7 @@ end;
 destructor TOvcFastList.Destroy;
 begin
   Clear;
-{$IFDEF VERSIONXE2}
   if Assigned(FList) then Dispose(FList);
-{$ENDIF}
 end;
 
 function TOvcFastList.Add(Item: Pointer): Integer;
@@ -1110,25 +1106,19 @@ end;
 
 procedure TOvcFastList.SetCapacity(NewCapacity: Integer);
 begin
-  if (NewCapacity < FCount)
-     {$IFNDEF VERSIONXE2} or (NewCapacity > MaxListSize) {$ENDIF} then
+  if (NewCapacity < FCount)then
     CapacityError(NewCapacity);
   if NewCapacity <> FCapacity then begin
-    {$IFDEF VERSIONXE2}
     if not Assigned(FList) then
       New(FList);
     SetLength(FList^, NewCapacity);
-    {$ELSE}
-    ReallocMem(FList, NewCapacity * SizeOf(Pointer));
-    {$ENDIF}
     FCapacity := NewCapacity;
   end;
 end;
 
 procedure TOvcFastList.SetCount(NewCount: Integer);
 begin
-  if (NewCount < 0)
-     {$IFNDEF VERSIONXE2} or (NewCount > MaxListSize) {$ENDIF} then
+  if (NewCount < 0) then
     CountError(NewCount);
   if NewCount > FCapacity then SetCapacity(NewCount);
   if NewCount > FCount then

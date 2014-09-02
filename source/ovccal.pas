@@ -41,10 +41,8 @@ unit ovccal;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
-  SysUtils, OvcBase, OvcConst, OvcData, OvcIntl,
-  OvcMisc, OvcDate;
+  System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
+  SysUtils, OvcBase, OvcConst, OvcData, OvcIntl, OvcMisc, OvcDate;
 
 type
   TOvcDateFormat   = (dfShort, dfLong);
@@ -342,11 +340,9 @@ type
   TOvcCalendar = class(TOvcCustomCalendar)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle;
@@ -1483,11 +1479,7 @@ var
       if Assigned(FOnDrawItem) then
         FOnDrawItem(Self, FDate+(NewIdx-OldIdx), clRowCol[R,C])
       else
-{$IFDEF UNICODE}
         DrawText(Canvas.Handle, S, Length(S), clRowCol[R,C], DT_SINGLELINE or DT_CENTER or DT_VCENTER);
-{$ELSE}
-        DrawText(Canvas.Handle, PAnsiChar(S), Length(S), clRowCol[R,C], DT_SINGLELINE or DT_CENTER or DT_VCENTER);
-{$ENDIF}        
     end;
   end;
 
@@ -1506,11 +1498,7 @@ var
       R := DrawButtonFace(Canvas, calGetCurrentRectangle, 1, BS, True, True, False)
     else
       R := DrawButtonFace(Canvas, calGetCurrentRectangle, 1, BS, True, False, False);
-{$IFDEF UNICODE}
     DrawText(Canvas.Handle, S, Length(S), R, DT_CENTER or DT_VCENTER or DT_SINGLELINE);
-{$ELSE}
-    DrawText(Canvas.Handle, PAnsiChar(S), Length(S), R, DT_CENTER or DT_VCENTER or DT_SINGLELINE);
-{$ENDIF}
   end;
 
 begin

@@ -50,10 +50,9 @@ unit ovcnbk;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
-  SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt, OvcMisc
-  {$IFDEF VERSION7}, Themes{$ENDIF};
+  System.UITypes, System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics,
+  Menus, Messages, SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt,
+  OvcMisc, Themes;
 
 type
   TDrawTabEvent = procedure(Sender : TObject; Index : Integer;
@@ -446,11 +445,9 @@ type
       read FOnUserCommand write FOnUserCommand;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Controller;
     property Color default clBtnFace;
@@ -487,10 +484,8 @@ type
 
 implementation
 
-{$IFDEF VERSION7}
 uses
   UxTheme, Math;
-{$ENDIF}
 
 type
   {provide access to protected TControl methods and properties}
@@ -502,23 +497,15 @@ const
   tabMinTabWidth = 20;
   tabMargin      = 2;
 
-{$IFDEF VERSION7}
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices; inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
 
 {*** TOvcTabPage ***}
 
@@ -555,10 +542,8 @@ begin
 
   if NoteBook.FHotTab <> -1 then
   begin
-    {$IFDEF VERSION7}
       if ThemesEnabled then
         NoteBook.InvalidateTab(NoteBook.FHotTab);
-    {$ENDIF}
     NoteBook.FHotTab := -1;
   end;
 end;
@@ -627,19 +612,15 @@ begin
 end;
 
 procedure TOvcTabPage.Paint;
-{$IFDEF VERSION7}
 var
   Details: TThemedElementDetails;
-{$ENDIF}
 begin
-  {$IFDEF VERSION7}
   if ThemesEnabled and ((not Assigned(Notebook)) or (Notebook.Color=clBtnface)) then
   begin
     Details := ThemeServices.GetElementDetails(ttBody);
     ThemeServices.DrawElement(Canvas.Handle, Details, ClientRect);
   end
   else
-  {$ENDIF}
     inherited;
 end;
 
@@ -855,11 +836,9 @@ end;
 
 procedure TOvcNotebook.CMMouseleave(var Message: TMessage);
 begin
-  {$IFDEF VERSION7}
   if FHotTab <> -1 then
     InvalidateTab(FHotTab);
   FHotTab := -1;
-  {$ENDIF}
   inherited;
 end;
 
@@ -1287,7 +1266,6 @@ begin
     if PtInRect(PC.Area, Point(X,Y)) then
     begin
       FoundTab := True;
-      {$IFDEF VERSION7}
       if ThemesEnabled then
         if FHotTab <> I then
         begin
@@ -1296,14 +1274,12 @@ begin
           FHotTab := I;
           InvalidateTab(FHotTab);
         end;
-      {$ENDIF}
 
       DoOnMouseOverTab(I);
       Break;
     end;
   end;
 
-  {$IFDEF VERSION7}
   if not FoundTab then
   begin
     if FHotTab <> -1 then
@@ -1313,7 +1289,6 @@ begin
       FHotTab := -1;
     end;
   end;
-  {$ENDIF}
 
   inherited MouseMove(Shift, X, Y);
 end;
@@ -1797,10 +1772,8 @@ begin
           T := FTabHeight*tabTotalRows+3;
           H := Self.Height-T-2;
           W := Self.Width-3;
-          {$IFDEF VERSION7}
           if ThemesEnabled then
             Dec(W);
-          {$ENDIF}
         end;
       toBottom :
         begin
@@ -1808,10 +1781,8 @@ begin
           T := 1;
           H := Self.Height-FTabHeight*tabTotalRows-5;
           W := Self.Width-3;
-          {$IFDEF VERSION7}
           if ThemesEnabled then
             Dec(W);
-          {$ENDIF}
         end;
       toRight :
         begin
@@ -2182,23 +2153,18 @@ var
   StartRow   : Integer;
   TabsUsed   : Integer;
   PC         : TColor;
-  {$IFDEF VERSION2010}
   CR: TRect;
   Details: TThemedElementDetails;
-  {$ENDIF}
 
   procedure DrawTabBorder({const} TR : TRect; Current, Hot, IsEnabled : Boolean);
   var
     PW         : Integer;
     L, T, R, B : Integer;
-    {$IFDEF VERSION7}
     TT: TThemedTab;
     Details: TThemedElementDetails;
     RBody: TRect;
     TmpImg: TBitmap;
-    {$ENDIF}
   begin
-    {$IFDEF VERSION7}
     if ThemesEnabled and (TP.TabColor=clBtnFace) then
     begin
       Details := ThemeServices.GetElementDetails(ttPane);
@@ -2261,7 +2227,6 @@ var
       end;
     end
     else
-    {$ENDIF}
     with Canvas do begin
       with TR do begin
         L := Left;
@@ -2373,11 +2338,9 @@ var
         {draw shadow first, if selected}
         if FShadowedText then begin
           Canvas.Font.Color := FTextShadowColor;
-          {$IFDEF VERSION7}
           if ThemesEnabled then
             SetBkMode(Canvas.Handle, TRANSPARENT)
           else
-          {$ENDIF}
             SetBkMode(Canvas.Handle, OPAQUE);
           DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
           Canvas.Font.Color := HoldColor;
@@ -2386,11 +2349,9 @@ var
           DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
         end else begin
           {draw the text}
-          {$IFDEF VERSION7}
           if ThemesEnabled then
             SetBkMode(Canvas.Handle, TRANSPARENT)
           else
-          {$ENDIF}
             SetBkMode(Canvas.Handle, OPAQUE);
           DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
         end;
@@ -2410,10 +2371,8 @@ var
 
   procedure DrawTriangle(X, Y : Integer; Left : Boolean);
   begin
-    {$IFDEF VERSION7}
     if ThemesEnabled then
       Exit;
-    {$ENDIF}
     if Row <> StartRow then begin
       {get color from directly below this triangle area}
       Canvas.Brush.Color := Canvas.Pixels[X,Y+1];
@@ -2426,14 +2385,12 @@ var
   end;
 
 begin
-  {$IFDEF VERSION2010}
   if ThemesEnabled then
   begin
     CR := ClientRect;
     Details := ThemeServices.GetElementDetails(tttabDontCare);
     ThemeServices.DrawParentBackground(Handle, Canvas.Handle, Details, True, @CR);
   end;
-  {$ENDIF}
   {get page color}
   if FPageUsesTabColor then begin
     TP := TOvcTabPage(FPages[PageIndex]);
@@ -3270,22 +3227,17 @@ var
   StartRow   : Integer;
   TabsUsed   : Integer;
   PC         : TColor;
-  {$IFDEF VERSION2010}
   CR: TRect;
   Details: TThemedElementDetails;
-  {$ENDIF}
 
   procedure DrawTabBorder({const} TR : TRect; Current, Hot, IsEnabled : Boolean);
   var
     PW         : Integer;
     L, T, R, B : Integer;
-    {$IFDEF VERSION7}
     TT: TThemedTab;
     Details: TThemedElementDetails;
     RBody: TRect;
-    {$ENDIF}
   begin
-    {$IFDEF VERSION7}
     if ThemesEnabled and (TP.TabColor=clBtnFace) then
     begin
       Details := ThemeServices.GetElementDetails(ttPane);
@@ -3330,7 +3282,6 @@ var
       ThemeServices.DrawElement(Canvas.Handle, Details, TR);
     end
     else
-    {$ENDIF}
     with Canvas do begin
       with TR do begin
         L := Left;
@@ -3433,11 +3384,9 @@ var
         {draw shadow first, if selected}
         if FShadowedText then begin
           Canvas.Font.Color := FTextShadowColor;
-          {$IFDEF VERSION7}
           if ThemesEnabled then
             SetBkMode(Canvas.Handle, TRANSPARENT)
           else
-          {$ENDIF}
             SetBkMode(Canvas.Handle, OPAQUE);
           DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
           Canvas.Font.Color := HoldColor;
@@ -3446,22 +3395,18 @@ var
           DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
         end else begin
           {draw the text}
-          {$IFDEF VERSION7}
           if ThemesEnabled then
             SetBkMode(Canvas.Handle, TRANSPARENT)
           else
-          {$ENDIF}
             SetBkMode(Canvas.Handle, OPAQUE);
           DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
         end;
       end else begin
         {use shadow text for inactive tabs}
         Canvas.Font.Color := FHighlightColor;
-        {$IFDEF VERSION7}
         if ThemesEnabled then
           SetBkMode(Canvas.Handle, TRANSPARENT)
         else
-        {$ENDIF}
           SetBkMode(Canvas.Handle, OPAQUE);
         DrawText(Canvas.Handle, PChar(Title), -1, R, DT_CENTER or DT_SINGLELINE);
         SetBkMode(Canvas.Handle, TRANSPARENT);
@@ -3475,10 +3420,8 @@ var
 
   procedure DrawTriangle(X, Y : Integer; Left : Boolean);
   begin
-    {$IFDEF VERSION7}
     if ThemesEnabled then
       Exit;
-    {$ENDIF}
     if Row <> StartRow then begin
       {get color from directly above this triangle area}
       Canvas.Brush.Color := Canvas.Pixels[X,Y-1];
@@ -3491,14 +3434,12 @@ var
   end;
 
 begin
-  {$IFDEF VERSION2010}
   if ThemesEnabled then
   begin
     CR := ClientRect;
     Details := ThemeServices.GetElementDetails(tttabDontCare);
     ThemeServices.DrawParentBackground(Handle, Canvas.Handle, Details, True, @CR);
   end;
-  {$ENDIF}
   {get page color}
   if FPageUsesTabColor then begin
     TP := TOvcTabPage(FPages[PageIndex]);

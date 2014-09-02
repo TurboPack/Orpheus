@@ -41,9 +41,7 @@ unit ovcflcbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, Graphics, OvcCmbx
-  {$IFNDEF VERSION5}, StdCtrls{$ENDIF};
+  System.Types, Windows, Messages, SysUtils, Classes, Graphics, OvcCmbx, StdCtrls;
 
 type
   TOvcCbxFileAttribute = (cbxReadOnly, cbxHidden, cbxSysFile, cbxArchive,
@@ -96,11 +94,9 @@ type
       write SetShowIcons
       default True;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

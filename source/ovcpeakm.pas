@@ -41,9 +41,8 @@ unit ovcpeakm;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, Graphics, Forms, Messages, SysUtils, OvcBase,
-  ExtCtrls;
+  System.UITypes, Windows, Classes, Controls, Graphics, Forms, Messages, SysUtils,
+  OvcBase, ExtCtrls;
 
 type
   TIntArray = array[0..pred(MaxInt div sizeof(Integer))] of Integer;
@@ -141,10 +140,8 @@ type
       default 0;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Font;
     property ParentFont;

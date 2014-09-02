@@ -65,11 +65,9 @@ type
       write FMaxHistory
       default 5;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

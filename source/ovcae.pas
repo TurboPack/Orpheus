@@ -41,10 +41,8 @@ unit ovcae;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
-  OvcNf, OvcPf, OvcSf, OvcColor, OvcBase, OvcCmd, OvcConst,
-  OvcData, OvcEf, OvcStr;
+  System.Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
+  OvcNf, OvcPf, OvcSf, OvcColor, OvcBase, OvcCmd, OvcConst, OvcData, OvcEf, OvcStr;
 
 type
   {event to get a pointer to the cell's value}
@@ -274,11 +272,9 @@ type
       read FOnUserValidation write FOnUserValidation;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D;

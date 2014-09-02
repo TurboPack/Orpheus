@@ -41,9 +41,8 @@ unit ovcftcbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, Controls, Graphics, Printers,
-  OvcCmbx, OvcData, OvcMisc{$IFNDEF VERSION5}, StdCtrls{$ENDIF};
+  System.Types, Windows, Messages, SysUtils, Classes, Controls, Graphics, Printers,
+  OvcCmbx, OvcData, OvcMisc, StdCtrls;
 
   {  StdCtrls, Menus, ExtCtrls, OvcBase}
 
@@ -106,11 +105,9 @@ type
 
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

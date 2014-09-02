@@ -102,11 +102,7 @@ implementation
 
 constructor TOvcClockDialog.Create(AOwner : TComponent);
 begin
-  {$IFDEF VERSION5}
   if not ((AOwner is TCustomForm) or (AOwner is TCustomFrame)) then
-  {$ELSE}
-  if not (AOwner is TForm) then
-  {$ENDIF}
     raise EOvcException.Create(GetOrphStr(SCOwnerMustBeForm));
 
   inherited Create(AOwner);

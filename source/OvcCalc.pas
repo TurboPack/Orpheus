@@ -41,9 +41,9 @@ unit ovccalc;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls, Forms, Graphics,
-  Menus, Messages, StdCtrls, SysUtils, OvcData, OvcConst, OvcBase, OvcMisc;
+  System.UITypes, System.Types, Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls,
+  Forms, Graphics, Menus, Messages, StdCtrls, SysUtils, OvcData, OvcConst, OvcBase,
+  OvcMisc;
 
 type
   TOvcCalculatorButton = (
@@ -491,11 +491,9 @@ type
   TOvcCalculator = class(TOvcCustomCalculator)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle default bsNone;
@@ -766,20 +764,13 @@ begin
   if Assigned(taListBox) then begin
     if not Value and taListBox.Visible then begin
       if csDesigning in taListBox.Owner.ComponentState then begin
-        {$IFDEF VERSION4}
         taListBox.Visible := Value;
         taListBox.Height := 0;
-        {$ELSE}
-        taListBox.Free;
-        taListBox := nil;
-        {$ENDIF}
       end else
         taListBox.Visible := Value;
     end else if Value and not taListBox.Visible then begin
       taListBox.Visible := Value;
-      {$IFDEF VERSION4}
       taListBox.Height := taHeight;
-      {$ENDIF}
     end;
   end else if Value then begin
     ValidateListBox;

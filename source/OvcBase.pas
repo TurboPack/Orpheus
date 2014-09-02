@@ -47,9 +47,8 @@ unit ovcbase;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Classes, Controls, Dialogs, Forms, Messages, StdCtrls, SysUtils,
-  OvcCmd, OvcData, OvcMisc, OvcConst, OvcExcpt, OvcTimer, OvcDate;
+  System.UITypes, System.Types, Windows, Classes, Controls, Dialogs, Forms, Messages,
+  StdCtrls, SysUtils, OvcCmd, OvcData, OvcMisc, OvcConst, OvcExcpt, OvcTimer, OvcDate;
 
 type
   TOvcLabelPosition = (lpTopLeft, lpBottomLeft); {attached label types}
@@ -802,9 +801,7 @@ type
     procedure SetBorderStyle(const Value: TBorderStyle);
   protected
     procedure Deactivate; override;
-    {$IFDEF VERSION2009}
     procedure InitializeNewForm; override;
-    {$ENDIF}
     procedure DoClose(var Action: TCloseAction); override;
     procedure CreateParams(var Params: TCreateParams); override;
   public
@@ -1004,13 +1001,9 @@ var
   ParentCtrl : TControl;
 begin
   ParentCtrl := Control.Parent;
-{$IFDEF VERSION5}
   while Assigned(ParentCtrl) and
     not ((ParentCtrl is TCustomForm) or
          (ParentCtrl is TCustomFrame)) do
-{$ELSE}
-  while Assigned(ParentCtrl) and (not (ParentCtrl is TCustomForm)) do
-{$ENDIF}
     ParentCtrl := ParentCtrl.Parent;
   Result := TWinControl(ParentCtrl);
 end;
@@ -1127,11 +1120,7 @@ begin
     if ((AOwner is TOvcComponent) and not TOvcComponent(AOwner).FInternal)
     or ((AOwner is TOvcCollectibleControl) and not TOvcCollectibleControl(AOwner).FInternal)
     or ((AOwner is TOvcCustomControl) and not TOvcCustomControl(AOwner).FInternal) then
-{$IFDEF VERSION5}
       if not (csLoading in AOwner.ComponentState) then
-{$ELSE}
-      if not (csLoading in AOwner.ComponentState) then
-{$ENDIF}
         Name := GenerateName;
 end;
 
@@ -1195,10 +1184,8 @@ procedure TOvcCollectible.SetName(const NewName : TComponentName);
 begin
   inherited SetName(NewName);
   if not (csLoading in ComponentState) then
-{$IFDEF VERSION5}
     if (csInLine in ComponentState) then
       Changed;
-{$ENDIF}
   if (Collection <> nil)
   and (Collection.ItemEditor <> nil) then
     SendMessage(Collection.ItemEditor.Handle, OM_PROPCHANGE, 0, 0);
@@ -1226,9 +1213,7 @@ begin
     LogBoolean('csAncestor in Owner.ComponentState', csAncestor in Owner.ComponentState);
     {$ENDIF}
     if assigned(FCollection) then
-        {$IFDEF Version5}
         if not (csInline in ComponentState) then
-        {$ENDIF}
           FCollection.Changed;
   finally
     InChanged := False;
@@ -1310,9 +1295,7 @@ begin
       or ((AOwner is TOvcCollectibleControl) and not TOvcCollectibleControl(AOwner).FInternal)
       or ((AOwner is TOvcCustomControl) and not TOvcCustomControl(AOwner).FInternal) then
         if not (csLoading in AOwner.ComponentState)
-         {$IFDEF Version5}
           and not (csInLine in AOwner.ComponentState)
-         {$ENDIF}
           then Name := GenerateName;
 end;
 
@@ -1376,9 +1359,7 @@ procedure TOvcCollectibleControl.SetName(const NewName : TComponentName);
 begin
   inherited SetName(NewName);
   if not (csLoading in ComponentState) then
-    {$IFDEF Version5}
     if not (csInLine in ComponentState) then
-    {$ENDIF}
       Changed;
 end;
 
@@ -1398,9 +1379,7 @@ begin
   InChanged := True;
   try
     if assigned(FCollection) then
-       {$IFDEF Version5}
         if not (csInline in ComponentState) then
-       {$ENDIF}
           FCollection.Changed;
   finally
     InChanged := False;
@@ -1514,11 +1493,7 @@ end;
 procedure TOvcController.DestroyHandle;
 begin
   if FHandle <> 0 then
-  {$IFDEF VERSION6}
     Classes.DeallocateHWnd(FHandle);
-  {$ELSE}
-    DeallocateHWnd(FHandle);
-  {$ENDIF}
 
   FHandle := 0;
 end;
@@ -1574,11 +1549,7 @@ end;
 function TOvcController.GetHandle : TOvcHWnd{hWnd};
 begin
   if FHandle = 0 then
-  {$IFDEF VERSION6}
     FHandle := Classes.AllocateHWnd(cWndProc);
-  {$ELSE}
-    FHandle := AllocateHWnd(cWndProc);
-  {$ENDIF}
   Result := FHandle;
 end;
 
@@ -1609,13 +1580,8 @@ var
   end;
 
 begin
-{$IFDEF VERSION5}
   if (Owner is TCustomForm) or (Owner is TCustomFrame) then
     with TWinControl(Owner) do
-{$ELSE}
-  if Owner is TForm then
-    with TForm(Owner) do
-{$ENDIF}
       for I := 0 to ComponentCount-1 do
         MarkField(Components[I]);
 end;
@@ -1683,13 +1649,8 @@ var
 
 begin
   Result := nil;
-{$IFDEF VERSION5}
   if ((Owner is TCustomForm) or (Owner is TCustomFrame)) then
     with TWinControl(Owner) do
-{$ELSE}
-  if Owner is TForm then
-    with TForm(Owner) do
-{$ENDIF}
       for I := 0 to ComponentCount-1 do begin
         ValidateEf(Components[I]);
 
@@ -1843,21 +1804,13 @@ end;
 
 procedure TO32CustomControl.LabelAttach(Sender : TObject; Value : Boolean);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
   S  : string;
 begin
   if (csLoading in ComponentState) then
     Exit;
 
-{$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-{$ELSE}
-  PF := TForm(GetParentForm(Self));
-{$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -1891,21 +1844,13 @@ end;
 
 procedure TO32CustomControl.Notification(AComponent : TComponent; Operation : TOperation);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-{$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-{$ELSE}
-      PF := TForm(GetParentForm(Self));
-{$ENDIF}
       if Assigned(PF) and not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;
         FLabelInfo.ALabel := nil;
@@ -2082,21 +2027,13 @@ end;
 
 procedure TOvcCustomControl.LabelAttach(Sender : TObject; Value : Boolean);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
   S  : string;
 begin
   if (csLoading in ComponentState) then
     Exit;
 
-{$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-{$ELSE}
-  PF := TForm(GetParentForm(Self));
-{$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -2130,21 +2067,13 @@ end;
 
 procedure TOvcCustomControl.Notification(AComponent : TComponent; Operation : TOperation);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-{$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-{$ELSE}
-      PF := TForm(GetParentForm(Self));
-{$ENDIF}
       if Assigned(PF) and not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;
         FLabelInfo.ALabel := nil;
@@ -2379,20 +2308,12 @@ begin
         LogBoolean('(csAncestor in Owner.ComponentState)', (csAncestor in Owner.ComponentState));
         LogBoolean('Stored', Stored);
         {$ENDIF}
-        {$IFDEF VERSION5}
         if (TForm(Parent).Designer <> nil)
-        {$ELSE}
-        if (Parent.Designer <> nil)
-        {$ENDIF}
         and not InLoaded
         and IsLoaded
         and not (csAncestor in Owner.ComponentState)
         and Stored then
-          {$IFDEF VERSION5}
           TForm(Parent).Designer.Modified;
-          {$ELSE}
-          Parent.Designer.Modified;
-          {$ENDIF}
         if (ItemEditor <> nil)
         and not (csAncestor in Owner.ComponentState)
         then
@@ -2407,19 +2328,14 @@ begin
 end;
 
 procedure TOvcCollection.Clear;
-{$IFDEF Version5}
 var
   i : Integer;
-{$ENDIF}
 begin
-  {$IFDEF Version5}
   for i := Count - 1 downto 0 do
     if not (csAncestor in Item[i].ComponentState) then
       Item[i].Free;
-  {$ELSE}
   while Count > 0 do
     Item[0].Free;
-  {$ENDIF}
   if ItemEditor <> nil then
     SendMessage(ItemEditor.Handle, OM_PROPCHANGE, 0, 0);
 end;
@@ -2754,7 +2670,6 @@ begin
   inherited DoClose(Action);
 end;
 
-{$IFDEF VERSION2009}
 procedure TOvcPopupWindow.InitializeNewForm;
 begin
   inherited;
@@ -2763,7 +2678,6 @@ begin
   Color := clWindow;
   FCloseAction := caFree;
 end;
-{$ENDIF}
 
 function TOvcPopupWindow.IsShortCut(var Message: TWMKey): Boolean;
 begin

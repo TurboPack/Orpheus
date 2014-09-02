@@ -43,7 +43,7 @@ interface
 
 uses
   Windows, Classes, ClipBrd, Controls, Forms, Graphics, Menus, Messages,
-  SysUtils, {$IFDEF VERSION6} Variants, {$ENDIF}
+  SysUtils, Variants,
   OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData, OvcExcpt,
   OvcIntl, OvcMisc, OvcStr, OvcUser, OvcDate, OvcBordr,imm,dialogs;
 
@@ -171,7 +171,7 @@ type
     procedure SetAsStDate(Value : TStDate);
     procedure SetAsStTime(Value : TStTime);
     procedure SetAsVariant(Value : Variant);
-    procedure SetAutoSize(Value : Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value : Boolean); override;
     procedure SetBorderStyle(Value : TBorderStyle);
     procedure SetDecimalPlaces(Value : Byte);
     procedure SetEpoch(Value : Integer);
@@ -1306,7 +1306,7 @@ procedure TOvcBaseEntryField.efChangeMask(Mask : PChar);
   {-change the picture mask}
 var
   BufS: string;                      //SZ Unicode
-  Buf: array[0..MaxEditLen] of {$IFDEF UNICODE}Word{$ELSE}Byte{$ENDIF};
+  Buf: array[0..MaxEditLen] of Word;
 begin
   if (Mask <> nil) and (Mask^ <> #0) then begin
     if csLoading in ComponentState then begin
@@ -1767,11 +1767,7 @@ begin
   end;
 
   if Assigned(C) then
-    {$IFDEF VERSION5}
     if (GetImmediateParentForm(C) = GetImmediateParentForm(Self)) then
-    {$ELSE}
-    if GetParentForm(C) = GetParentForm(Self) then
-    {$ENDIF}
       Result := True;
 end;
 
@@ -3924,11 +3920,7 @@ end;
 
 function TOvcBaseEntryField.GetDefStrType: TVarType;
 begin
-{$IFDEF UNICODE}
   Result := varUString;
-{$ELSE}
-  Result := varString;
-{$ENDIF}
 end;
 
 procedure TOvcBaseEntryField.SetAsVariant(Value : Variant);
@@ -3978,7 +3970,7 @@ begin
         {try to convert it into a string}
         SetAsString(VarAsType(Value, GetDefStrType));
     varString   : SetAsString(Value);
-{$IFDEF UNICODE}varUString: SetAsString(Value);{$ENDIF}
+    varUString: SetAsString(Value);
   end;
 end;
 

@@ -42,8 +42,7 @@ unit ovcfxfnt;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, SysUtils, Graphics, OvcExcpt;
+  System.UITypes, Windows, Classes, SysUtils, Graphics, OvcExcpt;
 
 var
   {List of names of the fixed fonts in the system}

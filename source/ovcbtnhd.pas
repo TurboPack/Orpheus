@@ -42,8 +42,7 @@ interface
 
 uses
   Windows, Classes, Controls, ExtCtrls, Forms, Graphics,
-  {$IFDEF VERSION7}Types,{$ENDIF}
-  Messages, SysUtils, OvcBase, OvcConst, OvcData, OvcMisc, OvcDrag;
+  Types, Messages, SysUtils, OvcBase, OvcConst, OvcData, OvcMisc, OvcDrag;
 
 type
   TOvcButtonHeaderStyle = (bhsNone, bhsRadio, bhsButton);
@@ -291,10 +290,8 @@ type
                    read FRearranged write FRearranged;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Enabled;
     property Font;

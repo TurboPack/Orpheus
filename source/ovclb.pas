@@ -156,11 +156,9 @@ type
   TOvcListBox = class(TOvcCustomListBox)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle;
@@ -332,21 +330,13 @@ end;
 
 procedure TOvcCustomListBox.LabelAttach(Sender : TObject; Value : Boolean);
 var
-  {$IFDEF VERSION5}
   PF : TWinControl;
-  {$ELSE}
-  PF : TForm;
-  {$ENDIF}
   S  : string;
 begin
   if csLoading in ComponentState then
     Exit;
 
-  {$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-  {$ELSE}
-  PF := TForm(GetParentForm(Self));
-  {$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -380,21 +370,13 @@ end;
 procedure TOvcCustomListBox.Notification(AComponent : TComponent;
           Operation : TOperation);
 var
-  {$IFDEF VERSION5}
   PF : TWinControl;
-  {$ELSE}
-  PF : TForm;
-  {$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then begin
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-      {$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-      {$ELSE}
-      PF := TForm(GetParentForm(Self));
-      {$ENDIF}
       if Assigned(PF) and
          not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;

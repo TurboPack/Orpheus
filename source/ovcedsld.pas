@@ -42,10 +42,9 @@ unit ovcedsld;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
-  StdCtrls, SysUtils, OvcBase, OvcConst, OvcData, OvcEdPop, OvcMisc,
-  OvcSlide, OvcExcpt,imm;
+  System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
+  StdCtrls, SysUtils, OvcBase, OvcConst, OvcData, OvcEdPop, OvcMisc, OvcSlide,
+  OvcExcpt,imm;
 
 type
   TOvcCustomSliderEdit = class(TOvcEdPopup)
@@ -159,11 +158,9 @@ type
   TOvcSliderEdit = class(TOvcCustomSliderEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec default False;
     property AutoSelect;
@@ -475,15 +472,10 @@ begin
 
     SetFocus;
     FSlider.Hide;
-    {$IFDEF VERSION5}
     if (FSlider.Parent is TCustomForm) then
       TForm(FSlider.Parent).AutoScroll := WasAutoScroll
     else if (FSlider.Parent is TCustomFrame) then
       TFrame(FSlider.Parent).AutoScroll := WasAutoScroll;
-    {$ELSE}
-    if FSlider.Parent is TForm then
-      TForm(FSlider.Parent).AutoScroll := WasAutoScroll;
-    {$ENDIF}
     Cursor := HoldCursor;
 
     {change parentage so that we control the window handle destruction}
@@ -541,29 +533,18 @@ procedure TOvcCustomSliderEdit.PopupOpen;
 var
   P : TPoint;
   R : TRect;
-  {$IFDEF VERSION4}
   F : TCustomForm;
-  {$ENDIF}
 begin
   if FSlider.Visible then
     Exit;  {already popped up, exit}
 
   inherited PopupOpen;
 
-  {$IFDEF VERSION5}
   FSlider.Parent := GetImmediateParentForm(Self);
   if (FSlider.Parent is TForm) then
     WasAutoScroll := TForm(FSlider.Parent).AutoScroll
   else if (FSlider.Parent is TCustomFrame) then
     WasAutoScroll := TFrame(FSlider.Parent).AutoScroll;
-  {$ELSE}
-  FSlider.Parent := GetParentForm(Self);
-  if FSlider.Parent is TForm then begin
-    WasAutoScroll := TForm(FSlider.Parent).AutoScroll;
-    TForm(FSlider.Parent).AutoScroll := False;
-  end;
-  {$ENDIF}
-
 
   {set 3d to be the same as our own}
   FSlider.ParentCtl3D := False;
@@ -571,7 +552,6 @@ begin
 
   {determine the proper position}
   SystemParametersInfo(SPI_GETWORKAREA, 0, @R, 0);    //http://www.vbaccelerator.com/home/Vb/Tips/Working_with_Multiple_Monitors/article.asp
-  {$IFDEF VERSION4}
   F := GetParentForm(Self);
   if Assigned(F) then
     R := Rect(F.Monitor.Left, F.Monitor.Top,
@@ -583,7 +563,6 @@ begin
 
 
 
-  {$ENDIF}
   if FPopupAnchor = paLeft then
     P := ClientToScreen(Point(-3, Height-4))
   else {paRight}

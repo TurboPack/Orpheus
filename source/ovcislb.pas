@@ -198,10 +198,8 @@ type
       write SetOnChange;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D;

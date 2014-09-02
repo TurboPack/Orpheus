@@ -137,11 +137,9 @@ type
   published
     {inherited properties}
     property DataType;            {needs to load before most other properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property BorderStyle;
     property CaretIns;
@@ -279,7 +277,7 @@ end;
 
 procedure TOvcCustomPictureField.CreateWnd;
 var
-  P : array[0..MaxEditLen+1] of {$IFDEF UNICODE}Word{$ELSE}Byte{$ENDIF}; //SZ
+  P : array[0..MaxEditLen+1] of Word; //SZ
   S: String;  //SZ added
 begin
   {save field data}

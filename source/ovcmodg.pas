@@ -40,9 +40,8 @@ unit ovcmodg;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics, Messages,
-  StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
+  System.UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics,
+  Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
 
 type
   {.Z+}

@@ -149,11 +149,9 @@ type
   TOvcTimeEdit = class(TOvcCustomTimeEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSelect;
     property AutoSize;
@@ -176,9 +174,7 @@ type
     property MaxLength;
     property NowString;
     property OEMConvert;
-    {$IFDEF VERSION4}
     property ParentBiDiMode;
-    {$ENDIF}
     property ParentColor;
     property ParentCtl3D;
     property ParentFont;
@@ -201,9 +197,7 @@ type
     property OnDblClick;
     property OnDragDrop;
     property OnDragOver;
-    {$IFDEF VERSION4}
     property OnEndDock;
-    {$ENDIF}
     property OnEndDrag;
     property OnEnter;
     property OnExit;

@@ -518,11 +518,7 @@ end;
 destructor TOvcIntlSup.Destroy;
 begin
   if intlHandle <> 0 then
-  {$IFDEF VERSION6}
     Classes.DeallocateHWnd(intlHandle);
-  {$ELSE}
-    DeallocateHWnd(intlHandle);
-  {$ENDIF}
   inherited Destroy;
 end;
 
@@ -1510,19 +1506,11 @@ begin
     FAutoUpdate := Value;
     if FAutoUpdate then
       {allocate our window handle}
-      {$IFDEF VERSION6}
         intlHandle := Classes.AllocateHWnd(isIntlWndProc)
-      {$ELSE}
-        intlHandle := AllocateHWnd(isIntlWndProc)
-      {$ENDIF}
     else begin
       {deallocate our window handle}
       if intlHandle <> 0 then
-        {$IFDEF VERSION6}
           Classes.DeallocateHWnd(intlHandle);
-        {$ELSE}
-          DeallocateHWnd(intlHandle);
-        {$ENDIF}
       intlHandle := 0;
     end;
   end;
