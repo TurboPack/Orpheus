@@ -1,0 +1,448 @@
+Revision 287: (2013/07/14 Armin Biernaczyk)
+- ovcedit.pas
+  New internal variable 'edeRows' forces the editor to scroll the text when you enter
+  the last, not completely visible line
+
+Revision 270: (2013/01/01 Armin Biernaczyk)
+- ovcstate.pas
+  Bugfix: Calling TOvcFormState.ReadFormState made the window disappear when called
+  for a visible form.
+- ovctchdr.pas
+  Bugfix: The components TOvcTCColHead and TOvcTCRowHead displayed garbage when
+  'UseASCIIZStrings' was set to False.
+
+Revision 269: (2012/10/05 Armin Biernaczyk)
+Added support for Delphi XE3
+
+Revision 268: (2012/09/30 Armin Biernaczyk)
+- ovctgres.pas
+  Minor bugfix: The property TOvcTCCheckBox.CellGlyphs.IsDefault could not be set to true.
+
+Revision 267: (2012/03/18 Armin Biernaczyk)
+- Tests added to OrpheusTests
+- Minor changes regarding the bugfixes in rev 266
+
+Revision 266: (2012/03/17 Armin Biernaczyk)
+- ovcef.pas
+  Workaround in TOvcBaseEntryField.efRangeToStRange for a bug in system.str in Delphi XE2
+- ovcsf.pas
+  Minor bugfix in TOvcCustomSimpleField.efTransfer.
+
+Revision 265: (2012/01/04 Armin Biernaczyk)
+- ovcvlb.pas
+  Bugfix for an issue in the function 'ScrollCanvas' that led to display problems in
+  TOvcVirtualListBox and TOvcReportView when using the mousewheel.
+
+Revision 264: (2011/12/18 Armin Biernaczyk)
+- ovcedit.pas
+  New property 'ShowWrapColumn' to display a vertical line at a certain column in
+  TOvcEditor (similar to the Delphi IDE).
+- ovctcbox.pas
+  Fix for an issue when using TOvcTCCheckBox in a TOvcTable when user defined styles
+  are used in Delphi XE2.
+
+Revision 257: (2011/09/22 Armin Biernaczyk)
+- ovctable.pas
+  Change in TOvcCustomTable.DoGetCellData to detect invalid pointers in GetCellData-
+  event at runtime.
+
+Revision 250: (2011/09/07 Armin Biernaczyk)
+- ovcstr.pas
+  Code for OvcStr.StrChPos changed to resolve issue 3405788.
+
+Revision 242/243: (2011/09/01 Armin Biernaczyk)
+- ovc.inc
+  New Symbol 'VERSIONXE2' for Delphi XE2 (aka Pulsar)
+- ovccklb.pas, ovcclrcb.pas, ovccmbx.pas, ovcnbk.pas, ovctccheckbbx.pas,
+  OvcThemes.pas,
+  Code modified to use 'StyleServices' instead of 'ThemeServices' in Delphi XE2;
+  'ThemeServices' is deprecated in Delphi XE2.
+- ovcdlm.pas
+  Code for TOvcFastList modified for Delphi XE2 (type 'Classes.TPointerList' has
+  changed in XE2)
+- ovcnbk.pas
+  Modified Theme-support: When themes were active, the properties
+  TOvcTabPage.TabColor and TOvcNotebook.Color have been ignored. Now these colors are
+  used except when they have the default-values (clBtnface)
+- ovctbcls.pas
+  Minor changes for Delphi XE2
+- ovctcbox.pas
+  Added Theme-Support for TOvcTCCheckBox
+
+Revision 241: (2011/08/28 Armin Biernaczyk)
+- ovcstr.pas
+  Reimplementation of 'UseAsciiZStrings' (rev 237) was incorrect and caused errors
+  when using different kinds of strings in TOvcTable.
+- ovcrvidx.pas, o32rxngn.pas, o32intlst.pas, o32intdeq.pas, o32igrid.pas
+  Minor changes for compatibility with Delphi XE2
+
+Revision 238: (2011/07/23 Armin Biernaczyk)
+- ovclb.pas
+  Bugfix in TOvcCustomListBox.tlSetTabStops: The tabstops were not set properly,
+  resulting in a misalignment of the text.
+
+Revision 237: (2011/07/08 Armin Biernaczyk)
+- ovctccustomedt.pas, ovctcedt.pas, ovctchdr.pas, ovctcstr.pas
+  Reimplemented 'UseAsciiZStrings' as suggested by Henner Kollmann for backward
+  compatibility; see also rev210.
+
+Revision 236: (2011/06/23 Armin Biernaczyk)
+- ovcdlm.pas
+  Minor changes to prepare for x64-compiler
+- ovcspary.pas
+  added PUREPASCAL-version for function 'ChunkIsBlank'
+- ovcviewr.pas
+  1) Minor internal changes to prepare for x64-compiler (where integer<>pointer).
+  2) Unicode bugfix in TOvcCustomFileViewer.fvInitObject-Fields.
+  3) Bugfix in PUREPASCAL-implementation of TOvcCustomFileViewer.fvGetLineAsText.
+  4) added PUREPASCAL-code for asm-Blocks in TOvcCustomFileViewer.fvGotoTextLine.
+
+Revision 235: (2011/06/17 Armin Biernaczyk)
+- o32flxed.pas
+  Bugfix for TO32CustomFlexEdit: When the mousepointer left the control, the cursor
+  was set to the first character if Borders.Active=True.
+- o32tcflx.pas, ovctcedt.pas, ovctcpic.pas ovctcsim.pas, ovctcstr.pas
+  New properties 'EllipsisMode' and 'IgnoreCR' to improve support for cells
+  containing long and/or multi-line strings.
+  See new demo in examples\delphi\table\table 16 Multiline
+- ovctable.pas
+  To give the user the possibility to find out whether a value has been saved or
+  not when leaving a cell, 'DoGetCellData' with Purpose=cdpForSave is only called
+  when neccessary.
+
+Revision 233/234: (2011/06/04 Armin Biernaczyk)
+- o32flxed.pas
+  Minor bugfix in TO32CustomFlexEdit.SetText
+- o32lkout.pas and ovclkout.pas
+  Renamed local variable 'Offset' in TO32CustomLookOutBar.Paint and
+  TOvcLookOutBar.Paint for compatibility with Delphi XE2
+- o32tcflx.pas
+  Changed default value for property 'PassWordChar' to #0 so that TO32TCFlexEdit
+  does not work in password-mode by default.
+  Bugfix in TO32TCCustomFlexEdit.GetCellEditor: Accessing TO32TCCustomFlexEdit's
+  property 'CellEditor' led to an access violation later on.
+- ovccmbx.pas
+  Bugfix in TOvcBaseComboBox for issue 668019
+  (OnClick was fired twice when an item form the dropdown-list was selected).
+- ovcddpf.pas and ovcdbsf.pas
+  Bugfix in TOvcDbPictureField.pfdbGetFieldValue and
+  TOvcDbSimpleField.sfdbGetFieldValue for issue 3305212.
+- ovcpf.pas
+  Added new property 'FloatScale' (see new demo in
+  examples\delphi\table\table 15 floatscale)
+  Bugfix for one of the problems listed in issue 668056 (Deleting a character in
+  TOvcPictureField was not possible in certain cases)
+- ovctcpic.pas
+  Added new properties 'FloatScale' and 'UserData'
+
+Revision 232: (2011/05/13 Armin Biernaczyk)
+- ovccmbx.pas
+  Minor bugfix for TOvcBaseComboBox: Changing the selected item using the mousewheel
+  did not work properly.
+- ovcdrcbx.pas
+  Bugfix for TOvcDirectoryComboBox: The height of the control was not set properly
+  if a font was used that led to an ItemHeight of 16 (as in EXCBX.dpr)
+- ovcfmcbx.pas
+  Bugfix for TOvcAssociationComboBox: This control did not work...
+
+Revision 231: (2011/05/08 Armin Biernaczyk)
+- ovctcbef.pas
+  TOvcTCBaseEntryField uses 'FDataStringType' to determine what kind of string is
+  provided. Due to this change, the property 'DataStringType' can now be used for
+  'TOvcPictureField' and 'TOvcSimpleField'.
+  (So projects still using ShortStrings, like CustOrd.dpr, can use these cell
+  components.)
+- ovctcpic.pas and ovctvsim.pas
+  The property 'DataStringType' has been made visible.
+
+Revision 220: (2011/05/05 Armin Biernaczyk)
+- O32LkOut.pas
+  fix for issue 1307362 implemented as suggested by Nathan Sutcliffe.
+- ovctcedt.pas
+  TOvcTCCustomString now respects the option "efoAutoSelect" if a TOvcController is
+  given (as the other cell components do).
+
+Revision 214: (2011/04/28 Sebastian Zierer)
+- ovccklb.pas
+  Added AutoComplete property to TOvcCheckList, checked state only toggled with space
+  key (or mouse)
+
+Revision 213: (2011/04/20 Armin Biernaczyk)
+- ovctable.pas
+  Minor Bugfix: When otoNoSelection in Options it was necessary to click on a cell
+  containing aOvcTCCheckBox three times to change the checkbox' state
+
+Revision 212: (2011/04/18 Armin Biernaczyk)
+- ovctccbx.pas
+  Bugfix: Comboboxes in Tables did not work because TOvcTCCustomComboBox.tcPaint
+  provided a PChar instead of the expected PString for the inherited method.
+
+Revision 210: (2011/04/17 Armin Biernaczyk)
+Some bugfixes and changes regarding TOvcTable:
+- The properties 'UseASCIIZStrings' and 'UsePString' of 'TOvcTCBaseString' were
+  replaced by 'DataStringType':
+  Both properties "tried" to define what kind of strings a cell is using, i.e. what
+  kind of data the table expects for the cell when calling 'GetCellData'. For
+  UseASCIIZStrings=True and UsePString=True (default) a pointer to a string was
+  expected. This case worked.
+  However, UseASCIIZStrings=False and UsePString=True did not work, as the cell still
+  expected a PString when painting the cell - but a pointer to a ShortString when
+  editing.
+  To resolve this problem the two properties were replaced by 'DataStringType' with
+  possible values 'tstString', 'tstShortString' and 'tstPChar'. This property tells
+  the table what kind of strings are used to store the data. Of course 'tstString'
+  is the default.
+  See the example ExTbl10.dpr/ExTbl10_XE.dpr
+- ovctcstr.pas
+  Replaced properties 'UseASCIIZStrings' and 'UsePString' of 'TOvcTCBaseString' by
+  'DataStringType'.
+- ovctcmmn.pas
+  New type TOvcTblStringtype (for DataStringType)
+- ovctchdr.pas
+  Bugfixes in TOvcTCColHead.tcPaint and TOvcTCRowHead.tcPaint.
+- ovctcedt.pas
+  Several changes due to replacing 'UseASCIIZStrings' and 'UsePString'.
+- ovctcbef.pas
+  Bugfix in TOvcTCBaseEntryField.tcPaint.
+- o32tcflx.pas
+  Several changes due to replacing 'UseASCIIZStrings' and 'UsePString'.
+
+Revision 208: (2011/04/17 Armin Biernaczyk)
+- ovcCoco.pas
+  Several Bugfixes to make it work in the unicode-world
+- ovcdrpvw.pas
+  Changed TOvcDataRvItem.ReadFromStream so that it can
+  read from streams containing Ansi-strings in the
+  unicode-world.
+  (For example when opening ExDrv0.pas/.dfm in Delphi
+   XE)
+- ovcrvexp.pas
+  Some Bugfixes to make it work in the unicode-world.
+  Formated the code (which was an auto-generated mess)
+
+Revision 207: (2011/04/16 Armin Biernaczyk)
+- ovcstore.pas:
+  "Upgraded" TOvcIniFileStore.ReadString and .WriteString to be able
+  to handle Unicode-Strings.
+  (see examples/delphi/ExState_XE.dproj)
+
+Revision 204/205/206: (2011/04/09 Armin Biernaczyk)
+- Ovcxfrc1.pas/dfm
+  Minor bugfix for EntryFields with DataType char.
+- OvcViewr.pas, OvcSfPe
+  Removed redundant internal functions MinI, MaxI, MinL, MaxL
+  (These are defined in OvcMisc.pas, too, and OvcMisc was
+  already included in the uses-list)
+- Ovctcmmn.pas
+  Removed redundant internal functions MinI, MaxI, MinL, MaxL
+  (included OvcMisc.pas in uses-list instead)
+- Ovcsc.pas, Ovcfsc.pas
+  Moved internal assembler function(s) GetArrowWidth to OvcMisc.pas
+  (and added PUREPASCAL-code)
+- OvcMisc.pas
+  Added PUREPASCAL code for functions CompStruct, MinI, MaxI,
+  MinL, MaxL
+- OvcEdit.pas
+  modified code for TOvcCustomEditor.edRefreshLines to stop the
+  editor repainting the entire ClientRect for every character
+  that is being typed.
+  Some code simplifictions in TOvcCustomEditor.Paint.
+- OvcCalc.pas
+  Fix for issue 3267487.
+
+Revision 203: (2011/03/30 Armin Biernaczyk)
+- ovcviewr.pas
+  Added PUREPASCAL-version for CalcEffCol
+  Added PUREPASCAL-version for TOvcCustomFileViewer.fvGetLineAsText
+
+Revision 202: (2011/03/29 Armin Biernaczyk)
+- ovcedit.pas
+  New method TOvcCustomEditor.Text to access the editor's content as a
+  string (instead of using PChar an GetText/SetText).
+- ovcef.pas
+  "upgraded" TOvcBaseEntryField.GetAsDateTime and .SetAsDateTime so
+  that they work for (efDataType mod fcpDivisor) = fsubDouble:
+  TOvcPictureFields with DataType=pftDateTime use this efDataType, so
+  the extension is necessary to make TOvcPictureField.AsDateTime := ...
+  work in case DataType=pftDateTime.
+- ovcintl.pas
+  Some extensions to use picture-masks containing both characters for
+  date AND time. These are necessary for TOvcPictureFields with
+  DataType=pftDateTime (e.g. PictureMask='dd/mm/yyyy hh:mm:ss')
+  The main problem here is that pmMonth=pmMinute...
+  New method TOvcIntlSup.DateTimeToDatePChar to put date and/or time
+  in a string based on a picture-string (needed for TOvcCustomPicture-
+  Field.efTransfer; see below).
+- ovcpf.pas
+  Modified TransferString in TOvcCustomPictureField.efTransfer because
+  the bugfix in rev 194 caused another problem when assigning a string
+  to a picture field containing literals.
+  Added a new transfer-procedure TransferDateTime in TOvcCustomPicture-
+  Field.efTransfer to handle the case DataType=pftDateTime correctly.
+  This did not work before.
+  Modified TOvcCustomPictureField.pfGetDataType to return the proper
+  type (fidPictureDouble instead of fidPictureDate) in case DataType=
+  pftDateTime.
+- ovcxfer.pas
+  Major changes (see source) to transfer component data from and to
+  data-records with different kind of string-types (string, array of char
+  and shortstring)
+  Upgraded to support TOvcEditor-components
+- ovcxfrc1.pas/dfm
+  Changes (and bugfixes) to reflect the new options offers by ovcxfer.pas
+
+Revision 201: (2011/03/25 Armin Biernaczyk)
+- ovcsf.pas
+  Bugfix: TOvcSimpleField did not display the password-character properly in
+  passwordmode (in unicode)
+
+Revision 200: (2011/03/25 Armin Biernaczyk)
+- ovccal.pas
+  Bugfix in TOvcCustomCalendar.SetCalendarDate
+- ovcintl.pas
+  - removed internal assembler function GetMaxWord 
+  - re-coded TOvcIntlSup.isMergeIntoPicture to fix some bugs and make it easier to read.
+    (methods like 'DateToDateString' did not work properly due to bugs in this method)
+  - Bugfix in TOvcIntlSup.MonthStringToMonth
+    (due to this bug OvcPictureFields with mask='dd nnn yyyy' and DataType=pftDate did
+    not recognise '01 Jan 2000' as a valid date.)
+
+Revision 199: (2011/03/21 Armin Biernaczyk)
+- ovcedit.pas
+  Fixed issues 668026 and 755214 in TOvcCustomEditor
+
+Revision 197: (2011/03/21 Armin Biernaczyk)
+- ovcedit.pas
+  Bugfix (issue 947482): When Margins.Left.Enabled=True, the selected text was not
+  highlighted properly (text and background were not aligned properly)
+
+Revision 196: (2011/03/21 Armin Biernaczyk)
+- ovcedit.pas
+  bugfix: <tab>-characters were deleted from the file when saving it (issue 667991).
+- ovcviewed.pas/dfm
+  minor bugfix: Lists used in TfrmViewEd were not freed (issue 1056218)
+
+Revision 194: (2011/03/19 Armin Biernaczyk)
+- ovcpf.pas
+  Minor bugfix: When transfering a string to the field (e.g. via AsString), the string
+  was not merged with the PictureMask for datatype=pftString if the length of the
+  string equaled MaxLength.
+
+Revision 192: (2011/03/16 Armin Biernaczyk)
+- OvcCalc.pas:
+  Bugfix for issue 1190028 (wrong result in calculator component)
+
+Revision 191: (2011/03/16 Armin Biernaczyk)
+- TOvcTCBaseEntryField
+  Bugfix: data transfer between TOvcTCBaseEntryField and TOvcBaseEntryField did not work
+  in case of strings.
+
+Revision 190: (2011/03/08 Armin Biernaczyk)
+- OvcUtils.pas
+  Bugfixes for StripCharFromEnd and StripCharFromFront
+- TOvcBaseViewer
+  Several bugfixes for unicode-version:
+  + component displayed only garbage
+  + CopyToClipboard did not work
+  + PUREPASCAL-code added for several (not yet all) assembler-functions
+
+Revision 187: (2011/03/06 Armin Biernaczyk)
+- OvcStr.pas
+  a) Added assember-free code for all functions/procedures in this unit (PUREPASCAL)
+  b) Serveral bugfixes:
+     LoCaseChar         - returned upper case character
+     OctalLPChar        - unicode version did not work
+     StrChDeletePrim    - both unicode & ansi-version failed for Pos=StrLen(P)
+     StrChInsertPrim    - ansi-Version failed for Pos=StrLen(Dest)
+     StrInsertChars     - did not work for Count>1024
+     TrimEmbeddedZeros  - result was undefined for Pos('E',S)=0
+     TrimTrailingZeros  - result was undefined for S=''
+     TrimTrailPrimPChar - unicode-version deleted spaces only
+                        - ansi-version did work properly for S = '  '
+
+Revision 166: (2010/11/26 Armin Biernaczyk)
+- TOvcTextFileEditor
+  New property 'Encoding' (unicode-version)
+  improved handling of encodings when loading/saving files:
+  a) TOvcCustomTextFileEditor.SaveToFile
+     If an encoding is passed to this method, it will be used even if not all the
+     characters can be coded.
+     If no encoding is specified, 'suggestEncoding' will be used to determine a suitable
+     encoding: If possible 'Encoding' will be used. However, if not all characters can be
+     coded, the method will use UTF8-encoding.
+     One can check in advance whether 'Encoding' will not be used by comparing 'Encoding'
+     with 'suggestEncoding'.
+  b) TOvcCustomTextFileEditor.LoadFromFile
+     If no encoding is passed to this method, it tries to derive the file's encoding from
+     it's BOM and uses TEncoding.Default as default. Otherwise the given encoding is
+     used as default. However, the given encoding will be ignored if the file's BOM indicates
+     a different encoding.
+
+     The used encoding is stored in 'Encoding' an will therefore be used when the file
+     is saved later (see a).
+
+- TOvcEditor
+  Selecting/copying/pasting of rectangular blocks of text did not work properly when the text
+  contained <tab>-characters
+
+Revision 164: (2010/11/24 Armin Biernaczyk)
+- TOvcTCBaseEntryField
+  Fixed a bug in TOvcTCBaseEntryField: Datatransfer did not work and caused exceptions.
+
+Revision 160: (2010/10/26 Armin Biernaczyk)
+- TOvcEditor
+  fixed wrong handling of TOvcUndoBuffer.BufAvail (unicode) that caused the TOvcEditor to
+  crash after some editing.
+  Improved performance of TOvcParaList.DeleteBlock (was quite slow when deleting a huge
+  amount of paragraphs)
+- TOvcCustomTextFileEditor
+  Improved handling of different encodings (unicode)
+
+Revision 156/157: (2010/10/23 Armin Biernaczyk)
+- TOvcEditor
+  Fixed unicode-version of ovcstr.DetabPChar and ovceditu.edGetActualCol
+  (TOvcEditor (unicode-version) now displays texts containing tab-characters correctly)
+
+Revision 149: (2010/10/04 Armin Biernaczyk)
+- TOvcEditor
+  Added support for selecting/copying/pasting rectangular blocks of text (as in the Delphi IDE)
+  does not yet work properly in case the text contains <tab>-characters.
+  (As in the Delphi-IDE press <AltGr> when selecting text with the mouse)
+
+Revision 147/148: (2010/10/04 Armin Biernaczyk)
+- TOvcEditor
+  Some bugs fixed in the Editor (unicode-version)
+
+Revision 142: (2010/10/03 Armin Biernaczyk)
+- TOvcEditor
+  Implemented search functions (unicode-version)
+
+Revision 49: (2009/11/28 Roman Kassebaum)
+- TOvcTCCustomString and with it TOvcTCString uses PString. This means the in the OnGetCellText
+  event handler should look like the following:
+  Data := @FString; (with FString: string, not a ShortString or AnsiString).
+  This is the first revision that allows to use the TOvcTCString under unicode.
+
+Revision 48: (2009/11/28 Roman Kassebaum)
+- Added the properties Adjust, Color and Font to the editor TOvcTCCustomControl.
+
+Revision 47: (2009/11/25 Roman Kassebaum)
+- TOvcTCColHead: Introduced the new property ShowEllipsis.
+
+Revision 46: (2009/11/24 Roman Kassebaum)
+- TOvcTCColHead: Fixed a big problem that occurs if the Ellipsis was shown.
+  Previous revisions shouldn't be used any longer.
+
+Revision 45: (2009/11/18 Roman Kassebaum)
+- Added the new editor TOvcTCCustomInt for Integers. The OnGetCellText event handler should look like the following:
+  OvcTCCustomInt1.IntToData(FInteger, Data, Purpose);
+  The DoneEdit event handler must be assigned in the following way:
+  FInteger := OvcTCCustomInt1.IntegerValue;
+
+Revision 44: (2009/11/18 Roman Kassebaum)
+- Added the new editor TOvcTCCustomStr which uses PChar. The OnGetCellText event handler should look like the following:
+  OvcTCCustomStr1.StringToData(FString, Data, Purpose);
+  Cause the TOvcTCCustomStr uses a PChar, the DoneEdit event handler must be assigned in the following way:
+  FString := OvcTCCustomStr1.StringValue;
+
+
