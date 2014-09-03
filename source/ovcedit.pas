@@ -53,8 +53,6 @@ const
   MARGINPAD = 5;
 
 type
-  TScrollstyle = System.UITypes.TScrollStyle;
-
   {Forward Declarations}
   TOvcCustomEditor = class;
 

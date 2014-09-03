@@ -51,10 +51,6 @@ uses
   OvcTCBEF, OvcTCell, OvcTBClr, OvcTBCls, OvcTCmmn, OvcTGPns, OvcDate;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   {data-aware table options}
   TOvcDbTableOptions = (dtoCellsPaintText, dtoAllowColumnMove,
     dtoAllowColumnSize, dtoAlwaysEditing, dtoHighlightActiveRow,

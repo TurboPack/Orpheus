@@ -35,9 +35,7 @@
 {.W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFDEF VERSION6}
-  {$WARN SYMBOL_DEPRECATED OFF}
-{$ENDIF}
+{$WARN SYMBOL_DEPRECATED OFF}
 
 
 unit ovctimer;

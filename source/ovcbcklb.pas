@@ -41,8 +41,7 @@ unit ovcbcklb;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
+  System.Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
   SysUtils, OvcBase, OvcLB;
 
 const
@@ -198,11 +197,9 @@ type
 
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle;

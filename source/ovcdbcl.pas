@@ -58,10 +58,6 @@ type
     {event to notify of a scroll action}
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   TOvcDbColumnList = class(TOvcCustomControlEx)
   {.Z+}
   protected {private}

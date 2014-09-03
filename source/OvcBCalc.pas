@@ -45,9 +45,8 @@ interface
 
 uses
   Windows, Buttons, Classes, Controls, ExtCtrls, Forms, Graphics, Menus,
-  Messages, {$IFDEF VERSION4} MultiMon, {$ENDIF}
-  StdCtrls, SysUtils, OvcBase, OvcVer, OvcMisc,
-  OvcEditF, OvcBordr, OvcEdClc, ovcCalc, ovcEdPop;
+  Messages, MultiMon, StdCtrls, SysUtils, OvcBase, OvcVer, OvcMisc, OvcEditF,
+  OvcBordr, OvcEdClc, ovcCalc, ovcEdPop;
 
 const
   BorderMsgClose = WM_USER+10;
@@ -92,10 +91,8 @@ type
     {internal methods}
     function GetButtonWidth : Integer;
 
-{$IFDEF VERSION4}
     procedure CMDialogKey(var Msg : TCMDialogKey);
       message CM_DIALOGKEY;
-{$ENDIF}
 
     procedure CreateParams(var Params : TCreateParams);
       override;
@@ -151,12 +148,10 @@ type
     {base property values}
     FOvcEdit : TOvcNumberEditEx;
 
-    {$IFDEF VERSION4}
     FBiDiMode      : TBiDiMode;
     FConstraints   : TSizeConstraints;
     FParentBiDiMode: Boolean;
     FDragKind      : TDragKind;
-    {$ENDIF}
     FAbout         : string;
     FAutoSelect    : Boolean;
     FAutoSize      : Boolean;
@@ -212,7 +207,6 @@ type
     WasAutoScroll    : Boolean;
 
     {base property methods}
-    {$IFDEF VERSION4}
     function GetBiDiMode : TBiDiMode;
     function GetDragKind : TDragKind;
     function GetParentBiDiMode : Boolean;
@@ -220,7 +214,6 @@ type
     procedure SetBiDiMode(Value : TBiDiMode); override;
     procedure SetDragKind(Value : TDragKind);
     procedure SetParentBiDiMode(Value : Boolean); override;
-    {$ENDIF}
 
     function GetAbout : string;
     function GetAutoSelect : Boolean;
@@ -264,7 +257,7 @@ type
 
     procedure SetAbout(const Value : string);
     procedure SetAutoSelect(Value : Boolean);
-    procedure SetAutoSize(Value : Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value : Boolean); override;
     procedure SetCharCase(Value : TEditCharCase);
     procedure SetCursor(Value : TCursor);
     procedure SetDragCursor(Value : TCursor);
@@ -351,7 +344,6 @@ type
 
 
   published
-    {$IFDEF VERSION4}
     property Anchors;
 
     property BiDiMode : TBiDiMode
@@ -367,7 +359,6 @@ type
     property DragKind : TDragKind
       read GetDragKind
       write SetDragKind;
-    {$ENDIF}
 
     property About : string
       read GetAbout
@@ -401,11 +392,9 @@ type
       read GetDragCursor
       write SetDragCursor;
 
-    {$IFDEF VERSION4}
     property DragMode : TDragMode
       read GetDragMode
       write SetDragMode;
-    {$ENDIF}
 
     property Enabled : Boolean
       read FEnabled
@@ -686,7 +675,6 @@ begin
   SetBounds(Left, Top, Width, Height);
 end;
 
-{$IFDEF VERSION4}
 procedure TOvcBorderEdPopup.CMDialogKey(var Msg : TCMDialogKey);
 begin
 (*
@@ -701,8 +689,6 @@ begin
     inherited;
 *)
 end;
-{$ENDIF}
-
 
 procedure TOvcBorderEdPopup.SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
 begin
@@ -744,11 +730,9 @@ begin
   FOnPopupClose  := FOvcEdit.FOnPopupClose;
   FShowButton    := FOvcEdit.FShowButton;
 
-  {$IFDEF VERSION4}
   FBiDiMode      := FOvcEdit.BiDiMode;
   FDragKind      := FOvcEdit.DragKind;
   FParentBiDiMode:= FOvcEdit.ParentBiDiMode;
-  {$ENDIF}
   FAbout         := FOvcEdit.About;
   FAutoSelect    := FOvcEdit.AutoSelect;
   FAutoSize      := FOvcEdit.AutoSize;
@@ -992,7 +976,6 @@ end;
 
 
 {base property methods}
-{$IFDEF VERSION4}
 function TOvcBorderedNumberEdit.GetBiDiMode : TBiDiMode;
 begin
   Result := FOvcEdit.BiDiMode;
@@ -1052,7 +1035,6 @@ begin
     FOvcEdit.DragKind := Value;
   end;
 end;
-{$ENDIF}
 
 
 function TOvcBorderedNumberEdit.GetAbout : string;

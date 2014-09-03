@@ -59,11 +59,9 @@ type
   protected
     FOvcEdit : TOvcEditEx;
 
-    {$IFDEF VERSION4}
     FBiDiMode      : TBiDiMode;
     FParentBiDiMode: Boolean;
     FDragKind      : TDragKind;
-    {$ENDIF}
     FAbout         : string;
     FAutoSelect    : Boolean;
     FAutoSize      : Boolean;
@@ -98,10 +96,8 @@ type
     FOnDblClick    : TNotifyEvent;
     FOnDragDrop    : TDragDropEvent;
     FOnDragOver    : TDragOverEvent;
-    {$IFDEF VERSION4}
     FOnEndDock     : TEndDragEvent;
     FOnStartDock   : TStartDockEvent;
-    {$ENDIF}
     FOnEndDrag     : TEndDragEvent;
     FOnEnter       : TNotifyEvent;
     FOnExit        : TNotifyEvent;
@@ -117,7 +113,6 @@ type
     procedure CreateWnd; override;
 
     {property methods}
-    {$IFDEF VERSION4}
     function GetBiDiMode : TBiDiMode;
     function GetParentBiDiMode : Boolean;
     function GetDragKind : TDragKind;
@@ -129,7 +124,6 @@ type
     procedure SetDragKind(Value : TDragKind);
     procedure SetOnEndDock(Value : TEndDragEvent);
     procedure SetOnStartDock(Value : TStartDockEvent);
-    {$ENDIF}
 
     function GetAbout : string;
     function GetAutoSelect : Boolean;
@@ -169,7 +163,7 @@ type
 
     procedure SetAbout(const Value : string);
     procedure SetAutoSelect(Value : Boolean);
-    procedure SetAutoSize(Value : Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value : Boolean); override;
     procedure SetCharCase(Value : TEditCharCase);
     procedure SetEditController(Value : TOvcController);
     procedure SetCursor(Value : TCursor);
@@ -214,7 +208,6 @@ type
       read FOvcEdit;
 
   published
-    {$IFDEF VERSION4}
     property Anchors;
 
     property BiDiMode : TBiDiMode
@@ -228,7 +221,6 @@ type
     property DragKind : TDragKind
       read GetDragKind
       write SetDragKind;
-    {$ENDIF}
 
     property AutoSize : Boolean
       read GetAutoSize
@@ -258,11 +250,9 @@ type
       read GetDragCursor
       write SetDragCursor;
 
-    {$IFDEF VERSION4}
     property DragMode : TDragMode
       read GetDragMode
       write SetDragMode;
-    {$ENDIF}
 
     property Enabled : Boolean
       read FEnabled
@@ -338,7 +328,6 @@ type
       read GetOnDragOver
       write SetOnDragOver;
 
-    {$IFDEF VERSION4}
     property OnEndDock : TEndDragEvent
       read GetOnEndDock
       write SetOnEndDock;
@@ -347,7 +336,6 @@ type
       read GetOnStartDock
       write SetOnStartDock;
 
-    {$ENDIF}
     property OnEndDrag : TEndDragEvent
       read GetOnEndDrag
       write SetOnEndDrag;
@@ -413,11 +401,9 @@ begin
   Width  := FOvcEdit.BorderParent.Width;
 *)
 
-  {$IFDEF VERSION4}
   FBiDiMode      := FOvcEdit.BiDiMode;
   FParentBiDiMode:= FOvcEdit.ParentBiDiMode;
   FDragKind      := FOvcEdit.DragKind;
-  {$ENDIF}
   FAbout         := FOvcEdit.About;
   FAutoSelect    := FOvcEdit.AutoSelect;
   FAutoSize      := FOvcEdit.AutoSize;
@@ -449,10 +435,8 @@ begin
   FOnDblClick    := FOvcEdit.OnDblClick;
   FOnDragDrop    := FOvcEdit.OnDragDrop;
   FOnDragOver    := FOvcEdit.OnDragOver;
-  {$IFDEF VERSION4}
   FOnEndDock     := FOvcEdit.OnEndDock;
   FOnStartDock   := FOvcEdit.OnStartDock;
-  {$ENDIF}
   FOnEndDrag     := FOvcEdit.OnEndDrag;
   FOnEnter       := FOvcEdit.OnEnter;
   FOnExit        := FOvcEdit.OnExit;
@@ -480,7 +464,6 @@ begin
   SetBounds(Left, Top, Width, Height);
 end;
 
-{$IFDEF VERSION4}
 function TOvcBorderedEdit.GetBiDiMode : TBiDiMode;
 begin
   Result := FOvcEdit.BiDiMode;
@@ -541,8 +524,6 @@ begin
   FOnStartDock := Value;
   FOvcEdit.OnStartDock := Value;
 end;
-{$ENDIF}
-
 
 function TOvcBorderedEdit.GetAbout : string;
 begin

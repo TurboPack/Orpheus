@@ -53,10 +53,6 @@ const
   ScrollBarWidth = 16;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   {Forward Declarations}
   TO32CustomInspectorGrid = class;
 

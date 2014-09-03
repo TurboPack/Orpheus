@@ -54,8 +54,6 @@ uses
   OvcTbClr, OvcTbRws, OvcTbCls, OvcDrag;
 
 type
-  TScrollStyle = System.UITypes.TScrollStyle;
-
   TOvcCustomTable = class(TOvcTableAncestor)
     {-The custom class for tables}
     protected {private}

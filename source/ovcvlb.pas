@@ -122,10 +122,6 @@ type
   TBuffer = array[0..255] of Char;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   TOvcCustomVirtualListBox = class(TOvcCustomControlEx)
   {.Z+}
   protected {private}
@@ -520,11 +516,9 @@ type
     property OnUserCommand;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Controller;

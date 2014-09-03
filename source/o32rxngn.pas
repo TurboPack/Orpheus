@@ -77,16 +77,11 @@ unit o32rxngn;
 interface
 
 uses
-  Classes, SysUtils, O32IntDeq, O32IntLst{$IFDEF UNICODE}, o32WideCharSet{$ENDIF};
+  Classes, SysUtils, O32IntDeq, O32IntLst, o32WideCharSet;
 
 type
   PO32CharSet = ^TO32CharSet;
-{$IFDEF UNICODE}
   TO32CharSet = TWideCharSet; // set of Ansichar;
-{$ELSE}
-  TO32CharSet = set of Char;
-{$ENDIF}  
-
 
   TO32NFAMatchType = ( {types of matching performed...}
      mtNone,           {..no match (an epsilon no-cost move)}

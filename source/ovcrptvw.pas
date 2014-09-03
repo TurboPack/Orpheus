@@ -67,8 +67,6 @@ const
 
 
 type
-  TScrollStyle = System.UITypes.TScrollStyle;
-
   TOvcRVListBox = class;
   TOvcCustomReportView = class;
 

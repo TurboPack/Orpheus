@@ -48,8 +48,6 @@ uses
 const
   ChildIndent = 17;
 type
-  TScrollStyle = System.UITypes.TScrollStyle;
-
   TOvcOlNodeStyle = (osPlain, osRadio, osCheck);
   TOvcOlNodeMode  = (omPreload, omDynamicLoad, omDynamic);
 

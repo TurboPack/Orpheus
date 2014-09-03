@@ -47,8 +47,7 @@ unit ovcurl;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, Dialogs, ExtCtrls, Graphics, Menus, ShellAPI,
+  System.UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Graphics, Menus, ShellAPI,
   Messages, StdCtrls, SysUtils, OvcVer;
 
 type
@@ -112,11 +111,9 @@ type
       stored FUseVisitedColor
       default clBlack;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Alignment;
     property AutoSize;

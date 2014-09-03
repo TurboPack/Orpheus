@@ -186,9 +186,7 @@ end;
 procedure TO32Validators.Delete(Index: Integer);
 begin
   TO32ValidatorItem(Items[Index]).Validator.Free;
-  {$IFDEF VERSION5}
     inherited Delete(Index);
-  {$ENDIF}
 end;
 {=====}
 
@@ -199,9 +197,7 @@ begin
   for i := 0 to Count - 1 do begin
     if TO32ValidatorItem(Items[i]).Name = Name then begin
       TO32ValidatorItem(Items[i]).Validator.Free;
-      {$IFDEF VERSION5}
         inherited Delete(i);
-      {$ENDIF}
       exit;
     end;
   end;

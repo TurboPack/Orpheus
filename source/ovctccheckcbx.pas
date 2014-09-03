@@ -36,9 +36,8 @@ interface
 {$I OVC.INC}
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Messages, Forms, Controls, StdCtrls, Classes, Graphics, OvcBase,
-  ovccklb, ovctcmmn, OvcTCell, OvcTCStr{$IFDEF VERSION2010}, Themes{$ENDIF};
+  System.UITypes, System.Types, Windows, Messages, Forms, Controls, StdCtrls, Classes,
+  Graphics, OvcBase, ovccklb, ovctcmmn, OvcTCell, OvcTCStr, Themes;
 
 type
   TCellCheckComboBoxItem = class(TCollectionItem)
@@ -268,23 +267,15 @@ var
 const
   ComboBoxHeight = 24;
 
-{$IFDEF VERSION2010}
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices; inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
 
 { TCellCheckComboBoxItem }
 
@@ -397,13 +388,11 @@ begin
   FCheckList := TOvcCheckList.Create(FDropDown);
   FCheckList.OnStateChange := CheckListStateChange;
   FCheckList.Align := alClient;
-  {$IFDEF VERSION2009}
   FCheckList.AlignWithMargins := True; // Align with Margins = 1 so we get a black border
   FCheckList.Margins.Left := 1;
   FCheckList.Margins.Top:= 1;
   FCheckList.Margins.Right := 1;
   FCheckList.Margins.Bottom := 1;
-  {$ENDIF}
   FCheckList.BorderStyle := bsNone;
   FCheckList.Parent := FDropDown;
   FCheckList.BoxClickOnly := False;
@@ -497,10 +486,8 @@ var
   RightPixel   : Integer;
   SrcRect      : TRect;
   DestRect     : TRect;
-{$IFDEF VERSION2010}
   Details: TThemedElementDetails;
   BtnRect: TRect;
-{$ENDIF}
 begin
   {Calculate the effective cell width (the cell width less the size
    of the button)}
@@ -512,7 +499,6 @@ begin
   TopPixel := CellRect.Top + 1;
   BotPixel := CellRect.Bottom - 1;
 
-  {$IFDEF VERSION2010}
   if ThemesEnabled then
   begin
     Details := ThemeServices.GetElementDetails(tcDropDownButtonNormal);
@@ -521,7 +507,6 @@ begin
     ThemeServices.DrawElement(canvas.handle, Details, BtnRect);
   end
   else
-  {$ENDIF}
   {Paint the button}
   with Canvas do
     begin
