@@ -45,13 +45,9 @@ unit ovcrptvw;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Classes, Controls, ExtCtrls, Forms, Graphics, Messages, SysUtils,
-  Menus, StdCtrls,
-  {$IFDEF VERSION4} ImgList,  {$ENDIF}
-  {$IFDEF VERSION6} Variants, {$ENDIF}
-  OvcFiler, OvcConst, OvcExcpt, OvcBase, OvcBtnHd, OvcData, OvcMisc, OvcVLB,
-  OvcRVIdx, OvcColor, OvcRvExpDef;
+  System.UITypes, System.Types, Windows, Classes, Controls, ExtCtrls, Forms, Graphics,
+  Messages, SysUtils, Menus, StdCtrls, ImgList, Variants, OvcFiler, OvcConst, OvcExcpt,
+  OvcBase, OvcBtnHd, OvcData, OvcMisc, OvcVLB, OvcRVIdx, OvcColor, OvcRvExpDef;
 
 const
   {default property values}
@@ -71,9 +67,7 @@ const
 
 
 type
-  {$IFDEF VERSIONXE3}
   TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
 
   TOvcRVListBox = class;
   TOvcCustomReportView = class;
@@ -1017,9 +1011,7 @@ type
          StartAfter is seen. The StartAfter item itself is not returned.}
     property Fields: TOvcRvFields
                    read GetFields write SetFields;
-{$IFDEF VERSION4}
     function Focused: Boolean; override;
-{$ENDIF}
     function GetGroupElement(G: TOvcRvIndexGroup): Pointer;
     procedure GotoNearest(DataRef: Pointer);
       {- Select new CurrentItem based on DataRef and the currently
@@ -1182,11 +1174,9 @@ type
     procedure Clear;
       {- Clear all item data from all views.}
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property ActiveView;
     property Align;
     property AutoCenter;
@@ -3042,13 +3032,11 @@ begin
   and not FDFMBased
   and not OwnerReport.LoadingViews then
     TOvcCustomReportView(Owner).ViewDeleted := True;
-  {$IFDEF Version5}
   if csAncestor in ComponentState then
     if csDesigning in ComponentState then
       if not (csDestroying in ComponentState) then
         raise Exception.CreateFmt(
           'Inherited component, %s, cannot delete',[Name]);
-  {$ENDIF}
   if Owner <> nil then
     if not (csDestroying in Owner.ComponentState) then
       if TOvcCustomReportView(Owner).ActiveView = Self.Name then
@@ -6010,7 +5998,6 @@ begin
   FRVListBox.Invalidate;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomReportView.Focused: Boolean;
 begin
   Result :=
@@ -6018,7 +6005,6 @@ begin
     and FRVListBox.HandleAllocated
     and (GetFocus = FRVListBox.Handle);
 end;
-{$ENDIF}
 
 procedure TOvcCustomReportView.SetSortColumn(Value : Integer);
 begin

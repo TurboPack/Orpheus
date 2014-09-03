@@ -46,9 +46,8 @@ unit ovcsc;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, Forms, Graphics, Messages, StdCtrls,
-  SysUtils, OvcBase, OvcData, OvcEF, OvcMisc, OvcExcpt;
+  System.UITypes, System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics,
+  Messages, StdCtrls, SysUtils, OvcBase, OvcData, OvcEF, OvcMisc, OvcExcpt;
 
 type
   TOvcSpinnerStyle = (stNormalVertical, stNormalHorizontal, stFourWay, stStar,
@@ -207,10 +206,8 @@ type
       default True;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Enabled;
     property ParentShowHint;
     property ShowHint;
@@ -1213,15 +1210,10 @@ var
 
 begin
   {get current parent color}
-  {$IFDEF VERSION5}
   if (Parent is TCustomForm) then
     PC := TForm(Parent).Color
   else if (Parent is TCustomFrame) then
     PC := TFrame(Parent).Color
-  {$ELSE}
-  if Parent is TForm then
-    PC := TForm(Parent).Color
-  {$ENDIF}
   else
     PC := Color;
 
@@ -1305,15 +1297,10 @@ var
 
 begin
   {get current parent color}
-  {$IFDEF VERSION5}
   if (Parent is TCustomForm) then
     PC := TForm(Parent).Color
   else if (Parent is TCustomFrame) then
     PC := TFrame(Parent).Color
-  {$ELSE}
-  if Parent is TForm then
-    PC := TForm(Parent).Color
-  {$ENDIF}
   else
     PC := Color;
 

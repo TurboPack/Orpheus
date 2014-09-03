@@ -281,7 +281,6 @@ function EnsureChunk(var A : PChunkArray; CI : word;
 {--------}
 function ChunkIsBlank(A : PChunkArray; ArrayInx : word) : boolean;
   {-Return true if the chunk has no items (all pointers are nil).}
-{$IFDEF PUREPASCAL}
   var
     Chunk: PChunk;
     i: Integer;
@@ -291,35 +290,6 @@ function ChunkIsBlank(A : PChunkArray; ArrayInx : word) : boolean;
     while (i>=0) and (Chunk^[i]=nil) do Dec(i);
     result := i<0;
   end;
-{$ELSE}
-  const
-    ChunkSizeInDWords = sizeof(TChunk) div 4;
-  var
-    Chunk : PChunk;
-  begin
-    Chunk := A^[ArrayInx].Chunk;
-    asm
-      push edi
-{$IFDEF VERSION6}  { Delphi 6 codegen bug }
-      push ecx
-{$ENDIF}
-      lea eax, Chunk
-      mov edi, [eax]
-      xor eax, eax
-      mov edx, eax
-      mov ecx, ChunkSizeInDWords
-      repe scasd
-      jne @@Exit
-      inc edx
-    @@Exit:
-{$IFDEF VERSION6}  { Delphi 6 codegen bug }
-      pop ecx
-{$ENDIF}
-      mov @Result, dl
-      pop edi
-    end;
-  end;
-{$ENDIF}
 {--------}
 procedure DeleteChunk(A : PChunkArray; ArrayInx : word; var NumChunks : word);
   {-Delete a chunk, moving chunks below up one.}

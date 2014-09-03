@@ -123,11 +123,9 @@ type
   published
     {inherited properties}
     property DataType;       {needs to loaded before most other properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property BorderStyle;
     property CaretIns;

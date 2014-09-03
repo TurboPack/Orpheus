@@ -42,8 +42,7 @@ unit ovcslide;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Classes, Buttons, Controls, Graphics, Forms, Messages, SysUtils,
+  System.Types, Windows, Classes, Buttons, Controls, Graphics, Forms, Messages, SysUtils,
   OvcBase, OvcConst, OvcData, OvcExcpt;
 
 type
@@ -169,10 +168,8 @@ type
   TOvcSlider = class(TOvcCustomSlider)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle default bsSingle;

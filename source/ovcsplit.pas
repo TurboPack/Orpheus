@@ -41,9 +41,8 @@ unit ovcsplit;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, SysUtils, Messages, Classes, Graphics, Controls, Forms, Dialogs,
-  Buttons, ExtCtrls, OvcBase, OvcData;
+  System.Types, Windows, SysUtils, Messages, Classes, Graphics, Controls, Forms,
+  Dialogs, Buttons, ExtCtrls, OvcBase, OvcData;
 
 type
   TSplitterOrientation = (soVertical, soHorizontal);
@@ -133,10 +132,8 @@ type
   protected
     procedure AncestorNotFound(Reader: TReader; const ComponentName: string;
       ComponentClass: TPersistentClass; var Component: TComponent);
-    {$IFDEF Version4}
     procedure Resize;
       override;
-    {$ENDIF}
     procedure CreateParams(var Params : TCreateParams);
       override;
     procedure CreateWnd;
@@ -218,10 +215,8 @@ type
       read FOnResize write FOnResize;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D default True;
@@ -351,7 +346,6 @@ begin
   sSetSectionInfo;
 end;
 
-{$IFDEF Version4}
 procedure TOvcSplitter.ReSize;
 begin
   inherited Resize;
@@ -367,7 +361,6 @@ begin
   end;
   DoOnResize;
 end;
-{$ENDIF}
 
 destructor TOvcSplitter.Destroy;
 begin

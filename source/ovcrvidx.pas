@@ -49,9 +49,7 @@ type
   TOvcAbstractReportView = class;
 
   TOvcDRDataType = (
-    dtString, dtFloat, dtInteger, dtDateTime, dtBoolean
-    {$IFDEF Version4} ,dtDWord {$ENDIF} ,dtCustom
-  );
+    dtString, dtFloat, dtInteger, dtDateTime, dtBoolean, dtDWord, dtCustom);
 
   {.Z+}
   TOvcAbstractRvField = class(TOvcCollectible)

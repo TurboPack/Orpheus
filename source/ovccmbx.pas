@@ -949,7 +949,6 @@ begin
     end;
   end;
 
-  {$IFDEF VERSION2010}
   // Set brush color so that DrawFocusRect has the correct colors
   if UseRuntimeThemes then
   begin
@@ -957,7 +956,6 @@ begin
     Canvas.Handle;
     Exit;
   end;
-  {$ENDIF}
 end;
 
 procedure TOvcBaseComboBox.DrawItemThemed(DC: HDC; Details: TThemedElementDetails; Index: Integer; Rect: TRect);

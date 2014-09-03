@@ -66,11 +66,9 @@ type
     property SelectPrinter : Boolean
       read FSelectPrinter write FSelectPrinter
       default True;
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

@@ -36,9 +36,7 @@
 {.W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFDEF VERSION6}
-  {$WARN SYMBOL_DEPRECATED OFF}
-{$ENDIF}
+{$WARN SYMBOL_DEPRECATED OFF}
 
 unit ovctccbx;
   {-Orpheus Table Cell - check combo box type}
@@ -46,9 +44,8 @@ unit ovctccbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, SysUtils, Messages, Graphics, Classes, Controls, Forms, StdCtrls,
-  OvcBase, OvcMisc, OvcTCmmn, OvcTCell, OvcTCStr;
+  System.UITypes, System.Types, Windows, SysUtils, Messages, Graphics, Classes,
+  Controls, Forms, StdCtrls, OvcBase, OvcMisc, OvcTCmmn, OvcTCell, OvcTCStr;
 
 type
   TOvcTCComboBoxState = (otlbsUp, otlbsDown);
@@ -351,27 +348,17 @@ implementation
 uses
   Math,
   StrUtils,
-{$IFDEF VERSION2010}
   Themes;
-{$ENDIF}
 
-{$IFDEF VERSION2010}
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices; inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
 
 const
   ComboBoxHeight = 24;
@@ -634,10 +621,8 @@ procedure TOvcTCCustomComboBox.DrawButton(Canvas       : TCanvas;
     RightPixel   : Integer;
     SrcRect      : TRect;
     DestRect     : TRect;
-{$IFDEF VERSION2010}
   Details: TThemedElementDetails;
   BtnRect: TRect;
-{$ENDIF}
   begin
     {Calculate the effective cell width (the cell width less the size
      of the button)}
@@ -649,7 +634,6 @@ procedure TOvcTCCustomComboBox.DrawButton(Canvas       : TCanvas;
     TopPixel := CellRect.Top + 1;
     BotPixel := CellRect.Bottom - 1;
 
-    {$IFDEF VERSION2010}
     if ThemeServices.ThemesEnabled then
     begin
       Details := ThemeServices.GetElementDetails(tcDropDownButtonNormal);
@@ -658,7 +642,6 @@ procedure TOvcTCCustomComboBox.DrawButton(Canvas       : TCanvas;
       ThemeServices.DrawElement(canvas.handle, Details, BtnRect);
     end
     else
-    {$ENDIF}
     {Paint the button}
     with Canvas do
       begin
@@ -801,17 +784,9 @@ begin
     else if (Style = csDropDown) or (Style = csSimple) then
     begin
       if UseRunTimeItems then
-        {$IFDEF CBuilder}
-        S := StrPas(ItemRec^.RTSt)
-        {$ELSE}
         S := ItemRec^.RTSt
-        {$ENDIF}
       else
-        {$IFDEF CBuilder}
-        S := StrPas(ItemRec^.St);
-        {$ELSE}
         S := ItemRec^.St;
-        {$ENDIF}
     end;
 
     // if nothing is displayed, display TextHint instead
@@ -1129,13 +1104,11 @@ begin
   FListBox := TListBox.Create(FDropDown);
   FListBox.OnClick := ListBoxClick;
   FListBox.Align := alClient;
-  {$IFDEF VERSION2009}
   FListBox.AlignWithMargins := True; // Align with Margins = 1 so we get a black border
   FListBox.Margins.Left := 1;
   FListBox.Margins.Top:= 1;
   FListBox.Margins.Right := 1;
   FListBox.Margins.Bottom := 1;
-  {$ENDIF}
   FListBox.BorderStyle := bsNone;
   FListBox.Parent := FDropDown;
 //  FListBox.WantDblClicks := False;
@@ -1213,10 +1186,8 @@ var
   RightPixel   : Integer;
   SrcRect      : TRect;
   DestRect     : TRect;
-{$IFDEF VERSION2010}
   Details: TThemedElementDetails;
   BtnRect: TRect;
-{$ENDIF}
 begin
   {Calculate the effective cell width (the cell width less the size
    of the button)}
@@ -1228,7 +1199,6 @@ begin
   TopPixel := CellRect.Top + 1;
   BotPixel := CellRect.Bottom - 1;
 
-  {$IFDEF VERSION2010}
   if ThemesEnabled then
   begin
     Details := ThemeServices.GetElementDetails(tcDropDownButtonNormal);
@@ -1237,7 +1207,6 @@ begin
     ThemeServices.DrawElement(canvas.handle, Details, BtnRect);
   end
   else
-  {$ENDIF}
   {Paint the button}
   with Canvas do
     begin

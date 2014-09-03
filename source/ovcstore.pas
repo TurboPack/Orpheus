@@ -42,10 +42,7 @@ interface
 
 uses
   Windows, Registry, Classes, Controls, Forms, SysUtils, IniFiles, OvcFiler,
-{$IFDEF UNICODE}
-  OvcStr, StrUtils,
-{$ENDIF}
-  OvcData, OvcConst;
+  OvcStr, StrUtils, OvcData, OvcConst;
 
 type
   TOvcReadStrEvent =
@@ -331,7 +328,6 @@ function TOvcIniFileStore.ReadString(const Section, Item,
    -Changes
      04/2011, AB: Added unicode version}
 
-{$IFDEF UNICODE}
 var
   Bytes : TBytes;
   i, L: Integer;
@@ -345,11 +341,6 @@ begin
     Result := SysUtils.TEncoding.UTF7.GetString(Bytes);
   end;
 end;
-{$ELSE}
-begin
-  Result := FStore.ReadString(Section, Item, DefaultValue);
-end;
-{$ENDIF}
 
 procedure TOvcIniFileStore.WriteString(const Section, Item, Value : string);
   {-write string to ini-File
@@ -357,7 +348,6 @@ procedure TOvcIniFileStore.WriteString(const Section, Item, Value : string);
    -Changes
      04/2011, AB: Added unicode version}
 
-{$IFDEF UNICODE}
 var
   Bytes : TBytes;
   s : string;
@@ -375,12 +365,6 @@ begin
     FStore.WriteString(Section, Item, s);
   end;
 end;
-{$ELSE}
-begin
-  FStore.WriteString(Section, Item, Value);
-end;
-{$ENDIF}
-
 
 {===== TO32XMLFileStore ==============================================}
 

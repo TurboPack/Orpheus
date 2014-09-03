@@ -65,7 +65,7 @@ type
     {property methods}
     function GetTransparent : Boolean;
     procedure SetAlignment(Value : TAlignment);
-    procedure SetAutoSize(Value : Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value : Boolean); override;
     procedure SetCaption(const Value : string);
     procedure SetOriginX(Value : Integer);
     procedure SetOriginY(Value : Integer);
@@ -126,11 +126,9 @@ type
 
   TOvcRotatedLabel = class(TOvcCustomRotatedLabel)
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Alignment default taLeftJustify;
     property AutoSize;

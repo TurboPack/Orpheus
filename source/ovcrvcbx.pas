@@ -62,11 +62,9 @@ type
       read FReportView write SetReportView;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Color;
     property Ctl3D;

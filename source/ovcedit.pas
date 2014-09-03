@@ -6500,7 +6500,7 @@ begin
       if not TEncoding.IsStandardEncoding(FEncoding) then
         FEncoding.Free;
       FEncoding := nil;
-      BOMSize := TEncoding.GetBufferEncoding(Buffer, FEncoding {$IFDEF VERSIONXE}, DefEncoding{$ENDIF});
+      BOMSize := TEncoding.GetBufferEncoding(Buffer, FEncoding, DefEncoding);
 
       {there might be null-characters (nc's) in the buffer; 'GetString' will cut off the
        input at this point - which might not be wanted. So we transform nc's into spaces
@@ -6602,7 +6602,7 @@ begin
   else begin
     {otherwise we have to check whether the text can be represented by the codepage}
     I := ParaCount;
-    while (I>0) and (ovc32StringIsCurrentCodePage(GetParaPointer(I){$IFDEF VERSIONXE}, FEncoding.Codepage{$ENDIF})) do
+    while (I>0) and (ovc32StringIsCurrentCodePage(GetParaPointer(I), FEncoding.Codepage)) do
       Dec(I);
     if I>0 then
       {'FEncoding' cannot be used - suggest UTF8 instead}

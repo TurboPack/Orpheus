@@ -42,9 +42,8 @@ unit ovctcmmn;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, SysUtils, Messages, Graphics, Forms, StdCtrls, Classes, Controls,
-  OvcBase, OvcData, OvcExcpt, OvcMisc;
+  System.Types, Windows, SysUtils, Messages, Graphics, Forms, StdCtrls, Classes,
+  Controls, OvcBase, OvcData, OvcExcpt, OvcMisc;
 
 {---Enumeration types}
 type
@@ -168,21 +167,10 @@ type
   PCellComboBoxInfo = ^TCellComboBoxInfo;
   TCellComboBoxInfo = packed record
     Index : integer;                {index into Items list}
-    {$IFDEF CBuilder}
-    case integer of
-      0 : (St      : array[0..255] of char);
-      1 : (RTItems : TStrings;
-           RTSt    : array[0..255] of char);
-    {$ELSE}
       St      : string;    {string value if Index = -1}  //SZ 02.02.2010: replaced array[0..255] of char with string. We cannot use a variant record anymore, but the lower memory usage of the string compensates for that. This also should make upgrading projects easier
       RTItems : TStrings;  {run-time items list}
       RTSt    : string;    {run-time string value if Index = -1}
       TextHint: string;    {text that is displayed in gray if an empty string would be displayed }
-//    case integer of
-//      0 : (St      : ShortString);  {string value if Index = -1}
-//      1 : (RTItems : TStrings;      {run-time items list}
-//           RTSt    : ShortString);  {run-time string value if Index = -1}
-    {$ENDIF}
   end;
 
   TOvcCellAttributes = packed record {display attributes for a cell}
@@ -601,17 +589,11 @@ procedure TOvcTableAncestor.tbFinishLoadingCellList;
       ParentCtrl : TControl;
     begin
       ParentCtrl := Control.Parent;
-      {$IFDEF VERSION5}
       while Assigned(ParentCtrl) and
             (not ((ParentCtrl is TCustomForm) or
                   (ParentCtrl is TCustomFrame))) do
         ParentCtrl := ParentCtrl.Parent;
       Result := TWinControl(ParentCtrl);
-      {$ELSE}
-      while Assigned(ParentCtrl) and (not (ParentCtrl is TCustomForm)) do
-        ParentCtrl := ParentCtrl.Parent;
-      Result := TForm(ParentCtrl);
-      {$ENDIF}
     end;
 
   {------}

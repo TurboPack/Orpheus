@@ -42,8 +42,8 @@ unit ovctchdr;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, SysUtils, Graphics, Classes, OvcTCmmn, OvcTCell, OvcTCStr, OvcMisc;
+  System.UITypes, Windows, SysUtils, Graphics, Classes, OvcTCmmn, OvcTCell, OvcTCStr,
+  OvcMisc;
 
 type
   // a common ancestor for table header cells

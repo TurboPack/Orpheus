@@ -543,9 +543,7 @@ procedure TOvcTableColumns.tcStopLoading;
       ParentCtrl := Control.Parent;
       while (Assigned(ParentCtrl)) and
             (not (ParentCtrl is TCustomForm))
-            {$IFDEF VERSION5}
             and (not (ParentCtrl is TCustomFrame))
-            {$ENDIF}
             do
         ParentCtrl := ParentCtrl.Parent;
       Result := TForm(ParentCtrl);
