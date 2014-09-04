@@ -1254,10 +1254,8 @@ function CompareInt(I1,I2 : Integer) : Integer;
 { compare two integers, return negative, 0 and positive value for I1<I2, I1=I2 and I1>I2 resp.}
 function CompareFloat(F1,F2 : Extended) : Integer;
 { compare two doubles, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
-{$IFNDEF CBuilder}
 function CompareComp(F1,F2 : comp) : Integer;
 { compare two comps, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
-{$ENDIF}
 
 {.Z+}
 
@@ -1312,7 +1310,6 @@ begin
     Result := 1;
 end;
 
-{$IFNDEF CBuilder}
 function CompareComp(F1,F2 : Comp) : Integer;
 { compare two doubles, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
 begin
@@ -1324,7 +1321,6 @@ begin
   else
     Result := 1;
 end;
-{$ENDIF}
 
 procedure TOvcRVHeader.Paint;
 begin

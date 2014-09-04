@@ -463,7 +463,7 @@ procedure TOvcCustomSimpleField.efEdit(var Msg : TMessage; Cmd : Word);
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           if (sefAcceptChar in sefOptions) and CharIsOk then begin
             Exclude(sefOptions, sefAcceptChar);
             Exclude(sefOptions, sefLiteral);
@@ -796,7 +796,7 @@ procedure TOvcCustomSimpleField.efEdit(var Msg : TMessage; Cmd : Word);
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           if sefAcceptChar in sefOptions then
             if CharIsOk then begin
               efEditSt[0] := Ch;

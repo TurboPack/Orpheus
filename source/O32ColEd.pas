@@ -41,15 +41,11 @@ unit o32coled;
 interface
 
 uses
-  Windows, Classes, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Dialogs, ExtCtrls, Forms, Graphics, Messages, StdCtrls, SysUtils, OvcBase,
-  OvcData, OvcSpeed, Menus;
+  Windows, Classes, Controls, DesignIntf, DesignEditors, Dialogs, ExtCtrls, Forms,
+  Graphics, Messages, StdCtrls, SysUtils, OvcBase, OvcData, OvcSpeed, Menus;
 
 type
-  {$IFDEF VERSION6}
-    TProtectedSelectionList = class(TDesignerSelections);
-  {$ENDIF}
+  TProtectedSelectionList = class(TDesignerSelections);
 
   TO32frmCollEditor = class(TForm)
     ListBox1: TListBox;
@@ -73,23 +69,11 @@ type
   private
     procedure FillGrid;
 
-{$IFDEF VERSION5}
-  {$IFDEF VERSION6}
     procedure SelectComponentList(SelList : TDesignerSelections);
-  {$ELSE}
-    procedure SelectComponentList(SelList : TDesignerSelectionList);
-  {$ENDIF}
-{$ELSE}
-    procedure SelectComponentList(SelList : TComponentList);
-{$ENDIF}
     procedure OmPropChange(var Msg : TMessage); message OM_PROPCHANGE;
   public
     Collection : TO32Collection;
-    {$IFDEF VERSION4}
     Designer   : IDesigner;
-    {$ELSE}
-    Designer   : TDesigner;
-    {$ENDIF}
     InInLined  : Boolean;
   end;
 
@@ -100,62 +84,23 @@ type
     function GetValue : string; override;
   end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION5}
-    {$IFDEF VERSION6}
-      procedure ShowO32CollectionEditor(Designer : IDesigner;
-                                      Collection : TO32Collection;
-                                      InInLined  : Boolean);
-
-    {$ELSE}
-      procedure ShowO32CollectionEditor(Designer : IFormDesigner;
-                                        Collection : TO32Collection;
-                                        InInLined  : Boolean);
-    {$ENDIF}
-
-  {$ELSE}
-    procedure ShowO32CollectionEditor(Designer : IFormDesigner;
-                                      Collection : TO32Collection);
-  {$ENDIF}
-{$ELSE}
-  procedure ShowO32CollectionEditor(Designer : TFormDesigner;
-                                    Collection : TO32Collection);
-{$ENDIF}
-
+procedure ShowO32CollectionEditor(Designer : IDesigner;
+                                Collection : TO32Collection;
+                                InInLined  : Boolean);
 
 implementation
 
-{$R *.DFM}
+{$R *.dfm}
 
-
-{$IFDEF VERSION4}
-  {$IFDEF VERSION5}
-    {$IFDEF VERSION6}
-      procedure ShowO32CollectionEditor(Designer : IDesigner;
-                                        Collection : TO32Collection;
-                                        InInLined  : Boolean);
-    {$ELSE}
-      procedure ShowO32CollectionEditor(Designer : IFormDesigner;
-                                        Collection : TO32Collection;
-                                        InInLined  : Boolean);
-    {$ENDIF}
-  {$ELSE}
-procedure ShowO32CollectionEditor(Designer : IFormDesigner; Collection : TO32Collection);
-  {$ENDIF}
-
-{$ELSE}
-procedure ShowO32CollectionEditor(Designer : TFormDesigner; Collection : TO32Collection);
-{$ENDIF}
+procedure ShowO32CollectionEditor(Designer : IDesigner;
+                                  Collection : TO32Collection;
+                                  InInLined  : Boolean);
 begin
   if Collection.ItemEditor = nil then
     Collection.ItemEditor := TO32frmCollEditor.Create(Application);
   TO32frmCollEditor(Collection.ItemEditor).Collection := Collection;
   TO32frmCollEditor(Collection.ItemEditor).Designer := Designer;
-{$IFDEF Version5}
   TO32frmCollEditor(Collection.ItemEditor).InInLined := InInLined;
-{$ELSE}
-  TO32frmCollEditor(Collection.ItemEditor).InInLined := False;
-{$ENDIF}
   TO32frmCollEditor(Collection.ItemEditor).Show;
 end;
 
@@ -174,13 +119,9 @@ end;
 
 procedure TO32CollectionEditor.Edit;
 begin
-{$IFDEF Version5}
   ShowO32CollectionEditor(Designer,
                        TO32Collection(GetOrdValueAt(0)),
                        False);
-{$ELSE}
-  ShowO32CollectionEditor(Designer, TO32Collection(GetOrdValueAt(0)));
-{$ENDIF}
 end;
 
 
@@ -197,11 +138,8 @@ begin
   Caption := Collection.GetEditorCaption;
   FillGrid;
 
-  if Collection.ReadOnly
-  {$IFDEF Version5}
-    or InInLined
-  {$ENDIF}
-  then begin
+  if Collection.ReadOnly or InInLined then
+  begin
     btnAdd.Enabled := False;
     btnDelete.Enabled := False;
     btnMoveUp.Enabled := False;
@@ -238,12 +176,10 @@ end;
 
 procedure TO32frmCollEditor.btnAddClick(Sender: TObject);
 begin
-  {$IFDEF Version5}
   if InInLined then begin
     ShowMessage('Can''t add inherited components');
     exit;
   end;
-  {$ENDIF}
   Collection.Add;
   FillGrid;
   ListBox1.ItemIndex := ListBox1.Items.Count-1;
@@ -264,12 +200,10 @@ begin
     end;
   if C <> 1 then exit;
   if J <> -1 then begin
-    {$IFDEF Version5}
     if InInLined then begin
       ShowMessage('Inherited component - can''t delete');
       exit;
     end;
-    {$ENDIF}
     TComponent(ListBox1.Items.Objects[J]).Free;
 
     ListBox1.ItemIndex := -1;
@@ -342,83 +276,31 @@ end;
 
 procedure TO32frmCollEditor.ListBox1Click(Sender: TObject);
 var
-{$IFDEF VERSION5}
-  {$IFDEF VERSION6}
-    SelList : TDesignerSelections;
-  {$ELSE}
-    SelList : TDesignerSelectionList;
-  {$ENDIF}
-{$ELSE}
-  SelList : TComponentList;
-{$ENDIF}
+  SelList : TDesignerSelections;
   i : Integer;
 begin
-{$IFDEF VERSION5}
-  {$IFDEF VERSION6}
-    SelList := TDesignerSelections.Create;
-  {$ELSE}
-    SelList := TDesignerSelectionList.Create;
-  {$ENDIF}
-{$ELSE}
-  SelList := TComponentList.Create;
-{$ENDIF}
+  SelList := TDesignerSelections.Create;
   for i := 0 to pred(ListBox1.Items.Count) do
-    if ListBox1.Selected[i] then begin
-    {$IFDEF VERSION6}
+    if ListBox1.Selected[i] then
+    begin
       TProtectedSelectionList(SelList).Add(TComponent(ListBox1.Items.Objects[i]));
-    {$ELSE}
-      SelList.Add(TComponent(ListBox1.Items.Objects[i]));
-    {$ENDIF}
       Collection.DoOnItemSelected(I);
     end;
-  if not Collection.ReadOnly
-  and not InInLined
-  then begin
-    {$IFDEF VERSION6}
-      btnMoveUp.Enabled := TProtectedSelectionList(SelList).Count = 1;
-    {$ELSE}
-      btnMoveUp.Enabled := SelList.Count = 1;
-    {$ENDIF}
+  if not Collection.ReadOnly and not InInLined then
+  begin
+    btnMoveUp.Enabled := TProtectedSelectionList(SelList).Count = 1;
     btnMoveDown.Enabled := btnMoveUp.Enabled;
     btnDelete.Enabled := btnMoveUp.Enabled;
   end;
-  {$IFDEF VERSION6}
   if TProtectedSelectionList(SelList).Count > 0 then
-  {$ELSE}
-  if SelList.Count > 0 then
-  {$ENDIF}
     SelectComponentList(SelList);
 end;
 
-{$IFDEF VERSION5}
-  {$IFDEF VERSION6}
-    procedure TO32frmCollEditor.SelectComponentList(
-      SelList : TDesignerSelections);
-  {$ELSE}
-    procedure TO32frmCollEditor.SelectComponentList(
-      SelList : TDesignerSelectionList);
-  {$ENDIF}
-{$ELSE}
-procedure TO32frmCollEditor.SelectComponentList(SelList : TComponentList);
-{$ENDIF}
+procedure TO32frmCollEditor.SelectComponentList(SelList : TDesignerSelections);
 begin
-  {$IFNDEF Ver80}
-  {$IFDEF VERSION4}
-    {$IFDEF VERSION6}
-      if Designer <> nil then
-        (Designer as IDesigner).SetSelections(SelList);
-    {$ELSE}
-      if Designer <> nil then
-        (Designer as IFormDesigner).SetSelections(SelList);
-    {$ENDIF}
-  {$ELSE}
   if Designer <> nil then
-    (Designer as TFormDesigner).SetSelections(SelList);
-  {$ENDIF}
+    (Designer as IDesigner).SetSelections(SelList);
   SelList.Free;
-  {$ELSE}
-  CompLib.SetSelection(Designer,Designer.Form{Collection.ParentForm},SelList);
-  {$ENDIF}
 end;
 
 procedure TO32frmCollEditor.OmPropChange(var Msg : TMessage);

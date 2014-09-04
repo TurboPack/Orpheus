@@ -41,8 +41,7 @@ unit ovcbtnh0;
 interface
 
 uses
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Forms, SysUtils, OvcData, OvcBase, OvcBtnHd, OvcColE0;
+  DesignIntf, DesignEditors, Forms, SysUtils, OvcData, OvcBase, OvcBtnHd, OvcColE0;
 
 type
   TOvcButtonHeaderEditor = class(TComponentEditor)
@@ -62,15 +61,10 @@ implementation
 
 procedure TOvcButtonHeaderEditor.ExecuteVerb(Index : Integer);
 begin
-{$IFDEF VERSION5}
   if Index = 0 then
     ShowCollectionEditor(Designer,
                          (Component as TOvcButtonHeader).Sections,
                          IsInInLined);
-{$ELSE}
-  if Index = 0 then
-    ShowCollectionEditor(Designer, (Component as TOvcButtonHeader).Sections);
-{$ENDIF}
 end;
 
 function TOvcButtonHeaderEditor.GetVerb(Index : Integer) : string;

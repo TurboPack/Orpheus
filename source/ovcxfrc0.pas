@@ -42,9 +42,8 @@ unit ovcxfrc0;
 interface
 
 uses
-  Windows, Classes,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  ExtCtrls, Forms, Messages, StdCtrls, SysUtils, OvcData;
+  Windows, Classes, DesignIntf, DesignEditors, ExtCtrls, Forms, Messages, StdCtrls,
+  SysUtils, OvcData;
 
 type
   {component editor for the transfer component}

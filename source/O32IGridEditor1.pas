@@ -34,8 +34,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, ComCtrls, ExtCtrls, checklst,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  StdCtrls, Buttons, ComCtrls, ExtCtrls, checklst, DesignIntf, DesignEditors,
   ovcbase, ovcsc,  o32flxbn,   ovcef, ovcsf, ovccmbx, ovcftcbx, ovcclrcb,
   O32IGrid, Menus;
 
@@ -145,15 +144,7 @@ uses
 
 {$R *.DFM}
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure EditItems(Dsg : IDesigner; IGrid : TO32CustomInspectorGrid);
-  {$ELSE}
-    procedure EditItems(Dsg : IFormDesigner; IGrid : TO32CustomInspectorGrid);
-  {$ENDIF}
-{$ELSE}
-  procedure EditItems(Dsg : TFormDesigner; IGrid : TO32CustomInspectorGrid);
-{$ENDIF}
+procedure EditItems(Dsg : IDesigner; IGrid : TO32CustomInspectorGrid);
 begin
   with TIGridCmpEd.Create(Application) do begin
     Grid := IGrid;
@@ -619,9 +610,7 @@ end;
 procedure TIGridCmpEd.FormCreate(Sender: TObject);
 begin
   CurrentItem := nil;
-  {$IFDEF VERSION4}
   O32FlexButton1.WheelSelection := true;
-  {$ENDIF}
 end;
 
 procedure TIGridCmpEd.FormKeyPress(Sender: TObject; var Key: Char);

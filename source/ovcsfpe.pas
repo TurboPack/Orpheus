@@ -41,9 +41,8 @@ unit OvcSfPe;
 interface
 
 uses
-  Windows, Buttons, Classes, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Graphics, Forms, StdCtrls, SysUtils, OvcConst, OvcData, OvcMisc;
+  Windows, Buttons, Classes, Controls, DesignIntf, DesignEditors, Graphics, Forms,
+  StdCtrls, SysUtils, OvcConst, OvcData, OvcMisc;
 
 type
   TOvcfrmSimpleMask = class(TForm)

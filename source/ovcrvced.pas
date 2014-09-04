@@ -42,12 +42,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs,
-  {$IFDEF DesignTime}
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  {$ENDIF}
-  StdCtrls, Buttons, OvcBase, OvcEF, OvcSF, OvcRVIdx, OvcRptVw,
-  OvcData, OvcCmbx, ExtCtrls, OvcLB;
+  Dialogs, DesignIntf, DesignEditors, StdCtrls, Buttons, OvcBase, OvcEF, OvcSF,
+  OvcRVIdx, OvcRptVw, OvcData, OvcCmbx, ExtCtrls, OvcLB;
 
 type
   PTmpColumnProp = ^TTmpColumnProp;
@@ -134,7 +130,6 @@ type
     procedure ClearOldView;
   end;
 
-{$IFDEF DesignTime}
 type
   {property editor for the report view}
   TOvcReportViewEditor = class(TDefaultEditor)
@@ -172,21 +167,8 @@ type
       override;
   end;
 
-{$IFDEF VERSION4}
-{$IFDEF VERSION6}
   procedure EditViews(Dsg : IDesigner; ReportView : TOvcCustomReportView);
-{$ELSE}
-  procedure EditViews(Dsg : IFormDesigner; ReportView : TOvcCustomReportView);
-{$ENDIF}
-{$ELSE}
-procedure EditViews(Dsg : TFormDesigner; ReportView : TOvcCustomReportView);
-{$ENDIF}
 
-{$ELSE}
-procedure EditViews(Dsg : Pointer; ReportView : TOvcCustomReportView);
-{$ENDIF}
-
-{$IFDEF DesignTime}
 type
   TOvcRvImgIdxProperty = class(TIntegerProperty)
   public
@@ -194,33 +176,13 @@ type
     function GetValue: string; override;
     procedure GetValues(Proc: TGetStrProc); override;
 
-    procedure ListMeasureWidth(const Value: string; ACanvas: TCanvas;
-      var AWidth: Integer);
-      {$IFDEF VERSION5}
-        {$IFNDEF VERSION6}
-          override;
-        {$ENDIF}
-      {$ENDIF}
-    procedure ListMeasureHeight(const Value: string; ACanvas: TCanvas;
-      var AHeight: Integer);
-      {$IFDEF VERSION5}
-        {$IFNDEF VERSION6}
-          override;
-        {$ENDIF}
-      {$ENDIF}
-    procedure ListDrawValue(const Value: string; ACanvas: TCanvas;
-      const ARect: TRect; ASelected: Boolean);
-      {$IFDEF VERSION5}
-        {$IFNDEF VERSION6}
-          override;
-        {$ENDIF}
-      {$ENDIF}
+    procedure ListMeasureWidth(const Value: string; ACanvas: TCanvas; var AWidth: Integer);
+    procedure ListMeasureHeight(const Value: string; ACanvas: TCanvas; var AHeight: Integer);
+    procedure ListDrawValue(const Value: string; ACanvas: TCanvas; const ARect: TRect; ASelected: Boolean);
   end;
-{$ENDIF}
-
-
 
 implementation
+
 uses
   OvcRvPEd, OVCStr;
 
@@ -436,13 +398,11 @@ begin
       exit;
     end;
   end;
-{$IFDEF VERSION5}
   if csInline
     in OwnerView.ComponentState then begin
     ShowMessage('Ancestor open - can''t delete');
     exit;
   end;
-{$ENDIF}
   for i := pred(GListBox.Items.Count) downto 0 do
     if GListBox.Selected[i] then
       with GListBox do begin
@@ -703,19 +663,7 @@ begin
   until True;
 end;
 
-{$IFDEF DesignTime}
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure EditViews(Dsg : IDesigner; ReportView : TOvcCustomReportView);
-  {$ELSE}
-    procedure EditViews(Dsg : IFormDesigner; ReportView : TOvcCustomReportView);
-  {$ENDIF}
-{$ELSE}
-procedure EditViews(Dsg : TFormDesigner; ReportView : TOvcCustomReportView);
-{$ENDIF}
-{$ELSE}
-procedure EditViews(Dsg : Pointer; ReportView : TOvcCustomReportView);
-{$ENDIF}
+procedure EditViews(Dsg : IDesigner; ReportView : TOvcCustomReportView);
 var
   i, j : Integer;
   Found : Boolean;
@@ -778,9 +726,7 @@ begin
           end;
         emEditing :
           begin
-            {$IFDEF DesignTime}
             Dsg.Modified;
-            {$ENDIF}
             Application.ProcessMessages;
             ViewName := ReportView.CurrentView.Name;
             ViewToEdit := ReportView.CurrentView;
@@ -1002,7 +948,6 @@ begin
   btnAddClick(nil);
 end;
 
-{$IFDEF DesignTime}
 {*** TOvcCustomReportView ***}
 
 procedure TOvcReportViewEditor.ExecuteVerb(Index : Integer);
@@ -1079,7 +1024,6 @@ procedure TOvcRvFieldNameProperty.SetValue(const AValue : String);
 begin
   SetStrValue(AValue);
 end;
-{$ENDIF}
 
 procedure TRVCmpEd.btnDeleteClick(Sender: TObject);
 var
@@ -1110,7 +1054,6 @@ begin
   end;
 end;
 
-{$IFDEF DesignTime}
 { TOvcRvImgIdxProperty }
 
 function TOvcRvImgIdxProperty.GetAttributes: TPropertyAttributes;
@@ -1171,17 +1114,7 @@ procedure TOvcRvImgIdxProperty.ListDrawValue(const Value: string; ACanvas: TCanv
 
 var
   ImgIdx: Integer;
-  {$IFDEF VERSION5}
-  {$IFNDEF VERSION6}
-  Left: Integer;
-  {$ENDIF}
-  {$ENDIF}
 begin
-  {$IFDEF VERSION5}
-  {$IFNDEF VERSION6}
-  Left := 1;
-  {$ENDIF}
-  {$ENDIF}
   with ACanvas do
   try
 
@@ -1192,22 +1125,8 @@ begin
         ARect.Left + 1,
         ARect.Top + 1,
         ImgIdx);
-      {$IFDEF VERSION5}
-      {$IFNDEF VERSION6}
-      Left := TOvcCustomReportView(TOvcRvField(
-        GetComponent(0)).OwnerReport).HeaderImages.Width + 2;
-      {$ENDIF}
-      {$ENDIF}
     end;
   finally
-    {$IFDEF VERSION5}
-      {$IFNDEF VERSION6}
-        inherited ListDrawValue(Value,
-                                ACanvas,
-                                Rect(Left, ARect.Top, ARect.Right, ARect.Bottom),
-                                ASelected);
-      {$ENDIF}
-    {$ENDIF}
   end;
 end;
 
@@ -1228,7 +1147,5 @@ begin
   if TOvcCustomReportView(TOvcRvField(GetComponent(0)).OwnerReport).HeaderImages <> nil then
     AHeight := TOvcCustomReportView(TOvcRvField(GetComponent(0)).OwnerReport).HeaderImages.Height + 4;
 end;
-
-{$ENDIF}
 
 end.

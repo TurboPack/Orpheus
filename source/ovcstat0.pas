@@ -41,10 +41,8 @@ unit ovcstat0;
 interface
 
 uses
-  Windows, Buttons, Classes, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  ExtCtrls, Forms, Messages, StdCtrls, SysUtils, TypInfo, OvcFiler, OvcState,
-  OvcSpeed, OvcBase, OvcLB;
+  Windows, Buttons, Classes, Controls, DesignIntf, DesignEditors, ExtCtrls, Forms,
+  Messages, StdCtrls, SysUtils, TypInfo, OvcFiler, OvcState, OvcSpeed, OvcBase, OvcLB;
 
 type
   TOvcfrmPropsDlg = class(TForm)
@@ -81,11 +79,7 @@ type
 
   private
     TheOwner : TWinControl;
-    {$IFDEF VERSION4}
     FDesigner: IDesigner;
-    {$ELSE}
-    FDesigner: TDesigner;
-    {$ENDIF}
 
     procedure AddItem(IdxComp, IdxProp : Integer; AUpdate : Boolean);
     procedure BuildLists(StoredProps : TStrings);
@@ -119,20 +113,9 @@ type
       override;
   end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION5}
-    function ShowStorageDesigner(AForm : TWinControl;
-                                 ADesigner : IDesigner;
-                                 AStoredList : TStrings) : Boolean;
-  {$ELSE}
-    function ShowStorageDesigner(AForm : TForm;
-                                 ADesigner : IDesigner;
-                                 AStoredList : TStrings) : Boolean;
-  {$ENDIF}
-{$ELSE}
-function ShowStorageDesigner(AForm : TForm; ADesigner : TDesigner; AStoredList : TStrings) : Boolean;
-{$ENDIF}
-
+function ShowStorageDesigner(AForm : TWinControl;
+                             ADesigner : IDesigner;
+                             AStoredList : TStrings) : Boolean;
 
 implementation
 
@@ -150,20 +133,12 @@ var
   StorageOwner   : TComponent;
 begin
   Storage := Component as TOvcComponentState;
-  {$IFDEF VERSION5}
   StorageOwner := Designer.GetRoot;
-  {$ELSE}
-  StorageOwner := Designer.Form;
-  {$ENDIF}
 
   if (Index = 0) then begin
-{$IFDEF VERSION5}
     if (csAncestor in Storage.ComponentState) then
       raise Exception.Create('Component has ancestor. StoredProperties cannot be edited');
     if ShowStorageDesigner(StorageOwner as TWinControl, Designer, Storage.StoredProperties) then
-{$ELSE}
-    if ShowStorageDesigner(StorageOwner as TForm, Designer, Storage.StoredProperties) then
-{$ENDIF}
       Storage.SetNotification;
   end;
 end;
@@ -187,20 +162,11 @@ var
   StorageOwner   : TComponent;
 begin
   Storage := GetComponent(0) as TOvcComponentState;
-  {$IFDEF VERSION5}
   StorageOwner := Designer.GetRoot;
-  {$ELSE}
-  StorageOwner := Designer.Form;
-  {$ENDIF}
 
-
-{$IFDEF VERSION5}
   if (csAncestor in Storage.ComponentState) then
     raise Exception.Create('Component has ancestor. StoredProperties cannot be edited');
   if ShowStorageDesigner(StorageOwner as TWinControl, Designer, Storage.StoredProperties) then
-{$ELSE}
-  if ShowStorageDesigner(StorageOwner as TForm, Designer, Storage.StoredProperties) then
-{$ENDIF}
     Storage.SetNotification;
 end;
 
@@ -217,15 +183,7 @@ end;
 
 {*** ShowStorageDesigner ***}
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION5}
 function ShowStorageDesigner(AForm : TWinControl; ADesigner : IDesigner; AStoredList : TStrings) : Boolean;
-  {$ELSE}
-function ShowStorageDesigner(AForm : TForm; ADesigner : IDesigner; AStoredList : TStrings) : Boolean;
-  {$ENDIF}
-{$ELSE}
-function ShowStorageDesigner(AForm : TForm; ADesigner : TDesigner; AStoredList : TStrings) : Boolean;
-{$ENDIF}
 begin
   with TOvcfrmPropsDlg.Create(Application) do
   try

@@ -41,10 +41,9 @@ unit ovctbpe1;
 interface
 
 uses
-  Windows, Classes, Graphics, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Messages, SysUtils, Forms, Dialogs, StdCtrls, OvcBase, OvcEf, OvcPb, OvcNf,
-  Buttons, ExtCtrls, OvcTCmmn, OvcTable, OvcTbRws, OvcSf, OvcSc;
+  Windows, Classes, Graphics, Controls, DesignIntf, DesignEditors, Messages, SysUtils,
+  Forms, Dialogs, StdCtrls, OvcBase, OvcEf, OvcPb, OvcNf, Buttons, ExtCtrls, OvcTCmmn,
+  OvcTable, OvcTbRws, OvcSf, OvcSc;
 
 type
   TOvcfrmRowEditor = class(TForm)

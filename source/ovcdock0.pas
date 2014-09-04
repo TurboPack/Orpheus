@@ -41,9 +41,8 @@ unit ovcdock0;
 interface
 
 uses
-  Windows, Classes, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Forms, StdCtrls, SysUtils, OvcData, ExtCtrls;
+  Windows, Classes, Controls, DesignIntf, DesignEditors, Forms, StdCtrls, SysUtils,
+  OvcData, ExtCtrls;
 
 type
   TOvcfrmDock = class(TForm)

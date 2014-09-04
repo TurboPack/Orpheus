@@ -43,10 +43,9 @@ unit ovctbpe2;
 interface
 
 uses
-  Windows, SysUtils, Messages, Classes, Graphics, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  TypInfo, Forms, Dialogs, StdCtrls, OvcBase, OvcEf, OvcPb, OvcNf, Buttons,
-  ExtCtrls, OvcTCmmn, OvcTCell, OvcTbCls, OvcTable, OvcSf, OvcSc;
+  Windows, SysUtils, Messages, Classes, Graphics, Controls, DesignIntf, DesignEditors,
+  TypInfo, Forms, Dialogs, StdCtrls, OvcBase, OvcEf, OvcPb, OvcNf, Buttons, ExtCtrls,
+  OvcTCmmn, OvcTCell, OvcTbCls, OvcTable, OvcSf, OvcSc;
 
 type
   TOvcfrmColEditor = class(TForm)
@@ -195,15 +194,7 @@ procedure TOvcfrmColEditor.FormShow(Sender: TObject);
 {--------}
 procedure TOvcfrmColEditor.GetCells;
   var
-    {$IFDEF VERSION4}
-    {$IFDEF VERSION6}
-        Designer : IDesigner;
-    {$ELSE}
-      Designer : IFormDesigner;
-    {$ENDIF}
-    {$ELSE}
-    Designer : TFormDesigner;
-    {$ENDIF}
+    Designer : IDesigner;
     TI   : PTypeInfo;
     Index: Integer;
     C    : TComponent;

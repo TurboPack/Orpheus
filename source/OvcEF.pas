@@ -1431,11 +1431,7 @@ begin
     GlobalUnlock(H);
 
     {give the handle to the clipboard}
-    {$IFNDEF UNICODE}
-    Clipboard.SetAsHandle(CF_TEXT, H);
-    {$ELSE}
     Clipboard.SetAsHandle(CF_UNICODETEXT, H);
-    {$ENDIF}
   end;
 end;
 
@@ -2128,7 +2124,7 @@ begin
   {ignored. the only way for the null character to get here}
   {is by changing a key after it has been entered , probably}
   {in a key preview event handler}
-  if (Cmd = ccChar) and (Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam)) = #0) then
+  if (Cmd = ccChar) and (Char(Msg.wParam) = #0) then
     Exit;
 
   {filter out commands that are inappropriate in read-only mode}
@@ -4657,11 +4653,7 @@ procedure TOvcBaseEntryField.WMPaste(var Msg : TWMPaste);
 var
   H  : THandle;
 begin
-  {$IFNDEF UNICODE}
-  H := Clipboard.GetAsHandle(CF_TEXT);
-  {$ELSE}
   H := Clipboard.GetAsHandle(CF_UNICODETEXT);
-  {$ENDIF}
   if H <> 0 then begin
     TMessage(Msg).lParam := LongInt(GlobalLock(H));
     efPerformEdit(TMessage(Msg), ccPaste);

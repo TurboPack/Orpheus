@@ -652,7 +652,7 @@ begin  {edit}
   case Cmd of
     ccChar :
       begin
-        Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+        Ch := Char(Msg.wParam);
         if not (sefAcceptChar in sefOptions) then
           Exit
         else begin

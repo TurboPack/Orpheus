@@ -5243,7 +5243,7 @@ begin
         TopLine := edCurLine-Pred(edRows);
     ccChar : {process normal character input}
       if not ReadOnly then
-        edInsertChar(Char({$IFNDEF UNICODE}Lo{$ENDIF}(CharCode)));
+        edInsertChar(Char(CharCode));
     ccCopy : {copy highlighted text to clipboard}
       if edHaveHighlight then
         CopyToClipboard;

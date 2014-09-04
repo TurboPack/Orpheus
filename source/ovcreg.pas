@@ -51,13 +51,8 @@ unit ovcreg;
 interface
 
 uses
-  DIALOGS, Windows,
-  {$IFDEF VERSION6}
-    DesignIntf, DesignEditors, VCLEditors,
-  {$ELSE}
-    DsgnIntf,
-  {$ENDIF}
-  Classes, Controls, TypInfo, OvcData, OvcValid, OvcConst;
+  DIALOGS, Windows, DesignIntf, DesignEditors, VCLEditors, Classes, Controls, TypInfo,
+  OvcData, OvcValid, OvcConst;
 
 type
   {property editor for the virtual ListBox header string property}
@@ -67,13 +62,7 @@ type
   {property editor for the timer pool}
   TOvcTimerPoolEditor = class(TDefaultEditor)
   protected
-    {$IFDEF VERSION6}
-      procedure EditProperty(const Prop: IProperty; var Continue: Boolean); override;
-    {$ELSE}
-      procedure EditProperty(PropertyEditor : TPropertyEditor;
-                         var Continue, FreeEditor : Boolean); override;
-    {$ENDIF}
-
+    procedure EditProperty(const Prop: IProperty; var Continue: Boolean); override;
   end;
 
 type
@@ -274,27 +263,14 @@ end;
 
 {*** TOvcTimerPoolEditor ***}
 
-{$IFDEF VERSION6}
 procedure TOvcTimerPoolEditor.EditProperty(const Prop    : IProperty;
                                            var   Continue: Boolean);
-{$ELSE}
-procedure TOvcTimerPoolEditor.EditProperty(PropertyEditor : TPropertyEditor;
-          var Continue, FreeEditor : Boolean);
-{$ENDIF}
 var
   PropName : string;
 begin
-  {$IFDEF VERSION6}
-    PropName := Prop.GetName;
-  {$ELSE}
-    PropName := PropertyEditor.GetName;
-  {$ENDIF}
+  PropName := Prop.GetName;
   if CompareText(PropName, 'ONALLTRIGGERS') = 0 then begin
-    {$IFDEF VERSION6}
-      Prop.Edit;
-    {$ELSE}
-      PropertyEditor.Edit;
-    {$ENDIF}
+    Prop.Edit;
     Continue := False;
   end;
 end;
@@ -311,11 +287,7 @@ var
   PropClass : TClass;
   Skip      : Boolean;
 begin
-  {$IFDEF VERSION5}
   COwner := Designer.GetRoot;
-  {$ELSE}
-  COwner := Designer.Form;
-  {$ENDIF}
   PropClass := GetTypeData(GetPropType)^.ClassType;
   for I := 0 to COwner.ComponentCount - 1 do begin
     Component := COwner.Components[I];

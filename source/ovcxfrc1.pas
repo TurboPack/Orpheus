@@ -121,9 +121,6 @@ begin
   Left := (Screen.Width - Width) div 2;
 
   SetButtonStatus;
-  {$IFDEF CBuilder}
-  SetInstructionText;
-  {$ENDIF}
 end;
 
 procedure TOvcfrmTransfer.btnSelectAllClick(Sender: TObject);
@@ -199,77 +196,6 @@ begin
   end;
 
   if cbTransfer.Checked then with memoTransfer do begin
-    {$IFDEF CBuilder}
-    { FIXME: CBuilder-Code is not up to date... }
-    memoTransfer.Clear;
-
-    {emit record definition}
-    Lines.Add(Format('// transfer buffer for the %s form', [ComponentForm.Name]));
-    Lines.Add(Format('#pragma pack(push, 1)', [ComponentForm.Name]));
-    Lines.Add(Format('struct T%sTransferRec {', [ComponentForm.Name]));
-
-    {emit data declaration for each component}
-    for I := 0 to ComponentList.Count-1 do begin
-      if not lbAllComponents.Selected[I] then
-        Continue;
-      C := TComponent(ComponentList.Items[I]);
-
-      if (C is TEdit) then begin
-        if TEdit(C).MaxLength = 0 then
-          Lines.Add(Format('  char %sText[256];',
-            [C.Name]))
-        else
-          Lines.Add(Format('  char %sText[%d];',
-           [C.Name, TEdit(C).MaxLength]));
-      end else if (C is TLabel) or
-         (C is TPanel) or (C is TOvcRotatedLabel) then begin
-        Lines.Add(Format('  char %sText[256];',
-         [C.Name]));
-      end else if (C is TCheckBox) or (C is TRadioButton) then begin
-        Lines.Add(Format('  bool %sChecked;',
-         [C.Name]));
-      end else if (C is TMemo) then begin
-        Lines.Add(Format('  TStringList* %sLines;',
-         [C.Name]));
-      end else if (C is TListBox) then begin
-        Lines.Add(Format('  TListBoxTransfer %sXfer;',
-         [C.Name]));
-      end else if (C is TComboBox) then begin
-        Lines.Add(Format('  TComboBoxTransfer %sXfer;',
-         [C.Name]));
-      end else if (C is TOvcBaseEntryField) then begin
-        case TLocalEF(C).efDataType mod fcpDivisor of
-          fsubString   :
-            S := Format('  char %sValue[%d];', [C.Name, TLocalEF(C).DataSize]);
-          fsubChar     : S := 'char';
-          fsubBoolean  : S := 'bool';
-          fsubYesNo    : S := 'bool';
-          fsubLongInt  : S := 'int';
-          fsubWord     : S := 'Word';
-          fsubInteger  : S := 'int';
-          fsubByte     : S := 'Byte';
-          fsubShortInt : S := 'int';
-          fsubReal     : S := 'double';
-          fsubExtended : S := 'Extended';
-          fsubDouble   : S := 'double';
-          fsubSingle   : S := 'float';
-          fsubComp     : S := 'Comp';
-          fsubDate     : S := 'TStDate';
-          fsubTime     : S := 'TStTime';
-        else
-          S := '';
-        end;
-        if (TLocalEF(C).efDataType mod fcpDivisor) = fsubString then
-          Lines.Add(S)
-        else
-          Lines.Add(Format('  %s %sValue;',
-            [S, C.Name]));
-      end;
-    end;
-    {end of record structure}
-    Lines.Add('};');
-    Lines.Add('#pragma pack(pop)');
-    {$ELSE}
     memoTransfer.Clear;
 
     {emit record definition}
@@ -344,86 +270,11 @@ begin
     end;
     {end of record structure}
     Lines.Add('  end;');
-    {$ENDIF}
   end;
 
   if cbInitialize.Checked then with memoInitialize do begin
     memoInitialize.Clear;
 
-    {$IFDEF CBuilder}
-    {create stub for initialization method}
-    Lines.Add(       '  // declaration - place in header');
-    Lines.Add(Format('  void Init%sTransfer(T%0:sTransferRec& Data);', [ComponentForm.Name]));
-    Lines.Add(       ' ');
-
-    {create initialization method}
-    Lines.Add(       '// initialize transfer buffer');
-    Lines.Add(Format('void T%s::Init%0:sTransfer(T%0:sTransferRec& Data)',
-                     [ComponentForm.Name]));
-    Lines.Add(       '{');
-
-    {initialize each field in the record}
-    for I := 0 to ComponentList.Count-1 do begin
-      if not lbAllComponents.Selected[I] then
-        Continue;
-      C := TComponent(ComponentList.Items[I]);
-      J := Length(C.Name);
-
-      if (C is TEdit) or (C is TLabel) or
-         (C is TPanel) or (C is TOvcRotatedLabel) then begin
-        Lines.Add(Format('  strcpy(Data.%sText, "");',
-         [C.Name]));
-      end else if (C is TCheckBox) or (C is TRadioButton) then begin
-        Lines.Add(Format('  Data.%sChecked%s = false;',
-         [C.Name, Spaces(Len-J-7)]));
-      end else if (C is TMemo) then begin
-        Lines.Add(Format('  Data.%sLines%s = new TStringList;',
-         [C.Name, Spaces(Len-J-5)]));
-      end else if (C is TListBox) then begin
-        Lines.Add(Format('  Data.%sXfer.Items%s = new TStringList;',
-         [C.Name, Spaces(Len-J-10)]));
-        Lines.Add(Format('  Data.%sXfer.ItemIndex%s = 0;',
-         [C.Name, Spaces(Len-J-14)]));
-      end else if (C is TComboBox) then begin
-        Lines.Add(Format('  Data.%sXfer.Items%s = new TStringList;',
-         [C.Name, Spaces(Len-J-10)]));
-        Lines.Add(Format('  Data.%sXfer.ItemIndex%s = 0;',
-         [C.Name, Spaces(Len-J-14)]));
-        Lines.Add(Format('  Data.%sXfer.Text%s = "";',
-         [C.Name, Spaces(Len-J-9)]));
-      end else if (C is TOvcBaseEntryField) then begin
-        case TLocalEF(C).efDataType mod fcpDivisor of
-          fsubString   :
-            S := Format('  strcpy(Data.%sValue, "");', [C.Name]);
-          fsubChar     : S := ''' '';';
-          fsubBoolean,
-          fsubYesNo    : S := 'false;';
-          fsubLongInt,
-          fsubWord,
-          fsubInteger,
-          fsubByte,
-          fsubShortInt,
-          fsubReal,
-          fsubExtended,
-          fsubDouble,
-          fsubSingle,
-          fsubComp     : S := '0;';
-          fsubDate     : S := 'Stdate::CurrentDate(); // in Stdate unit';
-          fsubTime     : S := 'Stdate::CurrentTime(); // in Stdate unit';
-        else
-          S := '';
-        end;
-        if (TLocalEF(C).efDataType mod fcpDivisor) = fsubString then
-          Lines.Add(S)
-        else
-          Lines.Add(Format('  Data.%sValue%s = %s',
-         [C.Name, Spaces(Len-J-5), S]));
-      end;
-    end;
-
-    {add end of with and method}
-    Lines.Add('}');
-    {$ELSE}
     {create stub for initialization method}
     Lines.Add(Format('procedure Init%sTransfer(var Data : T%0:sTransferRec);', [ComponentForm.Name]));
     Lines.Add(       '  {-initialize transfer buffer}');
@@ -494,60 +345,11 @@ begin
     {add end of with and method}
     Lines.Add('  end; {with}');
     Lines.Add('end;');
-    {$ENDIF}
   end;
 
   if cbSample.Checked then with memoSample do begin
     memoSample.Clear;
 
-    {$IFDEF CBuilder}
-    Lines.Add(       '// transfer record declaration');
-    Lines.Add(Format('T%sTransferRec TR;', [ComponentForm.Name]));
-    Lines.Add(       #13);
-    Lines.Add(       '  // call to initialize the transfer record');
-    Lines.Add(Format('  Init%sTransfer(TR);', [ComponentForm.Name]));
-
-    NL := TStringList.Create;
-    try
-      {build list of component names}
-      for I := 0 to ComponentList.Count-1 do
-        if lbAllComponents.Selected[I] then
-          NL.Add(TComponent(ComponentList.Items[I]).Name);
-
-      Lines.Add(#13);
-      Lines.Add('  // call to transfer data to the form');
-      S :=      '  OrTransfer1->TransferToFormZ(OPENARRAY(TComponent*, (';
-
-      if NL.Count = 1 then
-        Lines.Add(S + NL[0] + ')), &TR);')
-      else begin
-        Lines.Add(S);
-        for I := 0 to NL.Count-2 do
-          Lines.Add('    ' + NL[I] + ',');
-
-        {add the last item}
-        Lines.Add('    ' + NL[NL.Count-1] + ')), &TR);');
-      end;
-
-      Lines.Add(#13);
-      Lines.Add('  // call to transfer data from the form');
-      S :=      '  OrTransfer1->TransferFromFormZ(OPENARRAY(TComponent*, (';
-
-      if NL.Count = 1 then
-        Lines.Add(S + NL[0] + ')), &TR);')
-      else begin
-        Lines.Add(S);
-        for I := 0 to NL.Count-2 do
-          Lines.Add('    ' + NL[I] + ',');
-
-        {add the last item}
-        Lines.Add('    ' + NL[NL.Count-1] + ')), &TR);');
-      end;
-
-    finally
-      NL.Free;
-    end;
-    {$ELSE}
     Lines.Add(       'var');
     Lines.Add(       '{transfer record declaration}');
     Lines.Add(Format('  TR : T%sTransferRec;', [ComponentForm.Name]));
@@ -611,7 +413,6 @@ begin
     finally
       NL.Free;
     end;
-    {$ENDIF}
   end;
 
   if cbTransfer.Checked then
@@ -638,33 +439,21 @@ begin
   try
     {copy transfer record to string list}
     if ((P = 0) or (P = 1)) and (memoTransfer.Lines.Count > 0) then begin
-      {$IFDEF CBuilder}
-      M.Add(#13#10'//  >>> Transfer record <<<'#13#10);
-      {$ELSE}
       M.Add(#13#10'>>> Transfer record <<<'#13#10);
-      {$ENDIF}
       for I := 0 to memoTransfer.Lines.Count-1 do
         M.Add(memoTransfer.Lines[I]);
     end;
 
     {copy init code to the string list}
     if ((P = 0) or (P = 2)) and (memoInitialize.Lines.Count > 0) then begin
-      {$IFDEF CBuilder}
-      M.Add(#13#10'// >>> Initialization header and method <<<'#13#10);
-      {$ELSE}
       M.Add(#13#10'>>> Initialization header and method <<<'#13#10);
-      {$ENDIF}
       for I := 0 to memoInitialize.Lines.Count-1 do
         M.Add(memoInitialize.Lines[I]);
     end;
 
     {copy sample transfer calls to string list}
     if ((P = 0) or (P = 3)) and (memoSample.Lines.Count > 0) then begin
-      {$IFDEF CBuilder}
-      M.Add(#13#10'// >>> Sample transfer calls <<<'#13#10);
-      {$ELSE}
       M.Add(#13#10'>>> Sample transfer calls <<<'#13#10);
-      {$ENDIF}
       for I := 0 to memoSample.Lines.Count-1 do
         M.Add(memoSample.Lines[I]);
     end;

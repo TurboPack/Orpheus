@@ -272,11 +272,7 @@ var
   G     : TBitmap;
 begin
   with Msg.DrawItemStruct^ do begin
-    {$IFNDEF VERSION5}
-    State := TOwnerDrawState(WordRec(LongRec(itemState).Lo).Lo);
-    {$ELSE}
     State := TOwnerDrawState(LongRec(itemState).Lo);
-    {$ENDIF}
     Canvas.Handle := hDC;
     Canvas.Font := Font;
     Canvas.Brush := Brush;

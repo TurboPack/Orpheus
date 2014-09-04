@@ -35,10 +35,6 @@
 {.$W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF VERSION3}
-!! Error - not for Delphi versions 1 and 2 or C++ Builder version 1
-{$ENDIF}
-
 {$R OVCBASE.RES}
 
 unit ovcbase;
@@ -720,10 +716,6 @@ type
     property ItemEditor : TForm read FItemEditor write FItemEditor;
 
     function Add : TO32CollectionItem; dynamic;
-
-    {$IFNDEF VERSION4}
-    function Insert(Index: Integer): TO32CollectionItem; dynamic;
-    {$ENDIF}
 
     function GetItem(Index: Integer): TO32CollectionItem;
     function GetOwner: TPersistent; override;
@@ -2511,18 +2503,6 @@ begin
   if ItemEditor <> nil then
     SendMessage(ItemEditor.Handle, OM_PROPCHANGE, 0, 0);
 end;
-
-{$IFNDEF VERSION4}
-function TO32Collection.Insert(Index: Integer): TO32CollectionItem;
-var
-  I: Integer;
-begin
-  result := Add;
-  for I := Index to Count - 2 do
-    Items[I].Index := I + 1;
-  Items[Count - 1].Index := Index;
-end;
-{$ENDIF}
 
 function TO32Collection.GetItem(Index : Integer) : TO32CollectionItem;
 begin

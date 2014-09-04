@@ -116,21 +116,9 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure Deselect;
     procedure Hide;
-    {$IFNDEF VERSION4}
-      {$IFNDEF CBUILDER}
-        {D3}
-        procedure Invalidate; override;
-        procedure SetFocus; override;
-      {$ELSE}
-        {BCB3}
-        procedure Invalidate; reintroduce;
-        procedure SetFocus; reintroduce;
-      {$ENDIF}
-    {$ELSE}
     {D4, 5 ...}
     procedure Invalidate; reintroduce;
     procedure SetFocus; reintroduce;
-    {$ENDIF}
     procedure Move(const Loc: TRect);
     function PosEqual(const Rect: TRect): Boolean;
     procedure UpdateLoc(const Loc: TRect);
@@ -585,12 +573,7 @@ type
     procedure MouseUp(Button: TMouseButton; Shift: TShiftState;
                 X, Y: Integer); override;
 
-    {$IFNDEF VERSION4}
-        {D3}
-        procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); dynamic;
-    {$ELSE}
-      procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); reintroduce; dynamic;
-    {$ENDIF}
+    procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); reintroduce; dynamic;
 
     function BoxRect(ALeft, ATop, ARight, ABottom: Longint): TRect;
     procedure DoExit; override;
@@ -824,25 +807,6 @@ type
   end;
 
 {===== Local Methods =================================================}
-
-{$IFNDEF VERSION4}
-function Min(Val1, Val2: Integer): Integer;
-begin
-  if Val1 < Val2 then
-    result := Val1
-  else
-    result := Val2;
-end;
-
-function Max(Val1, Val2: Integer): Integer;
-begin
-  if Val1 > Val2 then
-    result := Val1
-  else
-    result := Val2;
-end;
-{$ENDIF}
-
 
 function GridRect(Coord1, Coord2: TGridCoord): TGridRect;
 begin

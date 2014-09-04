@@ -41,8 +41,8 @@ unit ovclkou0;
 interface
 
 uses
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Forms, SysUtils, OvcData, OvcBase, OvcLkOut, OvcLkOu1, OvcColE0;
+  DesignIntf, DesignEditors, Forms, SysUtils, OvcData, OvcBase, OvcLkOut, OvcLkOu1,
+  OvcColE0;
 
 type
   TOvcLookoutBarEditor = class(TComponentEditor)
@@ -74,13 +74,9 @@ implementation
 procedure TOvcLookoutBarEditor.ExecuteVerb(Index : Integer);
 begin
   case Index of
-{$IFDEF VERSION5}
     0 : ShowCollectionEditor(Designer,
                             (Component as TOvcLookOutBar).FolderCollection,
                             IsInInLined);
-{$ELSE}
-    0 : ShowCollectionEditor(Designer, (Component as TOvcLookOutBar).FolderCollection);
-{$ENDIF}
     1 : EditLookOut(Designer, (Component as TOvcLookOutBar));
   end;
 end;
@@ -97,38 +93,5 @@ function TOvcLookoutBarEditor.GetVerbCount : Integer;
 begin
   Result := 2;
 end;
-
-
-{*** TO32LookoutBarEditor ***}
-
-
-//procedure TO32LookoutBarEditor.ExecuteVerb(Index : Integer);
-//begin
-(*  case Index of
-{$IFDEF VERSION5}
-    0 : ShowCollectionEditor(Designer,
-                            (Component as TO32LookOutBar).FolderCollection,
-                            IsInInLined);
-{$ELSE}
-    0 : ShowCollectionEditor(Designer, (Component as TO32LookOutBar).FolderCollection);
-{$ENDIF}
-    1 : EditLookOut(Designer, (Component as TO32LookOutBar));
-  end;
-*)
-//end;
-
-//function TO32LookoutBarEditor.GetVerb(Index : Integer) : string;
-//begin
-(*  case Index of
-    0 : Result := 'Edit Folders...';
-    1 : Result := 'Layout Tool...';
-  end;
-*)
-//end;
-
-//function TO32LookoutBarEditor.GetVerbCount : Integer;
-//begin
-//  Result := 2;
-//end;
 
 end.

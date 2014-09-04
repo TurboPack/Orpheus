@@ -41,8 +41,7 @@ unit ovccmdp0;
 interface
 
 uses
-  Windows, Buttons, Classes, Controls, Dialogs, Forms,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  Windows, Buttons, Classes, Controls, Dialogs, Forms, DesignIntf, DesignEditors,
   Graphics, Menus, Messages, StdCtrls, SysUtils, Tabs, OvcData, OvcCmd, OvcMisc,
   OvcCmdP1, OvcExcpt, OvcConst, ExtCtrls;
 

@@ -317,11 +317,7 @@ var
   S : TOwnerDrawState;
 begin
   with Msg.DrawItemStruct^ do begin
-    {$IFNDEF VERSION5}
-      S := TOwnerDrawState(WordRec(LongRec(itemState).Lo).Lo);
-    {$ELSE}
       S := TOwnerDrawState(LongRec(itemState).Lo);
-    {$ENDIF}
 
     FGlyphWidth := (rcItem.Right-rcItem.Left + 1 + BoxMargin*2);
 

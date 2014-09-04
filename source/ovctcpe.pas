@@ -41,8 +41,7 @@ unit ovctcpe;
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  Windows, Classes, Graphics, Forms, Controls, Buttons, DesignIntf, DesignEditors,
   StdCtrls, ExtCtrls, OvcTCBEF, OvcStr, OvcEF, OvcBase, OvcSf, OvcPb, OvcPf;
 
 type

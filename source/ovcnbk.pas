@@ -899,9 +899,6 @@ begin
     Classes.RegisterClass(TOvcTabPage);
 //  if Classes.GetClass(TOvcTabPage.ClassName) = nil then
 //    Classes.RegisterClass(TOvcTabPage);
-  {$IFNDEF VERSION6}
-  RegisterClassAlias(TOvcTabPage, 'TOvcPageContainer');
-  {$ENDIF}
 
   FPages := TOvcCollection.Create(Self, TOvcTabPage);
   FPages.OnChanged := tabCollectionChanged;

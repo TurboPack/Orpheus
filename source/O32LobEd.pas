@@ -47,8 +47,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  StdCtrls, OvcSpeed, OvcBase, OvcState, ExtCtrls, O32LkOut, O32ColEd;
+  DesignIntf, DesignEditors, StdCtrls, OvcSpeed, OvcBase, OvcState, ExtCtrls,
+  O32LkOut, O32ColEd;
 
 type
   TO32LookoutBarEditor = class(TComponentEditor)
@@ -104,26 +104,15 @@ type
   public
     { Public declarations }
     Bar : TO32LookOutBar;
-    {$IFDEF VERSION4}
     Designer   : IDesigner;
-    {$ELSE}
-    Designer   : TDesigner;
-    {$ENDIF}
     procedure PopulateFolderList;
     procedure PopulateItemList;
   end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure EditLookOut(Designer : IDesigner; Bar : TO32LookOutBar);
-  {$ELSE}
-    procedure EditLookOut(Designer : IFormDesigner; Bar : TO32LookOutBar);
-  {$ENDIF}
-{$ELSE}
-procedure EditLookOut(Designer : TFormDesigner; Bar : TO32LookOutBar);
-{$ENDIF}
+procedure EditLookOut(Designer : IDesigner; Bar : TO32LookOutBar);
 
 implementation
+
 {$R *.DFM}
 
 
@@ -372,15 +361,7 @@ begin
   end;
 end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure EditLookOut(Designer : IDesigner; Bar : TO32LookOutBar);
-  {$ELSE}
-    procedure EditLookOut(Designer : IFormDesigner; Bar : TO32LookOutBar);
-  {$ENDIF}
-{$ELSE}
-procedure EditLookOut(Designer : TFormDesigner; Bar : TO32LookOutBar);
-{$ENDIF}
+procedure EditLookOut(Designer : IDesigner; Bar : TO32LookOutBar);
 var
   O32frmLkOutEd: TO32frmLkOutEd;
   i : Integer;

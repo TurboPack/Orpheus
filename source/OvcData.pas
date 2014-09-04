@@ -51,11 +51,6 @@ const
   ScrollBarStyles : array [System.UITypes.TScrollStyle] of LongInt =
                     (0, WS_HSCROLL, WS_VSCROLL, WS_HSCROLL or WS_VSCROLL);
 
-{$IFNDEF VERSION4}
-type
-  PDateTime     = ^TDateTime;
-{$ENDIF}
-
 {some colors that are not defined by Delphi}
 const
   clCream      = TColor($A6CAF0);

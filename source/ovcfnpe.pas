@@ -41,9 +41,7 @@ unit ovcfnpe;
 interface
 
 uses
-  Dialogs,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Forms;
+  Dialogs, DesignIntf, DesignEditors, Forms;
 
 type
   {property editor for ranges}

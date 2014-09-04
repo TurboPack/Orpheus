@@ -545,9 +545,6 @@ var
   R: TRect;
 //  DC: THandle;
 //  Height, Width: Integer;
-  {$IFNDEF VERSION4}
-    Points: array[1..5] of TPoint;
-  {$ENDIF}
 begin
   R := Client;
 //  Height := R.Bottom;
@@ -1323,20 +1320,8 @@ end;
 
 procedure TO32CustomLookOutBar.InsertFolder(const ACaption : string;
                                                   AFolderIndex : Integer);
-{$IFNDEF VERSION4}
-var
-  I : Integer;
-{$ENDIF}
 begin
-{$IFNDEF VERSION4}
-  FFolders.Add;
-  for I := AFolderIndex to FFolders.Count - 2 do begin
-    Folders[I].Index := I + 1;
-  end;
-  Folders[FFolders.Count - 1].Index := AFolderIndex;
-{$ELSE}
   FFolders.Insert(AFolderIndex);
-{$ENDIF}
   Folders[AFolderIndex].Caption := ACaption;
   if FolderCount = 1 then begin
     FActiveFolder := 0;
@@ -1387,19 +1372,9 @@ procedure TO32CustomLookOutBar.InsertItem(const ACaption : string;
                                     AIconIndex : Integer);
 var
   AFolder : TO32LookOutFolder;
-{$IFNDEF VERSION4}
-  I : Integer;
-{$ENDIF}
 begin
   AFolder := Folders[AFolderIndex];
-{$IFNDEF VERSION4}
-  AFolder.FItems.Add;
-  for I := AFolderIndex to AFolder.FItems.Count - 2 do
-    AFolder.Items[I].Index := I + 1;
-  AFolder.Items[AFolder.FItems.Count-1].Index := AFolderIndex;
-{$ELSE}
   AFolder.FItems.Insert(AItemIndex);
-{$ENDIF}
   AFolder.Items[AItemIndex].Caption := ACaption;
   AFolder.Items[AItemIndex].IconIndex := AIconIndex;
   Invalidate;

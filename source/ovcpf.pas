@@ -887,7 +887,7 @@ procedure TOvcCustomPictureField.efEdit(var Msg : TMessage; Cmd : Word);
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           Literal := sefLiteral in sefOptions;
           Exclude(sefOptions, sefLiteral);
           if not (sefAcceptChar in sefOptions) then
@@ -1287,7 +1287,7 @@ ExitPoint:
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           Literal := sefLiteral in sefOptions;
           if sefAcceptChar in sefOptions then
             if CharIsOK then begin
