@@ -138,9 +138,7 @@ type
     property Borders: TO32Borders read FBorders write FBorders;
 
   published
-    {$IFDEF VERSION4}
     property Alignment: TAlignment read FAlignment write FAlignment;
-    {$ENDIF}
     property ButtonGlyph: TBitmap
       read GetButtonGlyph write SetButtonGlyph;
 

@@ -129,11 +129,7 @@ begin
   FOwner := AOwner;
 
   {create a callable window proc pointer}
-  {$IFDEF VERSION6}
     NewWndProc := Classes.MakeObjectInstance(voWndProc);
-  {$ELSE}
-    NewWndProc := MakeObjectInstance(voWndProc);
-  {$ENDIF}
 
   ValidatorType := 'None';
   FSoftValidation := false;

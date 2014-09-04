@@ -588,14 +588,10 @@ begin   {Get}
   CurrentSymbol.Len := NextSymbol.Len;
   NextSymbol.Len := 0;
   ContextLen := 0;
-  {$IFDEF UNICODE}
   if Ord(CurrInputCh)<=High(StartState^) then
     state := StartState[Ord(CurrInputCh)]
   else
     state := 1;
-  {$ELSE}
-  state := StartState[Ord(CurrInputCh)];
-  {$ENDIF}
   bpCurrToken := BufferPosition;
   while true do
   begin

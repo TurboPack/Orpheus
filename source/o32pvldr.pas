@@ -84,7 +84,7 @@ type
 implementation
 
 uses
-  Mask, SysUtils, O32VlReg {$IFDEF VERSION6}, MaskUtils{$ENDIF}, OVCStr;
+  Mask, SysUtils, O32VlReg, MaskUtils, OVCStr;
 
 {$IFNDEF VERSION6}
   { These are declared in the implementation section of the VCL unit Mask.pas, }

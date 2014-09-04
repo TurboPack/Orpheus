@@ -29,11 +29,9 @@
 
 {$I OVC.INC}
 
-{$IFDEF VERSION7}
-  {$WARN UNSAFE_CODE OFF}
-  {$WARN UNSAFE_TYPE OFF}
-  {$WARN UNSAFE_CAST OFF}
-{$ENDIF}
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_TYPE OFF}
+{$WARN UNSAFE_CAST OFF}
 
 unit ovccoco;
 {Base components for Coco/R for Delphi grammars for use with version 1.1}

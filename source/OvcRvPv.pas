@@ -220,15 +220,8 @@ end;
 procedure TOvcRVPrintPreview.SetZoom(const Value: Integer);
 begin
   FZoom := Value;
-  {$IFDEF VERSION4}
   FScale := Min(ScrollBox1.ClientHeight / Printer.PageHeight,
                 ScrollBox1.ClientWidth / Printer.PageWidth) * FZoom / 100;
-  {$ELSE}
-  if  (ScrollBox1.ClientHeight / Printer.PageHeight)
-    < (ScrollBox1.ClientWidth / Printer.PageWidth)
-  then FScale := (ScrollBox1.ClientHeight / Printer.PageHeight) * FZoom / 100
-  else FScale := (ScrollBox1.ClientWidth / Printer.PageWidth) * FZoom / 100;
-  {$ENDIF}
   ResizeCanvas;
   AlignPaper;
 end;
