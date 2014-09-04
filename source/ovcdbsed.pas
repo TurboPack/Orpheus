@@ -114,12 +114,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
 
     procedure PopupClose(Sender : TObject);
       override;
@@ -135,11 +133,9 @@ type
   TOvcDbSliderEdit = class(TOvcCustomDbSliderEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec default False;
     property AutoSelect;
@@ -203,7 +199,7 @@ uses
 const
   {field types supported}
   SupportedFieldTypes : set of  TFieldType = [ftSmallint, ftInteger,
-    ftWord, ftFloat, ftCurrency, ftBCD {$IFDEF VERSION4}, ftLargeint {$ENDIF}];
+    ftWord, ftFloat, ftCurrency, ftBCD, ftLargeint];
 
 
 {*** TOvcCustomDbSliderEdit ***}
@@ -551,7 +547,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomDbSliderEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -563,6 +558,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

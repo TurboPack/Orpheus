@@ -135,13 +135,10 @@ type
       override;
     procedure Restore;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     procedure CutToClipboard;
       override;
@@ -175,11 +172,9 @@ type
       write SetZeroAsNull default False;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property Borders;
     property BorderStyle;
@@ -888,7 +883,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbNumericField.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -900,6 +894,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

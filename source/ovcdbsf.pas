@@ -129,12 +129,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
     procedure Restore;
       override;
 
@@ -170,11 +168,9 @@ type
       write SetZeroAsNull default False;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property Borders;
     property BorderStyle;
@@ -245,7 +241,7 @@ const
   {field types supported by the data aware simple field}
   SupportedFieldTypes : set of  TFieldType =
     [ftString, ftSmallInt, ftInteger, ftWord, ftBoolean, ftFloat,
-     ftCurrency, ftBCD {$IFDEF VERSION5}, ftWideString {$ENDIF}];
+     ftCurrency, ftBCD, ftWideString];
 
 
 procedure TOvcDbSimpleField.CMEnter(var Msg : TMessage);
@@ -562,7 +558,7 @@ begin
   begin
     {get the entry field value}
     case FFieldType of
-      ftString{$IFDEF VERSION5}, ftWideString{$ENDIF}:
+      ftString, ftWideString:
 { 06/2011, AB fix for a bug discovered by Yeimi Osorio (in TOvcDBPictureField, issue 3305212)
            GetValue expects a string here }
         FLastError := Self.GetValue(sValue);
@@ -578,10 +574,7 @@ begin
       Field.Clear
     else
       case FFieldType of
-        ftString
-        {$IFDEF VERSION5}
-        , ftWideString
-        {$ENDIF}
+        ftString, ftWideString
                      : Field.AsString  := sValue;
         ftSmallInt   : Field.AsInteger := I;
         ftInteger    : Field.AsInteger := L;
@@ -597,11 +590,7 @@ end;
 procedure TOvcDbSimpleField.sfdbSetFieldProperties;
 begin
   case FFieldType of
-    ftString
-    {$IFDEF VERSION5}
-    , ftWideString
-    {$ENDIF}
-     :
+    ftString, ftWideString:
       begin
         DataType := sftString;
         if Field <> nil then
@@ -653,10 +642,7 @@ begin
 
   if Field <> nil then begin
     case FFieldType of
-      ftString
-      {$IFDEF VERSION5}
-      , ftWideString
-      {$ENDIF}
+      ftString, ftWideString
                    : sNewValue := Field.AsString;
       ftSmallInt   : I := Field.AsInteger;
       ftInteger    : L := Field.AsInteger;
@@ -674,7 +660,7 @@ begin
     efdbBusy := True;
     try
       {get copy of current field value}
-      if FFieldType in [ftString {$IFDEF VERSION5}, ftWideString{$ENDIF}] then
+      if FFieldType in [ftString, ftWideString] then
         GetValue(sOldValue)
       else
         Self.GetValue(F);
@@ -687,8 +673,7 @@ begin
 
       {set field value}
       case FFieldType of
-        ftString {$IFDEF VERSION5}, ftWideString{$ENDIF}:
-          SetValue(sNewValue);
+        ftString, ftWideString: SetValue(sNewValue);
         ftSmallInt,
         ftInteger,
         ftWord,
@@ -710,7 +695,7 @@ begin
     end;
 
     {if field value changed, call DoOnChange}
-    if FFieldType in [ftString {$IFDEF VERSION5}, ftWideString{$ENDIF}] then
+    if FFieldType in [ftString, ftWideString] then
     begin
       if sOldValue <> sNewValue then
         inherited DoOnChange;
@@ -939,7 +924,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbSimpleField.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -951,6 +935,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

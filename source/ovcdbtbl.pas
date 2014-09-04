@@ -45,9 +45,8 @@ interface
 {$I ovc.inc}
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Buttons, Classes, Controls, DB, Forms, Graphics, Menus, Messages,
-  SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt, OvcMisc,
+  System.UITypes, Windows, Buttons, Classes, Controls, DB, Forms, Graphics, Menus,
+  Messages, SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt, OvcMisc,
   OvcTCBEF, OvcTCell, OvcTBClr, OvcTBCls, OvcTCmmn, OvcTGPns, OvcDate;
 
 type
@@ -506,11 +505,9 @@ type
   TOvcDbTable = class(TOvcCustomDbTable)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property LockedColumns;
     property Access;
     property Adjust;
@@ -576,12 +573,8 @@ type
 implementation
 
 uses
-{$IFDEF VERSIONXE5UP}
-  System.Types,
-{$ENDIF}
-  Dialogs, OvcNF, OvcPF, OvcSF, OvcTCBmp, OvcTCBox, OvcTCCbx, OvcTCEdt,
-  OvcTCGly, OvcTCHdr, OvcTCIco, OvcTCNum, OvcTCPic, OvcTCSim,
-  OvcTCHeaderExtended;
+  System.Types, Dialogs, OvcNF, OvcPF, OvcSF, OvcTCBmp, OvcTCBox, OvcTCCbx, OvcTCEdt,
+  OvcTCGly, OvcTCHdr, OvcTCIco, OvcTCNum, OvcTCPic, OvcTCSim, OvcTCHeaderExtended;
 
 type
   TLocalCell = class(TOvcBaseTableCell);
@@ -591,8 +584,7 @@ const
   {field types where editing is supported}
   SupportedFieldTypes : set of TFieldType = [ftString, ftSmallInt,
     ftInteger, ftWord, ftBoolean, ftFloat, ftCurrency, ftBCD, ftDate,
-    ftTime, ftDateTime
-    {WideString Support} {$IFDEF VERSION5}, ftWideString {$ENDIF}];
+    ftTime, ftDateTime, ftWideString];
 
   dtDefHitMargin = 4;
 
@@ -684,11 +676,7 @@ begin
   Result := True;
 
   if DataSet <> nil then
-{$IFDEF VERSIONXE6UP}
     Result := DataSet.Fields.LifeCycles = [TFieldLifeCycle.lcAutomatic];
-{$ELSE}
-    Result := DataSet.DefaultFields;
-{$ENDIF}
 end;
 
 function TOvcDbTableDataLink.GetFields(Index : Integer) : TField;
@@ -780,11 +768,7 @@ begin
   if (FField = nil) and (Length(FDataField) > 0) then
     if (Table <> nil) and (Table.DataLink.DataSet <> nil) then begin
       with Table.Datalink.Dataset do
-{$IFDEF VERSIONXE6UP}
         if Active or (Fields.LifeCycles <> [TFieldLifeCycle.lcAutomatic]) then
-{$ELSE}
-        if Active or (not DefaultFields) then
-{$ENDIF}
           SetField(FindField(FDataField)); { no exceptions }
     end;
 
@@ -1164,7 +1148,7 @@ begin
     StopEditing(True);
 
   {if focus isn't going to the table or already there}
-  if (Msg.wParam <> {$IFNDEF VERSIONXE2}Integer({$ENDIF}Handle{$IFNDEF VERSIONXE2}){$ENDIF}) and (Handle <> GetFocus)then
+  if (Msg.wParam <> Handle) and (Handle <> GetFocus) then
     Exclude(tbState, otsFocused);
 
   InvalidateCell(ActiveRow, ActiveColumn);
@@ -2590,14 +2574,9 @@ begin
     TOvcTCComboBox(ACell).UseRunTimeItems := False;
 
     {WideString Support}
-    {$IFDEF VERSION5}
     if AField.DataType in [ftString, ftWideString, ftSmallInt, ftInteger,
       ftWord] then begin
       if AField.DataType in [ftString, ftWideString] then
-    {$ELSE}
-    if AField.DataType in [ftString, ftSmallInt, ftInteger, ftWord] then begin
-      if AField.DataType = ftString then
-    {$ENDIF}
 
         TOvcTCComboBox(ACell).MaxLength := AField.DisplayWidth;
     end else
@@ -2606,12 +2585,7 @@ begin
     case AField.DataType of
 
       {WideString Support}
-      {$IFDEF VERSION5}
       ftString, ftWideString :
-      {$ELSE}
-      ftString   :
-      {$ENDIF}
-
         begin
           TOvcTCSimpleField(ACell).DataType := sftString;
           TOvcTCSimpleField(ACell).MaxLength := AField.DisplayWidth;
@@ -2630,12 +2604,7 @@ begin
     case AField.DataType of
 
       {WideString Support}
-      {$IFDEF VERSION5}
       ftString, ftWideString :
-      {$ELSE}
-      ftString   :
-      {$ENDIF}
-
         begin
           TOvcTCPictureField(ACell).DataType := pftString;
           if Length(TOvcTCPictureField(ACell).PictureMask) >
@@ -4206,7 +4175,7 @@ end;
 
 procedure TOvcCustomDbTable.tbFreeMem(P: Pointer; ACell: TOvcBaseTableCell; const AField: TField);
 begin
-  if (ACell is TOvcTCString) or (AField.DataType in [ftString{$IFDEF VERSION5}, ftWideString{$ENDIF}]) then
+  if (ACell is TOvcTCString) or (AField.DataType in [ftString, ftWideString]) then
     Dispose(PString(P))
   else
     FreeMem(P);
@@ -4279,11 +4248,7 @@ begin
       case AField.DataType of
         ftString   : PString(Data)^ := AField.Text;
 
-        {WideString Support}
-        {$IFDEF VERSION5}
         ftWideString : PString(Data)^ := AField.Text;
-        {$ENDIF}
-
         ftSmallInt : PSmallInt(Data)^ := AField.AsInteger; //I := AField.AsInteger;
         ftInteger  : PLongInt(Data)^ := AField.AsInteger; // L := AField.AsInteger;
         ftWord     : PWord(Data)^ := AField.AsInteger; // W := AField.AsInteger;
@@ -4337,11 +4302,7 @@ begin
 
         if Idx = -1 then
           if TOvcTCComboBox(ACell).Style in [csDropDown, csSimple] then
-            {$IFDEF CBuilder}
-            StrPCopy(PCellComboBoxInfo(Data)^.St, S);
-            {$ELSE}
             PCellComboBoxInfo(Data)^.St := PString(Data)^ //S;
-            {$ENDIF}
       end;
 
       Exit;
@@ -4380,7 +4341,7 @@ var
 begin
   Size := tbGetDataSize(ACell);
 
-  if (ACell is TOvcTCString) or (AField.DataType in [ftString{$IFDEF VERSION5}, ftWideString{$ENDIF}]) then
+  if (ACell is TOvcTCString) or (AField.DataType in [ftString, ftWideString]) then
     New(PString(P))
   else
     GetMem(P, Size);
@@ -4524,11 +4485,7 @@ begin
   end;
 
   if Assigned(C) then
-    {$IFDEF VERSION5}
     if (GetImmediateParentForm(C) = GetImmediateParentForm(Self)) then
-    {$ELSE}
-    if GetParentForm(C) = GetParentForm(Self) then
-    {$ENDIF}
       Result := True;
 end;
 
@@ -5192,10 +5149,7 @@ begin
         ftString   : AField.Text := string(S);
 
         {WideString Support}
-        {$IFDEF VERSION5}
         ftWideString : AField.Text := string(S);
-        {$ENDIF}
-
         ftSmallInt : AField.AsInteger := I;
         ftInteger  : AField.AsInteger := L;
         ftWord     : AField.AsInteger := W;

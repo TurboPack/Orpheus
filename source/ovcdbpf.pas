@@ -52,9 +52,8 @@ const
   {field types supported by the data aware picture field}
   SupportedFieldTypes : set of  TFieldType =
     [ftString, ftSmallInt, ftInteger, ftWord, ftBoolean,
-     ftFloat, ftCurrency, ftDate, ftTime, ftDateTime, ftBCD
-     {$IFDEF VERSION5}, ftWideString {$ENDIF}
-     {$IFDEF VERSION6}, ftTimeStamp {$ENDIF}];
+     ftFloat, ftCurrency, ftDate, ftTime, ftDateTime, ftBCD,
+     ftWideString, ftTimeStamp];
 
 type
   TOvcDbPictureField = class(TOvcCustomPictureField)
@@ -145,12 +144,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
     procedure Restore;
       override;
 
@@ -191,11 +188,9 @@ type
       write SetZeroAsNull default False;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property Borders;
     property BorderStyle;
@@ -523,7 +518,7 @@ begin
       ftDate,
       ftTime,
       ftDateTime : DT := Self.AsDateTime;
-      ftString{$IFDEF VERSION5}, ftWideString{$ENDIF}:
+      ftString, ftWideString:
 { 06/2011, AB fix for a bug discovered by Yeimi Osorio (issue 3305212)
            GetValue expects a string here }
         FLastError := Self.GetValue(sValue);
@@ -541,8 +536,7 @@ begin
       Field.Clear
     else
       case Field.DataType of
-        ftString{$IFDEF VERSION5}, ftWideString{$ENDIF}
-                     : Field.AsString  := sValue;
+        ftString, ftWideString: Field.AsString  := sValue;
         ftSmallInt   : Field.AsInteger := I;
         ftInteger    : Field.AsInteger := L;
         ftWord       : Field.AsInteger := W;
@@ -551,9 +545,7 @@ begin
         ftCurrency   : Field.AsFloat := E;
         ftBCD        : Field.AsFloat := E;
 
-        ftDate, ftTime {$IFDEF VERSION6} , ftTimeStamp {$ENDIF}
-                     : Field.AsDateTime := DT;
-
+        ftDate, ftTime, ftTimeStamp : Field.AsDateTime := DT;
         ftDateTime   :
           begin
             {preserve unedited date or time portion of field value}
@@ -571,11 +563,7 @@ end;
 procedure TOvcDbPictureField.pfdbSetFieldProperties;
 begin
   case FFieldType of
-    ftString
-    {$IFDEF VERSION5}
-    , ftWideString
-    {$ENDIF}
-      :
+    ftString, ftWideString:
       begin
         DataType := pftString;
         if Field <> nil then begin
@@ -596,7 +584,7 @@ begin
     ftBCD      : DataType := pftExtended;
     ftDate     : DataType := pftDate;
     ftTime     : DataType := pftTime;
-    ftDateTime {$IFDEF VERSION6} , ftTimeStamp {$ENDIF} :
+    ftDateTime, ftTimeStamp :
       case DateOrTime of
         ftUseDate, ftUseBothEditDate : DataType := pftDate;
         ftUseTime, ftUseBothEditTime : DataType := pftTime;
@@ -645,11 +633,7 @@ begin
 
   if Field <> nil then begin
     case FFieldType of
-      ftString
-      {$IFDEF VERSION5}
-      , ftWideString
-      {$ENDIF}
-                  : begin
+      ftString, ftWideString: begin
                      sNewValue := Field.AsString;
                      if (sNewValue = '') and not (efoStripLiterals in Options) then begin
                        {new or empty field. create display string w/ literals}
@@ -680,7 +664,7 @@ begin
                    else
                      DT := Field.AsDateTime;
       ftDate,
-      ftDateTime {$IFDEF VERSION6} , ftTimeStamp {$ENDIF}:
+      ftDateTime, ftTimeStamp:
         if (Field.IsNull) then DT := BadDate
         else DT := Field.AsDateTime;
     else
@@ -699,7 +683,7 @@ begin
     try
       {get copy of current field value}
 
-      if Field.DataType in [ftString {$IFDEF VERSION5}, ftWideString{$ENDIF}] then
+      if Field.DataType in [ftString, ftWideString] then
         Self.GetValue(sOldValue)
       else
         Self.GetValue(F);
@@ -716,7 +700,7 @@ begin
         ftDate     : Self.AsDateTime := DT;
         ftTime     : Self.AsDateTime := DT;
         ftDateTime : Self.AsDateTime := DT;
-        ftString {$IFDEF VERSION5}, ftWideString{$ENDIF}:
+        ftString, ftWideString:
           Self.SetValue(sNewValue);
         else
           Self.SetValue(S);
@@ -732,7 +716,7 @@ begin
     end;
 
     {if field value changed, call DoOnChange}
-    if Field.DataType in [ftString {$IFDEF VERSION5}, ftWideString{$ENDIF}] then
+    if Field.DataType in [ftString, ftWideString] then
     begin
       if sNewValue <> sOldValue then
         inherited DoOnChange;
@@ -1060,7 +1044,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbPictureField.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -1072,6 +1055,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

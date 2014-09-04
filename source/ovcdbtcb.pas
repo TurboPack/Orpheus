@@ -69,11 +69,9 @@ type
       read FDbEngineHelper
       write FDbEngineHelper;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

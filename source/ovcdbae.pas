@@ -41,8 +41,7 @@ unit ovcdbae;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, DB, DbCtrls, Forms, Graphics,
+  System.Types, Windows, Buttons, Classes, Controls, DB, DbCtrls, Forms, Graphics,
   SysUtils, Messages, OvcBase, OvcColor, OvcCmd, OvcConst, OvcData, OvcDbNf,
   OvcDbPf, OvcDbSf, OvcMisc, OvcEf, OvcStr;
 
@@ -434,11 +433,9 @@ type
     property DataSource;
     property DataField;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property AutoRowHeight;
     property BorderStyle;
@@ -522,11 +519,9 @@ type
     property DataField;
     property DateOrTime;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property AutoRowHeight;
     property BorderStyle;
@@ -609,11 +604,9 @@ type
     property DataSource;
     property DataField;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property AutoRowHeight;
     property BorderStyle;

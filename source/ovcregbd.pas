@@ -28,10 +28,6 @@
 
 {$I OVC.INC}
 
-{$IFNDEF VERSION3}
-!! Error - not for Delphi 1 or Delphi 2 or C++ Builder 1
-{$ENDIF}
-
 {$B-} {Complete Boolean Evaluation}
 {$I+} {Input/Output-Checking}
 {$P+} {Open Parameters}
@@ -47,9 +43,7 @@ unit ovcregbd;
 interface
 
 uses
-  Windows,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Classes, Controls, TypInfo;
+  Windows, DesignIntf, DesignEditors, Classes, Controls, TypInfo;
 
 procedure Register;
 

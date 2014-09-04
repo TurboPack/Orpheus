@@ -115,13 +115,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     {public properties}
     property Field : TField
@@ -131,11 +128,9 @@ type
   TOvcDbTimeEdit = class(TOvcCustomDbTimeEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSelect;
     property AutoSize;
@@ -162,9 +157,7 @@ type
     property OEMConvert;
     property ParentColor;
     property ParentCtl3D;
-    {$IFDEF VERSION4}
     property ParentBiDiMode;
-    {$ENDIF}
     property ParentFont;
     property ParentShowHint;
     property PopupMenu;
@@ -186,9 +179,7 @@ type
     property OnDblClick;
     property OnDragDrop;
     property OnDragOver;
-    {$IFDEF VERSION4}
     property OnEndDock;
-    {$ENDIF}
     property OnEndDrag;
     property OnEnter;
     property OnExit;
@@ -565,7 +556,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomDbTimeEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -577,6 +567,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

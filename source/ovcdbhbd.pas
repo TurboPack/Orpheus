@@ -38,11 +38,6 @@
 unit ovcdbhbd;
   {Borland Database Engine helper class}
 
-{$IFNDEF VERSION3}
-!! Error - The Borland Database Engine helper class is for Delphi 3+ only
-{$ENDIF}
-
-
 interface
 
 uses
@@ -125,11 +120,7 @@ var
   Desc   : DBDesc;
 begin
   StrPLCopy(AliasZSource, aAlias, pred(Length(AliasZSource)));
-{$IFDEF UNICODE}
   CharToOemW(AliasZSource, AliasZ);
-{$ELSE}
-  CharToOemA(AliasZSource, AliasZ);
-{$ENDIF}
   Check(DbiGetDatabaseDesc(AliasZ, @Desc));
   OemToCharA(Desc.szDbType, Desc.szDbType);
   aDriver := string(Desc.szDbType);

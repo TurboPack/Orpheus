@@ -41,8 +41,7 @@ unit ovcdbtb0;
 interface
 
 uses
-  Windows, SysUtils, Messages, Classes, Graphics, Controls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  Windows, SysUtils, Messages, Classes, Graphics, Controls, DesignIntf, DesignEditors,
   Buttons, Forms, Dialogs, StdCtrls, OvcBase, OvcEf, OvcPb, OvcPf, OvcNf,
   ExtCtrls, OvcTCmmn, OvcTCell, OvcDbTbl, OvcTbCls, OvcTable, OvcSf, OvcSc;
 
@@ -341,15 +340,7 @@ end;
 
 procedure TOvcfrmDbColEditor.GetCells;
 var
-  {$IFDEF VERSION4}
-    {$IFDEF VERSION6}
-      Designer : IDesigner;
-    {$ELSE}
-      Designer : IFormDesigner;
-    {$ENDIF}
-  {$ELSE}
-  Designer : TFormDesigner;
-  {$ENDIF}
+  Designer : IDesigner;
   TI       : PTypeInfo;
   Index    : Integer;
   C        : TComponent;

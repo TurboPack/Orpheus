@@ -124,11 +124,9 @@ type
       write FDbEngineHelper;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSelect;
     property AutoSize;
     property BorderStyle;
@@ -236,21 +234,13 @@ end;
 
 procedure TOvcDbSearchEdit.LabelAttach(Sender : TObject; Value : Boolean);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
   S  : string;
 begin
   if csLoading in ComponentState then
     Exit;
 
-{$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-{$ELSE}
-  PF := TForm(GetParentForm(Self));
-{$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -284,21 +274,13 @@ end;
 procedure TOvcDbSearchEdit.Notification(AComponent : TComponent;
                                         Operation : TOperation);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then begin
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-{$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-{$ELSE}
-      PF := TForm(GetParentForm(Self));
-{$ENDIF}
       if Assigned(PF) and not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;
         FLabelInfo.ALabel := nil;
@@ -353,74 +335,6 @@ begin
   end;
 end;
 
-
-{ - re-written}
-(*
-procedure TOvcDbSearchEdit.PerformSearch;
-var
-  L          : Integer;
-  BM         : TBookMark;
-  FoundField : TField;
-  FoundValue : string;
-  DataSet    : TDataSet;
-begin
-  {don't bother to do anything if it doesn't make sense}
-  if (DataSource = nil) then
-    Exit;
-  DataSet := DataSource.DataSet;
-  if (DataSet = nil) or
-     (OvcGetIndexFieldCount(DbEngineHelper, DataSet) = 0) or
-     (not DataSet.Active) then
-    Exit;
-
-  {perform the search for the partial key}
-  with DataSet do begin
-    {save location of current record}
-    BM := GetBookMark;
-    try
-      try
-        {find nearest record to key}
-        OvcFindNearestKey(DbEngineHelper, DataSet, [Text]);
-      except
-        on EConvertError do begin
-          SelStart := 0;
-          SelLength := Length(Text);
-        end else
-          raise;
-      end;
-
-      {retrieve the value of the found record}
-      FoundField := OvcGetIndexField(DbEngineHelper, DataSet, 0);
-      FoundValue := FoundField.AsString;
-      if (FoundField.DataType in [ftString, ftMemo, ftFmtMemo
-                                  {$IFDEF VERSION4},
-                                  ftFixedChar, ftWideString
-                                  {$ENDIF}]) then begin
-      {check to make sure match conforms to CaseSensitive setting}
-        if Pos(ISUpperCase(Text),
-               ISUpperCase(FoundValue)) <> 1 then begin
-          GotoBookMark(BM);
-          Exit;
-        end;
-      end;
-      if ShowResults then begin {found}
-        {record previous value}
-        PreviousText := ISUpperCase(Text);
-
-        {assign new value and select added characters}
-        L := Length(Text);
-        Text := FoundValue;
-        SelStart := L;
-        SelLength := Length(Text)-L;
-        Self.Modified := False;
-      end;
-    finally
-      FreeBookMark(BM);
-    end;
-  end;
-end;
-*)
-
 { re-written}
 procedure TOvcDbSearchEdit.PerformSearch;
 var
@@ -459,9 +373,7 @@ begin
       end;
 
       if OK
-      and ( Field.DataType in [ ftString, ftMemo
-        {$IFDEF VERSION3}, ftFmtMemo{$ENDIF}
-        {$IFDEF VERSION4}, ftFixedChar, ftWideString {$ENDIF} ] )
+      and ( Field.DataType in [ ftString, ftMemo, ftFmtMemo, ftFixedChar, ftWideString] )
       and ( pos( ISUpperCase( Text ), ISUpperCase( Field.AsString ) ) <> 1 ) then
         OK := false;
 

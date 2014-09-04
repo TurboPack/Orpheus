@@ -80,13 +80,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     property Field : TField
       read GetField;
@@ -104,11 +101,9 @@ type
       write SetDataSource;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Color;
     property Ctl3D;
@@ -164,7 +159,7 @@ implementation
 const
   {field types supported}
   SupportedFieldTypes : set of  TFieldType = [ftSmallint, ftInteger,
-    ftWord, ftFloat, ftCurrency, ftBCD {$IFDEF VERSION4}, ftLargeint {$ENDIF}];
+    ftWord, ftFloat, ftCurrency, ftBCD, ftLargeint];
 
 {*** TOvcDbColorComboBox ***}
 
@@ -312,7 +307,6 @@ begin
   Refresh;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbColorComboBox.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -324,6 +318,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

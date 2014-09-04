@@ -238,11 +238,9 @@ type
       write FDbEngineHelper;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Color;
     property Ctl3D;
     property DragMode;
@@ -607,21 +605,13 @@ end;
 
 procedure TOvcDbIndexSelect.LabelAttach(Sender : TObject; Value : Boolean);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
   S  : string;
 begin
   if csLoading in ComponentState then
     Exit;
 
-{$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-{$ELSE}
-  PF := TForm(GetParentForm(Self));
-{$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -655,21 +645,13 @@ end;
 procedure TOvcDbIndexSelect.Notification(AComponent : TComponent;
           Operation : TOperation);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then begin
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-{$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-{$ELSE}
-      PF := TForm(GetParentForm(Self));
-{$ENDIF}
       if Assigned(PF) and not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;
         FLabelInfo.ALabel := nil;
@@ -799,11 +781,7 @@ begin
   end;
 
   {conditionally remove non-visible Fields}
-{$IFDEF VERSIONXE6UP}
   if not ShowHidden and (DataSource.DataSet.Fields.LifeCycles <> [TFieldLifeCycle.lcAutomatic]) then begin
-{$ELSE}
-  if not ShowHidden and not (DataSource.DataSet.DefaultFields) then begin
-{$ENDIF}
     for I := Pred(Items.Count) downto 0 do begin
       IndexInfo := TOvcIndexInfo(Items.Objects[I]);
       Fld := DataSource.DataSet.FieldByName(IndexInfo.FFields[0]);

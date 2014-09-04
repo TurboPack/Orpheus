@@ -41,10 +41,9 @@ unit ovcdbae0;
 interface
 
 uses
-  Windows, Classes, Graphics, ExtCtrls, Forms, Controls, Buttons,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  StdCtrls, SysUtils, OvcBase, OvcConst, OvcData, OvcDbAe, OvcPb, OvcPf,
-  OvcEf, OvcSf, OvcStr;
+  Windows, Classes, Graphics, ExtCtrls, Forms, Controls, Buttons, DesignIntf, DesignEditors,
+  StdCtrls, SysUtils, OvcBase, OvcConst, OvcData, OvcDbAe, OvcPb, OvcPf, OvcEf, OvcSf,
+  OvcStr;
 
 type
   TOvcfrmDbAeRange = class(TForm)

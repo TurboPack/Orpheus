@@ -43,9 +43,7 @@ unit ovcregdb;
 interface
 
 uses
-  Windows, Classes,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Forms, SysUtils;
+  Windows, Classes, DesignIntf, DesignEditors, Forms, SysUtils;
 
 procedure Register;
 

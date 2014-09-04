@@ -41,9 +41,8 @@ unit ovcdbae2;
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons, StdCtrls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  SysUtils, ExtCtrls, OvcConst, OvcData, OvcExcpt, OvcMisc, OvcStr;
+  Windows, Classes, Graphics, Forms, Controls, Buttons, StdCtrls, DesignIntf,
+  DesignEditors, SysUtils, ExtCtrls, OvcConst, OvcData, OvcExcpt, OvcMisc, OvcStr;
 
 type
   TOvcfrmDbAePictureMask = class(TForm)

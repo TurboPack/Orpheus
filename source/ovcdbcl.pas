@@ -42,10 +42,9 @@ unit ovcdbcl;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, Db, DbCtrls, Forms, Graphics, StdCtrls,
-  Menus, Messages, SysUtils, OvcBase, OvcCmd, OvcConst, OvcData, OvcMisc,
-  OvcColor;
+  System.UITypes, System.Types, Windows, Buttons, Classes, Controls, Db, DbCtrls,
+  Forms, Graphics, StdCtrls, Menus, Messages, SysUtils, OvcBase, OvcCmd, OvcConst,
+  OvcData, OvcMisc, OvcColor;
 
 type
   THeaderClickEvent =
@@ -218,13 +217,10 @@ type
       override;
     destructor  Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     procedure InvalidateItem(Row : Integer);
       {-invalidate the area for this item}
@@ -292,11 +288,9 @@ type
         default 1;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Controller;
@@ -806,11 +800,7 @@ begin
   begin
     if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     begin
-{$IFDEF VERSIONXE6UP}
       if DataSource.DataSet.Fields.LifeCycles <> [TFieldLifeCycle.lcAutomatic] then
-{$ELSE}
-      if not DataSource.DataSet.DefaultFields then
-{$ENDIF}
         Result := DataSource.DataSet.FindField(FDataLink.FieldName);
     end;
   end;
@@ -956,8 +946,7 @@ begin
 
         {paint the string}
         Canvas.FillRect(CR);
-        ExtTextOut(Canvas.Handle, Left, Y, ETO_CLIPPED,
-                   @CR, {$IFDEF UNICODE}string(P){$ELSE}P{$ENDIF}, StrLen(P), nil);
+        ExtTextOut(Canvas.Handle, Left, Y, ETO_CLIPPED, @CR, string(P), StrLen(P), nil);
 
         {restore colors for active items}
         if I = ActiveRow then begin
@@ -1424,7 +1413,6 @@ begin
   Update;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbColumnList.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -1436,6 +1424,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.
