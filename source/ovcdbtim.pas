@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbTimeEdit = class(TOvcTimeEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment    : TAlignment;
     FAutoUpdate   : Boolean;
@@ -94,7 +95,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -106,7 +107,8 @@ type
     property PreserveDate : Boolean
       read FPreserveDate write FPreserveDate;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly write SetReadOnly;
 

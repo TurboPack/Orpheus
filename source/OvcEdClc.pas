@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomNumberEdit = class(TOvcEdPopup)
-  {.Z+}
+  
+
   protected {private}
     FAllowIncDec     : Boolean;
     FCalculator      : TOvcCalculator;
@@ -91,7 +92,7 @@ type
       override;
     procedure KeyPress(var Key : Char);
       override;
-    {.Z-}
+
 
     property AllowIncDec : Boolean
       read FAllowIncDec write FAllowIncDec;
@@ -109,10 +110,11 @@ type
       read GetReadOnly write SetReadOnly;
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
     procedure PopupClose(Sender : TObject);
       override;

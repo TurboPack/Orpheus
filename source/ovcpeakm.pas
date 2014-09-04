@@ -49,7 +49,7 @@ type
   PIntArray = ^TIntArray;
   TOvcPmStyle = (pmBar, pmHistoryPoint);
   TOvcPeakMeter = class(TOvcGraphicControl)
-  {.Z+}
+
   protected
     {Property fields}
     FBackgroundColor : TColor;
@@ -103,7 +103,7 @@ type
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
     {public properties}
-  {.Z-}
+
 
     property Peak : Integer
       read FPeak write SetPeak;
@@ -113,12 +113,12 @@ type
       read FBackgroundColor write SetBackgroundColor default clBtnFace;
     property BarColor : TColor
       read FBarColor write SetBarColor default clBlue;
-  {.Z+}
+
     property BorderStyle : TBorderStyle
       read FBorderStyle write SetBorderStyle default bsSingle;
     property Ctl3D : Boolean
       read FCtl3D write SetCtl3D default True;
-  {.Z-}
+
     property GridColor : TColor
       read FGridColor write SetGridColor default clBlack;
     property MarginBottom : Integer

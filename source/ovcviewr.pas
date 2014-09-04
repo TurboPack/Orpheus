@@ -70,7 +70,7 @@ const
 type
   {The ancestor viewer class}
   TOvcBaseViewer = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property fields - persistent}
     FBorders          : TOvcBorders;
@@ -299,14 +299,14 @@ type
       write FOnUserCommand;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
-  {.Z-}
+
 
     function CheckLine(LineNum : LongInt) : LongInt;
       virtual;
@@ -376,7 +376,7 @@ type
       stored False;
   end;
 
-  {.Z+}
+
   {TOrTextFileViewer related definitions}
   TStringNode = class
   protected
@@ -411,10 +411,10 @@ type
     function Nth(N : LongInt) : TStringNode;
       {-Return a pointer to the Nth node in the list}
   end;
-  {.Z-}
+
 
   TOvcCustomTextFileViewer = class(TOvcBaseViewer)
-  {.Z+}
+
   protected {private}
     {properties}
     FFileName : PString;
@@ -432,7 +432,7 @@ type
   protected
     function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
       override;
-  {.Z-}
+
 
     {properties}
     property FileName : string
@@ -444,12 +444,12 @@ type
       write SetIsOpen;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function CheckLine(LineNum : LongInt) : LongInt;
       override;
@@ -519,7 +519,7 @@ type
     property OnStartDrag;
   end;
 
-{.Z+}
+
 {TOrFileViewer related definitions}
 const
   {--DO NOT CHANGE ANY OF THE FOLLOWING CONSTANTS--}
@@ -546,11 +546,11 @@ type
 type
   PfvPageArray = ^TfvPageArray;
   TfvPageArray = array[0..Pred(MaxPageCount)] of TfvPageRec;
-{.Z-}
+
 
 type
   TOvcCustomFileViewer = class(TOvcBaseViewer)
-  {.Z+}
+
   protected {private}
     {properties}
     FBufferPageCount : integer;     {Number of pages in fvPages}
@@ -608,7 +608,7 @@ type
     {virtual methods}
     function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
       override;
-  {.Z-}
+
 
     {properties}
     property BufferPageCount : integer
@@ -632,12 +632,12 @@ type
       write SetIsOpen;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     {other methods}
     function CheckLine(LineNum : LongInt) : LongInt;

@@ -50,7 +50,7 @@ type
 type
   {section to act as parent for components}
   TOvcSection = class(TOvcCollectibleControl)
-  {.Z+}
+
   protected {private}
     {windows message response methods}
     procedure WMNCHitTest(var Msg : TWMNCHitTest);
@@ -62,7 +62,7 @@ type
 
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
   published
     property Color default clBtnFace;
     property Height stored False;
@@ -72,7 +72,7 @@ type
   end;
 
   TOvcSplitter = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property variables}
     FAllowResize      : Boolean;
@@ -161,7 +161,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
 
     {public methods}
     procedure Center;
@@ -182,11 +182,11 @@ type
     property AutoUpdate : Boolean
       read FAutoUpdate write SetAutoUpdate
       default False;
-  {.Z+}
+
     property BorderStyle : TBorderStyle
       read FBorderStyle write SetBorderStyle
       default bsNone;
-  {.Z-}
+
     property ColorLeft : TColor
       read FColorLeft write SetColorLeft
       default clBlack;

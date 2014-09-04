@@ -57,7 +57,8 @@ type
     of object;
 
   TOvcCustomTimeEdit = class(TOvcCustomEdit)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDurationDisplay     : TOvcDurationDisplay;
@@ -98,7 +99,7 @@ type
     procedure SetTime(Value : TDateTime);
     procedure SetTimeText(Value : string);
       dynamic;
-  {.Z-}
+
 
     {protected properties}
     property DefaultToPM  : Boolean
@@ -127,10 +128,11 @@ type
       read FOnSetTime write FOnSetTime;
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
      function FormatTime(Value : TDateTime) : string;
       dynamic;

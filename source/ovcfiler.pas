@@ -71,16 +71,18 @@ type
   end;
 
 type
-  {.Z+}
+  
+
   PExPropInfo = ^ TExPropInfo;
   TExPropInfo = packed record
     PI      : TPropInfo;
     AObject : TObject;
   end;
-  {.Z-}
+
 
 type
-  {.Z+}
+  
+
   TOvcPropertyList = class(TObject)
   protected {private}
     FList  : TList;
@@ -103,10 +105,11 @@ type
     property Items[Index : Integer] : PExPropInfo
       read Get; default;
   end;
-  {.Z-}
+
 
 type
-  {.Z+}
+  
+
   TOvcDataFiler = class(TObject)
   protected {private}
     {property variables}
@@ -177,15 +180,16 @@ type
     property Storage : TOvcAbstractStore
       read FStorage write FStorage;
   end;
-  {.Z-}
 
 
-{.Z+}
+
+
+
 procedure UpdateStoredList(AForm : TWinControl; AStoredList : TStrings; FromForm : Boolean);
 function CreateStoredItem(const CompName, PropName : string) : string;
 function ParseStoredItem(const Item : string; var CompName, PropName : string) : Boolean;
 function GetPropType(PropInfo : PExPropInfo) : PTypeInfo;
-{.Z-}
+
 
 
 implementation

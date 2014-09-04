@@ -79,7 +79,8 @@ type
   TOvcOutlineNodes = class;
 
   TOvcOutlineNode = class(TPersistent)
-  {.Z+}
+  
+
   protected
     FAddIndex : Integer;
     FButtonRect : TRect;
@@ -136,7 +137,7 @@ type
     function IsLastSibling: Boolean;
     function IsSibling(Value : TOvcOutlineNode): Boolean;
     property Owner: TOvcOutlineNodes read FOwner;
-  {.Z-}
+
     property AddIndex : Integer read FAddIndex;
     property Checked : Boolean read FChecked write SetChecked;
     procedure Collapse(Recurse: Boolean);
@@ -190,7 +191,7 @@ type
   end;
 
   TOvcOutlineNodes = class(TPersistent)
-  {.Z+}
+
   protected
     FOwner: TOvcCustomOutline;
     FParent : TOvcOutlineNode;
@@ -206,7 +207,7 @@ type
     function NextChild: TOvcOutlineNode;
   public
     procedure Assign(Source: TPersistent); override;
-  {.Z-}
+
     function Add(const S: string): TOvcOutlineNode;
     function AddButtonChild(Node: TOvcOutlineNode; const S: string;
                    InitStyle : TOvcOlNodeStyle; InitChecked : Boolean): TOvcOutlineNode;
@@ -237,7 +238,7 @@ type
     property Owner: TOvcCustomOutline read FOwner;
   end;
 
-  {.Z+}
+
   TOvcCustomOutline = class(TOvcCustomVirtualListBox)
   protected
     FActiveNode     : TOvcOutlineNode;
@@ -340,7 +341,7 @@ type
     function NotAutoRowHeight: Boolean;
 
   public
-  {.Z-}
+
     property AbsNodes : LongInt read GetAbsNodes;
     property AbsNode[Index : LongInt] : TOvcOutlineNode read GetAbsNode;
     property ActiveNode : TOvcOutlineNode read FActiveNode write SetActiveNode;
@@ -461,7 +462,7 @@ type
     property OnStartDrag;
   end;
 
-{.Z+}
+
 
 implementation
 

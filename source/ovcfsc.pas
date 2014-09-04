@@ -68,7 +68,8 @@ type
 
 type
   TOvcFlatSpinner = class(TOvcCustomControl)
-  {.Z+}
+  
+
   protected {private}
     FArrowColor     : TColor;
     FFaceColor      : TColor;

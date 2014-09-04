@@ -49,7 +49,8 @@ type
 
 type
   TOvcDbPictureLabel = class(TOvcCustomPictureLabel)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDataLink       : TFieldDataLink;

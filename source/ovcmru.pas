@@ -76,7 +76,7 @@ type
 
 
   TOvcMenuMRU = class(TOvcComponent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FAddPosition  : TOvcMRUAddPosition;
@@ -142,7 +142,7 @@ type
     procedure Remove(const Value : string);
     property Count : Integer
       read GetCount;
-  {.Z-}
+
 
   published
     property AddPosition : TOvcMRUAddPosition

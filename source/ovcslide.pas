@@ -50,7 +50,7 @@ type
 
 type
   TOvcCustomSlider = class(TOvcCustomControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBorderStyle   : TBorderStyle;
@@ -115,7 +115,7 @@ type
       virtual;
     procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
       override;
-  {.Z-}
+
 
     {properties}
     property BorderStyle : TBorderStyle
@@ -142,7 +142,7 @@ type
       read FOnChange write FOnChange;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     constructor CreateEx(AOwner : TComponent; AsPopup : Boolean);
@@ -162,7 +162,7 @@ type
 
     {public properties}
     property Canvas;
-  {.Z-}
+
   end;
 
   TOvcSlider = class(TOvcCustomSlider)

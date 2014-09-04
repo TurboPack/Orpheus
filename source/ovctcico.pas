@@ -46,19 +46,19 @@ uses
 type
   TOvcTCCustomIcon = class(TOvcBaseTableCell)
     protected
-      {.Z+}
+
       procedure tcPaint(TableCanvas : TCanvas;
                   const CellRect    : TRect;
                         RowNum      : TRowNum;
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
     public
-      {.Z+}
+
       procedure ResolveAttributes(RowNum : TRowNum; ColNum : TColNum;
                                   var CellAttr : TOvcCellAttributes); override;
-      {.Z-}
+
   end;
 
   TOvcTCIcon = class(TOvcTCCustomIcon)

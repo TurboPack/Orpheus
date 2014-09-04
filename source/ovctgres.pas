@@ -46,14 +46,14 @@ uses
 type
   TOvcCellGlyphs = class(TPersistent)
     protected {private}
-      {.Z+}
+
       FResource         : pointer;
       FActiveGlyphCount : Integer;
       FGlyphCount       : Integer;
       FOnCfgChanged     : TNotifyEvent;
-      {.Z-}
+
     protected
-      {.Z+}
+
       function GetBitMap : TBitMap;
       function GetIsDefault : boolean;
       procedure SetActiveGlyphCount(G : Integer);
@@ -64,12 +64,12 @@ type
       procedure CalcGlyphCount;
       function IsNotDefault : boolean;
       procedure DoCfgChanged;
-      {.Z-}
+
     public {protected}
-      {.Z+}
+
       property OnCfgChanged : TNotifyEvent
          read FOnCfgChanged write FOnCfgChanged;
-      {.Z-}
+
 
     public
       constructor Create;

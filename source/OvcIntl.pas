@@ -49,7 +49,8 @@ uses
 type
   TCurrencySt = array[0..5] of Char;
 
-  {.Z+}
+  
+
   TIntlData = packed record
     {substitution strings for semi-literal mask characters}
     CurrencyLtStr : TCurrencySt; {corresponding string for 'c'}
@@ -65,11 +66,12 @@ type
     YesChar       : Char;
     NoChar        : Char;
   end;
-  {.Z-}
+
 
 type
   TOvcIntlSup = class(TObject)
-  {.Z+}
+  
+
   protected {private}
     FAutoUpdate      : Boolean;     {true to reset settings when win.ini changes}
 
@@ -137,130 +139,148 @@ type
     constructor Create;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function CurrentDateString(const Picture : string;
       Pack : Boolean) : string;
-  {.Z+}
+  
+
     function CurrentDatePChar(Dest : PChar; Picture : PChar;
       Pack : Boolean) : PChar;
       {-returns today's date as a string of the specified form}
-  {.Z-}
+
 
     function CurrentTimeString(const Picture : string; Pack : Boolean) : string;
-  {.Z+}
+  
+
     function CurrentTimePChar(Dest : PChar; Picture : PChar; Pack : Boolean) : PChar;
       {-returns current time as a string of the specified form}
-  {.Z-}
+
 
     function DateToDateString(const Picture : string; Julian : TStDate;
       Pack : Boolean) : string;
-  {.Z+}
+  
+
     function DateToDatePChar(Dest : PChar; Picture : PChar; Julian : TStDate;
       Pack : Boolean) : PChar;
-  {.Z-}
+
       {-convert Julian to a string of the form indicated by Picture}
     function DateTimeToDatePChar(Dest : PChar; Picture : PChar;
       DT : TDateTime; Pack : Boolean) : PChar;
 
     function DateStringToDMY(const Picture, S : string; var Day, Month, Year : Integer;
       Epoch : Integer) : Boolean;
-  {.Z+}
+  
+
     function DatePCharToDMY(Picture, S : PChar; var Day, Month, Year : Integer;
       Epoch : Integer) : Boolean;
-  {.Z-}
+
       {-extract day, month, and year from S, returning true if string is valid}
 
     function DateStringIsBlank(const Picture, S : string) : Boolean;
-  {.Z+}
+  
+
     function DatePCharIsBlank(Picture, S : PChar) : Boolean;
-  {.Z-}
+
       {-return True if the month, day, and year in S are all blank}
 
     function DateStringToDate(const Picture, S : string; Epoch : Integer) : TStDate;
-  {.Z+}
+  
+
     function DatePCharToDate(Picture, S : PChar; Epoch : Integer) : TStDate;
-  {.Z-}
+
       {-convert St, a string of the form indicated by Picture, to a julian date. Picture and St must be of equal lengths}
 
     function DayOfWeekToString(WeekDay : TDayType) : string;
-  {.Z+}
+  
+
     function DayOfWeekToPChar(Dest : PChar; WeekDay : TDayType) : PChar;
-  {.Z-}
+
       {-return a string for the specified day of the week}
 
     function DMYtoDateString(const Picture : string;
       Day, Month, Year : Integer; Pack : Boolean; Epoch : Integer) : string;
-  {.Z+}
+  
+
     function DMYtoDatePChar(Dest : PChar; Picture : PChar;
       Day, Month, Year : Integer; Pack : Boolean; Epoch : Integer) : PChar;
-  {.Z-}
+
       {-merge the month, day, and year into the picture}
 
     function InternationalCurrency(FormChar : Char; MaxDigits : Byte; Float,
                                    AddCommas, IsNumeric : Boolean) : string;
-  {.Z+}
+  
+
     function InternationalCurrencyPChar(Dest : PChar; FormChar : Char;
                                         MaxDigits : Byte; Float,
                                         AddCommas, IsNumeric : Boolean) : PChar;
-  {.Z-}
+
       {-return a picture mask for a currency string, based on Windows' intl info}
 
     function InternationalDate(ForceCentury : Boolean) : string;
-  {.Z+}
+  
+
     function InternationalDatePChar(Dest : PChar; ForceCentury : Boolean) : PChar;
-  {.Z-}
+
       {-return a picture mask for a short date string, based on Windows' international information}
 
     function InternationalLongDate(ShortNames : Boolean; ExcludeDOW : Boolean) : string;
-  {.Z+}
+  
+
     function InternationalLongDatePChar(Dest : PChar; ShortNames : Boolean; ExcludeDOW : Boolean) : PChar;
-  {.Z-}
+
       {-return a picture mask for a date string, based on Windows' international information}
 
     function InternationalTime(ShowSeconds : Boolean) : string;
-  {.Z+}
+  
+
     function InternationalTimePChar(Dest : PChar; ShowSeconds : Boolean) : PChar;
-  {.Z-}
+
       {-return a picture mask for a time string, based on Windows' international information}
 
     function MonthStringToMonth(const S : string; Width : Byte) : Byte;
-  {.Z+}
+  
+
     function MonthPCharToMonth(S : PChar; Width : Byte) : Byte;
-  {.Z-}
+
       {-Convert the month name in S to a month (1..12)}
 
     function MonthToString(Month : Integer) : string;
-  {.Z+}
+  
+
     function MonthToPChar(Dest : PChar; Month : Integer) : PChar;
-  {.Z-}
+
       {return month name as a string for Month}
 
     procedure ResetInternationalInfo;
       {-read string resources and update internal info to match Windows'}
 
     function TimeStringToHMS(const Picture, S : string; var Hour, Minute, Second : Integer) : Boolean;
-  {.Z+}
+  
+
     function TimePCharToHMS(Picture, S : PChar; var Hour, Minute, Second : Integer) : Boolean;
-  {.Z-}
+
       {-extract Hours, Minutes, Seconds from St, returning true if string is valid}
 
     function TimeStringToTime(const Picture, S : string) : TStTime;
-  {.Z+}
+  
+
     function TimePCharToTime(Picture, S : PChar) : TStTime;
-  {.Z-}
+
       {-convert S, a string of the form indicated by Picture, to a Time variable}
 
     function TimeToTimeString(const Picture : string; T : TStTime; Pack : Boolean) : string;
-  {.Z+}
+  
+
     function TimeToTimePChar(Dest : PChar; Picture : PChar; T : TStTime; Pack : Boolean) : PChar;
-  {.Z-}
+
       {-convert T to a string of the form indicated by Picture}
 
     function TimeToAmPmString(const Picture : string; T : TStTime; Pack : Boolean) : string;
-  {.Z+}
+  
+
     function TimeToAmPmPChar(Dest : PChar; Picture : PChar; T : TStTime; Pack : Boolean) : PChar;
-  {.Z-}
+
       {-convert T to a string of the form indicated by Picture. Times are always displayed in am/pm format.}
 
     property AutoUpdate : Boolean

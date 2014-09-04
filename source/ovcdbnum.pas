@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbNumberEdit = class(TOvcCustomNumberEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment  : TAlignment;
     FAutoUpdate : Boolean;
@@ -95,7 +96,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -110,7 +111,8 @@ type
       read GetDataSource
       write SetDataSource;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly
       write SetReadOnly;
@@ -129,7 +131,7 @@ type
       override;
     procedure PopupOpen;
       override;
-  {.Z-}
+
 
     {public properties}
     property Field : TField

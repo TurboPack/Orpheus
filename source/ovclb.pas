@@ -46,7 +46,7 @@ uses
 
 type
   TOvcCustomListBox = class(TCustomListBox)
-  {.Z+}
+
   protected {private}
     {property variables}
     FController       : TOvcController;
@@ -117,7 +117,7 @@ type
 
     procedure DoOnTabStopsChanged;
       dynamic;
-  {.Z-}
+
 
     {properties}
     property About : string
@@ -134,14 +134,14 @@ type
       read FOnTabStopsChange write FOnTabStopsChange;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor  Destroy;
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
-  {.Z-}
+
 
     procedure ClearTabStops;
     procedure ResetHorizontalScrollbar;

@@ -45,11 +45,12 @@ uses
 
 type
   TOvcDbBDEHelper = class(TOvcDbEngineHelperBase)
-  {.Z+}
+  
+
   protected {private}
   protected
   public
-  {.Z-}
+
     {===GENERAL SESSION-BASED METHODS===}
     procedure GetAliasNames(aList : TStrings); override;
       {-fill list with available alias names; assumes default session}

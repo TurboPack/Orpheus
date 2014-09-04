@@ -198,20 +198,20 @@ type
 {---Table cell ancestor---}
   TOvcTableCellAncestor = class(TComponent)
     protected {private}
-      {.Z+}
+
       FOnCfgChanged : TNotifyEvent;
-      {.Z-}
+
     protected
-      {.Z+}
+
       procedure tcChangeScale(M, D : integer); dynamic;
       procedure tcDoCfgChanged;
-      {.Z-}
+
     public {protected}
-      {.Z+}
+
       procedure tcResetTableValues; virtual; abstract;
       property OnCfgChanged : TNotifyEvent
         write FOnCfgChanged;
-      {.Z-}
+
     public
   end;
 

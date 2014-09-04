@@ -48,7 +48,8 @@ uses
 
 type
   TOvcCustomSliderEdit = class(TOvcEdPopup)
-  {.Z+}
+  
+
   protected {private}
     FAllowIncDec     : Boolean;
     FSlider          : TOvcSlider;
@@ -111,7 +112,7 @@ type
       override;
     procedure MouseUp(Button : TMouseButton; Shift : TShiftState; X, Y : Integer);
       override;
-    {.Z-}
+
 
     property AllowIncDec : Boolean
       read FAllowIncDec write FAllowIncDec;
@@ -129,16 +130,18 @@ type
       read GetPopupWidth write SetPopupWidth;
     property Validate : Boolean
       read FValidate write FValidate;
-    {.Z+}
+    
+
     property ReadOnly : Boolean
       read GetReadOnly write SetReadOnly;
-    {.Z-}
+
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
     procedure PopupClose(Sender : TObject);
       override;

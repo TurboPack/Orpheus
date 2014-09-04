@@ -87,7 +87,8 @@ type
 
   {abstract entry field class}
   TOvcBaseEntryField = class(TOvcCustomControlEx)
-  {.Z+}
+  
+
   protected {private}
     {property instance variables}
     FAutoSize          : Boolean;      {size control when font changes}
@@ -454,7 +455,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
 
     procedure ClearContents;
       {-clear the contents of the entry field}
@@ -559,10 +560,11 @@ type
     property EverModified : Boolean
       read GetEverModified write SetEverModified;
 
-  {.Z+}
+  
+
     property InsertMode : Boolean
       read GetInsertMode write SetInsertMode;
-  {.Z-}
+
 
     property IntlSupport : TOvcIntlSup
       read FIntlSup write SetIntlSupport;

@@ -51,7 +51,8 @@ type
   TOvcDialogOptions = set of TOvcDialogOption;
 
   TOvcDialogPlacement = class(TPersistent)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FPosition : TOvcDialogPosition;
@@ -60,7 +61,7 @@ type
     FTop      : Integer;
     FWidth    : Integer;
     function LeftTopUsed: Boolean;
-  {.Z-}
+
   published
     {properties}
     property Position : TOvcDialogPosition
@@ -81,7 +82,8 @@ type
   end;
 
   TOvcBaseDialog = class(TOvcComponent)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FCaption   : string;
@@ -99,7 +101,7 @@ type
 
     {internal methods}
     procedure DoFormPlacement(Form : TForm);
-  {.Z-}
+
 
     {protected properties}
     property Caption : string
@@ -118,12 +120,13 @@ type
       read FOnHelpClick write FOnHelpClick;
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function Execute : Boolean;
       virtual; abstract;

@@ -46,7 +46,7 @@ uses
 type
   TOvcTableColors = class(TPersistent)
     protected {private}
-      {.Z+}
+
       FLocked              : TColor;
       FLockedText          : TColor;
       FActiveFocused       : TColor;
@@ -59,10 +59,10 @@ type
       FSelectedText        : TColor;
 
       FOnCfgChanged        : TNotifyEvent;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetLocked(C : TColor);
       procedure SetLockedText(C : TColor);
       procedure SetActiveFocused(C : TColor);
@@ -75,13 +75,13 @@ type
       procedure SetSelectedText(C : TColor);
 
       procedure DoCfgChanged;
-      {.Z-}
+
 
     public {protected}
-      {.Z+}
+
       property OnCfgChanged : TNotifyEvent
          read FOnCfgChanged write FOnCfgChanged;
-      {.Z-}
+
 
     public
       constructor Create;

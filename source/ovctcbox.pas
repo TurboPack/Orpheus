@@ -47,14 +47,14 @@ uses
 type
   TOvcTCCustomCheckBox = class(TOvcTCCustomGlyph)
     protected {private}
-      {.Z+}
+
       FAllowGrayed : boolean;
 
       FatherValue : Integer;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetAllowGrayed(AG : boolean);
 
       procedure GlyphsHaveChanged(Sender : TObject);
@@ -64,7 +64,7 @@ type
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;

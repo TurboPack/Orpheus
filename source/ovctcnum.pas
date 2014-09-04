@@ -49,12 +49,12 @@ type
   {The editor class for TOvcTCNumericField cell components}
   TOvcTCNumericFieldEdit = class(TOvcNumericField)
     protected {private}
-      {.Z+}
+
       FCell : TOvcBaseTableCell;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure efMoveFocusToNextField; override;
       procedure efMoveFocusToPrevField; override;
 
@@ -63,7 +63,7 @@ type
       procedure WMKeyDown(var Msg : TWMKey); message WM_KEYDOWN;
       procedure WMKillFocus(var Msg : TWMKillFocus); message WM_KILLFOCUS;
       procedure WMSetFocus(var Msg : TWMSetFocus); message WM_SETFOCUS;
-      {.Z-}
+
 
     public
       property CellOwner : TOvcBaseTableCell
@@ -73,14 +73,14 @@ type
   {The numeric field cell component class}
   TOvcTCCustomNumericField = class(TOvcTCBaseEntryField)
     protected
-      {.Z+}
+
       function GetCellEditor : TControl; override;
       function GetDataType : TNumericDataType;
       function GetPictureMask : string;
 
       procedure SetDataType(DT : TNumericDataType);
       procedure SetPictureMask(const PM : string);
-      {.Z-}
+
 
       property DataType : TNumericDataType
          read GetDataType write SetDataType;

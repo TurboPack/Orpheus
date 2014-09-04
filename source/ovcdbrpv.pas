@@ -86,7 +86,8 @@ type
   end;
 
   TOvcDbRvField = class(TOvcRvField)
-  {.Z+}
+  
+
   protected
   published
     {inherited properties}
@@ -95,7 +96,7 @@ type
     property CanSort stored false;
     property DefaultPrintWidth stored false;
     property DefaultWidth stored false;
-  {.Z-}
+
   end;
 
   TOvcDbRVEnumEvent =

@@ -62,7 +62,7 @@ type
 type
   {Class defining a caret shape}
   TOvcCaret = class(TPersistent)
-  {.Z+}
+
   protected
     {property fields}
     FAlign     : TOvcCaretAlign;      {Caret alignment in cell}
@@ -107,7 +107,7 @@ type
     property OnChange : TNotifyEvent
         read FOnChange
         write FOnChange;
-  {.Z-}
+
 
   published
     {properties}
@@ -139,7 +139,7 @@ type
         default False;
   end;
 
-{.Z+}
+
 type
   TOvcSingleCaret = class(TPersistent)
   {Class defining a Single caret}
@@ -238,7 +238,7 @@ type
         read FOvrCaretType
         write SetOvrCaretType;
   end;
-{.Z-}
+
 
 
 implementation

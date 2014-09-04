@@ -81,7 +81,7 @@ const
 type
   TOvcCustomSettings = class(TPersistent)
   private
-    {.Z+}
+
     {property variables}
     FGraduateFromColor  : TColor;
     FGraduateStyle      : TOvcGraduateStyle;
@@ -116,7 +116,7 @@ type
     procedure SetShadowDepth(Value : TOvcDepth);
     procedure SetShadowDirection(Value : TOvcShadeDirection);
     procedure SetShadowStyle(Value : TOvcShadeStyle);
-    {.Z-}
+
   public
     procedure Assign(Source : TPersistent);
       override;
@@ -124,12 +124,12 @@ type
     procedure BeginUpdate;
     procedure EndUpdate;
 
-    {.Z+}
+
     property OnColorChange : TNotifyEvent
       read FOnColorChange write FOnColorChange;
     property OnStyleChange : TNotifyEvent
       read FOnStyleChange write FOnStyleChange;
-    {.Z-}
+
 
   published
     property GraduateFromColor : TColor
@@ -155,7 +155,7 @@ type
   end;
 
   TOvcCustomLabel = class(TCustomLabel)
-  {.Z+}
+
   protected {private}
     {property variables}
     FAppearance         : TOvcAppearance;
@@ -183,7 +183,7 @@ type
   protected
     procedure Paint;
       override;
-  {.Z-}
+
 
     {protected properties} {can be published by descendants}
     property About : string
@@ -197,7 +197,7 @@ type
     property WordWrap : Boolean
       read GetWordWrap write SetWordWrap default lblDefWordWrap;
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
@@ -207,7 +207,7 @@ type
     procedure PaintTo(DC : TOvcHdc{Hdc}; CR : TRect; Flags : Word);
 
     property AutoSize;
-  {.Z-}
+
   end;
 
   TOvcLabel = class(TOvcCustomLabel)

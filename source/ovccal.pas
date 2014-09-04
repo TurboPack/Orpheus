@@ -73,7 +73,7 @@ const
 
 type
   TOvcCalColors = class(TPersistent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FUpdating     : Boolean;
@@ -102,7 +102,6 @@ type
 
     property OnChange : TNotifyEvent
       read  FOnChange write FOnChange;
-  {.Z-}
 
   published
     property ActiveDay : TColor index 0
@@ -136,7 +135,7 @@ type
 
 
   TOvcCustomCalendar = class(TOvcCustomControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBorderStyle     : TBorderStyle;
@@ -273,7 +272,6 @@ type
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
 
-  {.Z-}
 
     function DateString(const Mask : string): string;
     function DayString : string;

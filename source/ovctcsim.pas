@@ -49,12 +49,12 @@ type
   {The editor class for TOvcTCSimpleField cell components}
   TOvcTCSimpleFieldEdit = class(TOvcSimpleField)
     protected {private}
-      {.Z+}
+
       FCell : TOvcBaseTableCell;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure efMoveFocusToNextField; override;
       procedure efMoveFocusToPrevField; override;
 
@@ -63,7 +63,7 @@ type
       procedure WMKeyDown(var Msg : TWMKey); message WM_KEYDOWN;
       procedure WMKillFocus(var Msg : TWMKillFocus); message WM_KILLFOCUS;
       procedure WMSetFocus(var Msg : TWMSetFocus); message WM_SETFOCUS;
-      {.Z-}
+
 
     published
       property CellOwner : TOvcBaseTableCell
@@ -73,14 +73,14 @@ type
   {The simple field cell component class}
   TOvcTCCustomSimpleField = class(TOvcTCBaseEntryField)
     protected
-      {.Z+}
+
       function GetCellEditor : TControl; override;
       function GetDataType : TSimpleDataType;
       function GetPictureMask : Char;
 
       procedure SetDataType(DT : TSimpleDataType);
       procedure SetPictureMask(PM : Char);
-      {.Z-}
+
 
       property DataType : TSimpleDataType
          read GetDataType write SetDataType;

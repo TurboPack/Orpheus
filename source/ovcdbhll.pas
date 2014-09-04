@@ -116,11 +116,12 @@ uses
 
 type
   TOvcDbEngineHelperBase = class(TComponent)
-  {.Z+}
+  
+
   protected {private}
   protected
   public
-  {.Z-}
+
     {===GENERAL SESSION-BASED METHODS===}
     procedure GetAliasNames(aList : TStrings); virtual;
       {-fill list with available alias names; assumes 'default'

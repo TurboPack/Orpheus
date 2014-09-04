@@ -123,7 +123,7 @@ type
 
 type
   TOvcCustomVirtualListBox = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property variables}
     FItemIndex         : LongInt;     {selected item}
@@ -378,7 +378,7 @@ type
         descendants can turn off the behavior.}
     function IsValidIndex(Index : LongInt) : Boolean;
 
-  {.Z-}
+
 
     {protected properties}
     property AutoRowHeight : Boolean
@@ -437,12 +437,12 @@ type
 
   public
 
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor  Destroy;
       override;
-  {.Z-}
+
 
     procedure BeginUpdate; virtual;
       {-user is updating the list items--don't paint}

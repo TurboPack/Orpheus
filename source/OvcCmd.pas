@@ -359,7 +359,8 @@ type
   TOvcCommandProcessor = class;
 
   TOvcCommandTable = class(TPersistent)
-  {.Z+}
+  
+
   protected {private}
     FActive      : Boolean; {true to use this command table}
     FCommandList : TList;   {list of command/key mappings}
@@ -391,7 +392,7 @@ type
     constructor Create;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function AddRec(const CmdRec : TOvcCmdRec) : Integer;
       {-add a record to the list}
@@ -423,7 +424,8 @@ type
   end;
 
   TOvcCommandProcessor = class(TPersistent)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FTableList  : TList;    {list of command tables}
@@ -461,7 +463,7 @@ type
     constructor Create;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     procedure Add(CT : TOvcCommandTable);
       {-add a command table to the list of tables}
@@ -492,10 +494,11 @@ type
       {-return the number of commands in the command table}
     function GetCommandTable(const TableName : string) : TOvcCommandTable;
       {-return a pointer to the specified command table or nil}
-    {.Z+}
+    
+
     procedure GetState(var State : TOvcProcessorState; var Key, Shift : Byte);
       {-return the current status of the command processor}
-    {.Z-}
+
     function GetCommandTableIndex(const TableName : string) : Integer;
       {-return index to the specified command table or -1 for failure}
     function LoadCommandTable(const FileName : string) : Integer; virtual;
@@ -506,10 +509,11 @@ type
       {-save a command table to a text file}
     procedure SetScanPriority(const Names : array of string);
       {-reorder the list of tables based on this array}
-    {.Z+}
+    
+
     procedure SetState(State : TOvcProcessorState; Key, Shift : Byte);
       {-set the state to the command processor}
-    {.Z-}
+
     function Translate(var Msg : TMessage) : Word;
       {-translate a message into a command}
     function TranslateUsing(const Tables : array of string; var Msg : TMessage) : Word;

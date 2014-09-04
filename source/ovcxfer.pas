@@ -114,7 +114,7 @@ type
 
 type
   TOvcTransfer = class(TOvcComponent)
-  {.Z+}
+
   protected {private}
     xfrList : TList;
 
@@ -125,7 +125,7 @@ type
     {for internal use by the property editor}
     procedure GetTransferList(L : TList);
       {-return the list of components}
-  {.Z-}
+
     function GetTransferBufferSizePrim(CNA : array of TComponent; xfrStringtype : TxfrStringtype) : Word;
     function GetTransferBufferSize(CNA : array of TComponent) : Word;
     function GetTransferBufferSizeZ(CNA : array of TComponent) : Word;

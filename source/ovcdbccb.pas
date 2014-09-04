@@ -46,7 +46,8 @@ uses
 
 type
   TOvcDbColorComboBox = class(TOvcCustomColorComboBox)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDataLink : TFieldDataLink;

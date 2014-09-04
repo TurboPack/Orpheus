@@ -70,7 +70,7 @@ type
   TOvcRVListBox = class;
   TOvcCustomReportView = class;
 
-  {.Z+}
+
   TOvcRVHeader = class(TOvcButtonHeader)
   protected
     FListBox : TOvcRVListBox;
@@ -94,9 +94,9 @@ type
     property ListBox : TOvcRVListBox
       read FListBox write FListBox;
   end;
-  {.Z-}
 
-  {.Z+}
+
+
   TOvcRVFooter = class(TOvcButtonHeader)
   protected
     FListBox : TOvcRVListBox;
@@ -107,7 +107,7 @@ type
     property ListBox : TOvcRVListBox
       read FListBox write FListBox;
   end;
-  {.Z-}
+
 
   TOvcRVGridLines = (glNone,glVertical,glHorizontal,glBoth);
 
@@ -118,7 +118,7 @@ type
     property TextColor default clHighlightText;
   end;
 
-  {.Z+}
+
   TOvcRVListBox = class(TOvcVirtualListBox)
   protected
     FButtonHeader : TOvcRVHeader;
@@ -180,12 +180,12 @@ type
     property SelectColor : TOvcRvListSelectColors
       read FSelectColor write FSelectColor;
   end;
-  {.Z-}
+
 
   TOvcRvFieldSort = (rfsFirstAscending, rfsFirstDescending,
     rfsAlwaysAscending, rfsAlwaysDescending);
   TOvcRvField = class(TOvcAbstractRvField)
-  {.Z+}
+
   protected
     FAlignment         : TAlignment;
     FCaption           : string;
@@ -227,7 +227,7 @@ type
     function InUse: Boolean;
     function RefersTo(const RefField: TOvcRvField): Boolean;
     procedure ValidateExpression;
-  {.Z-}
+
   published
     property Alignment: TAlignment
                    read FAlignment write SetAlignment default taLeftJustify;
@@ -258,25 +258,25 @@ type
   end;
 
   TOvcRvFields = class(TOvcAbstractRvFields)
-  {.Z+}
+
   protected
     function GetItem(Index: Integer): TOvcRvField;
     procedure SetItem(Index: Integer; Value: TOvcRvField);
     function GetOwnerReport : TOvcCustomReportView;
   public
     constructor Create(AOwner: TOvcCustomReportView);
-  {.Z-}
+
     procedure Assign(Source: TPersistent); override;
     function Add: TOvcRvField;
     property Items[Index: Integer]: TOvcRvField
                    read GetItem write SetItem;
-  {.Z+}
+
     property Owner: TOvcCustomReportView
                    read GetOwnerReport;
-  {.Z-}
+
   end;
 
-  {.Z+}
+
   TOvcRVView = class;
   TOvcRvViewField = class(TOvcAbstractRvViewField)
   protected
@@ -316,7 +316,7 @@ type
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
     property AggExp: TOvcRvExpression read GetAggExp;
-  {.Z-}
+
     property Field: TOvcRvField
                    read GetField;
     property OwnerReport : TOvcCustomReportView
@@ -350,25 +350,25 @@ type
   end;
 
   TOvcRvViewFields = class(TOvcAbstractRvViewFields)
-  {.Z+}
+
   protected
     function GetItem(Index: Integer): TOvcRvViewField;
     procedure SetItem(Index: Integer; Value: TOvcRvViewField);
     function GetOwnerView : TOvcRVView;
   public
     constructor Create(AOwner: TOvcRVView);
-  {.Z-}
+
     function Add: TOvcRvViewField;
     property Items[Index: Integer]: TOvcRvViewField
                    read GetItem write SetItem;
-  {.Z+}
+
     property Owner: TOvcRVView
                    read GetOwnerView;
-  {.Z-}
+
   end;
 
   TOvcRVView = class(TOvcAbstractRvView)
-  {.Z+}
+
   protected
     FShowFooter: Boolean;
     FShowHeader: Boolean;
@@ -405,7 +405,7 @@ type
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
     property Dirty: Boolean read FDirty write SetDirty;
-  {.Z-}
+
     procedure SaveToStorage(Storage: TOvcAbstractStore;
       const Prefix: string); override;
     procedure LoadFromStorage(Storage: TOvcAbstractStore;
@@ -442,7 +442,7 @@ type
   end;
 
   TOvcRvViews = class(TOvcAbstractRvViews)
-  {.Z+}
+
   protected
     function GetItem(Index: Integer): TOvcRVView;
     procedure SetItem(Index: Integer; Value: TOvcRVView);
@@ -451,7 +451,7 @@ type
     constructor Create(AOwner: TOvcCustomReportView);
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
-  {.Z-}
+
 
     function Add: TOvcRVView;
     property Items[Index: Integer]: TOvcRVView
@@ -496,7 +496,7 @@ type
     property Style default [];
   end;
 
-  {.Z+}
+
   TOvcRvPrintProps = class(TPersistent)
   protected
     FDetailIndent      : Integer;
@@ -516,7 +516,7 @@ type
     constructor Create;
     destructor Destroy; override;
   published
-  {.Z-}
+
     property AutoScaleColumns : Boolean
                    read FAutoScaleColumns write FAutoScaleColumns
                    default False;
@@ -674,7 +674,7 @@ type
   TGetPageNumberMethod = function: Integer of object;
 
   TOvcCustomReportView = class(TOvcAbstractReportView)
-  {.Z+}
+
   protected
     FActiveView              : string;
     FActiveViewByTitle       : string;
@@ -976,7 +976,7 @@ type
       {- save a view definition in a storage container}
     function UniqueViewNameFromTitle(const Title: string): string;
 
-  {.Z-}
+
 
     procedure ScaleColumnWidths;
       {- Adjusts column widths according to content.}
@@ -1257,7 +1257,7 @@ function CompareFloat(F1,F2 : Extended) : Integer;
 function CompareComp(F1,F2 : comp) : Integer;
 { compare two comps, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
 
-{.Z+}
+
 
 implementation
 uses

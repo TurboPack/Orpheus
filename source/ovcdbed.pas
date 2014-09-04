@@ -49,7 +49,8 @@ uses
 
 type
   TOvcDbEditor = class(TOvcCustomEditor)
-  {.Z+}
+  
+
   protected
     {property variables}
     FAutoUpdate : Boolean;

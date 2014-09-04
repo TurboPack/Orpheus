@@ -243,7 +243,7 @@ type
     of object;
 
   TOvcCache = class(TComponent)
-  {.Z+}
+
   protected {private}
     {instance variables}
     FCacheHits     : LongInt;   {number of times requested item was in cache}
@@ -282,7 +282,6 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
 
     {public methods}
     procedure Clear;

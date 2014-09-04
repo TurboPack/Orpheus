@@ -58,7 +58,7 @@ const
 
 type
   TOvcBasicCheckList = class(TOvcCustomListBox)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBoldX          : Boolean;      {true for bold X in box}
@@ -139,7 +139,6 @@ type
       override;
     property Canvas;
 
-  {.Z-}
     property Glyphs[Index : Integer] : TBitmap
       read GetGlyphs
       write SetGlyphs;

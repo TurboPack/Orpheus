@@ -47,7 +47,7 @@ uses
 
 type
   TOvcCustomRotatedLabel = class(TOvcGraphicControl)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FAlignment      : TAlignment;
@@ -93,7 +93,7 @@ type
       override;
     procedure SetName(const NewName : TComponentName);
       override;
-  {.Z-}
+
 
     property Alignment : TAlignment
       read FAlignment write SetAlignment;
@@ -115,10 +115,10 @@ type
       read GetTransparent write SetTransparent;
 
   public
-  {.Z+}
+
     constructor Create(AOwner: TComponent);
       override;
-  {.Z-}
+
 
     {public properties}
     property Canvas;

@@ -57,7 +57,7 @@ type
 
 type
   TOvcCustomPictureField = class(TOvcPictureBase)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FInitDateTime     : Boolean;
@@ -113,7 +113,7 @@ type
     function efValidateField : Word;
       override;
       {-validate contents of field; result is error code or 0}
-  {.Z-}
+
 
     {public properties}
     property DataType : TPictureDataType

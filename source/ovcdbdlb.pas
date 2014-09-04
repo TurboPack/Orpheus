@@ -46,7 +46,8 @@ uses
 
 type
   TOvcDbDisplayLabel = class(TOvcCustomRotatedLabel)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDataLink : TFieldDataLink;

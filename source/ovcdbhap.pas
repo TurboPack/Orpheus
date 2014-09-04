@@ -53,11 +53,12 @@ uses
 
 type
   TOvcDbApolloEngineHelper = class(TOvcDbEngineHelperBase)
-  {.Z+}
+  
+
   protected {private}
   protected
   public
-  {.Z-}
+
     {===GENERAL TABLE AND INDEX-BASED METHODS===}
     procedure FindNearestKey(aDataSet   : TDataSet;
                        const aKeyValues : array of const); override;

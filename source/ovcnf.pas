@@ -53,7 +53,7 @@ type
 
 type
   TOvcCustomNumericField = class(TOvcPictureBase)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FNumericDataType   : TNumericDataType;
@@ -135,7 +135,7 @@ type
     function efValidateField : Word;
       override;
       {-validate contents of field; result is error code or 0}
-  {.Z-}
+
 
     {public properties}
     property DataType : TNumericDataType

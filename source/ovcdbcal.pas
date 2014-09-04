@@ -47,7 +47,8 @@ uses
 
 type
   TOvcDbCalendar = class(TOvcCustomCalendar)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FAutoUpdate  : Boolean;

@@ -145,7 +145,7 @@ type
   end;
 
   TOvcBorderParent = class(TOvcCustomControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBorders       : TOvcBorders;

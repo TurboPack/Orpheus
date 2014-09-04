@@ -49,7 +49,7 @@ type
   TOvcButtonState = (obsUp, obsDown, obsInactive, obsDisabled);
 
   TOvcCustomSpeedButton = class(TOvcGraphicControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FAutoRepeat      : Boolean;
@@ -132,7 +132,7 @@ type
       override;
     procedure Paint;
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoRepeat : Boolean
@@ -163,12 +163,12 @@ type
       read GetWordWrap write SetWordWrap;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     procedure SimulatedClick;
   end;

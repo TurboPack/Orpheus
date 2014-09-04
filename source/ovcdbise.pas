@@ -47,7 +47,8 @@ uses
 
 type
   TOvcDbSearchEdit = class(TOvcBaseISE)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDbEngineHelper : TOvcDbEngineHelperBase;
@@ -96,7 +97,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
-  {.Z-}
+
 
     {public methods}
     procedure PerformSearch;

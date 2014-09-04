@@ -53,16 +53,16 @@ type
 type
   TOvcTCComboBoxEditOld = class(TCustomComboBox)
     protected {private}
-      {.Z+}
+
       FCell     : TOvcBaseTableCell;
 
       EditField : HWnd;
       PrevEditWndProc : pointer;
       NewEditWndProc  : pointer;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure EditWindowProc(var Msg : TMessage);
       function  FilterWMKEYDOWN(var Msg : TWMKey) : boolean;
 
@@ -73,7 +73,7 @@ type
       procedure WMKeyDown(var Msg : TWMKey); message WM_KEYDOWN;
       procedure WMKillFocus(var Msg : TWMKillFocus); message WM_KILLFOCUS;
       procedure WMSetFocus(var Msg : TWMSetFocus); message WM_SETFOCUS;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;
@@ -186,7 +186,7 @@ type
 
   TOvcTCCustomComboBox = class(TOvcTCBaseString)
   protected {private}
-    {.Z+}
+
     {property fields - even size}
     FDropDownCount        : Integer;
     FEdit                 : TOvcTCComboBoxEdit;
@@ -211,10 +211,10 @@ type
   private
     FTextHint: string;
     procedure SetTextHint(const Value: string);
-    {.Z-}
+
 
   protected
-    {.Z+}
+
     function GetCellEditor : TControl; override;
 
     procedure SetShowArrow(Value : Boolean);
@@ -233,7 +233,7 @@ type
                       ColNum      : TColNum;
                 const CellAttr    : TOvcCellAttributes;
                       Data        : pointer); override;
-    {.Z-}
+
 
     {properties}
     property AutoAdvanceChar : boolean

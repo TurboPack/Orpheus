@@ -103,7 +103,7 @@ const
 
 type
   TOvcCalcColors = class(TPersistent)
-  {.Z+}
+
   private
     {property variables}
     FUpdating     : Boolean;
@@ -133,7 +133,6 @@ type
 
     property OnChange : TNotifyEvent
       read FOnChange write FOnChange;
-  {.Z-}
 
   published
     property ColorScheme : TOvcCalcColorScheme
@@ -157,17 +156,16 @@ type
   end;
 
 type
-  {.Z+}
+
   TOvcCalcPanel = class(TPanel)
   protected
     procedure Click;
       override;
   public
   end;
-  {.Z-}
 
 type
-  {.Z+}
+
   TOvcCustomCalculatorEngine = class
   protected {private}
     {property variables}
@@ -206,10 +204,9 @@ type
     property State : TOvcCalcStates
       read cState write cState;
   end;
-  {.Z-}
 
 type
-  {.Z+}
+
   TOvcCalcTape = class(TObject)
   protected {private}
     {property variables}
@@ -294,7 +291,6 @@ type
     property Width : Integer
       read GetWidth write SetWidth;
   end;
-  {.Z-}
 
 type
   TOvcCalcButtonPressedEvent =
@@ -306,7 +302,7 @@ type
   TOvcCalculatorOptions = set of TOvcCalculatorOption;
 
   TOvcCustomCalculator = class(TOvcCustomControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBorderStyle       : TBorderStyle;
@@ -428,7 +424,6 @@ type
       override;
     procedure Paint;
       override;
-  {.Z-}
 
     {protected properties}
     property BorderStyle : TBorderStyle
@@ -455,7 +450,7 @@ type
       read FOnButtonPressed  write FOnButtonPressed;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     constructor CreateEx(AOwner : TComponent; AsPopup : Boolean);
@@ -467,7 +462,6 @@ type
     procedure PushOperand(const Value : Extended);
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
 
     procedure CopyToClipboard;
     procedure PasteFromClipboard;

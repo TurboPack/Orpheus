@@ -47,7 +47,7 @@ uses
 
 type
   TOvcPictureBase = class(TOvcBaseEntryField)
-  {.Z+}
+
   protected {private}
     pfSemiLits   : Byte;               {# of semi-literals in field}
     pfPicFlags   : TPictureFlags;      {picture flags array}
@@ -136,7 +136,7 @@ type
       {-combines S with the picture mask and updates the edit string}
     function ValidateContents(ReportError : Boolean) : Word;
       override;
-  {.Z-}
+
   end;
 
 

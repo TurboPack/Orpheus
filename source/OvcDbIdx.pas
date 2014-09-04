@@ -66,7 +66,8 @@ type
               var DisplayName : string)
     of object;
 
-  {.Z+}
+  
+
   TOvcIndexInfo = class(TObject)
   protected {private }
     FDisplayName  : string;            {display name}
@@ -101,9 +102,10 @@ type
     property IndexName : string
       read FIndexName;
   end;
-  {.Z-}
 
-  {.Z+}
+
+  
+
   TOvcIndexSelectDataLink = class(TDataLink)
   protected {private }
     FIndexSelect : TOvcDbIndexSelect;
@@ -117,10 +119,11 @@ type
   public
     constructor Create(AIndexSelect : TOvcDbIndexSelect);
   end;
-  {.Z-}
+
 
   TOvcDbIndexSelect = class(TCustomComboBox)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDbEngineHelper : TOvcDbEngineHelperBase;
@@ -201,7 +204,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
-  {.Z-}
+
 
     procedure RefreshList;
     procedure RefreshNow;

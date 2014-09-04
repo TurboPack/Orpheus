@@ -57,7 +57,7 @@ type
 
 type
   TOvcCustomPictureLabel = class(TOvcCustomRotatedLabel)
-  {.Z+}
+
   protected {private}
     FString         : string;
     FBoolean        : Boolean;
@@ -130,7 +130,7 @@ type
     function plGetSampleDisplayData : string;
       dynamic;
       {-return the text to display while in design mode}
-  {.Z-}
+
 
     {properties}
     property PictureMask : string
@@ -142,10 +142,10 @@ type
       write SetUseIntlMask;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
 { - Hdc changed to TOvcHdc for BCB Compatibility }
     procedure PaintTo(DC : TOvcHdc{hDC}; X, Y : Integer);

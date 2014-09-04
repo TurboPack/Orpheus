@@ -45,7 +45,7 @@ uses
   OvcBase, OvcConst, OvcData, OvcExcpt, OvcCal, OvcDlg;
 
 type
-  {.Z+}
+
   TOvcfrmCalendarDlg = class(TForm)
     btnHelp: TButton;
     Panel1: TPanel;
@@ -54,11 +54,11 @@ type
     OvcCalendar1: TOvcCalendar;
     procedure OvcCalendar1DblClick(Sender: TObject);
   end;
-  {.Z-}
+
 
 type
   TOvcCalendarDialog = class(TOvcBaseDialog)
-  {.Z+}
+
   protected {private}
     {property variables}
     FCalendar  : TOvcCalendar;
@@ -68,7 +68,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function Execute : Boolean;
       override;

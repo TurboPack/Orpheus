@@ -54,7 +54,7 @@ type
 
 type
   TOvcCustomSimpleField = class(TOvcBaseEntryField)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FSimpleDataType : TSimpleDataType;  {data type for this field}
@@ -106,7 +106,7 @@ type
     function efValidateField : Word;
       override;
       {-validate contents of field; result is error code or 0}
-  {.Z-}
+
 
     {public properties}
     property DataType : TSimpleDataType

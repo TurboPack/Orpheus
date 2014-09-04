@@ -48,7 +48,8 @@ type
   TOvcFieldTypeSet = set of TFieldType;
 
   TOvcDbFieldComboBox = class(TOvcBaseComboBox)
-  {.Z+}
+  
+
   protected {private}
     FDataLink         : TFieldDataLink;
     FOmitFields       : TOvcFieldTypeSet;

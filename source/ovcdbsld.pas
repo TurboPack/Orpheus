@@ -47,7 +47,8 @@ uses
 
 type
   TOvcDbSlider = class(TOvcCustomSlider)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDataLink    : TFieldDataLink;

@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbDateEdit = class(TOvcCustomDateEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment    : TAlignment;
     FAutoUpdate   : Boolean;
@@ -96,7 +97,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -108,7 +109,8 @@ type
     property PreserveTime : Boolean
       read FPreserveTime write FPreserveTime;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly
       write SetReadOnly;
@@ -127,7 +129,7 @@ type
       override;
     procedure PopupOpen;
       override;
-  {.Z-}
+
 
     {public properties}
     property Field : TField

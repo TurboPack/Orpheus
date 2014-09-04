@@ -49,30 +49,31 @@ type
 type
   TOvcGridPen = class(TPersistent)
     protected {private}
-      {.Z+}
+      
+
       FNormalColor : TColor;
       FSecondColor : TColor;
       FEffect      : TGridEffect;
       FStyle       : TPenStyle;
 
       FOnCfgChanged  : TNotifyEvent;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetNormalColor(C : TColor);
       procedure SetSecondColor(C : TColor);
       procedure SetEffect(E : TGridEffect);
       procedure SetStyle(S : TPenStyle);
 
       procedure DoCfgChanged;
-      {.Z-}
+
 
     public {protected}
-      {.Z+}
+
       property OnCfgChanged : TNotifyEvent
          read FOnCfgChanged write FOnCfgChanged;
-      {.Z-}
+
 
     public
       constructor Create;
@@ -95,23 +96,23 @@ type
 
   TOvcGridPenSet = class(TPersistent)
     protected {private}
-      {.Z+}
+
       FNormalGrid        : TOvcGridPen;
       FLockedGrid        : TOvcGridPen;
       FCellWhenFocused   : TOvcGridPen;
       FCellWhenUnfocused : TOvcGridPen;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetOnCfgChanged(OC : TNotifyEvent);
-      {.Z-}
+
 
     public {protected}
-      {.Z+}
+
       property OnCfgChanged : TNotifyEvent
          write SetOnCfgChanged;
-      {.Z-}
+
 
     public
       constructor Create;

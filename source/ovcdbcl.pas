@@ -58,7 +58,8 @@ type
 
 type
   TOvcDbColumnList = class(TOvcCustomControlEx)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FActiveRow         : Integer;     {selected item}
@@ -225,12 +226,13 @@ type
     procedure InvalidateItem(Row : Integer);
       {-invalidate the area for this item}
 
-  {.Z+}
+  
+
     property ActiveRow : Integer
       read FActiveRow
       write SetActiveRow
       stored False;
-  {.Z-}
+
 
     {public properties}
     property Canvas;

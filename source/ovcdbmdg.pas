@@ -44,7 +44,8 @@ uses
   Graphics, Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
 
 type
-  {.Z+}
+  
+
   TOvcfrmDbMemoDlg = class(TForm)
     btnHelp: TButton;
     Panel1: TPanel;
@@ -56,7 +57,7 @@ type
   private
   public
   end;
-  {.Z-}
+
 
 type
   TOvcDbMemoDialog = class(TOvcBaseDialog)

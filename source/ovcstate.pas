@@ -51,7 +51,7 @@ type
 
 type
   TOvcAbstractState = class(TOvcComponent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FActive             : Boolean;
@@ -103,7 +103,7 @@ type
 
     property Form : TWinControl
       read GetForm;
-  {.Z-}
+
 
     {properties}
     property Active : Boolean
@@ -121,12 +121,12 @@ type
       read FOnRestoreState write FOnRestoreState;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     procedure RestoreState;
     procedure SaveState;
@@ -136,7 +136,7 @@ type
   end;
 
   TOvcFormState = class(TOvcAbstractState)
-  {.Z+}
+
   protected {private}
     {property variables}
     FOptions     : TOvcFormStateOptions;
@@ -162,7 +162,7 @@ type
   public
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
   published
     {properties}
@@ -178,7 +178,7 @@ type
   end;
 
   TOvcComponentState = class(TOvcAbstractState)
-  {.Z+}
+
   protected {private}
     {property variables}
     FStoredProperties : TStrings;
@@ -203,7 +203,7 @@ type
     destructor Destroy;
       override;
     procedure SetNotification;
-  {.Z-}
+
     procedure UpdateStoredProperties;
 
   published
@@ -220,7 +220,7 @@ type
   end;
 
   TOvcPersistentState = class(TOvcComponent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FStorage : TOvcAbstractStore;
@@ -231,7 +231,7 @@ type
   protected
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
   public
     procedure RestoreState(AnObject : TPersistent; const ASection : string);
@@ -244,9 +244,9 @@ type
   end;
 
 
-{.Z+}
+
 function GetDefaultSection(Component : TComponent) : string;
-{.Z-}
+
 
 
 implementation

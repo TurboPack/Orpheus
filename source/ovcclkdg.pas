@@ -46,7 +46,7 @@ uses
   OvcBase, OvcConst, OvcData, OvcExcpt, OvcDlg, OvcClock;
 
 type
-  {.Z+}
+
   TOvcfrmClockDlg = class(TForm)
     btnHelp: TButton;
     Panel1: TPanel;
@@ -54,11 +54,11 @@ type
     OvcClock1: TOvcClock;
     OvcController1: TOvcController;
   end;
-  {.Z-}
+
 
 type
   TOvcClockDialog = class(TOvcBaseDialog)
-  {.Z+}
+
   protected {private}
     {property variables}
     FClock   : TOvcClock;
@@ -72,7 +72,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function Execute : Boolean;
       override;

@@ -60,16 +60,18 @@ type
     property Format : string
       read FFormat write FFormat;
   end;
-  {.Z+}
+  
+
   TOvcDataRvItem = class;
   TIntArray = array[0..pred(MaxInt div sizeof(Integer))] of Integer;
   PIntArray = ^TIntArray;
   TByteArray = array[0..pred(MaxInt div sizeof(Byte))] of Byte;
   PByteArray = ^TByteArray;
   TOvcDataRvItems = class;
-  {.Z-}
+
   TOvcDataRvItem = class
-  {.Z+}
+  
+
   protected
     FData : Pointer;
     FOwner : TOvcDataReportView;
@@ -120,7 +122,7 @@ type
     destructor Destroy; override;
     procedure ReadFromStream(Stream : TStream);
     procedure WriteToStream(Stream : TStream);
-    {.Z-}
+
     property AsString[Index : Integer] : string
       read GetAsString write SetAsString;
     property AsFloat[Index : Integer] : Extended
@@ -142,7 +144,8 @@ type
   end;
 
   TOvcDataRvItems = class(TPersistent)
-  {.Z+}
+  
+
   protected
     FItems : TList;
     FOwner : TOvcDataReportView;
@@ -156,7 +159,7 @@ type
     procedure SaveToStream(Stream : TStream);
     constructor Create(AOwner : TOvcDataReportView); virtual;
     destructor Destroy; override;
-    {.Z-}
+
     function Add : TOvcDataRvItem;
     procedure Assign(Source : TPersistent); override;
     procedure Clear;
@@ -196,7 +199,8 @@ type
       Result: string) of object;
 
   TOvcDataReportView = class(TOvcCustomReportView)
-  {.Z+}
+  
+
   protected
     FItems             : TOvcDataRvItems;
     FOnDrawViewField   : TOvcDrawDViewFieldEvent;
@@ -236,7 +240,7 @@ type
   public
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
-  {.Z-}
+
     property CurrentItem : TOvcDataRvItem
       read GetCurrentItem write SetCurrentItem;
     procedure Enumerate(UserData : Pointer); override;
@@ -245,7 +249,8 @@ type
       UserData : Pointer); override;
     property Field[Index : Integer] : TOvcDataRvField
                    read GetField;
-  {.Z+}
+  
+
   published
     property Anchors;
     property Constraints;

@@ -59,12 +59,13 @@ uses
 
 type
   TOvcDbTitanEngineHelper = class(TOvcDbEngineHelperBase)
-  {.Z+}
+  
+
   protected {private}
     FSession : TttSession;
   protected
   public
-  {.Z-}
+
     {===GENERAL SESSION-BASED METHODS===}
     procedure GetAliasNames(aList : TStrings); override;
       {-fill list with available alias names; uses TitanSession

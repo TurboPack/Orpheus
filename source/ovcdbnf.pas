@@ -47,7 +47,8 @@ uses
 
 type
   TOvcDbNumericField = class(TOvcCustomNumericField)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FCanvas        : TControlCanvas;
