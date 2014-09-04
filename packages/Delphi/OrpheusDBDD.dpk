@@ -55,11 +55,11 @@ PACKAGE OrpheusDBDD;
 
 requires
   Vcl,
-  O408_d,
-  O408_r,
-  O408br,
   designide,
-  bdertl;
+  bdertl,
+  OrpheusDBDR,
+  OrpheusDD,
+  OrpheusDR;
 
 contains
   ovcdbae0 in '..\..\source\ovcdbae0.pas' {OvcfrmDbAeRange},

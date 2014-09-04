@@ -121,11 +121,11 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Vcl.dcp"/>
-        <DCCReference Include="O408_d.dcp"/>
-        <DCCReference Include="O408_r.dcp"/>
-        <DCCReference Include="O408br.dcp"/>
         <DCCReference Include="designide.dcp"/>
         <DCCReference Include="bdertl.dcp"/>
+        <DCCReference Include="OrpheusDBDR.dcp"/>
+        <DCCReference Include="OrpheusDD.dcp"/>
+        <DCCReference Include="OrpheusDR.dcp"/>
         <DCCReference Include="..\..\source\ovcdbae0.pas">
             <Form>OvcfrmDbAeRange</Form>
         </DCCReference>
