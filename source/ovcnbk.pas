@@ -50,7 +50,7 @@ unit ovcnbk;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics,
+  UITypes, Types, Windows, Buttons, Classes, Controls, Forms, Graphics,
   Menus, Messages, SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt,
   OvcMisc, Themes;
 

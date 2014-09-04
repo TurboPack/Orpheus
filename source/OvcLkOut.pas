@@ -542,7 +542,7 @@ type
 implementation
 
 uses
-  System.Types, System.UITypes;
+  Types, UITypes;
 
 const
   lobTimerInterval = 200;

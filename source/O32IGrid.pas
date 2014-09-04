@@ -45,7 +45,7 @@ unit o32igrid;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Graphics, Classes, Forms, Mask, StdCtrls,
+  UITypes, Types, Windows, Graphics, Classes, Forms, Mask, StdCtrls,
   ExtCtrls, Grids, Messages, Controls, OvcBase, OvcCmbx, OvcClrCb, ovcftcbx;
 
 const

@@ -41,7 +41,7 @@ unit ovcftcbx;
 interface
 
 uses
-  System.Types, Windows, Messages, SysUtils, Classes, Controls, Graphics, Printers,
+  Types, Windows, Messages, SysUtils, Classes, Controls, Graphics, Printers,
   OvcCmbx, OvcData, OvcMisc, StdCtrls;
 
   {  StdCtrls, Menus, ExtCtrls, OvcBase}

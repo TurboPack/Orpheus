@@ -42,7 +42,7 @@ unit OvcTCHeaderExtended;
 interface
 
 uses
-  System.UITypes, Windows, SysUtils, Graphics, Classes, Controls, OvcTCmmn, OvcTCell,
+  UITypes, Windows, SysUtils, Graphics, Classes, Controls, OvcTCmmn, OvcTCell,
   OvcTCStr, OvcMisc, ovctchdr;
 
 type

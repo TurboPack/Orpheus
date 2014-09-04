@@ -41,7 +41,7 @@ the contained controls to size and position themselves.  It should be fixed
 ASAP. }
 
 uses
-  System.Types, Windows, Messages, SysUtils, Classes, ExtCtrls, Controls, Graphics,
+  Types, Windows, Messages, SysUtils, Classes, ExtCtrls, Controls, Graphics,
   Commctrl, ComCtrls, Forms, StdActns, OvcBase;
 
 type

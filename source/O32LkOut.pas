@@ -40,7 +40,7 @@ unit o32lkout;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Messages, SysUtils, Classes, Graphics,
+  UITypes, Types, Windows, Messages, SysUtils, Classes, Graphics,
   Controls, Forms, Dialogs, Buttons, Menus, ExtCtrls, MMSystem, StdCtrls, OvcBase,
   OvcVer, OvcData, OvcConst, OvcMisc, OvcSpeed, OvcFiler, OvcState;
 

@@ -45,7 +45,7 @@ unit ovcedit;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, MMSystem, Classes, Controls, Forms, Graphics,
+  UITypes, Types, Windows, MMSystem, Classes, Controls, Forms, Graphics,
   Menus, Messages, StdCtrls, SysUtils, OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData,
   OvcEditN, OvcEditU, OvcExcpt, OvcFxFnt, OvcMisc, OvcStr, OvcEditP, OvcBordr;
 

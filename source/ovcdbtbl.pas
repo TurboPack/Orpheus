@@ -45,7 +45,7 @@ interface
 {$I ovc.inc}
 
 uses
-  System.UITypes, Windows, Buttons, Classes, Controls, DB, Forms, Graphics, Menus,
+  UITypes, Windows, Buttons, Classes, Controls, DB, Forms, Graphics, Menus,
   Messages, SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt, OvcMisc,
   OvcTCBEF, OvcTCell, OvcTBClr, OvcTBCls, OvcTCmmn, OvcTGPns, OvcDate;
 
@@ -573,7 +573,7 @@ type
 implementation
 
 uses
-  System.Types, Dialogs, OvcNF, OvcPF, OvcSF, OvcTCBmp, OvcTCBox, OvcTCCbx, OvcTCEdt,
+  Types, Dialogs, OvcNF, OvcPF, OvcSF, OvcTCBmp, OvcTCBox, OvcTCCbx, OvcTCEdt,
   OvcTCGly, OvcTCHdr, OvcTCIco, OvcTCNum, OvcTCPic, OvcTCSim, OvcTCHeaderExtended;
 
 type

@@ -41,7 +41,7 @@ unit ovccal;
 interface
 
 uses
-  System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
+  Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
   SysUtils, OvcBase, OvcConst, OvcData, OvcIntl, OvcMisc, OvcDate;
 
 type

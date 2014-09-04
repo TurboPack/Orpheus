@@ -41,7 +41,7 @@ unit ovcpeakm;
 interface
 
 uses
-  System.UITypes, Windows, Classes, Controls, Graphics, Forms, Messages, SysUtils,
+  UITypes, Windows, Classes, Controls, Graphics, Forms, Messages, SysUtils,
   OvcBase, ExtCtrls;
 
 type

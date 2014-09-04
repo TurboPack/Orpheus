@@ -41,7 +41,7 @@ unit ovcdbae;
 interface
 
 uses
-  System.Types, Windows, Buttons, Classes, Controls, DB, DbCtrls, Forms, Graphics,
+  Types, Windows, Buttons, Classes, Controls, DB, DbCtrls, Forms, Graphics,
   SysUtils, Messages, OvcBase, OvcColor, OvcCmd, OvcConst, OvcData, OvcDbNf,
   OvcDbPf, OvcDbSf, OvcMisc, OvcEf, OvcStr;
 

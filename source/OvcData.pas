@@ -41,14 +41,14 @@ unit ovcdata;
 interface
 
 uses
-  System.UITypes,
+  UITypes,
   Windows, Controls, Forms, Graphics, Messages, StdCtrls, SysUtils, OvcConst,
   OvcDate, O32SR;
 
 const
   BorderStyles    : array[TBorderStyle] of LongInt =
                     (0, WS_BORDER);
-  ScrollBarStyles : array [System.UITypes.TScrollStyle] of LongInt =
+  ScrollBarStyles : array [UITypes.TScrollStyle] of LongInt =
                     (0, WS_HSCROLL, WS_VSCROLL, WS_HSCROLL or WS_VSCROLL);
 
 {some colors that are not defined by Delphi}

@@ -42,7 +42,7 @@ unit ovcfxfnt;
 interface
 
 uses
-  System.UITypes, Windows, Classes, SysUtils, Graphics, OvcExcpt;
+  UITypes, Windows, Classes, SysUtils, Graphics, OvcExcpt;
 
 var
   {List of names of the fixed fonts in the system}

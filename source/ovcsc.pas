@@ -46,7 +46,7 @@ unit ovcsc;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics,
+  UITypes, Types, Windows, Buttons, Classes, Controls, Forms, Graphics,
   Messages, StdCtrls, SysUtils, OvcBase, OvcData, OvcEF, OvcMisc, OvcExcpt;
 
 type

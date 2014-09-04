@@ -42,7 +42,7 @@ unit o32flxed;
 interface
 
 uses
-  System.Types, Classes, Controls, Windows, Forms, Messages, SysUtils, StdCtrls,
+  Types, Classes, Controls, Windows, Forms, Messages, SysUtils, StdCtrls,
   Buttons, OvcData, O32Editf, OvcEF, Graphics, O32SR, O32bordr, O32Vldtr,
   O32VlOp1, o32ovldr, o32pvldr, o32rxvld, Dialogs;
 

@@ -42,7 +42,7 @@ unit ovcclrcb;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Classes, Controls, Forms, Graphics, Menus,
+  UITypes, Types, Windows, Classes, Controls, Forms, Graphics, Menus,
   Messages, StdCtrls, OvcCmbx, OvcConst, OvcData, Themes;
 
 type

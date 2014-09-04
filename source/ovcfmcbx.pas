@@ -41,7 +41,7 @@ unit ovcfmcbx;
 interface
 
 uses
-  System.Types, Windows, Messages, SysUtils, Classes, Graphics, Registry, OvcCmbx,
+  Types, Windows, Messages, SysUtils, Classes, Graphics, Registry, OvcCmbx,
   StdCtrls;
 
 type

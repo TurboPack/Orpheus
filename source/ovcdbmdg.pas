@@ -40,7 +40,7 @@ unit ovcdbmdg;
 interface
 
 uses
-  System.UITypes, Windows, Classes, Controls, DB, DBCtrls, Dialogs, ExtCtrls, Forms,
+  UITypes, Windows, Classes, Controls, DB, DBCtrls, Dialogs, ExtCtrls, Forms,
   Graphics, Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
 
 type

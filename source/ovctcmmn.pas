@@ -42,7 +42,7 @@ unit ovctcmmn;
 interface
 
 uses
-  System.Types, Windows, SysUtils, Messages, Graphics, Forms, StdCtrls, Classes,
+  Types, Windows, SysUtils, Messages, Graphics, Forms, StdCtrls, Classes,
   Controls, OvcBase, OvcData, OvcExcpt, OvcMisc;
 
 {---Enumeration types}

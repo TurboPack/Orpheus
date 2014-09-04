@@ -36,7 +36,7 @@ interface
 {$I OVC.INC}
 
 uses
-  System.UITypes, System.Types, Windows, Messages, Forms, Controls, StdCtrls, Classes,
+  UITypes, Types, Windows, Messages, Forms, Controls, StdCtrls, Classes,
   Graphics, OvcBase, ovccklb, ovctcmmn, OvcTCell, OvcTCStr, Themes;
 
 type

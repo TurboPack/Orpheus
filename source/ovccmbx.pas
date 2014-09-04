@@ -42,7 +42,7 @@ unit ovccmbx;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, SysUtils, Messages, Classes, Graphics,
+  UITypes, Types, Windows, SysUtils, Messages, Classes, Graphics,
   Controls, Forms, StdCtrls, Buttons, OvcBase, OvcConst, OvcData, OvcMisc, OvcBordr,
   OvcTimer, Themes;
 

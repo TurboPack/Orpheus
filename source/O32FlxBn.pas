@@ -42,7 +42,7 @@ unit o32flxbn;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Controls, Messages, Buttons, Graphics, Classes,
+  UITypes, Types, Windows, Controls, Messages, Buttons, Graphics, Classes,
   OvcBase, OvcVer, Grids, StdCtrls, O32MouseMon, OvcMisc;
 
 type

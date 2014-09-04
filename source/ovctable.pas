@@ -48,7 +48,7 @@ unit ovctable;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, SysUtils, Messages, Graphics, Classes,
+  UITypes, Types, Windows, SysUtils, Messages, Graphics, Classes,
   Controls, Forms, StdCtrls, Menus, Dialogs, OvcMisc, OvcData, OvcConst, OvcBase,
   OvcCmd, OvcTCmmn, OvcTCAry, OvcTSelL, OvcTCell, OvcTCHdr, OvcTGPns,
   OvcTbClr, OvcTbRws, OvcTbCls, OvcDrag;

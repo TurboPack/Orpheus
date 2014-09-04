@@ -41,7 +41,7 @@ unit ovccalc;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls,
+  UITypes, Types, Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls,
   Forms, Graphics, Menus, Messages, StdCtrls, SysUtils, OvcData, OvcConst, OvcBase,
   OvcMisc;
 

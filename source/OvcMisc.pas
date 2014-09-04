@@ -47,7 +47,7 @@ unit ovcmisc;
 interface
 
 uses
-  System.UITypes, Windows, Buttons, Classes, Controls, ExtCtrls, Forms, Graphics, Messages,
+  UITypes, Windows, Buttons, Classes, Controls, ExtCtrls, Forms, Graphics, Messages,
   SysUtils, Consts, OvcData;
 
 type

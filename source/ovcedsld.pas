@@ -42,7 +42,7 @@ unit ovcedsld;
 interface
 
 uses
-  System.Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
+  Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
   StdCtrls, SysUtils, OvcBase, OvcConst, OvcData, OvcEdPop, OvcMisc, OvcSlide,
   OvcExcpt,imm;
 

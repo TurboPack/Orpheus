@@ -42,7 +42,7 @@ unit ovcoutln;
 interface
 
 uses
-  System.UITypes, Windows, Classes, Controls, Forms, Graphics, Messages, SysUtils,
+  UITypes, Windows, Classes, Controls, Forms, Graphics, Messages, SysUtils,
   OvcBase, OvcMisc, OvcVLB, OvcDlm, StdCtrls;
 
 const
@@ -466,7 +466,7 @@ type
 implementation
 
 uses
-  System.Types, WideStrUtils;
+  Types, WideStrUtils;
 
 var
   BrushBitmap : TBitmap;

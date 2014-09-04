@@ -42,7 +42,7 @@ unit ovctchdr;
 interface
 
 uses
-  System.UITypes, Windows, SysUtils, Graphics, Classes, OvcTCmmn, OvcTCell, OvcTCStr,
+  UITypes, Windows, SysUtils, Graphics, Classes, OvcTCmmn, OvcTCell, OvcTCStr,
   OvcMisc;
 
 type

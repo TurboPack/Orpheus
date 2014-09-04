@@ -41,7 +41,7 @@ unit ovcsplit;
 interface
 
 uses
-  System.Types, Windows, SysUtils, Messages, Classes, Graphics, Controls, Forms,
+  Types, Windows, SysUtils, Messages, Classes, Graphics, Controls, Forms,
   Dialogs, Buttons, ExtCtrls, OvcBase, OvcData;
 
 type

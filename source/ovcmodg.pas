@@ -40,7 +40,7 @@ unit ovcmodg;
 interface
 
 uses
-  System.UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics,
+  UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics,
   Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
 
 type

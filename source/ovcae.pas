@@ -41,7 +41,7 @@ unit ovcae;
 interface
 
 uses
-  System.Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
+  Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
   OvcNf, OvcPf, OvcSf, OvcColor, OvcBase, OvcCmd, OvcConst, OvcData, OvcEf, OvcStr;
 
 type

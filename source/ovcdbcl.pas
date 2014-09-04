@@ -42,7 +42,7 @@ unit ovcdbcl;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Buttons, Classes, Controls, Db, DbCtrls,
+  UITypes, Types, Windows, Buttons, Classes, Controls, Db, DbCtrls,
   Forms, Graphics, StdCtrls, Menus, Messages, SysUtils, OvcBase, OvcCmd, OvcConst,
   OvcData, OvcMisc, OvcColor;
 

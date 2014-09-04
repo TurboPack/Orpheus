@@ -42,7 +42,7 @@ unit ovccklb;
 interface
 
 uses
-  System.Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
+  Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
   SysUtils, ImgList, OvcBase, OvcData, OvcLB, OvcMisc, Themes;
 
 type

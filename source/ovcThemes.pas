@@ -35,7 +35,7 @@ unit ovcThemes;
 interface
 
 uses
-  Windows, Graphics, System.UITypes, Themes, UxTheme;
+  Windows, Graphics, UITypes, Themes, UxTheme;
 
 type
   TovcThemes = class(TObject)

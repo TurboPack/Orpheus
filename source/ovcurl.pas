@@ -47,7 +47,7 @@ unit ovcurl;
 interface
 
 uses
-  System.UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Graphics, Menus, ShellAPI,
+  UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Graphics, Menus, ShellAPI,
   Messages, StdCtrls, SysUtils, OvcVer;
 
 type

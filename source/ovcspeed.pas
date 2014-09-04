@@ -42,7 +42,7 @@ unit ovcspeed;
 interface
 
 uses
-  System.Types, Windows, Buttons, Classes, Controls, ExtCtrls, Graphics, Forms,
+  Types, Windows, Buttons, Classes, Controls, ExtCtrls, Graphics, Forms,
   ActnList, ImgList, Messages, SysUtils, OvcBase, OvcMisc;
 
 type

@@ -41,7 +41,7 @@ unit ovcprcbx;
 interface
 
 uses
-  System.UITypes, Windows, Messages, SysUtils, Classes, Graphics, Controls, Printers,
+  UITypes, Windows, Messages, SysUtils, Classes, Graphics, Controls, Printers,
   ExtCtrls, OvcCmbx, OvcMisc, StdCtrls;
 
 type

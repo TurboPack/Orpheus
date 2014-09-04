@@ -42,7 +42,7 @@ unit ovcslide;
 interface
 
 uses
-  System.Types, Windows, Classes, Buttons, Controls, Graphics, Forms, Messages, SysUtils,
+  Types, Windows, Classes, Buttons, Controls, Graphics, Forms, Messages, SysUtils,
   OvcBase, OvcConst, OvcData, OvcExcpt;
 
 type

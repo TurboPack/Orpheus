@@ -34,7 +34,7 @@ unit ovcviewed;
 interface
 
 uses
-  System.Types, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Types, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   StdCtrls, ExtCtrls, OvcDrag, OvcRptVw, OvcBase, OvcRVIdx, Menus, OvcCmbx;
 
 const

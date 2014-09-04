@@ -45,7 +45,7 @@ unit ovcrptvw;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Classes, Controls, ExtCtrls, Forms, Graphics,
+  UITypes, Types, Windows, Classes, Controls, ExtCtrls, Forms, Graphics,
   Messages, SysUtils, Menus, StdCtrls, ImgList, Variants, OvcFiler, OvcConst, OvcExcpt,
   OvcBase, OvcBtnHd, OvcData, OvcMisc, OvcVLB, OvcRVIdx, OvcColor, OvcRvExpDef;
 

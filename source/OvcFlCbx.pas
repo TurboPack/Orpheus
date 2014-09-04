@@ -41,7 +41,7 @@ unit ovcflcbx;
 interface
 
 uses
-  System.Types, Windows, Messages, SysUtils, Classes, Graphics, OvcCmbx, StdCtrls;
+  Types, Windows, Messages, SysUtils, Classes, Graphics, OvcCmbx, StdCtrls;
 
 type
   TOvcCbxFileAttribute = (cbxReadOnly, cbxHidden, cbxSysFile, cbxArchive,

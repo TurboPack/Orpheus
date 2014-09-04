@@ -43,7 +43,7 @@ unit ovcbase;
 interface
 
 uses
-  System.UITypes, System.Types, Windows, Classes, Controls, Dialogs, Forms, Messages,
+  UITypes, Types, Windows, Classes, Controls, Dialogs, Forms, Messages,
   StdCtrls, SysUtils, OvcCmd, OvcData, OvcMisc, OvcConst, OvcExcpt, OvcTimer, OvcDate;
 
 type
