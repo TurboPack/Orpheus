@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{97ECEF13-FB31-4F7E-A2FA-21CEE6F4D30F}</ProjectGuid>
-        <MainSource>O408_r.dpk</MainSource>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <MainSource>OrpheusDR.dpk</MainSource>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <ProjectVersion>15.4</ProjectVersion>
         <Base>True</Base>
@@ -59,16 +59,15 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <SanitizedProjectName>O408_r</SanitizedProjectName>
+        <SanitizedProjectName>OrpheusDR</SanitizedProjectName>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1031</VerInfo_Locale>
-        <DllSuffix>200</DllSuffix>
         <DCC_DependencyCheckOutputName>C:\Users\Public\Documents\RAD Studio\8.0\Bpl\O407_r150.bpl</DCC_DependencyCheckOutputName>
         <DCC_WriteableConstants>true</DCC_WriteableConstants>
-        <DCC_Description>TurboPower Orpheus 4.08 runtime package - VCL200</DCC_Description>
+        <DCC_Description>TurboPower Orpheus 5.00 runtime package</DCC_Description>
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
         <GenDll>true</GenDll>
@@ -306,7 +305,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">O408_r.dpk</Source>
+                    <Source Name="MainSource">OrpheusDR.dpk</Source>
                 </Source>
                 <Parameters/>
                 <VersionInfo>

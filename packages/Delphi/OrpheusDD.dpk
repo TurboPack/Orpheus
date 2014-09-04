@@ -22,18 +22,18 @@
 {*                                                                            *}
 {* ***** END LICENSE BLOCK *****                                              *}
 
-PACKAGE O408br;
+PACKAGE OrpheusDD;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
+{$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION ON}
@@ -47,40 +47,55 @@ PACKAGE O408br;
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
+{$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'TurboPower Orpheus 4.08 data-aware runtime package - VCL200'}
-{$LIBSUFFIX '200'}
-{$RUNONLY}
+{$DESCRIPTION 'TurboPower Orpheus 5.00 designtime package'}
+{$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
-  vclx,
-  dbrtl,
-  vcldb,
-  O408_r;
+  Vcl,
+  Vclx,
+  designide,
+  OrpheusDR;
 
 contains
-  ovcdbae in '..\..\source\ovcdbae.pas',
-  ovcdbcal in '..\..\source\ovcdbcal.pas',
-  ovcdbccb in '..\..\source\ovcdbccb.pas',
-  ovcdbcl in '..\..\source\ovcdbcl.pas',
-  ovcdbclk in '..\..\source\ovcdbclk.pas',
-  ovcdbdat in '..\..\source\ovcdbdat.pas',
-  ovcdbdLb in '..\..\source\ovcdbdLb.pas',
-  ovcdbed in '..\..\source\ovcdbed.pas',
-  ovcdbfcb in '..\..\source\ovcdbfcb.pas',
-  ovcdbmdg in '..\..\source\ovcdbmdg.pas' {OvcfrmDbMemoDlg},
-  ovcdbnf in '..\..\source\ovcdbnf.pas',
-  ovcdbnum in '..\..\source\ovcdbnum.pas',
-  ovcdbpf in '..\..\source\ovcdbpf.pas',
-  ovcdbplb in '..\..\source\ovcdbplb.pas',
-  ovcdbrpv in '..\..\source\ovcdbrpv.pas',
-  ovcdbsed in '..\..\source\ovcdbsed.pas',
-  ovcdbsf in '..\..\source\ovcdbsf.pas',
-  ovcdbsld in '..\..\source\ovcdbsld.pas',
-  ovcdbtbl in '..\..\source\ovcdbtbl.pas',
-  ovcdbtim in '..\..\source\ovcdbtim.pas',
-  o32dbfe in '..\..\source\o32dbfe.pas';
+  Ovcabot0 in '..\..\source\Ovcabot0.pas' {OvcfrmAboutForm},
+  ovcaepe in '..\..\source\ovcaepe.pas' {OvcfrmAeRange},
+  ovcbtnh0 in '..\..\source\ovcbtnh0.pas',
+  ovccmdp0 in '..\..\source\ovccmdp0.pas',
+  ovccmdp1 in '..\..\source\ovccmdp1.pas',
+  ovccolr0 in '..\..\source\ovccolr0.pas',
+  ovcdock0 in '..\..\source\ovcdock0.pas' {OvcfrmDock},
+  Ovcdrpve in '..\..\source\Ovcdrpve.pas' {OvcfrmRvDataItemEditor},
+  OvcEfPe in '..\..\source\OvcEfPe.pas',
+  ovcfnpe in '..\..\source\ovcfnpe.pas',
+  ovcfxfpe in '..\..\source\ovcfxfpe.pas',
+  ovclbl0 in '..\..\source\ovclbl0.pas' {OvcLabelFrm},
+  ovclbl1 in '..\..\source\ovclbl1.pas' {SaveSchemeFrm},
+  ovclbl2 in '..\..\source\ovclbl2.pas',
+  ovclkou0 in '..\..\source\ovclkou0.pas',
+  ovclkou1 in '..\..\source\ovclkou1.pas' {OvcfrmLkOutEd},
+  ovcnbk0 in '..\..\source\ovcnbk0.pas',
+  OvcNfPe in '..\..\source\OvcNfPe.pas',
+  Ovcoutle in '..\..\source\Ovcoutle.pas' {OvcfrmOLItemsEditor},
+  o32vldpe in '..\..\source\o32vldpe.pas' {TO32FrmValidatorExpression},
+  ovcreg in '..\..\source\ovcreg.pas',
+  ovcrvced in '..\..\source\ovcrvced.pas' {RVCmpEd},
+  ovcrvped in '..\..\source\ovcrvped.pas' {RVCmpEd2},
+  OvcSfPe in '..\..\source\OvcSfPe.pas',
+  ovcstat0 in '..\..\source\ovcstat0.pas' {OvcfrmPropsDlg},
+  ovctbpe1 in '..\..\source\ovctbpe1.pas' {OvcfrmRowEditor},
+  ovctbpe2 in '..\..\source\ovctbpe2.pas' {OvcfrmColEditor},
+  ovctcpe in '..\..\source\ovctcpe.pas' {OvcfrmTCRange},
+  ovcxfrc0 in '..\..\source\ovcxfrc0.pas',
+  ovcxfrc1 in '..\..\source\ovcxfrc1.pas',
+  ovcpfpe in '..\..\source\ovcpfpe.pas' {OvcfrmPictureMask},
+  ovccole0 in '..\..\source\ovccole0.pas' {OvcfrmCollEditor},
+  O32LobEd in '..\..\source\O32LobEd.pas' {O32frmLkOutEd},
+  o32coled in '..\..\source\o32coled.pas' {O32frmCollEditor},
+  O32IGridEditor1 in '..\..\source\O32IGridEditor1.pas',
+  O32IGridItemEd in '..\..\source\O32IGridItemEd.pas' {FormIGridItemEditor};
 
 end.
+

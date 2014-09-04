@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{BA59A88B-97E3-435F-A04A-1510502C1E47}</ProjectGuid>
-        <MainSource>O408br.dpk</MainSource>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <MainSource>OrpheusDBDR.dpk</MainSource>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <ProjectVersion>15.4</ProjectVersion>
         <Base>True</Base>
@@ -70,20 +70,19 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <SanitizedProjectName>O408br</SanitizedProjectName>
+        <SanitizedProjectName>OrpheusDBDR</SanitizedProjectName>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
         <VerInfo_Keys>FileVersion=1.0.0.0;ProductVersion=1.0.0.0;CompanyName=;FileDescription=;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;Vcl;Bde;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <DllSuffix>200</DllSuffix>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_DependencyCheckOutputName>C:\Users\Public\Documents\RAD Studio\8.0\Bpl\O407br150.bpl</DCC_DependencyCheckOutputName>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_WriteableConstants>true</DCC_WriteableConstants>
         <DCC_Platform>x86</DCC_Platform>
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
-        <DCC_Description>TurboPower Orpheus 4.08 data-aware runtime package - VCL200</DCC_Description>
+        <DCC_Description>TurboPower Orpheus 5.00 data-aware runtime package</DCC_Description>
         <DCC_S>false</DCC_S>
         <DCC_N>true</DCC_N>
         <GenDll>true</GenDll>
@@ -138,7 +137,7 @@
         <DCCReference Include="vclx.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
         <DCCReference Include="vcldb.dcp"/>
-        <DCCReference Include="O408_r.dcp"/>
+        <DCCReference Include="OrpheusDR.dcp"/>
         <DCCReference Include="..\..\source\ovcdbae.pas"/>
         <DCCReference Include="..\..\source\ovcdbcal.pas"/>
         <DCCReference Include="..\..\source\ovcdbccb.pas"/>
@@ -182,7 +181,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">O408br.dpk</Source>
+                    <Source Name="MainSource">OrpheusDBDR.dpk</Source>
                 </Source>
                 <Parameters/>
                 <VersionInfo>

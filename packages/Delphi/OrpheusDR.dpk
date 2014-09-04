@@ -22,18 +22,18 @@
 {*                                                                            *}
 {* ***** END LICENSE BLOCK *****                                              *}
 
-PACKAGE O408_r;
+PACKAGE OrpheusDR;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
+{$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION ON}
@@ -47,10 +47,9 @@ PACKAGE O408_r;
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
+{$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'TurboPower Orpheus 4.08 runtime package - VCL200'}
-{$LIBSUFFIX '200'}
+{$DESCRIPTION 'TurboPower Orpheus 5.00 runtime package'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -215,6 +214,5 @@ contains
 {$IFDEF CPUX86}ovcRTF_RichOle in '..\..\source\ovcRTF_RichOle.pas',{$ENDIF}
   ovctccheckcbx in '..\..\source\ovctccheckcbx.pas',
   OvcTCHeaderExtended in '..\..\source\OvcTCHeaderExtended.pas';
-
 end.
 
