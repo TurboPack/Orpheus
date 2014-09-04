@@ -3586,10 +3586,6 @@ procedure TOvcCustomReportView.CreateWnd;
 begin
   inherited CreateWnd;
 
-  {$IFNDEF DisableTimer}
-  {if Controller <> nil then
-    FHoverTimer := Controller.TimerPool.Add(HoverTimerEvent, 250);}
-  {$ENDIF}
   {do we have scroll bars}
   rvHaveHS := FScrollBars in [ssHorizontal, ssBoth];
 

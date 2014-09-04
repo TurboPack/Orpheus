@@ -101,10 +101,7 @@ implementation
 {$I OVC.inc}
 
 uses
-{$IFDEF VERSIONXE5UP}
-  System.Types,
-{$ENDIF}
-  CommCtrl, ovctcedtHTMLText, ovcRTF_IText, Generics.Collections, ovcTable;
+  System.Types, CommCtrl, ovctcedtHTMLText, ovcRTF_IText, Generics.Collections, ovcTable;
 
 function SetWindowSubclass(hWnd: HWND; pfnSubclass: SUBCLASSPROC;
   uIdSubclass: UINT_PTR; dwRefData: DWORD_PTR): BOOL; stdcall; external comctl32; // XP or newer; Winapi.CommCtrl.SetWindowSubClass is broken (InitComCtl not called)

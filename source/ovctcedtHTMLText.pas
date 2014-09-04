@@ -121,16 +121,12 @@ type
     property ShowHint;
     property TabOrder;
     property TabStop;
-    {$IFDEF XE3}
     property Touch;
-    {$ENDIF}
     property Visible;
     property WantReturns;
     property WantTabs;
     property WordWrap;
-    {$IFDEF XE3}
     property StyleElements;
-    {$ENDIF}
     property OnChange;
     property OnClick;
     property OnContextPopup;
@@ -141,9 +137,7 @@ type
     property OnEndDrag;
     property OnEnter;
     property OnExit;
-    {$IFDEF XE3}
     property OnGesture;
-    {$ENDIF}
     property OnKeyDown;
     property OnKeyPress;
     property OnKeyUp;

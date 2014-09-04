@@ -39,9 +39,7 @@ type
     procedure TestCopy;
     procedure TestCopyRect;
     procedure TestDeleteRect;
-{$IFDEF UNICODE}
     procedure TestsuggestEncoding;
-{$ENDIF}
     procedure TestLoadFromFile;
     procedure TestSaveToFile;
     procedure TestUndoBufferFull;
@@ -299,8 +297,6 @@ begin
   end;
 end;
 
-{$IFDEF UNICODE}
-
 procedure TTestOvcEdit.TestsuggestEncoding;
 var
   SL       : TStringList;
@@ -352,9 +348,6 @@ begin
   end;
 end;
 
-{$ENDIF}
-
-
 procedure TTestOvcEdit.TestLoadFromFile;
 var
   SL          : TStringList;
@@ -362,9 +355,7 @@ var
   FileName    : string;
 const
   line = 'ASCII-Zeile';
-{$IFDEF UNICODE}
   unicodeline = 'Unicode: АБВГДЕЖЗИК';
-{$ENDIF}
 begin
   SL    := nil;
   GetTempPath(255,TMPDir);
@@ -381,7 +372,6 @@ begin
     { OvcTextFileEditor puts an extra #13#10 at the end of the text.
       Let's call this a feature, not a bug... }
     CheckEqualsString(SL.Text+#13#10, Buf);
-{$IFDEF UNICODE}
     { 2. UTF-8 Textfile }
     SL.Clear;
     SL.Add(line);
@@ -398,7 +388,6 @@ begin
     FForm.OvcTextFileEditor.LoadFromFile(FileName);
     FForm.OvcTextFileEditor.GetText(@Buf[0],SizeOf(Buf));
     CheckEqualsString(SL.Text+#13#10, Buf);
-{$ENDIF}
   finally
     SL.Free;
     DeleteFile(FileName);
@@ -413,9 +402,7 @@ var
   FileName    : string;
 const
   line = 'ASCII-Zeile';
-{$IFDEF UNICODE}
   unicodeline = 'Unicode: АБВГДЕЖЗИК';
-{$ENDIF}
 begin
   SL := nil;
   GetTempPath(255,TMPDir);
@@ -427,17 +414,16 @@ begin
     FForm.OvcTextFileEditor.AppendPara(line);
     FForm.OvcTextFileEditor.AppendPara(line);
     FForm.OvcTextFileEditor.SaveToFile(FileName);
-    SL.LoadFromFile(FileName{$IFDEF UNICODE},TEncoding.Default{$ENDIF});
+    SL.LoadFromFile(FileName, TEncoding.Default);
     FForm.OvcTextFileEditor.GetText(@Buf[0],SizeOf(Buf));
     CheckEqualsString(SL.Text+#13#10, Buf);
     { 2. Ansi-Textfile containing <tab>-characters }
     SL := TStringList.Create;
     FForm.OvcTextFileEditor.AppendPara(line+#9+line+#9);
     FForm.OvcTextFileEditor.SaveToFile(FileName);
-    SL.LoadFromFile(FileName{$IFDEF UNICODE},TEncoding.Default{$ENDIF});
+    SL.LoadFromFile(FileName, TEncoding.Default);
     FForm.OvcTextFileEditor.GetText(@Buf[0],SizeOf(Buf));
     CheckEqualsString(SL.Text+#13#10, Buf);
-{$IFDEF UNICODE}
     { 3. UTF-8 Textfile }
     FForm.OvcTextFileEditor.AppendPara(unicodeline);
     FForm.OvcTextFileEditor.SaveToFile(FileName);
@@ -449,7 +435,6 @@ begin
     SL.LoadFromFile(FileName,TEncoding.Unicode);
     FForm.OvcTextFileEditor.GetText(@Buf[0],SizeOf(Buf));
     CheckEqualsString(SL.Text+#13#10, Buf);
-{$ENDIF}
   finally
     SL.Free;
     DeleteFile(FileName);

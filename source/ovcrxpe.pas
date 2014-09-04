@@ -42,8 +42,7 @@ interface
 
 uses
   Windows, Classes, Graphics, Forms, Controls, Buttons, StdCtrls,
-
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  DesignIntf, DesignEditors,
   SysUtils, ExtCtrls, OvcRxVld,
   OvcConst,
   OvcData,

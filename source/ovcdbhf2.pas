@@ -28,10 +28,6 @@
 
 {$I OVC.INC}
 
-{$IFNDEF VERSION3}
-!! Error - The FlashFiler 2 engine helper class is for Delphi 3+ only
-{$ENDIF}
-
 {$B-} {Complete Boolean Evaluation}
 {$I+} {Input/Output-Checking}
 {$P+} {Open Parameters}
