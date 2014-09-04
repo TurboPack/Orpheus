@@ -313,7 +313,7 @@ var
 begin
   S := Text;
   for I := Length(S) downto 1 do
-    if not ovcCharInSet(S[I], ['0'..'9', '+', '-', FormatSettings.DecimalSeparator]) then
+    if not CharInSet(S[I], ['0'..'9', '+', '-', FormatSettings.DecimalSeparator]) then
       Delete(S, I, 1);
   Result := StrToFloat(S);
   if FValidate and ((Result < FSlider.Min) or (Result > FSlider.Max)) then begin
@@ -391,13 +391,13 @@ var
 begin
   inherited KeyPress(Key);
 
-  if not ovcCharInSet(Key, [#27, '0'..'9', '.', FormatSettings.DecimalSeparator, #8, '+', '-', '*', '/']) then begin
+  if not CharInSet(Key, [#27, '0'..'9', '.', FormatSettings.DecimalSeparator, #8, '+', '-', '*', '/']) then begin
     Key := #0;
     MessageBeep(0);
     Exit;
   end;
 
-  if FAllowIncDec  and ovcCharInSet(Key, ['+', '-']) then begin
+  if FAllowIncDec  and CharInSet(Key, ['+', '-']) then begin
     if Text = '' then
       Text := '0';
     D := StrToFloat(Text);

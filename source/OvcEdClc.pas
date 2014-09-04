@@ -238,7 +238,7 @@ var
 begin
   S := Text;
   for I := Length(S) downto 1 do
-    if not ovcCharInSet(S[I], ['0'..'9', '+', '-', 'e', 'E', FormatSettings.DecimalSeparator]) then
+    if not CharInSet(S[I], ['0'..'9', '+', '-', 'e', 'E', FormatSettings.DecimalSeparator]) then
       Delete(S, I, 1);
   Result := StrToFloat(S);
 end;
@@ -308,7 +308,7 @@ begin
   inherited KeyPress(Key);
 
   if not ((Key = #22) or (Key = #3) or (Key = #24)) then begin
-    if not ovcCharInSet(Key, [#27, '0'..'9', '.', FormatSettings.DecimalSeparator,
+    if not CharInSet(Key, [#27, '0'..'9', '.', FormatSettings.DecimalSeparator,
                     #8, '+', '-', '*', '/']) then begin
       Key := #0;
       MessageBeep(0);
@@ -324,7 +324,7 @@ begin
       Exit;
     end;
 
-    if FAllowIncDec and ovcCharInSet(Key, ['+', '-']) then begin
+    if FAllowIncDec and CharInSet(Key, ['+', '-']) then begin
       if Text = '' then
         Text := '0';
       D := StrToFloat(Text);
@@ -342,7 +342,7 @@ begin
       Key := #0; {clear key}
     end;
 
-    if ovcCharInSet(Key, ['+', '*', '/']) then begin
+    if CharInSet(Key, ['+', '*', '/']) then begin
       PopUpOpen;
       FCalculator.KeyPress(Key);
       Key := #0; {clear key}

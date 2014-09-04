@@ -43,7 +43,7 @@ interface
 
 uses
   Windows, Classes, Controls, Forms, Graphics, StdCtrls, Menus, Messages, Types,
-  SysUtils, OvcBase, OvcData, OvcCmd, OvcConst, OvcMisc, OvcExcpt, OvcColor;
+  SysUtils, OvcBase, OvcData, OvcCmd, OvcConst, OvcMisc, OvcExcpt, OvcColor, UITypes;
 
 const
   vlbMaxTabStops = 128;             {maximum number of tab stops}

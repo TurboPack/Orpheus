@@ -1957,7 +1957,7 @@ var
   Buf : array[0..1] of Char;
 begin
   if FPictureMask <> Value then begin
-    if ovcCharInSet(Value, SimplePictureChars) then begin
+    if CharInSet(Value, SimplePictureChars) then begin
       FPictureMask := Value;
       if csDesigning in ComponentState then begin
         efPicture[0] := Value;

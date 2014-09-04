@@ -45,9 +45,9 @@ unit ovcedit;
 interface
 
 uses
-  UITypes, Types, Windows, MMSystem, Classes, Controls, Forms, Graphics,
-  Menus, Messages, StdCtrls, SysUtils, OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData,
-  OvcEditN, OvcEditU, OvcExcpt, OvcFxFnt, OvcMisc, OvcStr, OvcEditP, OvcBordr;
+  Types, Windows, MMSystem, Classes, Controls, Forms, Graphics, Menus, Messages,
+  StdCtrls, SysUtils, OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData, OvcEditN,
+  OvcEditU, OvcExcpt, OvcFxFnt, OvcMisc, OvcStr, OvcEditP, OvcBordr, UITypes;
 
 const
   MARGINPAD = 5;
@@ -1432,7 +1432,7 @@ begin
       {strip control chars}
       for I := 0 to StrLen(GPs)-1 do begin
         if FKeepClipboardChars then begin
-          if not ovcCharInSet(GPs[I], FClipboardChars) and (GPs[I] <= #32) then
+          if not CharInSet(GPs[I], FClipboardChars) and (GPs[I] <= #32) then
             GPs[I] := #32;
         end else if GPs[I] < #9 then
           GPs[I] := #32;
@@ -2587,7 +2587,7 @@ begin
         Offset := 0;
         if Pos + BlockSize < SaveLen then begin
           {don't end block in cr/lf}
-          while ovcCharInSet(S[BlockSize+Offset], [#13, #10]) and
+          while CharInSet(S[BlockSize+Offset], [#13, #10]) and
                 (BlockSize+Offset < $FFF0) and
                 (Pos+BlockSize+Offset < SaveLen) do
             Inc(Offset);
@@ -6657,7 +6657,7 @@ begin
         sBuffer := GetParaPointer(I);
         for J := 1 to Length(sBuffer) do begin
           if FKeepClipboardChars then begin
-            if not ovcCharInSet(sBuffer[J], FClipboardChars) and (sBuffer[J] <= #32) then
+            if not CharInSet(sBuffer[J], FClipboardChars) and (sBuffer[J] <= #32) then
               sBuffer[J] := #32;
           end else if sBuffer[J] < #9 then
             sBuffer[J] := #32;

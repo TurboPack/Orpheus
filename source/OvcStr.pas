@@ -129,8 +129,6 @@ procedure TrimTrailingZerosPChar(P : PChar);
 function UpCaseChar(C : Char) : Char;
   {-Convert a character to uppercase using the AnsiUpper API}
 
-function ovcCharInSet(C: Char; const CharSet: TOvcCharSet): Boolean; deprecated;
-
 function ovc32StringIsCurrentCodePage(const S: string): Boolean; overload;
 function ovc32StringIsCurrentCodePage(const S: PWideChar; CP:Cardinal=0): Boolean; overload;
 
@@ -855,11 +853,6 @@ begin
     uppercase if the character ist passed to the function - in this
     case, the new charater will be returned. }
   result := Char(CharUpper(PChar(C)));
-end;
-
-function ovcCharInSet(C: Char; const CharSet: TOvcCharSet): Boolean;
-begin
-  Result := SysUtils.CharInSet(C, CharSet);
 end;
 
 function ovc32StringIsCurrentCodePage(const S: string): Boolean;

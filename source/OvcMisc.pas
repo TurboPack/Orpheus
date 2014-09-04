@@ -464,11 +464,11 @@ begin
   I := 1;
   SLen := Length(S);
   while I <= SLen do begin
-    while (I <= SLen) and ovcCharInSet(S[I], WordDelims) do
+    while (I <= SLen) and CharInSet(S[I], WordDelims) do
       Inc(I);
     if I <= SLen then
       Inc(Result);
-    while (I <= SLen) and not ovcCharInSet(S[I], WordDelims) do
+    while (I <= SLen) and not CharInSet(S[I], WordDelims) do
       Inc(I);
   end;
 end;
@@ -482,7 +482,7 @@ begin
   I := WordPosition(N, S, WordDelims);
   if I <> 0 then
     { find the end of the current word }
-    while (I <= Length(S)) and not ovcCharInSet(S[I], WordDelims) do begin
+    while (I <= Length(S)) and not CharInSet(S[I], WordDelims) do begin
       { add the I'th character to result }
       Inc(Len);
       SetLength(Result, Len);
@@ -501,14 +501,14 @@ begin
   Result := 0;
   while (I <= Length(S)) and (Count <> N) do begin
     {skip over delimiters}
-    while (I <= Length(S)) and ovcCharInSet(S[I], WordDelims) do
+    while (I <= Length(S)) and CharInSet(S[I], WordDelims) do
       Inc(I);
     {if we're not beyond end of S, we're at the start of a word}
     if I <= Length(S) then
       Inc(Count);
     {if not finished, find the end of the current word}
     if Count <> N then
-      while (I <= Length(S)) and not ovcCharInSet(S[I], WordDelims) do
+      while (I <= Length(S)) and not CharInSet(S[I], WordDelims) do
         Inc(I)
     else
       Result := I;

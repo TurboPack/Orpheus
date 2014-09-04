@@ -203,7 +203,7 @@ type
 implementation
 
 uses
-  ovcstr;
+  SysUtils;
 
 const
   NumFieldTypes : set of  TFieldType =
@@ -394,12 +394,12 @@ end;
 
 procedure TOvcCustomDbNumberEdit.KeyPress(var Key : Char);
 begin
-  if AllowIncDec and ovcCharInSet(Key, ['+', '-']) then
+  if AllowIncDec and CharInSet(Key, ['+', '-']) then
     FDataLink.Edit;
 
   inherited KeyPress(Key);
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;

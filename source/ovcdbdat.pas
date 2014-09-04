@@ -441,14 +441,14 @@ begin
   inherited KeyPress(Key);
 
 {  NeedsUpdating := (AllowIncDec and (Key in ['+', '-']));}
-  NeedsUpdating := (AllowIncDec and ovcCharInSet(TheKey, ['+', '-']));
+  NeedsUpdating := (AllowIncDec and CharInSet(TheKey, ['+', '-']));
 
   if (NeedsUpdating) then begin
     FDataLink.Edit;
     FDataLink.Field.AsDateTime := FDate;
   end;
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;

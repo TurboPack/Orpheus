@@ -554,7 +554,7 @@ var
 begin
   FillChar(FPictureFlags, SizeOf(FPictureFlags), pflagLiteral);
   for I := 1 to Length(FPictureMask) do begin
-    if ovcCharInSet(FPictureMask[I], PictureChars) then
+    if CharInSet(FPictureMask[I], PictureChars) then
       FPictureFlags[I] := pflagFormat
     else
       case FPictureMask[I] of

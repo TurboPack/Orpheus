@@ -598,7 +598,7 @@ end;
 
 procedure TIGridCmpEd.TreeView1KeyPress(Sender: TObject; var Key: Char);
 begin
-  if ovcCharInSet(Key, ['A'..'Z', 'a'..'z', '0'..'1']) then begin
+  if CharInSet(Key, ['A'..'Z', 'a'..'z', '0'..'1']) then begin
     CaptionEdit.SetFocus;
     CaptionEdit.Text := Key;
     Key := #0;

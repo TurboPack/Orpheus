@@ -421,7 +421,7 @@ begin
 
   if (ReadOnly) then Exit;
 
-  if FAllowIncDec and ovcCharInSet(Key, ['+', '-']) then begin
+  if FAllowIncDec and CharInSet(Key, ['+', '-']) then begin
   {accept current date}
     DoExit;
     if FDate = 0 then
@@ -862,14 +862,14 @@ begin
     try
       {parse the string into subfields using a string list to hold the parts}
       I1 := 1;
-      while (I1 <= Length(Value)) and not ovcCharInSet(Value[I1], ['0'..'9', 'A'..'Z']) do
+      while (I1 <= Length(Value)) and not CharInSet(Value[I1], ['0'..'9', 'A'..'Z']) do
         Inc(I1);
       while I1 <= Length(Value) do begin
         I2 := I1;
-        while (I2 <= Length(Value)) and ovcCharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
+        while (I2 <= Length(Value)) and CharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
           Inc(I2);
         StringList.Add(Copy(Value, I1, I2-I1));
-        while (I2 <= Length(Value)) and not ovcCharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
+        while (I2 <= Length(Value)) and not CharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
           Inc(I2);
         I1 := I2;
       end;
@@ -893,7 +893,7 @@ begin
         case FieldOrder[Field] of
           'M' :
             begin
-              if (S = '') or ovcCharInSet(S[1], ['0'..'9']) then begin
+              if (S = '') or CharInSet(S[1], ['0'..'9']) then begin
               {numeric month}
                 try
                   if S = '' then

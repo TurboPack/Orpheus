@@ -401,7 +401,7 @@ procedure TOvcCustomDbTimeEdit.KeyPress(var Key : Char);
 begin
   inherited KeyPress(Key);
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;

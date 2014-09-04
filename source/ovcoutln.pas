@@ -42,8 +42,8 @@ unit ovcoutln;
 interface
 
 uses
-  UITypes, Windows, Classes, Controls, Forms, Graphics, Messages, SysUtils,
-  OvcBase, OvcMisc, OvcVLB, OvcDlm, StdCtrls;
+  Windows, Classes, Controls, Forms, Graphics, Messages, SysUtils, OvcBase, OvcMisc,
+  OvcVLB, OvcDlm, StdCtrls, UITypes;
 
 const
   ChildIndent = 17;

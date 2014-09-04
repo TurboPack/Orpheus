@@ -535,12 +535,12 @@ function TOvcDbReportView.CreateValidFieldName(const FieldName : string) : strin
 var
   i : Integer;
 begin
-  if ovcCharInSet(FieldName[1], ['A'..'Z','a'..'z']) then
+  if CharInSet(FieldName[1], ['A'..'Z','a'..'z']) then
     Result := FieldName[1]
   else
     Result := '_';
   for i := 2 to length(FieldName) do
-    if ovcCharInSet(FieldName[i], ['A'..'Z','a'..'z','0'..'9']) then
+    if CharInSet(FieldName[i], ['A'..'Z','a'..'z','0'..'9']) then
       Result := Result + FieldName[i]
     else
       Result := Result + '_';

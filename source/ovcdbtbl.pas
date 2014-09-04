@@ -45,9 +45,9 @@ interface
 {$I ovc.inc}
 
 uses
-  UITypes, Windows, Buttons, Classes, Controls, DB, Forms, Graphics, Menus,
-  Messages, SysUtils, StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt, OvcMisc,
-  OvcTCBEF, OvcTCell, OvcTBClr, OvcTBCls, OvcTCmmn, OvcTGPns, OvcDate;
+  Windows, Buttons, Classes, Controls, DB, Forms, Graphics, Menus, Messages, SysUtils,
+  StdCtrls, OvcBase, OvcCmd, OvcConst, OvcData, OvcExcpt, OvcMisc, OvcTCBEF, OvcTCell,
+  OvcTBClr, OvcTBCls, OvcTCmmn, OvcTGPns, OvcDate, UITypes;
 
 type
   {data-aware table options}

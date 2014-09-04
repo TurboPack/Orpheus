@@ -254,7 +254,7 @@ begin
         end;
       mMskAscii, mMskAsciiOpt:
         begin
-          if ovcCharInSet(NewChar, LeadBytes) and TestChar(NewChar) then
+          if CharInSet(NewChar, LeadBytes) and TestChar(NewChar) then
           begin
             Result := False;
             Exit;
@@ -271,7 +271,7 @@ begin
         end;
       mMskAlpha, mMskAlphaOpt, mMskAlphaNum, mMskAlphaNumOpt:
         begin
-          if ovcCharInSet(NewChar, LeadBytes) then
+          if CharInSet(NewChar, LeadBytes) then
           begin
             if TestChar(NewChar) then
               Result := False;

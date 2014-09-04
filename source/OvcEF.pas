@@ -1207,7 +1207,7 @@ begin
   I := 0;
   L := StrLen(St);
   while St^ <> #0 do begin
-    if ovcCharInSet(St^, PictureChars) then
+    if CharInSet(St^, PictureChars) then
       Inc(I)
     else case St^ of
       pmFloatDollar, pmComma : Inc(I);
@@ -1354,20 +1354,20 @@ begin
     pmAnyChar, pmForceUpper, pmForceLower, pmForceMixed :
       ;
     pmMonthName, pmMonthNameU, pmAlpha, pmUpperAlpha, pmLowerAlpha :
-      Result := IsCharAlpha(Ch) or ovcCharInSet(Ch, AlphaCharSet);  //SZ: AlphaCharSet works only for ANSI characters; we need to check for [' ', '-', '.', ','] as well
+      Result := IsCharAlpha(Ch) or CharInSet(Ch, AlphaCharSet);  //SZ: AlphaCharSet works only for ANSI characters; we need to check for [' ', '-', '.', ','] as well
     pmDecimal :
-      Result := ovcCharInSet(Ch, RealCharSet);
+      Result := CharInSet(Ch, RealCharSet);
     pmWhole :
-      Result := (Ch = '-') or ovcCharInSet(Ch, IntegerCharSet);
+      Result := (Ch = '-') or CharInSet(Ch, IntegerCharSet);
     pmMonth, pmMonthU, pmDay, pmDayU, pmYear,
     pmHour, pmHourU, pmSecond, pmSecondU,
     pmPositive :
-      Result := ovcCharInSet(Ch, IntegerCharSet);
+      Result := CharInSet(Ch, IntegerCharSet);
     pmHexadecimal :
       case Ch of
         'A'..'F' : ;
       else
-        Result := ovcCharInSet(Ch, IntegerCharSet);
+        Result := CharInSet(Ch, IntegerCharSet);
       end;
     pmOctal :
       case Ch of
@@ -1390,10 +1390,10 @@ begin
       case Ch of
         '+', 'E' : ;
         else
-          Result := ovcCharInSet(Ch, RealCharSet);
+          Result := CharInSet(Ch, RealCharSet);
       end;
     pmUser1..pmUser8 :
-      Result := ovcCharInSet(Ch, UserData.UserCharSet[PicChar]);
+      Result := CharInSet(Ch, UserData.UserCharSet[PicChar]);
   end;
 end;
 
@@ -2335,7 +2335,7 @@ var
     else begin
       Result := 0;
       for I := DotPos+1 to MaxLength-1 do
-        if ovcCharInSet(efNthMaskChar(I), PictureChars) then
+        if CharInSet(efNthMaskChar(I), PictureChars) then
           Inc(Result)
         else
           Break;

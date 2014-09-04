@@ -47,9 +47,9 @@ unit ovcviewr;
 interface
 
 uses
-  UITypes, Windows, Classes, Controls, Forms, Graphics, Menus, Messages,
-  StdCtrls, SysUtils, OvcBase, OvcCaret, OvcCmd, OvcColor, OvcConst, OvcData, OvcExcpt,
-  OvcFxFnt, OvcMisc, OvcStr, OvcBordr, OvcEditU;
+  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls, SysUtils,
+  OvcBase, OvcCaret, OvcCmd, OvcColor, OvcConst, OvcData, OvcExcpt, OvcFxFnt, OvcMisc,
+  OvcStr, OvcBordr, OvcEditU, UITypes;
 
 type
   {text position record for viewer}

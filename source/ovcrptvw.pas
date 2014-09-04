@@ -45,9 +45,9 @@ unit ovcrptvw;
 interface
 
 uses
-  UITypes, Types, Windows, Classes, Controls, ExtCtrls, Forms, Graphics,
-  Messages, SysUtils, Menus, StdCtrls, ImgList, Variants, OvcFiler, OvcConst, OvcExcpt,
-  OvcBase, OvcBtnHd, OvcData, OvcMisc, OvcVLB, OvcRVIdx, OvcColor, OvcRvExpDef;
+  Types, Windows, Classes, Controls, ExtCtrls, Forms, Graphics, Messages, SysUtils,
+  Menus, StdCtrls, ImgList, Variants, OvcFiler, OvcConst, OvcExcpt, OvcBase, OvcBtnHd,
+  OvcData, OvcMisc, OvcVLB, OvcRVIdx, OvcColor, OvcRvExpDef, UITypes;
 
 const
   {default property values}
@@ -6304,12 +6304,12 @@ function TOvcCustomReportView.UniqueViewNameFromTitle(const Title : string) : st
 var
   i : Integer;
 begin
-  if ovcCharInSet(Title[1], ['A'..'Z','a'..'z']) then
+  if CharInSet(Title[1], ['A'..'Z','a'..'z']) then
     Result := Title[1]
   else
     Result := '_';
   for i := 2 to length(Title) do
-    if ovcCharInSet(Title[i], ['A'..'Z','a'..'z','0'..'9']) then
+    if CharInSet(Title[i], ['A'..'Z','a'..'z','0'..'9']) then
       Result := Result + Title[i]
     else
       Result := Result + '_';

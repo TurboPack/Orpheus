@@ -45,8 +45,8 @@ unit o32igrid;
 interface
 
 uses
-  UITypes, Types, Windows, Graphics, Classes, Forms, Mask, StdCtrls,
-  ExtCtrls, Grids, Messages, Controls, OvcBase, OvcCmbx, OvcClrCb, ovcftcbx;
+  Types, Windows, Graphics, Classes, Forms, Mask, StdCtrls, ExtCtrls, Grids, Messages,
+  Controls, OvcBase, OvcCmbx, OvcClrCb, ovcftcbx, UITypes;
 
 const
   ScrollBarWidth = 16;
@@ -1135,7 +1135,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -1468,7 +1468,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -1771,7 +1771,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -2093,7 +2093,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -5861,7 +5861,7 @@ end;
 {=====}
 procedure TO32CustomInspectorGrid.WMChar(var Msg: TWMChar);
 begin
-  if (goEditing in Options) and ovcCharInSet(Char(Msg.CharCode), [^H, #32..#255]) then
+  if (goEditing in Options) and CharInSet(Char(Msg.CharCode), [^H, #32..#255]) then
     ShowEditorChar(Char(Msg.CharCode))
   else
     inherited;

@@ -837,7 +837,7 @@ begin
   Base := CT.TableName;
 
   {remove trailing numbers from the name, forming the base name}
-  while (Length(Base) > 1) and ovcCharInSet(Base[Length(Base)], ['0'..'9']) do
+  while (Length(Base) > 1) and CharInSet(Base[Length(Base)], ['0'..'9']) do
     {$IFOPT H+}
     SetLength(Base, Length(Base)-1);
     {$ELSE}

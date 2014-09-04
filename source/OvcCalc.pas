@@ -1007,7 +1007,7 @@ begin
           else if AllSame(copy(S, 1, -Diff)) then
             S := copy(S,-Diff + 1, Length(S));
         end else begin
-          if AllSame(S) and (not ovcCharInSet(S[1], ['0'..'9'])) then
+          if AllSame(S) and (not CharInSet(S[1], ['0'..'9'])) then
             if Diff >= 0 then
               S := S + StringOfChar(S[1], Diff)
             else
@@ -2353,7 +2353,7 @@ begin
     cClearAll;
     for I := 1 to Length(S) do begin
       C := S[I];
-      if ovcCharInSet(C, ['0'..'9', FormatSettings.DecimalSeparator, '.', '+', '-', '*', '/', '=', '%']) then
+      if CharInSet(C, ['0'..'9', FormatSettings.DecimalSeparator, '.', '+', '-', '*', '/', '=', '%']) then
         KeyPress(C);
     end;
   end;

@@ -305,7 +305,7 @@ begin
   end else begin
     FillChar(pfPicFlags, MaxLength+1, pflagLiteral);
     for I := 0 to MaxLength-1 do
-      if ovcCharInSet(efNthMaskChar(I), PictureChars) then
+      if CharInSet(efNthMaskChar(I), PictureChars) then
         pfPicFlags[I] := pflagFormat
       else
         case efNthMaskChar(I) of

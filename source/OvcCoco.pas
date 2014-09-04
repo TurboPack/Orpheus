@@ -520,7 +520,7 @@ begin
   eof := false;
   ch := Scanner.CharAt(pos);
   inc(pos, SizeOf(Char));
-  while not ovcCharInSet(ch, LineEnds) do
+  while not CharInSet(ch, LineEnds) do
   begin
     SetLength(line, length(Line) + 1);
     line[i] := ch;

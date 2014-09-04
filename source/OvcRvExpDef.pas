@@ -2528,7 +2528,7 @@ begin
     and SimpleExp.IsConstant
     and ((EscapeExp = nil) or EscapeExp.IsConstant) then begin
       S := SimpleExp.GetValue(nil);
-      if not ovcCharInSet(S[1], ['%', '_']) then
+      if not CharInSet(S[1], ['%', '_']) then
         Result := True;
     end;
 end;
@@ -2575,7 +2575,7 @@ begin
   Result := SimpleExp.GetValue(Data);
   P := 1;
   while (P <= length(Result))
-    and not ovcCharInSet(Result[P], ['%', '_']) do
+    and not CharInSet(Result[P], ['%', '_']) do
       inc(P);
   dec(P);
   if P < length(Result) then

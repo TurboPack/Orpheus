@@ -551,12 +551,12 @@ function UniqueNameFromColumn(ColumnName : string; View : TOvcRVView) : string;
 var
   i : Integer;
 begin
-  if ovcCharInSet(ColumnName[1], ['A'..'Z','a'..'z']) then
+  if CharInSet(ColumnName[1], ['A'..'Z','a'..'z']) then
     Result := View.Name + '_' + ColumnName[1]
   else
     Result := View.Name + '_';
   for i := 2 to length(ColumnName) do
-    if ovcCharInSet(ColumnName[i], ['A'..'Z','a'..'z','0'..'9']) then
+    if CharInSet(ColumnName[i], ['A'..'Z','a'..'z','0'..'9']) then
       Result := Result + ColumnName[i]
     else
       Result := Result + '_';
@@ -645,12 +645,12 @@ function UniqueNameFromTitle(ReportView : TOvcCustomReportView; Title : string) 
 var
   i : Integer;
 begin
-  if ovcCharInSet(Title[1], ['A'..'Z','a'..'z']) then
+  if CharInSet(Title[1], ['A'..'Z','a'..'z']) then
     Result := Title[1]
   else
     Result := '_';
   for i := 2 to length(Title) do
-    if ovcCharInSet(Title[i], ['A'..'Z','a'..'z','0'..'9']) then
+    if CharInSet(Title[i], ['A'..'Z','a'..'z','0'..'9']) then
       Result := Result + Title[i]
     else
       Result := Result + '_';
