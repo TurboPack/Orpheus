@@ -46,7 +46,7 @@ interface
 
 uses
   Windows, Classes, Controls, ExtCtrls, Forms, SysUtils,
-  DBTables, OvcConst, OvcData, OvcExcpt, OvcDlg,
+  OvcConst, OvcData, OvcExcpt, OvcDlg,
   FileCtrl, Dialogs, StdCtrls;
 
 
@@ -124,7 +124,7 @@ var
   I         : Integer;
   AliasList : TStringList;
   ParamList : TStringList;
-begin
+begin                                             fff
   Result := '';
   if Alias > '' then begin
     {get a list of session aliases}

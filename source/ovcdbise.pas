@@ -41,7 +41,7 @@ unit ovcdbise;
 interface
 
 uses
-  Windows, Classes, Controls, Db, DbTables, ExtCtrls, Forms, Graphics, Menus,
+  Windows, Classes, Controls, Db, ExtCtrls, Forms, Graphics, Menus,
   Messages, StdCtrls, SysUtils, OvcBase, OvcConst, OvcData, OvcISEB, OvcExcpt,
   OvcMisc, OvcVer, OvcEditF, OvcDbHLL;
 

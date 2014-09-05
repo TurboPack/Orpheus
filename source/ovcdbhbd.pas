@@ -40,7 +40,7 @@ unit ovcdbhbd;
 
 interface
 
-uses
+uses                                                     gg
   Windows, Messages, SysUtils, Classes, OvcBase, Db, DBTables, OvcDbHLL;
 
 type

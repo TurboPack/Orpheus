@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2014 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'o32imgfm.pas' rev: 27.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'o32imgfm.pas' rev: 28.00 (Windows)
 
 #ifndef O32imgfmHPP
 #define O32imgfmHPP

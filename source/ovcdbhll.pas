@@ -112,7 +112,7 @@ unit ovcdbhll;
 interface
 
 uses
-  Windows, BDE, Messages, SysUtils, Classes, OvcBase, Db;
+  Windows, Messages, SysUtils, Classes, OvcBase, Db;
 
 type
   TOvcDbEngineHelperBase = class(TComponent)

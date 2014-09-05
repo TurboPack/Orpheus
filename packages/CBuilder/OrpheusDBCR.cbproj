@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{6BB79E32-9801-4FBF-B1AB-B716C1166540}</ProjectGuid>
         <MainSource>OrpheusDBCR.cpp</MainSource>
-        <ProjectVersion>15.4</ProjectVersion>
+        <ProjectVersion>16.0</ProjectVersion>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Base>True</Base>
         <AppType>Library</AppType>
@@ -118,6 +118,15 @@
         <PackageImport Include="dbrtl.bpi">
             <BuildOrder>8</BuildOrder>
         </PackageImport>
+        <PackageImport Include="OrpheusCR.bpi">
+            <BuildOrder>29</BuildOrder>
+        </PackageImport>
+        <CppCompile Include="OrpheusDBCR.cpp">
+            <BuildOrder>0</BuildOrder>
+        </CppCompile>
+        <ResFiles Include="OrpheusDBCR.res">
+            <BuildOrder>2</BuildOrder>
+        </ResFiles>
         <PackageImport Include="rtl.bpi">
             <BuildOrder>1</BuildOrder>
         </PackageImport>
@@ -127,13 +136,6 @@
         <PackageImport Include="vcldb.bpi">
             <BuildOrder>9</BuildOrder>
         </PackageImport>
-        <CppCompile Include="OrpheusDBCR.cpp">
-            <BuildOrder>0</BuildOrder>
-        </CppCompile>
-        <ResFiles Include="OrpheusDBCR.res">
-            <ModuleName>OrpheusDBCR.res</ModuleName>
-            <BuildOrder>2</BuildOrder>
-        </ResFiles>
         <DelphiCompile Include="..\..\source\o32dbfe.pas">
             <BuildOrder>29</BuildOrder>
         </DelphiCompile>
@@ -199,9 +201,6 @@
         <DelphiCompile Include="..\..\source\ovcdbtim.pas">
             <BuildOrder>28</BuildOrder>
         </DelphiCompile>
-        <PackageImport Include="OrpheusCR.bpi">
-            <BuildOrder>29</BuildOrder>
-        </PackageImport>
         <FormResources Include="..\..\source\ovcdbmdg.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

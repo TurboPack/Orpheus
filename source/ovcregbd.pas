@@ -46,7 +46,7 @@ uses
   Windows, DesignIntf, DesignEditors, Classes, Controls, TypInfo;
 
 procedure Register;
-
+                                                         gg
 implementation
 
 uses

@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{ED28D3D7-5928-4A4B-B0F9-5091CA90A133}</ProjectGuid>
         <MainSource>OrpheusCR.cpp</MainSource>
-        <ProjectVersion>15.4</ProjectVersion>
+        <ProjectVersion>16.0</ProjectVersion>
         <Config Condition="'$(Config)'==''">Release</Config>
         <Base>True</Base>
         <AppType>Library</AppType>
@@ -118,19 +118,18 @@
             <BuildOrder>161</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
+        <CppCompile Include="OrpheusCR.cpp">
+            <BuildOrder>0</BuildOrder>
+        </CppCompile>
+        <ResFiles Include="OrpheusCR.res">
+            <BuildOrder>2</BuildOrder>
+        </ResFiles>
         <PackageImport Include="rtl.bpi">
             <BuildOrder>1</BuildOrder>
         </PackageImport>
         <PackageImport Include="vcl.bpi">
             <BuildOrder>4</BuildOrder>
         </PackageImport>
-        <CppCompile Include="OrpheusCR.cpp">
-            <BuildOrder>0</BuildOrder>
-        </CppCompile>
-        <ResFiles Include="OrpheusCR.res">
-            <ModuleName>OrpheusCR.res</ModuleName>
-            <BuildOrder>2</BuildOrder>
-        </ResFiles>
         <DelphiCompile Include="..\..\source\o32bordr.pas">
             <BuildOrder>112</BuildOrder>
         </DelphiCompile>

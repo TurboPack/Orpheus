@@ -82,7 +82,6 @@ uses
   OvcDbTim,  {db date edit field w/ popup}
   OvcDbIdx,  {db index selection component}
   OvcDbMDg,  {db memo dialog component}
-  OvcDbADg,  {db alias selection dialog}
   OvcDbACb,  {db alias ComboBox}
   OvcDbFCb,  {db field ComboBox}
   OvcDbTCb,  {db table name ComboBox}
@@ -229,7 +228,6 @@ begin
     TOvcDbTableNameComboBox,
     TOvcDbColorComboBox,
     TOvcDbMemoDialog,
-    TOvcDbAliasDialog,
     TOvcDbSimpleField,
     TOvcDbPictureField,
     TOvcDbNumericField,

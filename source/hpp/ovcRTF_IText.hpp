@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2014 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcRTF_IText.pas' rev: 27.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcRTF_IText.pas' rev: 28.00 (Windows)
 
 #ifndef Ovcrtf_itextHPP
 #define Ovcrtf_itextHPP

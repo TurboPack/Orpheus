@@ -56,7 +56,6 @@ PACKAGE OrpheusDBDD;
 requires
   Vcl,
   designide,
-  bdertl,
   OrpheusDBDR,
   OrpheusDD,
   OrpheusDR;
@@ -66,15 +65,12 @@ contains
   ovcdbae1 in '..\..\source\ovcdbae1.pas' {OvcfrmDbAeSimpleMask},
   ovcdbae2 in '..\..\source\ovcdbae2.pas' {OvcfrmDbAePictureMask},
   ovcdbae3 in '..\..\source\ovcdbae3.pas' {OvcfrmDbAeNumericMask},
-  ovcdbhbd in '..\..\source\ovcdbhbd.pas',
   ovcdbtb0 in '..\..\source\ovcdbtb0.pas' {OvcfrmDbColEditor},
   ovcdbtb1 in '..\..\source\ovcdbtb1.pas' {OvcfrmProperties},
-  ovcregbd in '..\..\source\ovcregbd.pas',
   ovcregdb in '..\..\source\ovcregdb.pas',
   ovcdbhll in '..\..\source\ovcdbhll.pas',
   ovcdbise in '..\..\source\ovcdbise.pas',
   OvcDbIdx in '..\..\source\OvcDbIdx.pas',
-  ovcdbadg in '..\..\source\ovcdbadg.pas' {OvcfrmAliasDlg},
   ovcdbacb in '..\..\source\ovcdbacb.pas',
   ovcdbtcb in '..\..\source\ovcdbtcb.pas';
 

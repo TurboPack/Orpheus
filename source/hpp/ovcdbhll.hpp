@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2014 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdbhll.pas' rev: 27.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdbhll.pas' rev: 28.00 (Windows)
 
 #ifndef OvcdbhllHPP
 #define OvcdbhllHPP
@@ -15,7 +15,6 @@
 #include <System.hpp>	// Pascal unit
 #include <SysInit.hpp>	// Pascal unit
 #include <Winapi.Windows.hpp>	// Pascal unit
-#include <BDE.hpp>	// Pascal unit
 #include <Winapi.Messages.hpp>	// Pascal unit
 #include <System.SysUtils.hpp>	// Pascal unit
 #include <System.Classes.hpp>	// Pascal unit
