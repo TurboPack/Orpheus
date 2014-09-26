@@ -281,9 +281,18 @@
         <DCCReference Include="..\..\source\o32WideCharSet.pas"/>
         <DCCReference Include="..\..\source\ovcBidi.pas"/>
         <DCCReference Include="..\..\source\ovcThemes.pas">
-            <Form>$ENDIF</Form>
+            <Form>$ENDIF,
+  ovcThemes in &apos;..\..\source\ovcThemes.pas&apos;,
+{$IFDEF CPUX86</Form>
         </DCCReference>
+        <DCCReference Include="..\..\source\ovctcedtHTMLText.pas"/>
+        <DCCReference Include="..\..\source\ovctcedtTextFormatBar.pas">
+            <Form>ovcTextFormatBar</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\source\ovcRTF_TOM.pas"/>
+        <DCCReference Include="..\..\source\ovcRTF_Paint.pas"/>
         <DCCReference Include="..\..\source\ovcRTF_IText.pas"/>
+        <DCCReference Include="..\..\source\ovcRTF_RichOle.pas"/>
         <DCCReference Include="..\..\source\ovctccheckcbx.pas"/>
         <DCCReference Include="..\..\source\OvcTCHeaderExtended.pas"/>
         <BuildConfiguration Include="Debug">

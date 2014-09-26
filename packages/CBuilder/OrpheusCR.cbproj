@@ -8,7 +8,7 @@
         <AppType>Library</AppType>
         <FrameworkType>VCL</FrameworkType>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <TargetedPlatforms>1</TargetedPlatforms>
+        <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -46,7 +46,6 @@
         <SanitizedProjectName>OrpheusCR</SanitizedProjectName>
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
         <DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-        <ILINK_DelayLoadDll>Uxtheme.dll;riched20.dll;$(ILINK_DelayLoadDll)</ILINK_DelayLoadDll>
         <DCC_UnitSearchPath>..\..\source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <ILINK_LibraryPath>..\CBuilder\;..\..\source\;$(BDS)\lib;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -65,9 +64,10 @@
         <IncludePath>..\CBuilder\;..\..\source\;$(BDS)\include\Windows;$(BDS)\include\Windows\RTL\de;$(BDS)\include\Windows\RTL;$(BDS)\include\Windows\CRTL;$(BDS)\include\Windows\SDK;$(BDS)\include\Windows\vcl;$(IncludePath)</IncludePath>
         <BCC_wpar>false</BCC_wpar>
         <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
-        <TLIB_PageSize>32</TLIB_PageSize>
+        <TLIB_PageSize>128</TLIB_PageSize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <ILINK_DelayLoadDll>Uxtheme.dll;riched20.dll;$(ILINK_DelayLoadDll)</ILINK_DelayLoadDll>
         <ILINK_LibraryPath>C:\Program Files (x86)\Embarcadero\DelphiXE5\lib\win32\release\psdk\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
@@ -436,15 +436,6 @@
         <DelphiCompile Include="..\..\source\ovcRTF_IText.pas">
             <BuildOrder>157</BuildOrder>
         </DelphiCompile>
-        <DelphiCompile Include="..\..\source\ovcRTF_Paint.pas">
-            <BuildOrder>156</BuildOrder>
-        </DelphiCompile>
-        <DelphiCompile Include="..\..\source\ovcRTF_RichOle.pas">
-            <BuildOrder>158</BuildOrder>
-        </DelphiCompile>
-        <DelphiCompile Include="..\..\source\ovcRTF_TOM.pas">
-            <BuildOrder>155</BuildOrder>
-        </DelphiCompile>
         <DelphiCompile Include="..\..\source\ovcrvcbx.pas">
             <BuildOrder>68</BuildOrder>
         </DelphiCompile>
@@ -622,17 +613,17 @@
         <DelphiCompile Include="..\..\source\ovcxfer.pas">
             <BuildOrder>110</BuildOrder>
         </DelphiCompile>
+        <FormResources Include="..\..\source\ovcrvpdg.dfm"/>
         <FormResources Include="..\..\source\ovcspldg.dfm"/>
         <FormResources Include="..\..\source\OvcRvPv.dfm"/>
-        <FormResources Include="..\..\source\ovcrvpdg.dfm"/>
         <FormResources Include="..\..\source\ovcmodg.dfm"/>
         <FormResources Include="..\..\source\OvcViewEd.dfm"/>
         <FormResources Include="..\..\source\ovcvcped.dfm"/>
         <FormResources Include="..\..\source\ovctcedtTextFormatBar.dfm"/>
         <FormResources Include="..\..\source\OvcFldEd.dfm"/>
         <FormResources Include="..\..\source\ovcclkdg.dfm"/>
-        <FormResources Include="..\..\source\ovccaldg.dfm"/>
         <FormResources Include="..\..\source\ovcclcdg.dfm"/>
+        <FormResources Include="..\..\source\ovccaldg.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -730,8 +721,11 @@
                 </Excluded_Packages>
             </CPlusPlusBuilder.Personality>
             <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="iOSDevice">False</Platform>
                 <Platform value="OSX32">False</Platform>
                 <Platform value="Win32">True</Platform>
+                <Platform value="Win64">True</Platform>
             </Platforms>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>

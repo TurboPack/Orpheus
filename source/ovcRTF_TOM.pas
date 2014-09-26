@@ -20,6 +20,8 @@ unit ovcRTF_TOM;
 
 interface
 
+{$IFDEF WIN32}
+
 uses Windows, ActiveX, RichEdit, IMM;
 
 const
@@ -246,7 +248,11 @@ function CreateTextServices(punkOuter: IUnknown; pITextHost: ITextHost; out ppUn
 // See also: CreateTextServices
 procedure PatchTextServices(var Services: ITextServices);
 
+{$ENDIF}
+
 implementation
+
+{$IFDEF WIN32}
 
 uses SysUtils;
 
@@ -1328,5 +1334,7 @@ end;
 procedure TTextHostImpl.TxViewChange(fUpdate: Bool);
 begin
 end;
+
+{$ENDIF}
 
 end.

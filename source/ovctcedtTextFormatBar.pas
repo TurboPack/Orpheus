@@ -31,6 +31,8 @@ unit ovctcedtTextFormatBar;
 
 interface
 
+{$IFDEF WIN32}
+
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ovcbase, ovcspeed, ComCtrls, ExtCtrls,
@@ -94,7 +96,11 @@ type
 //var
 //  ovcTextFormatBar: TOvcTextFormatBar;
 
+{$ENDIF}
+
 implementation
+
+{$IFDEF WIN32}
 
 {$R *.dfm}
 
@@ -425,5 +431,7 @@ begin
 
   Result := DefSubclassProc(hWnd, uMsg, wParam, lParam);
 end;
+
+{$ENDIF}
 
 end.

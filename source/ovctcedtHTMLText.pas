@@ -40,6 +40,8 @@ unit ovctcedtHTMLText;
 
 interface
 
+{$IFDEF WIN32}
+
 uses
   Windows, SysUtils, Messages, Classes, Controls, Forms, StdCtrls,
   ComCtrls,
@@ -270,7 +272,11 @@ type
 
 function StyleΔToHTML(Old, New: TFontStyles): string;
 
+{$ENDIF}
+
 implementation
+
+{$IFDEF WIN32}
 
 uses
   Types, Variants, RichEdit, ovcRTF_RichOle, ActiveX, ClipBrd,
@@ -1016,5 +1022,7 @@ begin
   FFormatBar.AttachedControl := Self;
   FFormatBar.UpdatePosition;
 end;
+
+{$ENDIF}
 
 end.

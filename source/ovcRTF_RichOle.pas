@@ -30,16 +30,14 @@
 
 //{$I DelphiVersion.inc}
 
-{$IFDEF CPPBUILDER}
-{$HPPEMIT '#include <RichOle.h>'}
-{$ENDIF}
-
 unit ovcRTF_RichOle;
 
 {$WEAKPACKAGEUNIT}
 {$MINENUMSIZE 4}
 
 interface
+
+{$IFDEF WIN32}
 
 uses
   Windows, ActiveX, RichEdit;
@@ -224,7 +222,11 @@ function RichEdit_SetOleCallback(Wnd: HWND;
 {$IFDEF CPPBUILDER}{$EXTERNALSYM RichEdit_GetOleInterface}{$ENDIF}
 function RichEdit_GetOleInterface(Wnd: HWND; out Intf: IRichEditOle): Boolean;
 
+{$ENDIF}
+
 implementation
+
+{$IFDEF WIN32}
 
 function RichEdit_SetOleCallback(Wnd: HWND;
   const Intf: IRichEditOleCallback): Boolean;
@@ -236,5 +238,7 @@ function RichEdit_GetOleInterface(Wnd: HWND; out Intf: IRichEditOle): Boolean;
 begin
   Result := SendMessage(Wnd, EM_GETOLEINTERFACE, 0, LongInt(@Intf)) <> 0;
 end;
+
+{$ENDIF}
 
 end.
