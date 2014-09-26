@@ -49,7 +49,7 @@ PACKAGE OrpheusDD;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'TurboPower Orpheus 5.00 designtime package'}
+{$DESCRIPTION 'TurboPower Orpheus Delphi designtime package'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 

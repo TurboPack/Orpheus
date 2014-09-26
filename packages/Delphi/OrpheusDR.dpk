@@ -49,7 +49,7 @@ PACKAGE OrpheusDR;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'TurboPower Orpheus 5.00 runtime package'}
+{$DESCRIPTION 'TurboPower Orpheus Delphi runtime package'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -205,14 +205,10 @@ contains
   O32SBar in '..\..\source\O32SBar.pas',
   o32WideCharSet in '..\..\source\o32WideCharSet.pas',
   ovcBidi in '..\..\source\ovcBidi.pas',
-  ovcThemes in '..\..\source\ovcThemes.pas',
-{$IFDEF CPUX86}ovctcedtHTMLText in '..\..\source\ovctcedtHTMLText.pas',{$ENDIF}
-{$IFDEF CPUX86}ovctcedtTextFormatBar in '..\..\source\ovctcedtTextFormatBar.pas' {ovcTextFormatBar},{$ENDIF}
-{$IFDEF CPUX86}ovcRTF_TOM in '..\..\source\ovcRTF_TOM.pas',{$ENDIF}
-{$IFDEF CPUX86}ovcRTF_Paint in '..\..\source\ovcRTF_Paint.pas',{$ENDIF}
+  ovcThemes in '..\..\source\ovcThemes.pas' {$ENDIF},
   ovcRTF_IText in '..\..\source\ovcRTF_IText.pas',
-{$IFDEF CPUX86}ovcRTF_RichOle in '..\..\source\ovcRTF_RichOle.pas',{$ENDIF}
   ovctccheckcbx in '..\..\source\ovctccheckcbx.pas',
   OvcTCHeaderExtended in '..\..\source\OvcTCHeaderExtended.pas';
+
 end.
 

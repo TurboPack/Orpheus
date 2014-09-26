@@ -41,6 +41,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DesignOnlyPackage>true</DesignOnlyPackage>
         <DCC_HppOutput>..\..\source\hpp</DCC_HppOutput>
         <SanitizedProjectName>OrpheusDBCD</SanitizedProjectName>
         <DCC_AdditionalSwitches>-LUDesignIDE</DCC_AdditionalSwitches>
@@ -53,7 +54,7 @@
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_MajorVer>5</VerInfo_MajorVer>
-        <ILINK_Description>Orpheus data aware designtime components for CBuilder</ILINK_Description>
+        <ILINK_Description>TurboPower Orpheus CBuilder datataware designtime package</ILINK_Description>
         <Multithreaded>true</Multithreaded>
         <ILINK_GenerateLibFile>true</ILINK_GenerateLibFile>
         <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
@@ -92,9 +93,7 @@
         <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_MajorVer>5</VerInfo_MajorVer>
         <Defines>_DEBUG;$(Defines)</Defines>
-        <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=5.1.0.0;InternalName=;LegalCopyright=Copyright (c) Orpheus Group 2012;LegalTrademarks=;OriginalFilename=;ProductName=Orpheus;ProductVersion=5.1;Comments=</VerInfo_Keys>
     </PropertyGroup>
@@ -202,9 +201,9 @@
         <FormResources Include="..\..\source\ovcdbae1.dfm"/>
         <FormResources Include="..\..\source\ovcdbae2.dfm"/>
         <FormResources Include="..\..\source\ovcdbae3.dfm"/>
-        <FormResources Include="..\..\source\ovcdbtb0.dfm"/>
-        <FormResources Include="..\..\source\ovcdbtb1.dfm"/>
         <FormResources Include="..\..\source\ovcdbae0.dfm"/>
+        <FormResources Include="..\..\source\ovcdbtb1.dfm"/>
+        <FormResources Include="..\..\source\ovcdbtb0.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -295,10 +294,10 @@
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k200.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp200.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k210.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp210.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k210.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp210.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
                 </Excluded_Packages>
             </CPlusPlusBuilder.Personality>
             <Platforms>
