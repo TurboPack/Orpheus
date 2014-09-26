@@ -41,8 +41,7 @@ unit ovcfxfpe;
 interface
 
 uses
-  Classes, Graphics, Controls, Forms, Dialogs, SysUtils, TypInfo,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  Classes, Graphics, Controls, Forms, Dialogs, SysUtils, TypInfo, DesignIntf, DesignEditors,
   OvcFxFnt;
 
 type

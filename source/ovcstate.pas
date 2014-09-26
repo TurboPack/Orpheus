@@ -46,12 +46,12 @@ uses
 
 type
   TOvcFormStateOption  = (fsState, fsPosition, fsNoSize, fsColor,
-    fsActiveControl {$IFDEF VERSION4}, fsDefaultMonitor{$ENDIF});
+    fsActiveControl, fsDefaultMonitor);
   TOvcFormStateOptions = set of TOvcFormStateOption;
 
 type
   TOvcAbstractState = class(TOvcComponent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FActive             : Boolean;
@@ -71,12 +71,7 @@ type
     isSaveFormCloseQuery : TCloseQueryEvent;
 
     {property methods}
-{$IFDEF VERSION5}
     function GetForm  : TWinControl;
-{$ELSE}
-    function GetForm : TCustomForm;
-{$ENDIF}
-
     function GetSection : string;
     function GetSpecialValue(const Item : string): string;
     procedure SetSpecialValue(const Item : string; const Value : string);
@@ -106,15 +101,9 @@ type
     procedure SetEvents;
       dynamic;
 
-{$IFDEF VERSION5}
     property Form : TWinControl
       read GetForm;
-{$ELSE}
-    property Form : TCustomForm
-      read GetForm;
-{$ENDIF}
 
-  {.Z-}
 
     {properties}
     property Active : Boolean
@@ -132,12 +121,12 @@ type
       read FOnRestoreState write FOnRestoreState;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     procedure RestoreState;
     procedure SaveState;
@@ -147,7 +136,7 @@ type
   end;
 
   TOvcFormState = class(TOvcAbstractState)
-  {.Z+}
+
   protected {private}
     {property variables}
     FOptions     : TOvcFormStateOptions;
@@ -173,7 +162,7 @@ type
   public
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
   published
     {properties}
@@ -189,7 +178,7 @@ type
   end;
 
   TOvcComponentState = class(TOvcAbstractState)
-  {.Z+}
+
   protected {private}
     {property variables}
     FStoredProperties : TStrings;
@@ -214,7 +203,7 @@ type
     destructor Destroy;
       override;
     procedure SetNotification;
-  {.Z-}
+
     procedure UpdateStoredProperties;
 
   published
@@ -231,7 +220,7 @@ type
   end;
 
   TOvcPersistentState = class(TOvcComponent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FStorage : TOvcAbstractStore;
@@ -242,7 +231,7 @@ type
   protected
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
   public
     procedure RestoreState(AnObject : TPersistent; const ASection : string);
@@ -255,9 +244,9 @@ type
   end;
 
 
-{.Z+}
+
 function GetDefaultSection(Component : TComponent) : string;
-{.Z-}
+
 
 
 implementation
@@ -287,15 +276,10 @@ var
   Owner : TComponent;
 begin
   if Component <> nil then begin
-{$IFDEF VERSION5}
     if (Component is TCustomForm) then
       Result := Component.ClassName
     else if (Component is TCustomFrame) then
       Result := Component.Owner.ClassName
-{$ELSE}
-    if Component is TCustomForm then
-      Result := Component.ClassName
-{$ENDIF}
     else begin
       Result := Component.Name;
       if Component is TControl then begin
@@ -314,11 +298,7 @@ begin
         end;
       end else begin
         Owner := Component.Owner;
-{$IFDEF VERSION5}
         if (Owner is TCustomForm) or (Owner is TCustomFrame) then
-{$ELSE}
-        if Owner is TCustomForm then
-{$ENDIF}
           Result := Format('%s.%s', [Owner.ClassName, Result]);
       end;
     end;
@@ -331,12 +311,8 @@ end;
 
 constructor TOvcAbstractState.Create(AOwner : TComponent);
 begin
-{$IFDEF VERSION5}
   if not ((AOwner is TCustomForm) or
           (AOwner is TCustomFrame)) then
-{$ELSE}
-  if not (AOwner is TForm) then
-{$ENDIF}
     raise EOvcException.Create(GetOrphStr(SCFormUseOnly));
 
   inherited Create(AOwner);
@@ -409,22 +385,13 @@ begin
 end;
 
 
-{$IFDEF VERSION5}
 function TOvcAbstractState.GetForm : TWinControl;
-{$ELSE}
-function TOvcAbstractState.GetForm : TCustomForm;
-{$ENDIF}
 begin
-{$IFDEF VERSION5}
   if (Owner is TCustomForm) then
     Result := Owner as TWinControl
   else begin
     Result := Owner.Owner as TWinControl;
   end;
-{$ELSE}
-  Result := Owner as TCustomForm;
-{$ENDIF}
-
 end;
 
 
@@ -540,15 +507,9 @@ constructor TOvcFormState.Create(AOwner : TComponent);
 begin
   inherited Create(AOwner);
 
-{$IFDEF VERSION5}
   if (AOwner is TCustomForm) or (AOwner is TCustomFrame) then begin
     FOptions := [fsState, fsPosition];
   end else
-{$ELSE}
-  if (AOwner is TCustomForm) then begin
-    FOptions := [fsState, fsPosition];
-  end else
-{$ENDIF}
     FOptions := [];
 end;
 
@@ -652,7 +613,6 @@ begin
       WindowState := WinState;
     end;
 
-    {$IFDEF VERSION4}
     if fsDefaultMonitor in FOptions then begin
       S :=FStorage.ReadString(Section, cMonitor, '');
       if (S > '') then
@@ -661,8 +621,6 @@ begin
         except
         end;
     end;
-    {$ENDIF}
-
 
     if (fsColor in FOptions) then
       AForm.Color :=
@@ -704,10 +662,8 @@ begin
       rcNormalPosition.Bottom]));
     FStorage.WriteInteger(Section, cPixelsPerInch, PixelsPerInch);
 
-    {$IFDEF VERSION4}
     if fsDefaultMonitor in Options then
       FStorage.WriteString(Section, cMonitor, IntToStr(Ord(DefaultMonitor)));
-    {$ENDIF}
 
     FStorage.WriteInteger(Section, cFormColor, Color);
   end;
@@ -802,11 +758,7 @@ procedure TOvcComponentState.Loaded;
 begin
   inherited Loaded;
 
-{$IFDEF VERSION5}
   UpdateStoredList(TWinControl(Owner), FStoredProperties, True);
-{$ELSE}
-  UpdateStoredList(Form, FStoredProperties, True);
-{$ENDIF}
 end;
 
 procedure TOvcComponentState.Notification(AComponent : TComponent; Operation : TOperation);
@@ -860,11 +812,7 @@ begin
     Storage := Self.FStorage;
     FStorage.Open;
     try
-{$IFDEF VERSION5}
       StoreObjectsProps(TWinControl(Owner), FStoredProperties);
-{$ELSE}
-      StoreObjectsProps(Form, FStoredProperties);
-{$ENDIF}
     finally
       FStorage.Close;
     end;
@@ -895,14 +843,10 @@ end;
 
 procedure TOvcComponentState.WriteState(Writer : TWriter);
 begin
-{$IFDEF VERSION5}
   if (csAncestor in ComponentState) then
     Exit;
 
   UpdateStoredList(TWinControl(Owner), FStoredProperties, False);
-{$ElSE}
-  UpdateStoredList(Form, FStoredProperties, False);
-{$ENDIF}
 
   inherited WriteState(Writer);
 end;
@@ -910,11 +854,7 @@ end;
 
 procedure TOvcComponentState.UpdateStoredProperties;
 begin
-{$IFDEF VERSION5}
   UpdateStoredList(TWinControl(Owner), FStoredProperties, True);
-{$ELSE}
-  UpdateStoredList(Form, FStoredProperties, True);
-{$ENDIF}
 end;
 
 

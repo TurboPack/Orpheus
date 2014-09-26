@@ -40,12 +40,12 @@ unit ovcdbmdg;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, DB, DBCtrls, Dialogs, ExtCtrls, Forms, Graphics,
-  Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
+  UITypes, Windows, Classes, Controls, DB, DBCtrls, Dialogs, ExtCtrls, Forms,
+  Graphics, Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
 
 type
-  {.Z+}
+  
+
   TOvcfrmDbMemoDlg = class(TForm)
     btnHelp: TButton;
     Panel1: TPanel;
@@ -57,11 +57,10 @@ type
   private
   public
   end;
-  {.Z-}
+
 
 type
   TOvcDbMemoDialog = class(TOvcBaseDialog)
-  {.Z+}
   protected {private}
     {property variables}
     FDataLink  : TFieldDataLink;
@@ -81,13 +80,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     function Execute : Boolean;
       override;
@@ -218,7 +214,6 @@ begin
   FMemoFont.Assign(Value);
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbMemoDialog.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -230,8 +225,6 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
-
 
 {*** TOvcDbMemoDlg ***}
 

@@ -41,10 +41,8 @@ unit ovcae;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
-  OvcNf, OvcPf, OvcSf, OvcColor, OvcBase, OvcCmd, OvcConst,
-  OvcData, OvcEf, OvcStr;
+  Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
+  OvcNf, OvcPf, OvcSf, OvcColor, OvcBase, OvcCmd, OvcConst, OvcData, OvcEf, OvcStr;
 
 type
   {event to get a pointer to the cell's value}
@@ -63,7 +61,7 @@ type
 type
   {base class for array editors}
   TOvcBaseArrayEditor = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property variables}
     FActiveIndex       : LongInt;       {the focused cell}
@@ -220,7 +218,6 @@ type
       override;
     procedure SetFocus;
       override;
-  {.Z-}
 
     function WriteCellValue : LongInt;
       {-write the current cell value. return 0 or error code}
@@ -274,11 +271,9 @@ type
       read FOnUserValidation write FOnUserValidation;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D;
@@ -319,7 +314,7 @@ type
 type
   TSimpleCellField = class;
   TOvcSimpleArrayEditor = class(TOvcBaseArrayEditor)
-  {.Z+}
+
   protected {private}
     {variables to transfer to the edit cell field}
     aeDataType    : TSimpleDataType;
@@ -364,7 +359,6 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
 
   published
     {properties for the edit cell field}
@@ -378,7 +372,7 @@ type
       read aePictureMask write SetPictureMask;
   end;
 
-  {.Z+}
+
   TSimpleCellField = class(TOvcSimpleField)
   protected {private}
     procedure WMKeyDown(var Msg : TWMKeyDown);
@@ -396,12 +390,11 @@ type
     constructor Create(AOwner : TComponent);
       override;
   end;
-  {.Z-}
 
 type
   TPictureCellField = class;
   TOvcPictureArrayEditor = class(TOvcBaseArrayEditor)
-  {.Z+}
+
   protected {private}
     {variables to transfer to the edit cell field}
     aeDataType    : TPictureDataType;
@@ -449,7 +442,6 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
 
   published
     {properties for the edit cell field}
@@ -465,7 +457,7 @@ type
       read aePictureMask write SetPictureMask;
   end;
 
-  {.Z+}
+
   TPictureCellField = class(TOvcPictureField)
   protected {private}
     procedure WMKeyDown(var Msg : TWMKeyDown);
@@ -483,12 +475,11 @@ type
     constructor Create(AOwner : TComponent);
       override;
   end;
-  {.Z-}
 
 type
   TNumericCellField = class;
   TOvcNumericArrayEditor = class(TOvcBaseArrayEditor)
-  {.Z+}
+
   protected {private}
     {variables to transfer to the edit cell field}
     aeDataType    : TNumericDataType;
@@ -529,7 +520,6 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
 
   published
     {properties for the edit cell field}
@@ -539,7 +529,7 @@ type
       read aePictureMask write SetPictureMask;
   end;
 
-  {.Z+}
+
   TNumericCellField = class(TOvcNumericField)
   protected {private}
     procedure WMKeyDown(var Msg : TWMKeyDown);
@@ -557,7 +547,6 @@ type
     constructor Create(AOwner : TComponent);
       override;
   end;
-  {.Z-}
 
 
 implementation

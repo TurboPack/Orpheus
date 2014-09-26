@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbTimeEdit = class(TOvcTimeEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment    : TAlignment;
     FAutoUpdate   : Boolean;
@@ -94,7 +95,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -106,7 +107,8 @@ type
     property PreserveDate : Boolean
       read FPreserveDate write FPreserveDate;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly write SetReadOnly;
 
@@ -115,13 +117,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     {public properties}
     property Field : TField
@@ -131,11 +130,9 @@ type
   TOvcDbTimeEdit = class(TOvcCustomDbTimeEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSelect;
     property AutoSize;
@@ -162,9 +159,7 @@ type
     property OEMConvert;
     property ParentColor;
     property ParentCtl3D;
-    {$IFDEF VERSION4}
     property ParentBiDiMode;
-    {$ENDIF}
     property ParentFont;
     property ParentShowHint;
     property PopupMenu;
@@ -186,9 +181,7 @@ type
     property OnDblClick;
     property OnDragDrop;
     property OnDragOver;
-    {$IFDEF VERSION4}
     property OnEndDock;
-    {$ENDIF}
     property OnEndDrag;
     property OnEnter;
     property OnExit;
@@ -408,7 +401,7 @@ procedure TOvcCustomDbTimeEdit.KeyPress(var Key : Char);
 begin
   inherited KeyPress(Key);
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;
@@ -565,7 +558,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomDbTimeEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -577,6 +569,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

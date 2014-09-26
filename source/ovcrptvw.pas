@@ -45,13 +45,9 @@ unit ovcrptvw;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Classes, Controls, ExtCtrls, Forms, Graphics, Messages, SysUtils,
-  Menus, StdCtrls,
-  {$IFDEF VERSION4} ImgList,  {$ENDIF}
-  {$IFDEF VERSION6} Variants, {$ENDIF}
-  OvcFiler, OvcConst, OvcExcpt, OvcBase, OvcBtnHd, OvcData, OvcMisc, OvcVLB,
-  OvcRVIdx, OvcColor, OvcRvExpDef;
+  Types, Windows, Classes, Controls, ExtCtrls, Forms, Graphics, Messages, SysUtils,
+  Menus, StdCtrls, ImgList, Variants, OvcFiler, OvcConst, OvcExcpt, OvcBase, OvcBtnHd,
+  OvcData, OvcMisc, OvcVLB, OvcRVIdx, OvcColor, OvcRvExpDef, UITypes;
 
 const
   {default property values}
@@ -71,14 +67,10 @@ const
 
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   TOvcRVListBox = class;
   TOvcCustomReportView = class;
 
-  {.Z+}
+
   TOvcRVHeader = class(TOvcButtonHeader)
   protected
     FListBox : TOvcRVListBox;
@@ -102,9 +94,9 @@ type
     property ListBox : TOvcRVListBox
       read FListBox write FListBox;
   end;
-  {.Z-}
 
-  {.Z+}
+
+
   TOvcRVFooter = class(TOvcButtonHeader)
   protected
     FListBox : TOvcRVListBox;
@@ -115,7 +107,7 @@ type
     property ListBox : TOvcRVListBox
       read FListBox write FListBox;
   end;
-  {.Z-}
+
 
   TOvcRVGridLines = (glNone,glVertical,glHorizontal,glBoth);
 
@@ -126,7 +118,7 @@ type
     property TextColor default clHighlightText;
   end;
 
-  {.Z+}
+
   TOvcRVListBox = class(TOvcVirtualListBox)
   protected
     FButtonHeader : TOvcRVHeader;
@@ -188,12 +180,12 @@ type
     property SelectColor : TOvcRvListSelectColors
       read FSelectColor write FSelectColor;
   end;
-  {.Z-}
+
 
   TOvcRvFieldSort = (rfsFirstAscending, rfsFirstDescending,
     rfsAlwaysAscending, rfsAlwaysDescending);
   TOvcRvField = class(TOvcAbstractRvField)
-  {.Z+}
+
   protected
     FAlignment         : TAlignment;
     FCaption           : string;
@@ -235,7 +227,7 @@ type
     function InUse: Boolean;
     function RefersTo(const RefField: TOvcRvField): Boolean;
     procedure ValidateExpression;
-  {.Z-}
+
   published
     property Alignment: TAlignment
                    read FAlignment write SetAlignment default taLeftJustify;
@@ -266,25 +258,25 @@ type
   end;
 
   TOvcRvFields = class(TOvcAbstractRvFields)
-  {.Z+}
+
   protected
     function GetItem(Index: Integer): TOvcRvField;
     procedure SetItem(Index: Integer; Value: TOvcRvField);
     function GetOwnerReport : TOvcCustomReportView;
   public
     constructor Create(AOwner: TOvcCustomReportView);
-  {.Z-}
+
     procedure Assign(Source: TPersistent); override;
     function Add: TOvcRvField;
     property Items[Index: Integer]: TOvcRvField
                    read GetItem write SetItem;
-  {.Z+}
+
     property Owner: TOvcCustomReportView
                    read GetOwnerReport;
-  {.Z-}
+
   end;
 
-  {.Z+}
+
   TOvcRVView = class;
   TOvcRvViewField = class(TOvcAbstractRvViewField)
   protected
@@ -324,7 +316,7 @@ type
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
     property AggExp: TOvcRvExpression read GetAggExp;
-  {.Z-}
+
     property Field: TOvcRvField
                    read GetField;
     property OwnerReport : TOvcCustomReportView
@@ -358,25 +350,25 @@ type
   end;
 
   TOvcRvViewFields = class(TOvcAbstractRvViewFields)
-  {.Z+}
+
   protected
     function GetItem(Index: Integer): TOvcRvViewField;
     procedure SetItem(Index: Integer; Value: TOvcRvViewField);
     function GetOwnerView : TOvcRVView;
   public
     constructor Create(AOwner: TOvcRVView);
-  {.Z-}
+
     function Add: TOvcRvViewField;
     property Items[Index: Integer]: TOvcRvViewField
                    read GetItem write SetItem;
-  {.Z+}
+
     property Owner: TOvcRVView
                    read GetOwnerView;
-  {.Z-}
+
   end;
 
   TOvcRVView = class(TOvcAbstractRvView)
-  {.Z+}
+
   protected
     FShowFooter: Boolean;
     FShowHeader: Boolean;
@@ -413,7 +405,7 @@ type
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
     property Dirty: Boolean read FDirty write SetDirty;
-  {.Z-}
+
     procedure SaveToStorage(Storage: TOvcAbstractStore;
       const Prefix: string); override;
     procedure LoadFromStorage(Storage: TOvcAbstractStore;
@@ -450,7 +442,7 @@ type
   end;
 
   TOvcRvViews = class(TOvcAbstractRvViews)
-  {.Z+}
+
   protected
     function GetItem(Index: Integer): TOvcRVView;
     procedure SetItem(Index: Integer; Value: TOvcRVView);
@@ -459,7 +451,7 @@ type
     constructor Create(AOwner: TOvcCustomReportView);
     procedure Clear; override;
     procedure Assign(Source: TPersistent); override;
-  {.Z-}
+
 
     function Add: TOvcRVView;
     property Items[Index: Integer]: TOvcRVView
@@ -504,7 +496,7 @@ type
     property Style default [];
   end;
 
-  {.Z+}
+
   TOvcRvPrintProps = class(TPersistent)
   protected
     FDetailIndent      : Integer;
@@ -524,7 +516,7 @@ type
     constructor Create;
     destructor Destroy; override;
   published
-  {.Z-}
+
     property AutoScaleColumns : Boolean
                    read FAutoScaleColumns write FAutoScaleColumns
                    default False;
@@ -682,7 +674,7 @@ type
   TGetPageNumberMethod = function: Integer of object;
 
   TOvcCustomReportView = class(TOvcAbstractReportView)
-  {.Z+}
+
   protected
     FActiveView              : string;
     FActiveViewByTitle       : string;
@@ -984,7 +976,7 @@ type
       {- save a view definition in a storage container}
     function UniqueViewNameFromTitle(const Title: string): string;
 
-  {.Z-}
+
 
     procedure ScaleColumnWidths;
       {- Adjusts column widths according to content.}
@@ -1017,9 +1009,7 @@ type
          StartAfter is seen. The StartAfter item itself is not returned.}
     property Fields: TOvcRvFields
                    read GetFields write SetFields;
-{$IFDEF VERSION4}
     function Focused: Boolean; override;
-{$ENDIF}
     function GetGroupElement(G: TOvcRvIndexGroup): Pointer;
     procedure GotoNearest(DataRef: Pointer);
       {- Select new CurrentItem based on DataRef and the currently
@@ -1182,11 +1172,9 @@ type
     procedure Clear;
       {- Clear all item data from all views.}
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property ActiveView;
     property Align;
     property AutoCenter;
@@ -1266,12 +1254,10 @@ function CompareInt(I1,I2 : Integer) : Integer;
 { compare two integers, return negative, 0 and positive value for I1<I2, I1=I2 and I1>I2 resp.}
 function CompareFloat(F1,F2 : Extended) : Integer;
 { compare two doubles, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
-{$IFNDEF CBuilder}
 function CompareComp(F1,F2 : comp) : Integer;
 { compare two comps, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
-{$ENDIF}
 
-{.Z+}
+
 
 implementation
 uses
@@ -1324,7 +1310,6 @@ begin
     Result := 1;
 end;
 
-{$IFNDEF CBuilder}
 function CompareComp(F1,F2 : Comp) : Integer;
 { compare two doubles, return -1, 0 and 1 for F1<F2, F1=F2 and F1>F2 resp.}
 begin
@@ -1336,7 +1321,6 @@ begin
   else
     Result := 1;
 end;
-{$ENDIF}
 
 procedure TOvcRVHeader.Paint;
 begin
@@ -3042,13 +3026,11 @@ begin
   and not FDFMBased
   and not OwnerReport.LoadingViews then
     TOvcCustomReportView(Owner).ViewDeleted := True;
-  {$IFDEF Version5}
   if csAncestor in ComponentState then
     if csDesigning in ComponentState then
       if not (csDestroying in ComponentState) then
         raise Exception.CreateFmt(
           'Inherited component, %s, cannot delete',[Name]);
-  {$ENDIF}
   if Owner <> nil then
     if not (csDestroying in Owner.ComponentState) then
       if TOvcCustomReportView(Owner).ActiveView = Self.Name then
@@ -3604,10 +3586,6 @@ procedure TOvcCustomReportView.CreateWnd;
 begin
   inherited CreateWnd;
 
-  {$IFNDEF DisableTimer}
-  {if Controller <> nil then
-    FHoverTimer := Controller.TimerPool.Add(HoverTimerEvent, 250);}
-  {$ENDIF}
   {do we have scroll bars}
   rvHaveHS := FScrollBars in [ssHorizontal, ssBoth];
 
@@ -6010,7 +5988,6 @@ begin
   FRVListBox.Invalidate;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomReportView.Focused: Boolean;
 begin
   Result :=
@@ -6018,7 +5995,6 @@ begin
     and FRVListBox.HandleAllocated
     and (GetFocus = FRVListBox.Handle);
 end;
-{$ENDIF}
 
 procedure TOvcCustomReportView.SetSortColumn(Value : Integer);
 begin
@@ -6328,12 +6304,12 @@ function TOvcCustomReportView.UniqueViewNameFromTitle(const Title : string) : st
 var
   i : Integer;
 begin
-  if ovcCharInSet(Title[1], ['A'..'Z','a'..'z']) then
+  if CharInSet(Title[1], ['A'..'Z','a'..'z']) then
     Result := Title[1]
   else
     Result := '_';
   for i := 2 to length(Title) do
-    if ovcCharInSet(Title[i], ['A'..'Z','a'..'z','0'..'9']) then
+    if CharInSet(Title[i], ['A'..'Z','a'..'z','0'..'9']) then
       Result := Result + Title[i]
     else
       Result := Result + '_';

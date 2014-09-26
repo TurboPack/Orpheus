@@ -42,9 +42,8 @@ interface
 
 uses
   Windows, Classes, Graphics, Forms, Controls, Buttons, StdCtrls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  SysUtils, ExtCtrls, OvcConst, OvcData, OvcExcpt, OvcMisc, OvcStr, Dialogs,
-  O32Vldtr, O32VlOP1;
+  DesignIntf, DesignEditors, SysUtils, ExtCtrls, OvcConst, OvcData, OvcExcpt,
+  OvcMisc, OvcStr, Dialogs, O32Vldtr, O32VlOP1;
 
 type
   TTO32FrmValidatorExpression = class(TForm)

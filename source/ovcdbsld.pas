@@ -47,7 +47,8 @@ uses
 
 type
   TOvcDbSlider = class(TOvcCustomSlider)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDataLink    : TFieldDataLink;
@@ -88,13 +89,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     property Field : TField
       read GetField;
@@ -106,11 +104,9 @@ type
       read GetDataSource write SetDataSource;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle default bsSingle;
@@ -158,7 +154,7 @@ implementation
 const
   {field types supported}
   SupportedFieldTypes : set of  TFieldType = [ftSmallint, ftInteger,
-    ftWord, ftFloat, ftCurrency, ftBCD {$IFDEF VERSION4}, ftLargeint {$ENDIF}];
+    ftWord, ftFloat, ftCurrency, ftBCD, ftLargeint];
 
 
 {*** TOvcDbSlider ***}
@@ -320,7 +316,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbSlider.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -332,6 +327,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

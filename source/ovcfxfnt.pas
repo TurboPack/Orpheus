@@ -42,8 +42,7 @@ unit ovcfxfnt;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, SysUtils, Graphics, OvcExcpt;
+  UITypes, Windows, Classes, SysUtils, Graphics, OvcExcpt;
 
 var
   {List of names of the fixed fonts in the system}
@@ -52,7 +51,8 @@ var
 type
   {Orpheus fixed font class}
   TOvcFixedFont = class(TPersistent)
-  {.Z+}
+  
+
     protected
       FFont : TFont;                           {Actual font}
       FOnChange : TNotifyEvent;                {Font on change event handler}
@@ -77,7 +77,7 @@ type
         {-Create a new fixed font object--name is first fixed font on system}
       destructor Destroy; override;
         {-Destroy the fixed font object}
-  {.Z-}
+
 
       procedure Assign(F : TPersistent); override;
         {-Assign another fixed font's values to this one}

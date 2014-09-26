@@ -41,20 +41,15 @@ unit ovcdata;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
+  UITypes,
   Windows, Controls, Forms, Graphics, Messages, StdCtrls, SysUtils, OvcConst,
   OvcDate, O32SR;
 
 const
   BorderStyles    : array[TBorderStyle] of LongInt =
                     (0, WS_BORDER);
-  ScrollBarStyles : array [{$IFDEF VERSIONXE3} System.UITypes.{$ENDIF}TScrollStyle] of LongInt =
+  ScrollBarStyles : array [UITypes.TScrollStyle] of LongInt =
                     (0, WS_HSCROLL, WS_VSCROLL, WS_HSCROLL or WS_VSCROLL);
-
-{$IFNDEF VERSION4}
-type
-  PDateTime     = ^TDateTime;
-{$ENDIF}
 
 {some colors that are not defined by Delphi}
 const
@@ -272,17 +267,9 @@ type
     05 : (rtLong : LongInt);              {04}
     06 : (rtSgl  : Single);               {04}
     07 : (rtPtr  : Pointer);              {04}
-    {$IFDEF CBuilder}
-    08 : (rtReal : Double);               {06}
-    {$ELSE}
-    08 : (rtReal : Real);                 {06}
-    {$ENDIF CBuilder}
+     08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
-    {$IFDEF CBuilder}
-    10 : (rtComp : Double);               {08}
-    {$ELSE}
     10 : (rtComp : Comp);                 {08}
-    {$ENDIF CBuilder}
     11 : (rtExt  : Extended);             {10}
     12 : (rtDate : LongInt);              {04}
     13 : (rtTime : LongInt);              {04}

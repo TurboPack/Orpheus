@@ -35,22 +35,13 @@
 {.W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFNDEF Win32}
-{$G+} {286 Instructions}
-{$N+} {Numeric Coprocessor}
-
-{$C MOVEABLE,DEMANDLOAD,DISCARDABLE}
-{$ENDIF}
-
 unit Ovcdrpve;
 
 interface
 
 uses
-  Windows,
-  Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Grids, OvcRptVw, OvcDRpVw, ExtCtrls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors; {$ELSE} DsgnIntf; {$ENDIF}
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Grids, OvcRptVw, OvcDRpVw, ExtCtrls, DesignIntf, DesignEditors;
 
 type
   TOvcfrmRvDataItemEditor = class(TForm)
@@ -69,15 +60,7 @@ type
     ReportView : TOvcDataReportView;
     FieldCount : Integer;
     CurRow : Integer;
-    {$IFDEF VERSION4}
-    {$IFDEF VERSION6}
-      Dsgn : IDesigner;
-    {$ELSE}
-      Dsgn : IFormDesigner;
-    {$ENDIF}
-    {$ELSE}
-    Dsgn : TFormDesigner;
-    {$ENDIF}
+    Dsgn : IDesigner;
     SaveOnEnumerate  : TOvcDRVEnumEvent;
     procedure LoadData;
     procedure OvcDataReportView1Enumerate(Sender: TObject;
@@ -98,18 +81,8 @@ type
 var
   OvcfrmRvDataItemEditor: TOvcfrmRvDataItemEditor;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
     procedure ShowRvDataItemsEditor(Des : IDesigner;
                                     DataReportView : TOvcDataReportView);
-  {$ELSE}
-    procedure ShowRvDataItemsEditor(Des : IFormDesigner;
-                                    DataReportView : TOvcDataReportView);
-  {$ENDIF}
-{$ELSE}
-  procedure ShowRvDataItemsEditor(Des : TFormDesigner;
-                                  DataReportView : TOvcDataReportView);
-{$ENDIF}
 
 implementation
 
@@ -192,18 +165,7 @@ begin
     btnDelete.Enabled := True;
 end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure ShowRvDataItemsEditor(Des : IDesigner;
-                                    DataReportView : TOvcDataReportView);
-  {$ELSE}
-    procedure ShowRvDataItemsEditor(Des : IFormDesigner;
-                                    DataReportView : TOvcDataReportView);
-  {$ENDIF}
-{$ELSE}
-  procedure ShowRvDataItemsEditor(Des : TFormDesigner;
-                                  DataReportView : TOvcDataReportView);
-{$ENDIF}
+procedure ShowRvDataItemsEditor(Des : IDesigner; DataReportView : TOvcDataReportView);
 var
   i : Integer;
   s : string;

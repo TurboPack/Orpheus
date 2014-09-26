@@ -35,9 +35,7 @@
 {.W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFDEF VERSION6}
-  {$WARN SYMBOL_DEPRECATED OFF}
-{$ENDIF}
+{$WARN SYMBOL_DEPRECATED OFF}
 
 
 unit ovctimer;
@@ -54,7 +52,7 @@ type
     of object;
 
 type
-  {.Z+}
+
   PEventRec       = ^TEventRec;
   TEventRec       = packed record
     erHandle      : Integer;        {handle of this event record}
@@ -66,11 +64,11 @@ type
     erEnabled     : Boolean;        {true if trigger is active}
     erRecurring   : Boolean;        {false for one time trigger}
   end;
-  {.Z-}
+
 
 type
   TOvcTimerPool = class(TComponent)
-  {.Z+}
+
   protected {private}
     {property variables}
     FOnAllTriggers : TTriggerEvent;
@@ -120,7 +118,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function AddOneShot(OnTrigger : TTriggerEvent; Interval : Cardinal) : Integer;
       {-adds or updates one timer trigger. removed automatically after one firing}

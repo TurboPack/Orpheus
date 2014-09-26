@@ -43,9 +43,7 @@ interface
 
 uses
   Windows, Buttons, Classes, Controls, ExtCtrls, Forms, Graphics, Menus,
-  Messages,
-  {$IFDEF VERSION4} MultiMon, {$ENDIF}
-  StdCtrls, SysUtils, OvcBase, OvcVer, OvcMisc,
+  Messages, MultiMon, StdCtrls, SysUtils, OvcBase, OvcVer, OvcMisc,
   OvcBordr, OvcEditF, OvcBCalc, OvcEdCal, OvcCal;
 
 const
@@ -63,11 +61,9 @@ type
     {base property values}
     FOvcEdit : TOvcDateEditEx;
 
-    {$IFDEF VERSION4}
     FBiDiMode      : TBiDiMode;
     FParentBiDiMode: Boolean;
     FDragKind      : TDragKind;
-    {$ENDIF}
     FAbout         : string;
     FAutoSelect    : Boolean;
     FAutoSize      : Boolean;
@@ -103,10 +99,8 @@ type
     FOnDblClick    : TNotifyEvent;
     FOnDragDrop    : TDragDropEvent;
     FOnDragOver    : TDragOverEvent;
-    {$IFDEF VERSION4}
     FOnEndDock     : TEndDragEvent;
     FOnStartDock   : TStartDockEvent;
-    {$ENDIF}
     FOnEndDrag     : TEndDragEvent;
     FOnEnter       : TNotifyEvent;
     FOnExit        : TNotifyEvent;
@@ -134,7 +128,6 @@ type
     FOnSetDate           : TNotifyEvent;
 
     {base property methods}
-    {$IFDEF VERSION4}
     function GetBiDiMode : TBiDiMode;
     function GetParentBiDiMode : Boolean;
     function GetDragKind : TDragKind;
@@ -146,7 +139,6 @@ type
     procedure SetDragKind(Value : TDragKind);
     procedure SetOnEndDock(Value : TEndDragEvent);
     procedure SetOnStartDock(Value : TStartDockEvent);
-    {$ENDIF}
 
     function GetAbout : string;
     function GetAllowIncDec : Boolean;
@@ -198,7 +190,7 @@ type
     procedure SetAbout(const Value : string);
     procedure SetAllowIncDec(Value : Boolean);
     procedure SetAutoSelect(Value : Boolean);
-    procedure SetAutoSize(Value : Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value : Boolean); override;
     procedure SetCharCase(Value : TEditCharCase);
     procedure SetEditController(Value : TOvcController);
     procedure SetCursor(Value : TCursor);
@@ -289,7 +281,6 @@ type
       read FOvcEdit;
 
   published
-    {$IFDEF VERSION4}
     property Anchors;
 
     property BiDiMode : TBiDiMode
@@ -305,7 +296,6 @@ type
     property DragKind : TDragKind
       read GetDragKind
       write SetDragKind;
-    {$ENDIF}
     property About : string
       read GetAbout
       write SetAbout;
@@ -338,11 +328,9 @@ type
       read GetDragCursor
       write SetDragCursor;
 
-    {$IFDEF VERSION4}
     property DragMode : TDragMode
       read GetDragMode
       write SetDragMode;
-    {$ENDIF}
 
     property Epoch : Integer
       read GetEpoch
@@ -557,11 +545,9 @@ begin
 
   Borders.BottomBorder.Enabled := True;
 
-  {$IFDEF VERSION4}
   FBiDiMode      := FOvcEdit.BiDiMode;
   FParentBiDiMode:= FOvcEdit.ParentBiDiMode;
   FDragKind      := FOvcEdit.DragKind;
-  {$ENDIF}
   FAbout         := FOvcEdit.About;
   FAutoSelect    := FOvcEdit.AutoSelect;
   FAutoSize      := FOvcEdit.AutoSize;
@@ -592,10 +578,8 @@ begin
   FOnDblClick    := FOvcEdit.OnDblClick;
   FOnDragDrop    := FOvcEdit.OnDragDrop;
   FOnDragOver    := FOvcEdit.OnDragOver;
-  {$IFDEF VERSION4}
   FOnEndDock     := FOvcEdit.OnEndDock;
   FOnStartDock   := FOvcEdit.OnStartDock;
-  {$ENDIF}
   FOnEndDrag     := FOvcEdit.OnEndDrag;
   FOnEnter       := FOvcEdit.OnEnter;
   FOnExit        := FOvcEdit.OnExit;
@@ -822,7 +806,6 @@ end;
 
 
 {base property methods}
-{$IFDEF VERSION4}
 function TOvcBorderedDateEdit.GetBiDiMode : TBiDiMode;
 begin
   Result := FOvcEdit.BiDiMode;
@@ -891,8 +874,6 @@ begin
   FOnStartDock := Value;
   FOvcEdit.OnStartDock := Value;
 end;
-{$ENDIF}
-
 
 function TOvcBorderedDateEdit.GetAbout : string;
 begin

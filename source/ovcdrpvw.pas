@@ -60,16 +60,18 @@ type
     property Format : string
       read FFormat write FFormat;
   end;
-  {.Z+}
+  
+
   TOvcDataRvItem = class;
   TIntArray = array[0..pred(MaxInt div sizeof(Integer))] of Integer;
   PIntArray = ^TIntArray;
   TByteArray = array[0..pred(MaxInt div sizeof(Byte))] of Byte;
   PByteArray = ^TByteArray;
   TOvcDataRvItems = class;
-  {.Z-}
+
   TOvcDataRvItem = class
-  {.Z+}
+  
+
   protected
     FData : Pointer;
     FOwner : TOvcDataReportView;
@@ -87,10 +89,8 @@ type
     function GetAsBoolean(Index: Integer): Boolean;
     function GetAsDateTime(Index : Integer): TDateTime;
     function InternalGetAsDateTime(Index : Integer): TDateTime;
-    {$IFDEF Version4}
     function InternalGetAsDWord(Index: Integer): DWord;
     function GetAsDWord(Index: Integer): DWord;
-    {$ENDIF}
     function GetCustomFieldBuffer(Index: Integer): Pointer;
     function GetValue(Index: Integer): Variant;
     procedure SetValue(Index: Integer; const Value: Variant);
@@ -103,9 +103,7 @@ type
     function GetSelected : Boolean;
     procedure SetAsBoolean(Index: Integer; const Value: Boolean);
     procedure SetAsDateTime(Index : Integer; const Value: TDateTime);
-    {$IFDEF Version4}
     procedure SetAsDWord(Index: Integer; const Value: DWord);
-    {$ENDIF}
     procedure SetAsFloat(Index: Integer; const Value: Extended);
     procedure SetAsInteger(Index: Integer; const Value: Integer);
     procedure SetAsString(Index: Integer; const Value: string);
@@ -124,7 +122,7 @@ type
     destructor Destroy; override;
     procedure ReadFromStream(Stream : TStream);
     procedure WriteToStream(Stream : TStream);
-    {.Z-}
+
     property AsString[Index : Integer] : string
       read GetAsString write SetAsString;
     property AsFloat[Index : Integer] : Extended
@@ -135,11 +133,9 @@ type
       read GetAsInteger write SetAsInteger;
     property AsBoolean[Index : Integer] : Boolean
       read GetAsBoolean write SetAsBoolean;
-    {$IFDEF Version4}
     property AsDWord[Index : Integer] : DWord
       read GetAsDWord write SetAsDWord;
     procedure SetCustom(Index: Integer; const Value; Size: DWord);
-    {$ENDIF}
     property Value[Index: Integer]: Variant
       read GetValue write SetValue;
     property Data : Pointer read FData write FData;
@@ -148,7 +144,8 @@ type
   end;
 
   TOvcDataRvItems = class(TPersistent)
-  {.Z+}
+  
+
   protected
     FItems : TList;
     FOwner : TOvcDataReportView;
@@ -162,7 +159,7 @@ type
     procedure SaveToStream(Stream : TStream);
     constructor Create(AOwner : TOvcDataReportView); virtual;
     destructor Destroy; override;
-    {.Z-}
+
     function Add : TOvcDataRvItem;
     procedure Assign(Source : TPersistent); override;
     procedure Clear;
@@ -202,7 +199,8 @@ type
       Result: string) of object;
 
   TOvcDataReportView = class(TOvcCustomReportView)
-  {.Z+}
+  
+
   protected
     FItems             : TOvcDataRvItems;
     FOnDrawViewField   : TOvcDrawDViewFieldEvent;
@@ -242,7 +240,7 @@ type
   public
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
-  {.Z-}
+
     property CurrentItem : TOvcDataRvItem
       read GetCurrentItem write SetCurrentItem;
     procedure Enumerate(UserData : Pointer); override;
@@ -251,13 +249,12 @@ type
       UserData : Pointer); override;
     property Field[Index : Integer] : TOvcDataRvField
                    read GetField;
-  {.Z+}
+  
+
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property ActiveView;
     property Align;
     property AutoCenter;
@@ -346,7 +343,6 @@ type
   PBoolean  = ^Boolean;
   PDateTime = ^TDateTime;
 
-{$IFDEF Version4}
 function CompareDWord(D1, D2 : DWord) : Integer;
 begin
   if D1 < D2 then
@@ -357,7 +353,6 @@ begin
   else
     Result := 1;
 end;
-{$ENDIF}
 
 { TOvcDataRvField }
 
@@ -433,7 +428,6 @@ begin
       ord(TOvcDataRvItem(Data1).InternalGetAsBoolean(FieldIndex)),
       ord(TOvcDataRvItem(Data2).InternalGetAsBoolean(FieldIndex))
       );
-  {$IFDEF Version4}
   dtDWord :
     Result := CompareDWord(
       TOvcDataRvItem(Data1).InternalGetAsDWord(FieldIndex),
@@ -444,7 +438,6 @@ begin
       FieldIndex,
       TOvcDataRvItem(Data1).GetCustomFieldBuffer(FieldIndex),
       TOvcDataRvItem(Data2).GetCustomFieldBuffer(FieldIndex));
-  {$ENDIF}
   else
     raise Exception.Create('Unsupported datatype');
   end;
@@ -519,10 +512,8 @@ begin
     case F.DataType of
     dtInteger :
       Result := TOvcDataRvItem(Data).InternalGetAsInteger(Field);
-    {$IFDEF Version4}
     dtDWord :
       Result := TOvcDataRvItem(Data).InternalGetAsDWord(Field);
-    {$ENDIF}
     dtFloat :
       Result := TOvcDataRvItem(Data).InternalGetAsFloat(Field);
     else
@@ -767,10 +758,8 @@ begin
       S := sizeof(TDateTime);
     dtBoolean :
       S := sizeof(Boolean);
-    {$IFDEF Version4}
     dtDWord :
       S := sizeof(DWord);
-    {$ENDIF}
     else //dtCustom :
       S := 0;
     end;
@@ -882,10 +871,8 @@ begin
   case TOvcDataRvField(FOwner.Field[Index]).DataType of
   dtInteger :
     Result := InternalGetAsInteger(Index);
-  {$IFDEF Version4}
   dtDWord :
     Result := InternalGetAsDWord(Index);
-  {$ENDIF}
   dtFloat :
     Result := InternalGetAsFloat(Index);
   else
@@ -970,7 +957,6 @@ begin
       Result := 'TRUE'
     else
       Result := 'FALSE';
-  {$IFDEF Version4}
   dtDWord :
     begin
       f := TOvcDataRvField(FOwner.Field[Index]).Format;
@@ -982,7 +968,6 @@ begin
   dtCustom :
     Result := FOwner.DoGetCustomAsString(Index,
       GetCustomFieldBuffer(Index));
-  {$ENDIF}
   end;
 end;
 
@@ -1012,13 +997,11 @@ begin
     Result := AsDateTime[Index];
   dtBoolean :
     Result := AsBoolean[Index];
-  {$IFDEF Version4}
   dtDWord :
     Result := 1.0 * AsDWord[Index];
   dtCustom :
     Result := FOwner.DoGetCustomAsString(Index,
       GetCustomFieldBuffer(Index));
-  {$ENDIF}
   end;
 end;
 
@@ -1035,15 +1018,12 @@ begin
     AsDateTime[Index] := Value;
   dtBoolean :
     AsBoolean[Index] := Value;
-  {$IFDEF Version4}
   dtDWord :
     AsDWord[Index] := Value;
   {!!! custom}
-  {$ENDIF}
   end;
 end;
 
-{$IFDEF Version4}
 function TOvcDataRvItem.InternalGetAsDWord(Index: Integer): DWord;
 {- get as DWord, no type check}
 begin
@@ -1058,7 +1038,6 @@ begin
   CheckType(Index, dtDWord);
   Result := InternalGetAsDWord(Index);
 end;
-{$ENDIF}
 
 function TOvcDataRvItem.GetFieldSize(Index: Integer): Integer;
 begin
@@ -1159,7 +1138,6 @@ begin
     SetAsDateTime(Index, StrToDateTime(Value));
   dtBoolean :
     SetAsBoolean(Index, CompareText(Value, 'TRUE') = 0);
-  {$IFDEF Version4}
   dtDWord :
     begin
       Val(Value,E,Err);
@@ -1168,11 +1146,9 @@ begin
       else
         SetAsDWord(Index, 0);
     end;
-  {$ENDIF}
   end;
 end;
 
-{$IFDEF Version4}
 procedure TOvcDataRvItem.SetAsDWord(Index: Integer;
   const Value: DWord);
 begin
@@ -1194,8 +1170,6 @@ begin
   Changed;
 end;
 
-{$ENDIF}
-
 procedure TOvcDataRvItem.SetSelected(Value: Boolean);
 begin
   FOwner.IsSelected[FOwner.OffsetOfData[Self]] := Value;
@@ -1205,16 +1179,13 @@ procedure TOvcDataRvItem.ReadFromStream(Stream: TStream);
 var
   FS : LongInt;
   i : Integer;
-{$IFDEF UNICODE}
   j, k1, k2 : Integer;
-{$ENDIF}
 begin
   for i := 0 to pred(FOwner.Fields.Count) do begin
     Stream.Read(FS, sizeof(FS));
     if FS <> 0 then begin
       FieldSize[i] := FS;
       Stream.Read(DataBuffer^[FieldIndexTable^[i]], FS);
-{$IFDEF UNICODE}
       if FOwner.Field[i].DataType = dtString then begin
         { Beware: We might have just read an old fashioned Ansi-String from the
           stream (e.g data from an older *.dfm file). We have to detect this and
@@ -1239,7 +1210,6 @@ begin
           end;
         end;
       end;
-{$ENDIF}
     end;
   end;
 end;

@@ -95,14 +95,12 @@ type
   public
     constructor Create(AOwner : TComponent); override;
     destructor Destroy; override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean; override;
     function UpdateAction(Action: TBasicAction): Boolean; override;
-    {$ENDIF}
     procedure Restore; override;
-    procedure CutToClipboard; {$IFDEF VERSION4} reintroduce;{$ENDIF}
+    procedure CutToClipboard; reintroduce;
       {-copy highlighted text to the clipboard and then delete it}
-    procedure PasteFromClipboard; {$IFDEF VERSION4} reintroduce; {$ENDIF}
+    procedure PasteFromClipboard; reintroduce;
       {-paste the contents of the clipboard}
     property Field : TField read GetField;
   published
@@ -115,7 +113,6 @@ type
 
     {inherited properties}
 
-    {$IFDEF VERSION4}
 //    property Alignment; Not in a db-field
     property Anchors;
     property BiDiMode;
@@ -123,7 +120,6 @@ type
     property DragKind;
     property DragMode;
     property ParentBiDiMode;
-    {$ENDIF}
     property AutoSize default False;
     property About;
     property AutoSelect;
@@ -134,9 +130,7 @@ type
     property Cursor;
     property DragCursor;
     property EditLines;
-    {$IFNDEF CBuilder}
     property EFColors;
-    {$ENDIF}
     property Enabled;
     property Font;
     property HideSelection;
@@ -184,9 +178,7 @@ type
     property OnMouseDown;
     property OnMouseMove;
     property OnMouseUp;
-    {$IFDEF VERSION4}
     property OnMouseWheel;
-    {$ENDIF}
     property OnStartDrag;
     property OnUserValidation;
     property OnValidationError;
@@ -202,7 +194,7 @@ const
   {field types supported by the data aware FlexEdit}
   SupportedFieldTypes : set of  TFieldType =
     [ftString, ftSmallInt, ftInteger, ftWord, ftDate, ftBoolean, ftFloat,
-     ftCurrency, ftBCD {$IFDEF VERSION5}, ftWideString {$ENDIF}];
+     ftCurrency, ftBCD, ftWideString];
 
 
 procedure TO32dbFlexEdit.CMEnter(var Msg : TMessage);
@@ -445,10 +437,7 @@ begin
       Field.Clear
     else
       case FFieldType of
-        ftString
-        {$IFDEF VERSION5}
-        , ftWideString
-        {$ENDIF}: Field.AsString  := S;
+        ftString, ftWideString: Field.AsString  := S;
 
         ftSmallInt, ftInteger, ftWord : Field.AsInteger := StrToIntDef(S, 0);
 
@@ -473,7 +462,7 @@ end;
 procedure TO32dbFlexEdit.fedbSetFieldProperties;
 begin
   case FFieldType of
-    ftString {$IFDEF VERSION5}, ftWideString {$ENDIF}
+    ftString, ftWideString
       : begin
 //        DataType := feString;
         if Field <> nil then
@@ -518,11 +507,7 @@ begin
 
   if Field <> nil then begin
     case FFieldType of
-      ftString
-      {$IFDEF VERSION5}
-      , ftWideString
-      {$ENDIF}     :
-        S := Field.AsString;
+      ftString, ftWideString: S := Field.AsString;
 
       ftSmallInt, ftInteger, ftWord :
         S := IntToStr(Field.AsInteger);
@@ -771,7 +756,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32dbFlexEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -785,6 +769,5 @@ begin
     FDataLink.UpdateAction(Action);
 end;
 {=====}
-{$ENDIF}
 
 end.

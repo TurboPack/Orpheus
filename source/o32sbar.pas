@@ -41,9 +41,8 @@ the contained controls to size and position themselves.  It should be fixed
 ASAP. }
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, ExtCtrls, Controls, Graphics, Commctrl,
-  ComCtrls, Forms, {$IFDEF Version4}StdActns,{$ENDIF} OvcBase;
+  Types, Windows, Messages, SysUtils, Classes, ExtCtrls, Controls, Graphics,
+  Commctrl, ComCtrls, Forms, StdActns, OvcBase;
 
 type
   {Forward Declarations}
@@ -83,9 +82,7 @@ type
     FWidth: Integer;
     FAlignment: TAlignment;
     FBevel: TO32StatusPanelBevel;
-    {$IFDEF VERSION4}
     FBiDiMode: TBiDiMode;
-    {$ENDIF}
     FParentBiDiMode: Boolean;
     FStyle: TO32StatusPanelStyle;
     FUpdateNeeded: Boolean;
@@ -97,10 +94,8 @@ type
     {property methods}
     procedure SetAlignment(Value: TAlignment);
     procedure SetBevel(Value: TO32StatusPanelBevel);
-    {$IFDEF VERSION4}
     procedure SetBiDiMode(Value: TBiDiMode);
     procedure SetParentBiDiMode(Value: Boolean);
-    {$ENDIF}
     procedure SetStyle(Value: TO32StatusPanelStyle);
     procedure SetText(const Value: string);
     procedure SetWidth(Value: Integer);
@@ -113,20 +108,16 @@ type
   public
     constructor Create(Collection: TCollection); override;
     procedure Assign(Source: TPersistent); override;
-    {$IFDEF VERSION4}
     procedure ParentBiDiModeChanged;
     function UseRightToLeftAlignment: Boolean;
     function UseRightToLeftReading: Boolean;
-    {$ENDIF}
     property Container: TO32SBContainer read GetContainer;
     property ContainerIndex : Integer read FContainerIndex write FContainerIndex;
   published
     property Alignment: TAlignment read FAlignment write SetAlignment default taLeftJustify;
     property Bevel: TO32StatusPanelBevel read FBevel write SetBevel default spbLowered;
-    {$IFDEF VERSION4}
     property BiDiMode: TBiDiMode read FBiDiMode write SetBiDiMode stored IsBiDiModeStored;
     property ParentBiDiMode: Boolean read FParentBiDiMode write SetParentBiDiMode default True;
-    {$ENDIF}
     property Style: TO32StatusPanelStyle read FStyle write SetStyle default spsText;
     property Text: string read FText write SetText;
     property Width: Integer read FWidth write SetWidth;
@@ -178,9 +169,7 @@ type
     procedure SyncToSystemFont;
     procedure UpdatePanel(Index: Integer; Repaint: Boolean);
     procedure UpdatePanels(UpdateRects, UpdateText: Boolean);
-    {$IFDEF VERSION4}
     procedure CMBiDiModeChanged(var Message: TMessage); message CM_BIDIMODECHANGED;
-    {$ENDIF}
     procedure CMColorChanged(var Message: TMessage); message CM_COLORCHANGED;
     procedure CMParentFontChanged(var Message: TMessage); message CM_PARENTFONTCHANGED;
     procedure CMSysColorChange(var Message: TMessage); message CM_SYSCOLORCHANGE;
@@ -207,11 +196,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure GetChildren(Proc: TGetChildProc; Root: TComponent); override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean; override;
     procedure FlipChildren(AllLevels: Boolean); override;
     function GetPanelAt(X, Y: Integer): TO32StatusPanel;
-    {$ENDIF}
     property Canvas: TCanvas read FCanvas;
 
     property About : string read GetAbout write SetAbout
@@ -219,9 +206,7 @@ type
     property Containers[Index: Integer]: TO32SBContainer read GetContainer;
     property AutoHint: Boolean read FAutoHint write FAutoHint default False;
     property Align default alBottom;
-    {$IFDEF VERSION4}
     property BorderWidth;
-    {$ENDIF}
     property Color default clBtnFace;
     property Font stored IsFontStored;
     property Panels: TO32StatusPanels read FPanels write SetPanels;
@@ -238,7 +223,6 @@ type
   TO32StatusBar = class(TO32CustomStatusBar)
   published
     property About;
-    {$IFDEF VERSION4}
     property Action;
     property Anchors;
     property BiDiMode;
@@ -250,7 +234,6 @@ type
     property OnResize;
     property OnStartDock;
     property OnStartDrag;
-    {$ENDIF}
     property AutoHint;
     property Align;
     property Color;
@@ -270,9 +253,7 @@ type
     property UseSystemFont;
     property Visible;
     property OnClick;
-    {$IFDEF Version5}
     property OnContextPopup;
-    {$ENDIF}
     property OnDblClick;
     property OnDragDrop;
     property OnDragOver;
@@ -415,9 +396,7 @@ begin
   }
   FContainerIndex := -1;
   inherited Create(Collection);
-  {$IFDEF VERSION4}
   ParentBiDiModeChanged;
-  {$ENDIF}
 end;
 {=====}
 
@@ -454,7 +433,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 procedure TO32StatusPanel.SetBiDiMode(Value: TBiDiMode);
 begin
   if Value <> FBiDiMode then
@@ -465,7 +443,6 @@ begin
   end;
 end;
 {=====}
-{$ENDIF}
 
 function TO32StatusPanel.IsBiDiModeStored: Boolean;
 begin
@@ -473,7 +450,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 procedure TO32StatusPanel.SetParentBiDiMode(Value: Boolean);
 begin
   if FParentBiDiMode <> Value then
@@ -508,7 +484,6 @@ begin
   Result := SysLocale.MiddleEast and (BiDiMode = bdRightToLeft);
 end;
 {=====}
-{$ENDIF}
 
 function TO32StatusPanel.GetDisplayName: string;
 begin
@@ -683,9 +658,7 @@ begin
   with Params do
   begin
     Style := Style or GripStyles[FSizeGrip and (Parent is TCustomForm)
-    {$IFDEF VERSION4}
-    and (TCustomForm(Parent).BorderStyle in [bsSizeable, bsSizeToolWin])
-    {$ENDIF}];
+    and (TCustomForm(Parent).BorderStyle in [bsSizeable, bsSizeToolWin])];
     WindowClass.style := WindowClass.style and not CS_HREDRAW;
   end;
 end;
@@ -694,14 +667,7 @@ end;
 procedure TO32CustomStatusBar.CreateWnd;
 begin
   inherited CreateWnd;
-  {$IFNDEF VERSION4}
-    {$IFNDEF CBUILDER}
-      {D3}
-      SendMessage(Handle, WM_CTLCOLOR, 0, ColorToRGB(Color));
-    {$ENDIF}
-  {$ELSE}
   SendMessage(Handle, SB_SETBKCOLOR, 0, ColorToRGB(Color));
-  {$ENDIF}
   UpdatePanels(True, False);
   if FSimpleText <> '' then
     SendMessage(Handle, SB_SETTEXT, 255, Integer(PChar(FSimpleText)));
@@ -790,9 +756,7 @@ end;
 procedure TO32CustomStatusBar.DoRightToLeftAlignment(var Str: string;
   AAlignment: TAlignment; ARTLAlignment: Boolean);
 begin
-  {$IFDEF VERSION4}
   if ARTLAlignment then ChangeBiDiModeAlignment(AAlignment);
-  {$ENDIF}
 
   case AAlignment of
     taCenter: Insert(#9, Str, 1);
@@ -805,15 +769,10 @@ procedure TO32CustomStatusBar.UpdateSimpleText;
 const
   RTLReading: array[Boolean] of Longint = (0, SBT_RTLREADING);
 begin
-  {$IFDEF VERSION4}
   DoRightToLeftAlignment(FSimpleText, taLeftJustify, UseRightToLeftAlignment);
   if HandleAllocated then
     SendMessage(Handle, SB_SETTEXT, 255 or RTLREADING[UseRightToLeftReading],
       Integer(PChar(FSimpleText)));
-  {$ELSE}
-  if HandleAllocated then
-    SendMessage(Handle, SB_SETTEXT, 255, Integer(PChar(FSimpleText)));
-  {$ENDIF}
 end;
 {=====}
 
@@ -827,7 +786,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 procedure TO32CustomStatusBar.CMBiDiModeChanged(var Message: TMessage);
 var
   Loop: Integer;
@@ -897,7 +855,6 @@ begin
   end;
 end;
 {=====}
-{$ENDIF}
 
 procedure TO32CustomStatusBar.SetSizeGrip(Value: Boolean);
 begin
@@ -911,10 +868,8 @@ end;
 
 procedure TO32CustomStatusBar.SyncToSystemFont;
 begin
-  {$IFDEF Version5}
   if FUseSystemFont then
     Font := Screen.HintFont;
-  {$ENDIF}
 end;
 {=====}
 
@@ -967,17 +922,14 @@ begin
             Flags := SBT_POPOUT;
         end;
 
-        {$IFDEF VERSION4}
         if UseRightToLeftReading then
           Flags := Flags or SBT_RTLREADING;
-        {$ENDIF}
 
         if Style = spsOwnerDraw then
           Flags := Flags or SBT_OWNERDRAW;
 
         S := Text;
 
-        {$IFDEF VERSION4}
         if UseRightToLeftAlignment then
           DoRightToLeftAlignment(S, Alignment, UseRightToLeftAlignment)
         else
@@ -987,7 +939,6 @@ begin
             taRightJustify:
               Insert(#9#9, S, 1);
           end;
-        {$ENDIF}
 
         SendMessage(Handle, SB_SETTEXT, Index or Flags, Integer(PChar(S)));
 
@@ -1088,9 +1039,7 @@ end;
 procedure TO32CustomStatusBar.WMSize(var Message: TWMSize);
 begin
   { Eat WM_SIZE message to prevent control from doing alignment }
-  {$IFDEF VERSION4}
   if not (csLoading in ComponentState) then Resize;
-  {$ENDIF}
   Repaint;
 end;
 {=====}
@@ -1141,7 +1090,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32CustomStatusBar.ExecuteAction(Action: TBasicAction): Boolean;
 begin
   if AutoHint and (Action is THintAction) and not DoHint then
@@ -1154,7 +1102,6 @@ begin
   else Result := inherited ExecuteAction(Action);
 end;
 {=====}
-{$ENDIF}
 
 procedure TO32CustomStatusBar.CMSysColorChange(var Message: TMessage);
 begin

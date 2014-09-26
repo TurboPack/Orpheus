@@ -48,8 +48,7 @@ interface
 
 uses
   Windows, Classes, Controls, Forms, Graphics, Menus, Messages, SysUtils,
-  {$IFDEF VERSION6} Variants, {$ENDIF}
-  OvcData, OvcIntl, OvcRLbl, OvcStr, OvcUser, OvcDate, OvcMisc;
+  Variants, OvcData, OvcIntl, OvcRLbl, OvcStr, OvcUser, OvcDate, OvcMisc;
 
 type
   TPictureLabelDataType =
@@ -58,7 +57,7 @@ type
 
 type
   TOvcCustomPictureLabel = class(TOvcCustomRotatedLabel)
-  {.Z+}
+
   protected {private}
     FString         : string;
     FBoolean        : Boolean;
@@ -131,7 +130,7 @@ type
     function plGetSampleDisplayData : string;
       dynamic;
       {-return the text to display while in design mode}
-  {.Z-}
+
 
     {properties}
     property PictureMask : string
@@ -143,10 +142,10 @@ type
       write SetUseIntlMask;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
 { - Hdc changed to TOvcHdc for BCB Compatibility }
     procedure PaintTo(DC : TOvcHdc{hDC}; X, Y : Integer);
@@ -206,11 +205,9 @@ type
 
   TOvcPictureLabel = class(TOvcCustomPictureLabel)
   published
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Alignment default taLeftJustify;
     property AutoSize;
@@ -557,7 +554,7 @@ var
 begin
   FillChar(FPictureFlags, SizeOf(FPictureFlags), pflagLiteral);
   for I := 1 to Length(FPictureMask) do begin
-    if ovcCharInSet(FPictureMask[I], PictureChars) then
+    if CharInSet(FPictureMask[I], PictureChars) then
       FPictureFlags[I] := pflagFormat
     else
       case FPictureMask[I] of
@@ -876,7 +873,7 @@ begin
     varDate     : SetAsDate(Value);
     varBoolean  : SetAsBoolean(Value);
     varString   : SetAsString(Value);
-{$IFDEF UNICODE}varUString  : SetAsString(Value);{$ENDIF}
+    varUString  : SetAsString(Value);
   end;
 end;
 

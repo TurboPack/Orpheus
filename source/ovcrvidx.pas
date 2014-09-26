@@ -49,11 +49,9 @@ type
   TOvcAbstractReportView = class;
 
   TOvcDRDataType = (
-    dtString, dtFloat, dtInteger, dtDateTime, dtBoolean
-    {$IFDEF Version4} ,dtDWord {$ENDIF} ,dtCustom
-  );
+    dtString, dtFloat, dtInteger, dtDateTime, dtBoolean, dtDWord, dtCustom);
 
-  {.Z+}
+
   TOvcAbstractRvField = class(TOvcCollectible)
   protected
     FCanSort: Boolean;
@@ -75,9 +73,9 @@ type
     function GetValue(Data: Pointer): Variant; virtual;
     function AsString(Data: Pointer): string; virtual;
   end;
-  {.Z-}
 
-  {.Z+}
+
+
   TOvcAbstractRvFields = class(TOvcCollection)
   protected
     FOwner: TOvcAbstractReportView;
@@ -91,11 +89,11 @@ type
     property Owner: TOvcAbstractReportView
                    read FOwner;
   end;
-  {.Z-}
+
 
   TOvcAbstractRvView = class;
 
-  {.Z+}
+
   TOvcAbstractRvViewField = class(TOvcCollectible)
   protected
     FFieldName : string;
@@ -128,9 +126,9 @@ type
     property OwnerView : TOvcAbstractRvView
                    read FOwnerView;
   end;
-  {.Z-}
 
-  {.Z+}
+
+
   TOvcAbstractRvViewFields = class(TOvcCollection)
   protected
     function GetItem(Index: Integer): TOvcAbstractRvViewField;
@@ -144,9 +142,9 @@ type
     property Items[Index: Integer]: TOvcAbstractRvViewField
                    read GetItem write SetItem;
   end;
-  {.Z-}
 
-  {.Z+}
+
+
   TOvcAbstractRvView = class(TOvcCollectible)
   protected
     FFilterIndex: Integer;
@@ -173,9 +171,9 @@ type
     property ViewFields: TOvcAbstractRvViewFields
                    read FViewFields write SetViewFields;
   end;
-  {.Z-}
 
-  {.Z+}
+
+
   TOvcAbstractRvViews = class(TOvcCollection)
   protected
     function GetItem(Index: Integer): TOvcAbstractRvView;
@@ -189,7 +187,7 @@ type
     property Items[Index: Integer]: TOvcAbstractRvView
                    read GetItem write SetItem;
   end;
-  {.Z-}
+
 
   TOvcRvIndexGroup = class;
 
@@ -238,7 +236,7 @@ type
     procedure(Sender : TOvcAbstractReportView; const ArgList: Variant; var Result: Variant) of object;
 
 
-  {.Z+}
+
   TRvEnumMode = (emExpandAll, emCollapseAll);
 
   TOvcRvIndex = class;
@@ -358,10 +356,10 @@ type
     function Avg(SimpleExpression : TObject): Variant;
   end;
 
-  {.Z-}
+
 
   TOvcAbstractReportView = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected
     FDelayedBinding : Boolean;
     FActiveIndexerView: string;
@@ -475,7 +473,7 @@ type
     destructor Destroy; override;
     procedure ClearIndexList;
     function DoExtern(const ArgList: Variant): Variant;
-  {.Z-}
+
     function Count(GroupRef: TOvcRvIndexGroup): Integer;
       {- Return number of items in group identified by GroupRef}
     procedure ExpandAll(Expand: Boolean);
@@ -485,7 +483,7 @@ type
                    read GetField;
     property Fields: TOvcAbstractRvFields
                    read FFields write SetFields;
-  {.Z+}
+
     property ItemData[Index: Integer]: Pointer read GetData;
       {- Data of the current view by offset}
     property Lines: Integer read GetLines; {moved from protected}
@@ -494,7 +492,7 @@ type
     property OffsetOfData[DataValue: Pointer]: Integer read GetOffsetOfData;
       {- Returns the offset of a given item in the current view. -1 if
          the item is not currently visible.}
-  {.Z-}
+
     property Presorted : Boolean read FPresorted write FPresorted;
     procedure SelectAll(Select: Boolean);
     function Total(GroupRef: TOvcRvIndexGroup; Field: Integer): Double;

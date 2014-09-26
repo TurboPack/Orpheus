@@ -41,9 +41,8 @@ unit ovcfsc;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Messages, StdCtrls,
-  SysUtils, OvcBase, OvcData, OvcEF, OvcMisc;
+  UITypes, Types, Windows, Classes, Controls, Forms, Graphics,
+  Messages, StdCtrls, SysUtils, OvcBase, OvcData, OvcEF, OvcMisc;
 
 type
   TOvcFlatSpinnerStyle = (stNormalVertical, stNormalHorizontal, stFourWay, stStar,
@@ -69,7 +68,8 @@ type
 
 type
   TOvcFlatSpinner = class(TOvcCustomControl)
-  {.Z+}
+  
+
   protected {private}
     FArrowColor     : TColor;
     FFaceColor      : TColor;
@@ -266,10 +266,8 @@ type
       default True;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Enabled;
     property ParentShowHint;
     property ShowHint;

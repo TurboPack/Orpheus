@@ -48,7 +48,7 @@ type
 
   TOvcTCBaseString = class(TOvcBaseTableCell)
     protected {private}
-      {.Z+}
+
       FDataStringType   : TOvcTblStringtype;
       FUseWordWrap      : boolean;
       FShowEllipsis     : Boolean;
@@ -61,10 +61,10 @@ type
         component uses. }
     function ReadASCIIZStrings: boolean;
     procedure SetUseASCIIZStrings(const Value: boolean);
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       function GetEllipsisMode: TEllipsisMode;
       procedure SetEllipsisMode(EM:TEllipsisMode);
       procedure SetDataStringType(ADST : TOvcTblStringtype);
@@ -80,7 +80,7 @@ type
                       const CellRect  : TRect;
                       const CellAttr  : TOvcCellAttributes;
                             StZ       : string); virtual;
-      {.Z-}
+
 
       {properties}
       property DataStringType : TOvcTblStringtype

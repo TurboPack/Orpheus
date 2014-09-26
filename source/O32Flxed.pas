@@ -42,9 +42,8 @@ unit o32flxed;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Classes, Controls, Windows, Forms, Messages, SysUtils, StdCtrls, Buttons,
-  OvcData, O32Editf, OvcEF, Graphics, O32SR, O32bordr, O32Vldtr,
+  Types, Classes, Controls, Windows, Forms, Messages, SysUtils, StdCtrls,
+  Buttons, OvcData, O32Editf, OvcEF, Graphics, O32SR, O32bordr, O32Vldtr,
   O32VlOp1, o32ovldr, o32pvldr, o32rxvld, Dialogs;
 
 type
@@ -302,7 +301,6 @@ type
   {O32FlexEdit}
   TO32FlexEdit = class(TO32CustomFlexEdit)
   published
-    {$IFDEF VERSION4}
     property Alignment;
     property Anchors;
     property BiDiMode;
@@ -311,7 +309,6 @@ type
     property DragMode;
     property OnEndDock;
     property OnStartDock;
-    {$ENDIF}
     property AutoSize default False;
     property About;
     property AutoSelect;
@@ -667,16 +664,12 @@ begin
   { - begin}
     if MultilineEnabled then
       Style := Style and not WordWraps[FWordWrap] or ES_MULTILINE
-        {$IFDEF VERSION4}
         or Alignments[UseRightToLeftAlignment, FAlignment]
-        {$ENDIF}
         or WS_CLIPCHILDREN
     else
       Style := Style and not WordWraps[FWordWrap]
         or Passwords[PasswordChar <> #0]
-        {$IFDEF VERSION4}
         or Alignments[UseRightToLeftAlignment, FAlignment]
-        {$ENDIF}
         or WS_CLIPCHILDREN
   { - end}
   end;
@@ -686,11 +679,6 @@ end;
 procedure TO32CustomFlexEdit.SetParent(Value: TWinControl);
 begin
   inherited;
-  {$IFNDEF VERSION4}
-    {$IFDEF CBuilder}
-      HandleNeeded; {BCB3 needs a handle here}
-    {$ENDIF}
-  {$ENDIF}
 end;
 {=====}
 

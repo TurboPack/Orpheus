@@ -41,8 +41,7 @@ unit ovcnbk0;
 interface
 
 uses
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Forms, SysUtils, OvcBase, OvcData, OvcNbk, OvcColE0;
+  DesignIntf, DesignEditors, Forms, SysUtils, OvcBase, OvcData, OvcNbk, OvcColE0;
 
 type
   TOvcNotebookEditor = class(TComponentEditor)
@@ -63,15 +62,10 @@ implementation
 
 procedure TOvcNotebookEditor.ExecuteVerb(Index : Integer);
 begin
-{$IFDEF VERSION5}
   if Index = 0 then
     ShowCollectionEditor(Designer,
                          (Component as TOvcNotebook).PageCollection,
                          IsInInLined);
-{$ELSE}
-  if Index = 0 then
-    ShowCollectionEditor(Designer, (Component as TOvcNotebook).PageCollection);
-{$ENDIF}
 end;
 
 

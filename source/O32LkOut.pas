@@ -40,10 +40,9 @@ unit o32lkout;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Buttons, Menus, ExtCtrls, MMSystem, StdCtrls, OvcBase, OvcVer, OvcData,
-  OvcConst, OvcMisc, OvcSpeed, OvcFiler, OvcState;
+  UITypes, Types, Windows, Messages, SysUtils, Classes, Graphics,
+  Controls, Forms, Dialogs, Buttons, Menus, ExtCtrls, MMSystem, StdCtrls, OvcBase,
+  OvcVer, OvcData, OvcConst, OvcMisc, OvcSpeed, OvcFiler, OvcState;
 
 type
   {Forward Declaration}
@@ -439,9 +438,9 @@ type
     procedure InvalidateItem(FolderIndex, ItemIndex : Integer);
     procedure RenameItem(AFolderIndex, AItemIndex : Integer);
     procedure RestoreState(
-      const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
+      const Section : string = '');
     procedure SaveState(
-      const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
+      const Section : string = '');
 
     property ActiveItem : Integer
       read FActiveItem;
@@ -497,11 +496,9 @@ type
     property OnMouseOverItem;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property Ctl3D;
@@ -548,9 +545,6 @@ var
   R: TRect;
 //  DC: THandle;
 //  Height, Width: Integer;
-  {$IFNDEF VERSION4}
-    Points: array[1..5] of TPoint;
-  {$ENDIF}
 begin
   R := Client;
 //  Height := R.Bottom;
@@ -578,66 +572,30 @@ begin
       LineTo(R.Left + 5, R.Bottom - 1);
 
       {Draw the bottom, left curve}
-      {$IFNDEF VERSION4}
-      Points[1] := Point(R.Left + 5,  R.Bottom - 1);
-      Points[2] := Point(R.Left + 11, R.Bottom - 2);
-      Points[3] := Point(R.Left + 12, R.Bottom - 7);
-      Points[4] := Point(R.Left + 13, R.Bottom - 9);
-        {$IFDEF CBuilder}
-          Canvas.PolyBezier(Points);
-        {$ELSE}
-          Canvas.Polyline(Points);
-        {$ENDIF}
-      {$ELSE}
       PolyBezier([Point(R.Left + 5,    R.Bottom - 1),   {StartPoint}
                   Point(R.Left + 11,   R.Bottom - 2),   {ControlPoint}
                   Point(R.Left + 12,   R.Bottom - 7),   {ControlPoint}
                   Point(R.Left + 13,   R.Bottom - 9)]); {EndPoint}
-      {$ENDIF}
 
       {Draw the left side of the tab}
       MoveTo(R.Left + 13, R.Bottom - 9);
       LineTo(R.Left + 13, R.Top + 9);
 
       {Draw the top, left corner of the tab}
-      {$IFNDEF VERSION4}
-      Points[1] := Point(R.Left + 13,   R.Top + 9);
-      Points[2] := Point(R.Left + 14,   R.Top + 7);
-      Points[3] := Point(R.Left + 15,   R.Top + 2);
-      Points[4] := Point(R.Left + 21,   R.Top + 1);
-        {$IFDEF CBuilder}
-          Canvas.PolyBezier(Points);
-        {$ELSE}
-          Canvas.Polyline(Points);
-        {$ENDIF}
-      {$ELSE}
       PolyBezier([Point(R.Left + 13,   R.Top + 9),     {StartPoint}
                   Point(R.Left + 14,   R.Top + 7),     {ControlPoint}
                   Point(R.Left + 15,   R.Top + 2),     {ControlPoint}
                   Point(R.Left + 21,   R.Top + 1)]);   {EndPoint}
-      {$ENDIF}
 
       {Draw the top of the tab}
       MoveTo(R.Left + 21,   R.Top + 1);
       LineTo(R.Right - 16,  R.Top + 1);
 
       {Draw the Top, Right corner of the tab}
-      {$IFNDEF VERSION4}
-      Points[1] := Point(R.Right - 16,   R.Top + 1);
-      Points[2] := Point(R.Right - 10,   R.Top + 2);
-      Points[3] := Point(R.Right -  9,   R.Top + 7);
-      Points[4] := Point(R.Right -  8,   R.Top + 9);
-        {$IFDEF CBuilder}
-          Canvas.PolyBezier(Points);
-        {$ELSE}
-          Canvas.Polyline(Points);
-        {$ENDIF}
-      {$ELSE}
       PolyBezier([Point(R.Right - 16,   R.Top + 1),     {StartPoint}
                   Point(R.Right - 10,   R.Top + 2),     {ControlPoint}
                   Point(R.Right -  9,   R.Top + 7),     {ControlPoint}
                   Point(R.Right -  8,   R.Top + 9)]);   {EndPoint}
-      {$ENDIF}
 
       {Draw the right side of the tab}
       MoveTo(R.Right - 8, R.Top + 9);
@@ -645,22 +603,10 @@ begin
 
       {Draw the bottom, Right curve of the tab which should finish against the
        right side.}
-      {$IFNDEF VERSION4}
-      Points[1] := Point(R.Right - 8,  R.Bottom - 9);
-      Points[2] := Point(R.Right - 7,  R.Bottom - 7);
-      Points[3] := Point(R.Right - 6,  R.Bottom - 2);
-      Points[4] := Point(R.Right,      R.Bottom - 1);
-        {$IFDEF CBuilder}
-          Canvas.PolyBezier(Points);
-        {$ELSE}
-          Canvas.Polyline(Points);
-        {$ENDIF}
-      {$ELSE}
       PolyBezier([Point(R.Right - 8,   R.Bottom - 9),   {StartPoint}
                   Point(R.Right - 7,   R.Bottom - 7),   {ControlPoint}
                   Point(R.Right - 6,   R.Bottom - 2),   {ControlPoint}
                   Point(R.Right,       R.Bottom - 1)]); {EndPoint}
-      {$ENDIF}
 
     end else begin
     {Draw Standard Tabs}
@@ -1022,9 +968,7 @@ var
 begin
   inherited Create(AOwner);
 
-  {$IFDEF VERSION4}
   DoubleBuffered := true;
-  {$ENDIF}
 
   FContainers := TO32ContainerList.Create(Self);
 
@@ -1376,20 +1320,8 @@ end;
 
 procedure TO32CustomLookOutBar.InsertFolder(const ACaption : string;
                                                   AFolderIndex : Integer);
-{$IFNDEF VERSION4}
-var
-  I : Integer;
-{$ENDIF}
 begin
-{$IFNDEF VERSION4}
-  FFolders.Add;
-  for I := AFolderIndex to FFolders.Count - 2 do begin
-    Folders[I].Index := I + 1;
-  end;
-  Folders[FFolders.Count - 1].Index := AFolderIndex;
-{$ELSE}
   FFolders.Insert(AFolderIndex);
-{$ENDIF}
   Folders[AFolderIndex].Caption := ACaption;
   if FolderCount = 1 then begin
     FActiveFolder := 0;
@@ -1440,19 +1372,9 @@ procedure TO32CustomLookOutBar.InsertItem(const ACaption : string;
                                     AIconIndex : Integer);
 var
   AFolder : TO32LookOutFolder;
-{$IFNDEF VERSION4}
-  I : Integer;
-{$ENDIF}
 begin
   AFolder := Folders[AFolderIndex];
-{$IFNDEF VERSION4}
-  AFolder.FItems.Add;
-  for I := AFolderIndex to AFolder.FItems.Count - 2 do
-    AFolder.Items[I].Index := I + 1;
-  AFolder.Items[AFolder.FItems.Count-1].Index := AFolderIndex;
-{$ELSE}
   AFolder.FItems.Insert(AItemIndex);
-{$ENDIF}
   AFolder.Items[AItemIndex].Caption := ACaption;
   AFolder.Items[AItemIndex].IconIndex := AIconIndex;
   Invalidate;
@@ -2857,8 +2779,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomLookOutBar.RestoreState(
-  const Section : string {$IFDEF VERSION4} = '' {$ENDIF});
+procedure TO32CustomLookOutBar.RestoreState(const Section : string = '');
 var
   F, FC       : Integer;
   I, IC       : Integer;
@@ -2908,8 +2829,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomLookOutBar.SaveState(
-  const Section : string{$IFDEF VERSION4} = '' {$ENDIF});
+procedure TO32CustomLookOutBar.SaveState(const Section : string = '');
 var
   F           : Integer;
   I           : Integer;

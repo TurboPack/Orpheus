@@ -42,14 +42,13 @@ interface
 
 uses
   Windows, Classes, Controls, ExtCtrls, Forms, Graphics,
-  {$IFDEF VERSION7}Types,{$ENDIF}
-  Messages, SysUtils, OvcBase, OvcConst, OvcData, OvcMisc, OvcDrag;
+  Types, Messages, SysUtils, OvcBase, OvcConst, OvcData, OvcMisc, OvcDrag;
 
 type
   TOvcButtonHeaderStyle = (bhsNone, bhsRadio, bhsButton);
   TOvcBHDrawingStyle = (bhsDefault, bhsThin, bhsFlat, bhsEtched);
   TOvcButtonHeaderSection = class(TOvcCollectible)
-  {.Z+}
+
   protected
     {property variables}
     FAlignment: TAlignment;
@@ -85,7 +84,6 @@ type
       read fPaintRect;
 
   published
-  {.Z-}
     property Alignment : TAlignment
       read FAlignment write SetAlignment
       default taLeftJustify;
@@ -119,7 +117,7 @@ type
     OldIndex, NewIndex: Integer) of object;
 
   TOvcButtonHeader = class(TOvcCustomControl)
-  {.Z+}
+
   protected
     {property variables}
     FAllowResize    : Boolean;
@@ -231,13 +229,11 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
 
     {public properties}
-  {.Z+}
+
     property DragSection: TOvcButtonHeaderSection read FDragSection;
     property PushRect : TRect read fPushRect;
-  {.Z-}
     property ResizeSection: Integer read GetResizeSection;
     property Section[Index : Integer] : TOvcButtonHeaderSection
       read GetSection write SetSection;
@@ -291,10 +287,8 @@ type
                    read FRearranged write FRearranged;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Enabled;
     property Font;

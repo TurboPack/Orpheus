@@ -42,11 +42,7 @@ interface
 
 uses
   Windows, Classes, Controls,
-  {$IFDEF VERSION6}
-    DesignIntf, DesignEditors, VCLEditors,
-  {$ELSE}
-    DsgnIntf,
-  {$ENDIF}
+  DesignIntf, DesignEditors, VCLEditors,
   Graphics, Forms, SysUtils, OvcData;
 
 type
@@ -58,12 +54,6 @@ type
       override;
     procedure SetValue(const Value: string);
       override;
-    {$IFDEF VERSION5}
-      {$IFNDEF VERSION6}
-      procedure ListDrawValue(const Value: string; ACanvas: TCanvas;
-         const ARect: TRect; ASelected: Boolean); override;
-      {$ENDIF}
-    {$ENDIF}
   end;
 
 implementation
@@ -141,80 +131,5 @@ begin
   SetOrdValue(OrStringToColor(Value));
 end;
 
-
-{$IFDEF VERSION5}
-{$IFNDEF VERSION6}
-{Note: This routine is copied directly from DSGNINTF.PAS
-       Copyright (c) 1995,99 Inprise Corporation
-
-       The problem we are trying to solve here is the "'clCream' is
-       not an integer value" exception. This boils down to a design
-       flaw in Delphi 5's TColorProperty class (from which we are
-       descending TOvcColorProperty). It has a hard coded call to
-       StringToColor in its ListDrawValue method. We are adding some
-       new color names (clCream, etc) and although we are correctly
-       overriding the GetValue method and SetValue methods to convert
-       clCream to its TColor value, ListDrawValue doesn't. It blindly
-       assumes that color names only exist in the standard VCL color
-       list, and anything else is invalid (hence the exception). The
-       ideal solution would be to add a new virtual method to
-       TColorProperty to enable color names to be converted to TColor
-       values. For Delphi 5, we just blindly copy the ListDrawValue
-       method in its entirety.}
-
-procedure TOvcColorProperty.ListDrawValue(const Value: string; ACanvas: TCanvas;
-  const ARect: TRect; ASelected: Boolean);
-  function ColorToBorderColor(AColor: TColor): TColor;
-  type
-    TColorQuad = record
-      Red,
-      Green,
-      Blue,
-      Alpha: Byte;
-    end;
-  begin
-    if (TColorQuad(AColor).Red > 192) or
-       (TColorQuad(AColor).Green > 192) or
-       (TColorQuad(AColor).Blue > 192) then
-      Result := clBlack
-    else if ASelected then
-      Result := clWhite
-    else
-      Result := AColor;
-  end;
-var
-  vRight: Integer;
-  vOldPenColor, vOldBrushColor: TColor;
-begin
-  vRight := (ARect.Bottom - ARect.Top) {* 2} + ARect.Left;
-  with ACanvas do
-  try
-    {save off things}
-    vOldPenColor := Pen.Color;
-    vOldBrushColor := Brush.Color;
-
-    { frame things }
-    Pen.Color := Brush.Color;
-    Rectangle(ARect.Left, ARect.Top, vRight, ARect.Bottom);
-
-    { set things up and do the work }
-    Brush.Color := OrStringToColor(Value);
-    Pen.Color := ColorToBorderColor(ColorToRGB(Brush.Color));
-    Rectangle(ARect.Left + 1, ARect.Top + 1, vRight - 1, ARect.Bottom - 1);
-
-    { restore the things we twiddled with }
-    Brush.Color := vOldBrushColor;
-    Pen.Color := vOldPenColor;
-  finally
-    {we'd like to call our ancestor's ListDrawValue here, but we'd
-     just get the same problem again; we can't skip an ancestor with
-     inherited, so we just replicate here what's in
-     TPropertyEditor.ListDrawValue}
-    ACanvas.TextRect(Rect(vRight, ARect.Top, ARect.Right, ARect.Bottom),
-                     vRight + 1, ARect.Top + 1, Value);
-  end;
-end;
-{$ENDIF}
-{$ENDIF}
 
 end.

@@ -28,10 +28,6 @@
 
 {$I OVC.INC}
 
-{$IFNDEF VERSION3}
-!! Error - The FlashFiler engine helper class is for Delphi 3+ only
-{$ENDIF}
-
 {$B-} {Complete Boolean Evaluation}
 {$I+} {Input/Output-Checking}
 {$P+} {Open Parameters}
@@ -49,12 +45,13 @@ uses
 
 type
   TOvcDbFFEngineHelper = class(TOvcDbEngineHelperBase)
-  {.Z+}
+  
+
   protected {private}
     FSession : TffSession;
   protected
   public
-  {.Z-}
+
     {===GENERAL SESSION-BASED METHODS===}
     procedure GetAliasNames(aList : TStrings); override;
       {-fill list with available alias names; assumes for default session}

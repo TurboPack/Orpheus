@@ -53,15 +53,10 @@ uses
   BM-table is used.}
 
 type
-  BTable = array[0..{$IFDEF UNICODE}{$IFDEF HUGE_UNICODE_BMTABLE}$FFFF{$ELSE}$FF{$ENDIF}{$ELSE}$FF{$ENDIF}] of Byte;
+  BTable = array[0..{$IFDEF HUGE_UNICODE_BMTABLE}$FFFF{$ELSE}$FF{$ENDIF}] of Byte;
   {table used by the Boyer-Moore search routines}
 
-{$IFDEF UNICODE}
   TOvcCharSet = SysUtils.TSysCharSet;
-{$ELSE}
-  TOvcCharSet = set of AnsiChar;
-{$ENDIF}
-
 
 function BinaryBPChar(Dest : PChar; B : Byte) : PChar;
   {-Return a binary PChar string for a byte}
@@ -134,9 +129,7 @@ procedure TrimTrailingZerosPChar(P : PChar);
 function UpCaseChar(C : Char) : Char;
   {-Convert a character to uppercase using the AnsiUpper API}
 
-function ovcCharInSet(C: Char; const CharSet: TOvcCharSet): Boolean;
-
-function ovc32StringIsCurrentCodePage(const S: {$IFDEF UNICODE}UnicodeString{$ELSE}WideString{$ENDIF}): Boolean; overload;
+function ovc32StringIsCurrentCodePage(const S: string): Boolean; overload;
 function ovc32StringIsCurrentCodePage(const S: PWideChar; CP:Cardinal=0): Boolean; overload;
 
 
@@ -225,10 +218,9 @@ procedure BMMakeTable(MatchString : PChar; var BT : BTable); register;
 
    If L>255, we consider the last 255 characters of MatchString. This might result "less than
    optimal" skip-distances, but still leads to a valid table. }
-{$IFDEF PUREPASCAL}
 var
   L: Cardinal;
-  c: {$IFDEF UNICODE}Word{$ELSE}Byte{$ENDIF};
+  c: Word;
   p: Byte;
 begin
   L := StrLen(MatchString);
@@ -238,119 +230,15 @@ begin
   end;
   FillChar(BT, SizeOf(BTable), Byte(L));
   if L>1 then for p := 0 to L-2 do begin
-    c := {$IFDEF UNICODE}Word{$ELSE}Byte{$ENDIF}(MatchString[p]);
-    {$IFDEF UNICODE}{$IFNDEF HUGE_UNICODE_BMTABLE}
+    c := Word(MatchString[p]);
+    {$IFNDEF HUGE_UNICODE_BMTABLE}
     { If we are using a small (256-Byte) BM-Table in unicode, no information about characters
       with c>255 can be stored. }
     if c<=255 then
-    {$ENDIF}{$ENDIF}
+    {$ENDIF}
     BT[c] := L - p - 1;
   end;
 end;
-
-{$ELSE}
-{$IFDEF UNICODE}
-asm
-  push  esi             { Save registers because they will be changed }
-  push  edi
-  push  ebx
-
-  cld                   { Ensure forward string ops }
-  mov   edi, eax        { Move EAX to ESI & EDI }
-  mov   esi, eax
-  xor   eax, eax        { Zero EAX }
-  or    ecx, -1
-  repne scasw           { Search for null terminator }
-  not   ecx
-  dec   ecx             { ECX is length of search string }
-  cmp   ecx, 0FFh       { If ECX > 255, use the last 255 characters }
-  jbe   @@1
-  lea   esi, [esi + 2*ecx - 510]
-  mov   ecx, 0FFh
-
-@@1:
-  mov   ch, cl          { Duplicate CL in CH }
-  mov   eax, ecx        { Fill each byte in EAX with length }
-  shl   eax, 16
-  mov   ax, cx
-  mov   edi, edx        { Point to the table }
-{$IFDEF HUGE_UNICODE_BMTABLE}
-  mov   ecx, 4000h      { Fill table bytes with length }
-{$ELSE}
-  mov   ecx, 40h        { Fill table bytes with length }
-{$ENDIF}
-  rep   stosd
-  cmp   al, 1           { If length <= 1, we're done }
-  jbe   @@MTDone
-  mov   edi, edx        { Reset EDI to beginning of table }
-  xor   ebx, ebx        { Zero EBX }
-  mov   cl, al          { Restore CL to length of string }
-  dec   ecx
-
-@@MTNext:
-  lodsw                 { Load table with positions of letters }
-{$IFNDEF HUGE_UNICODE_BMTABLE}
-  test  ah, ah
-  jnz   @@MTDontfill
-{$ENDIF}
-  mov   bx, ax          { That exist in the search string }
-  mov   [edi+ebx], cl
-@@MTDontfill:
-  loop  @@MTNext
-
-@@MTDone:
-  pop   ebx             { Restore registers }
-  pop   edi
-  pop   esi
-end;
-{$ELSE}
-asm
-  push  esi             { Save registers because they will be changed }
-  push  edi
-  push  ebx
-
-  cld                   { Ensure forward string ops }
-  mov   edi, eax        { Move EAX to ESI & EDI }
-  mov   esi, eax
-  xor   eax, eax        { Zero EAX }
-  or    ecx, -1
-  repne scasb           { Search for null terminator }
-  not   ecx
-  dec   ecx             { ECX is length of search string }
-  cmp   ecx, 0FFh       { If ECX > 255, use the last 255 characters }
-  jbe   @@1
-  lea   esi, [esi + ecx - 255]
-  mov   ecx, 0FFh
-
-@@1:
-  mov   ch, cl          { Duplicate CL in CH }
-  mov   eax, ecx        { Fill each byte in EAX with length }
-  shl   eax, 16
-  mov   ax, cx
-  mov   edi, edx        { Point to the table }
-  mov   ecx, 64         { Fill table bytes with length }
-  rep   stosd
-  cmp   al, 1           { If length >= 1, we're done }
-  jbe   @@MTDone
-  mov   edi, edx        { Reset EDI to beginning of table }
-  xor   ebx, ebx        { Zero EBX }
-  mov   cl, al          { Restore CL to length of string }
-  dec   ecx
-
-@@MTNext:
-  lodsb                 { Load table with positions of letters }
-  mov   bl, al          { That exist in the search string }
-  mov   [edi+ebx], cl
-  loop  @@MTNext
-
-@@MTDone:
-  pop   ebx             { Restore registers }
-  pop   edi
-  pop   esi
-end;
-{$ENDIF}
-{$ENDIF}
-
 
 function BMSearch(var Buffer; BufLength : Cardinal; var BT : BTable;
   MatchString : PChar; var Pos : Cardinal) : Boolean; register;
@@ -377,7 +265,6 @@ function BMSearch(var Buffer; BufLength : Cardinal; var BT : BTable;
 
      (This is a simplyfied version of the Boyer-Moore search algorithm). }
 
-{$IFDEF PUREPASCAL}
 var
   BufPtr : PChar;
   lenMS1 : Cardinal;
@@ -414,245 +301,6 @@ begin
     end;
   end;
 end;
-{$ELSE}
-
-  { remark: At the beginning of the code we have EAX=Buffer, EDX=BufLength and ECX=BT;
-    MatchString and Pos are on the stack }
-var
-  BufPtr : Pointer;
-{$IFDEF UNICODE}
-                            { The Unicode-variant of this function has been derived from
-                              the original non-Unicode version. }
-  lenMS1: Cardinal;
-asm
-  push  edi                 { Save registers since we will be changing }
-  push  esi
-  push  ebx
-  push  edx
-
-  mov   BufPtr, eax         { Copy Buffer to local variable and ESI }
-  mov   esi, eax
-  mov   ebx, ecx            { Copy BT (Pointer to Boyer-Moore-Table) to EBX }
-
-  cld                       { Ensure forward string ops }
-  xor   eax, eax            { Zero out EAX so we can search for null }
-  mov   edi, MatchString    { Set EDI to beginning of MatchString }
-  or    ecx, -1             { We will be counting down }
-  repne scasw               { Find null }
-  not   ecx                 { ECX = length of MatchString + null }
-  dec   ecx                 { ECX = length of MatchString (in characters) }
-  mov   edx, ecx            { Copy length of MatchString to EDX }
-
-  pop   ecx                 { Pop length of buffer (in characters) into ECX }
-  mov   edi, esi            { Set EDI to beginning of search buffer }
-  mov   esi, MatchString    { Set ESI to beginning of MatchString }
-
-  cmp   edx, 1              { Check to see if we have a trivial case }
-  ja    @@BMSInit           { If Length(MatchString) > 1 do BM search }
-  jb    @@BMSNotFound       { If Length(MatchString) = 0 we're done }
-
-  mov   ax,[esi]            { If Length(MatchString) = 1 do a REPNE SCASW }
-  mov   ebx, edi
-  repne scasw               { search for ax, starting at edi }
-  jne   @@BMSNotFound       { No match during REPNE SCASW }
-  sub   edi, ebx            { Found, calculate position. EDI points to the
-                              character after the matching character. }
-  shr   edi, 1
-  dec   edi
-  mov   esi, Pos            { Set position in Pos }
-  mov   [esi], edi
-  mov   eax, 1              { Set result to True }
-  jmp   @@BMSDone           { We're done }
-
-@@BMSInit:
-{ At this point we have: EAX = 0
-                         EBX = Pointer to BT
-                         EDI = Pointer to Buffer
-                         ECX = Length of Buffer in characters
-                         ESI = Pointer to MatchString
-                         EDX = Length of MatchString in characters }
-
-  dec   edx                 { Set up for BM Search }
-  mov   lenMS1, edx         { lenMS1 := Length(MatchString)-1 }
-
-  lea   esi, [esi + 2*edx]  { Set ESI to end of MatchString }
-  lea   ecx, [edi + 2*ecx]  { Set ECX to end of buffer }
-  lea   edi, [edi + 2*edx]  { Set EDI to first check point }
-  mov   dx, [esi]           { Set DX to character we'll be looking for }
-  sub   esi, 2              { Dec ESI in prep for BMSFound loop }
-  std                       { Backward string ops }
-  jmp   @@BMSComp           { Jump to first comparison }
-
-@@BMSNext:
-{$IFNDEF HUGE_UNICODE_BMTABLE}
-                            { Regarding the BM-Table there are two options:
-                              a) Use a table with one entry for every character; this
-                                 results in a 64K table. The following 4 lines of code
-                                 can be omitted in this case.
-                              b) Use a table with only 256 entries. The overhead for
-                                 building the table is smaller, but for "real" 2-byte
-                                 characters, you can only proceed one character. }
-  test  ah,ah
-  jz    @@UseBT
-  add   edi, 2              { For 2-byte characters the BM-Table is not used. }
-  jmp   @@BMSComp
-{$ENDIF}
-
-@@UseBT:
-  movzx eax, [ebx+eax]      { Look up skip distance from table }
-  lea   edi, [edi + 2*eax]  { Skip EDI ahead to next check point }
-
-@@BMSComp:
-{ At this point we have: DX  = Last character of MatchString (the char we
-                               are looking for in the Buffer)
-                         EBX = Pointer to Boyer-Moore-Table
-                         ESI = Pointer to the second last character of MatchString
-                         EDI = Pointer to the character in the buffer, that has to
-                               be compared with DX
-                         ECX = Pointer to the end of the Buffer (points to the first
-                               byte behind the Buffer) }
-
-  cmp   edi, ecx            { Have we reached end of buffer? }
-  jae   @@BMSNotFound       { If so, we're done }
-  mov   ax, [edi]           { Move character from buffer into AX for comparison }
-  cmp   dx, ax              { Compare }
-  jne   @@BMSNext           { If not equal, go to next checkpoint }
-
-  push  ecx                 { Save ECX }
-  sub   edi, 2              { EDI now points to the char corresponding to ESI }
-  mov   ecx, lenMS1         { Move Length(MatchString)-1 to ECX }
-  repe  cmpsw               { Compare MatchString to buffer }
-  je    @@BMSFound          { If equal, string is found }
-
-  mov   eax, lenMS1         { Move Length(MatchString)-1 to AX }
-  sub   eax, ecx            { Calculate offset that string didn't match }
-  shl   eax, 1
-  add   esi, eax            { Move ESI back to end of MatchString }
-  add   edi, eax            { Move EDI to pre-string compare location }
-  add   edi, 2
-  mov   ax, dx              { Move character back to AX }
-  pop   ecx                 { Restore ECX }
-  jmp   @@BMSNext           { Do another compare }
-
-@@BMSFound:                 { EDI points to the char BEFORE the start of match }
-  add   edi, 2
-  sub   edi, BufPtr         { Calculate position of match }
-  mov   eax, edi
-  shr   eax,1
-  mov   esi, Pos
-  mov   [esi], eax          { Set Pos to position of match }
-  mov   eax, 1              { Set result to True }
-  pop   ecx                 { Restore ESP }
-  jmp   @@BMSDone
-
-@@BMSNotFound:
-  xor   eax, eax            { Set result to False }
-
-@@BMSDone:
-  cld                       { Restore direction flag }
-  pop   ebx                 { Restore registers }
-  pop   esi
-  pop   edi
-end;
-{$ELSE}
-asm
-  push  edi                 { Save registers since we will be changing }
-  push  esi
-  push  ebx
-  push  edx
-
-  mov   BufPtr, eax         { Copy Buffer to local variable and ESI }
-  mov   esi, eax
-  mov   ebx, ecx            { Copy BufLength to EBX }
-
-  cld                       { Ensure forward string ops }
-  xor   eax, eax            { Zero out EAX so we can search for null }
-  mov   edi, MatchString    { Set EDI to beginning of MatchString }
-  or    ecx, -1             { We will be counting down }
-  repne scasb               { Find null }
-  not   ecx                 { ECX = length of MatchString + null }
-  dec   ecx                 { ECX = length of MatchString }
-  mov   edx, ecx            { Copy length of MatchString to EDX }
-
-  pop   ecx                 { Pop length of buffer into ECX }
-  mov   edi, esi            { Set EDI to beginning of search buffer }
-  mov   esi, MatchString    { Set ESI to beginning of MatchString }
-
-  cmp   edx, 1              { Check to see if we have a trivial case }
-  ja    @@BMSInit           { If Length(MatchString) > 1 do BM search }
-  jb    @@BMSNotFound       { If Length(MatchString) = 0 we're done }
-
-  mov   al,[esi]            { If Length(MatchString) = 1 do a REPNE SCASB }
-  mov   ebx, edi
-  repne scasb
-  jne   @@BMSNotFound       { No match during REP SCASB }
-  dec   edi                 { Found, calculate position }
-  sub   edi, ebx
-  mov   esi, Pos            { Set position in Pos }
-  mov   [esi], edi
-  mov   eax, 1              { Set result to True }
-  jmp   @@BMSDone           { We're done }
-
-@@BMSInit:
-  dec   edx                 { Set up for BM Search }
-  add   esi, edx            { Set ESI to end of MatchString }
-  add   ecx, edi            { Set ECX to end of buffer }
-  add   edi, edx            { Set EDI to first check point }
-  mov   dh, [esi]           { Set DH to character we'll be looking for }
-  dec   esi                 { Dec ESI in prep for BMSFound loop }
-  std                       { Backward string ops }
-  jmp   @@BMSComp           { Jump to first comparison }
-
-@@BMSNext:
-  movzx eax, [ebx+eax]      { Look up skip distance from table }
-  add   edi, eax            { Skip EDI ahead to next check point }
-
-@@BMSComp:
-  cmp   edi, ecx            { Have we reached end of buffer? }
-  jae   @@BMSNotFound       { If so, we're done }
-  mov   al, [edi]           { Move character from buffer into AL for comparison }
-  cmp   dh, al              { Compare }
-  jne   @@BMSNext           { If not equal, go to next checkpoint }
-
-  push  ecx                 { Save ECX }
-  dec   edi
-  xor   ecx, ecx            { Zero ECX }
-  mov   cl, dl              { Move Length(MatchString) to ECX }
-  repe  cmpsb               { Compare MatchString to buffer }
-  je    @@BMSFound          { If equal, string is found }
-
-  mov   al, dl              { Move Length(MatchString) to AL }
-  sub   al, cl              { Calculate offset that string didn't match }
-  add   esi, eax            { Move ESI back to end of MatchString }
-  add   edi, eax            { Move EDI to pre-string compare location }
-  inc   edi
-  mov   al, dh              { Move character back to AL }
-  pop   ecx                 { Restore ECX }
-  jmp   @@BMSNext           { Do another compare }
-
-@@BMSFound:                 { EDI points to start of match }
-  mov   edx, BufPtr         { Move pointer to buffer into EDX }
-  sub   edi, edx            { Calculate position of match }
-  mov   eax, edi
-  inc   eax
-  mov   esi, Pos
-  mov   [esi], eax          { Set Pos to position of match }
-  mov   eax, 1              { Set result to True }
-  pop   ecx                 { Restore ESP }
-  jmp   @@BMSDone
-
-@@BMSNotFound:
-  xor   eax, eax            { Set result to False }
-
-@@BMSDone:
-  cld                       { Restore direction flag }
-  pop   ebx                 { Restore registers }
-  pop   esi
-  pop   edi
-end;
-{$ENDIF}
-{$ENDIF}
-
 
 function BMSearchUC(var Buffer; BufLength : Cardinal; var BT : BTable;
   MatchString : PChar; var Pos : Cardinal) : Boolean; register;
@@ -661,7 +309,6 @@ function BMSearchUC(var Buffer; BufLength : Cardinal; var BT : BTable;
      uppercase (PRIOR to creating the table)
      For details see 'BMSearch'; }
 
-{$IFDEF PUREPASCAL}
 var
   BufPtr : PChar;
   lenMS1 : Cardinal;
@@ -697,272 +344,6 @@ begin
     end;
   end;
 end;
-{$ELSE}
-
-  { remark: At the beginning of the code we have EAX=Buffer, EDX=BufLength and ECX=BT;
-    MatchString and Pos are on the stack
-    The code is slightly different to BMSearch, because
-     - we cannot use REPNE SCASB(W) when Length(MatchString)=1 and
-     - we cannot use REPE CMPB(W) for comparing MatchString with
-       a text in the buffer. -}
-var
-  BufPtr : Pointer;
-{$IFDEF UNICODE}
-  lenMS1: Cardinal;
-asm
-  push  edi                 { Save registers since we will be changing }
-  push  esi
-  push  ebx
-  push  edx
-
-  mov   BufPtr, eax         { Copy Buffer to local variable and ESI }
-  mov   esi, eax
-  mov   ebx, ecx            { Copy BT (Pointer to Boyer-Moore-Table) to EBX }
-
-  cld                       { Ensure forward string ops }
-  xor   eax, eax            { Zero out EAX so we can search for null }
-  mov   edi, MatchString    { Set EDI to beginning of MatchString }
-  or    ecx, -1             { We will be counting down }
-  repne scasw               { Find null }
-  not   ecx                 { ECX = length of MatchString + null }
-  dec   ecx                 { ECX = length of MatchString (in Characters) }
-  mov   edx, ecx            { Copy length of MatchString to EDX }
-
-  pop   ecx                 { Pop length of buffer (in characters) into ECX }
-  mov   edi, esi            { Set EDI to beginning of search buffer }
-  mov   esi, MatchString    { Set ESI to beginning of MatchString }
-
-  or    dl, dl              { Check to see if we have a trivial case }
-  jz    @@BMSNotFound       { If Length(MatchString) = 0 we're done }
-
-{ At this point we have: EAX = 0
-                         EBX = Pointer to BT
-                         EDI = Pointer to Buffer
-                         ECX = Length of Buffer in characters
-                         ESI = Pointer to MatchString
-                         EDX = Length of MatchString in characters }
-
-  dec   edx                 { Set up for BM Search }
-  mov   lenMS1, edx         { lenMS1 := Length(MatchString)-1 }
-
-  shl   edx, 1
-  add   esi, edx            { Set ESI to end of MatchString }
-  shl   ecx, 1
-  add   ecx, edi            { Set ECX to end of buffer }
-  add   edi, edx            { Set EDI to first check point }
-  mov   dx, [esi]           { Set DX to character we'll be looking for }
-  jmp   @@BMSComp           { Jump to first comparison }
-
-@@BMSNext:
-{$IFNDEF HUGE_UNICODE_BMTABLE}
-  test  ah,ah
-  jz    @@UseBT
-  add   edi, 2              { For 2-byte characters, the BM-Table is not used. }
-  jmp   @@BMSComp
-{$ENDIF}
-
-@@UseBT:
-  movzx ax, [ebx+eax]       { Look up skip distance from table }
-  shl   ax, 1
-  add   edi, eax            { Skip EDI ahead to next check point }
-
-@@BMSComp:
-{ At this point we have: EAX = 0
-                         DX  = Last character of MatchString (the character we
-                               are looking for in the Buffer)
-                         EBX = Pointer to Boyer-Moore-Table
-                         ESI = Pointer to the last character of MatchString
-                         EDI = Pointer to the character in the buffer that has to
-                               be compared with DX
-                         ECX = Pointer to the end of the Buffer (points to the first
-                               byte behind the Buffer) }
-
-  cmp   edi, ecx            { Have we reached end of buffer? }
-  jae   @@BMSNotFound       { If so, we're done }
-  mov   ax, [edi]           { Move character from buffer into AX for comparison }
-
-  push  ebx                 { Save registers }
-  push  ecx
-  push  edx
-  push  eax                 { Push Char onto stack for CharUpper }
-  call  CharUpper
-  pop   edx                 { Restore registers }
-  pop   ecx
-  pop   ebx
-
-  cmp   dx, ax              { Compare }
-  jne   @@BMSNext           { If not equal, go to next checkpoint }
-
-  push  ecx                 { Save ECX }
-  mov   ecx, LenMS1         { Move Length(MatchString)-1 to ECX }
-  jcxz  @@BMSFound          { If CX is zero, string is found }
-
-@@StringComp:
-  sub   edi, 2              { Dec buffer index }
-  mov   ax, [edi]           { Get char from buffer }
-
-  push  ebx                 { Save registers }
-  push  ecx
-  push  edx
-  push  eax                 { Push Char onto stack for CharUpper }
-  call  CharUpper
-  pop   edx                 { Restore registers }
-  pop   ecx
-  pop   ebx
-
-  sub   esi, 2
-  cmp   ax, [esi]
-  loope @@StringComp        { OK?  Get next character }
-  je    @@BMSFound          { Matched! }
-
-  mov   eax, lenMS1         { Move Length(MatchString)-1 to AX }
-  sub   ax, cx              { Calculate offset that string didn't match }
-  shl   ax, 1
-  add   esi, eax            { Move ESI back to end of MatchString }
-  add   edi, eax            { Move EDI to pre-string compare location }
-
-  mov   ax, dx              { Move character back to AX }
-  pop   ecx                 { Restore ECX }
-  jmp   @@BMSNext           { Do another compare }
-
-@@BMSFound:                 { EDI points to the char BEFORE the start of match }
-  sub   edi, BufPtr         { Calculate position of match }
-  mov   eax, edi
-  shr   eax,1
-  mov   esi, Pos
-  mov   [esi], eax          { Set Pos to position of match }
-  mov   eax, 1              { Set result to True }
-  pop   ecx                 { Restore ESP }
-  jmp   @@BMSDone
-
-@@BMSNotFound:
-  xor   eax, eax            { Set result to False }
-
-@@BMSDone:
-  pop   ebx                 { Restore registers }
-  pop   esi
-  pop   edi
-end;
-{$ELSE}
-asm
-  push  edi                 { Save registers since we will be changing }
-  push  esi
-  push  ebx
-  push  edx
-
-  mov   BufPtr, eax         { Copy Buffer to local variable and ESI }
-  mov   esi, eax
-  mov   ebx, ecx            { Copy BufLength to EBX }
-
-  cld                       { Ensure forward string ops }
-  xor   eax, eax            { Zero out EAX so we can search for null }
-  mov   edi, MatchString    { Set EDI to beginning of MatchString }
-  or    ecx, -1             { We will be counting down }
-  repne scasb               { Find null }
-  not   ecx                 { ECX = length of MatchString + null }
-  dec   ecx                 { ECX = length of MatchString }
-  mov   edx, ecx            { Copy length of MatchString to EDX }
-
-  pop   ecx                 { Pop length of buffer into ECX }
-  mov   edi, esi            { Set EDI to beginning of search buffer }
-  mov   esi, MatchString    { Set ESI to beginning of MatchString }
-
-  or    dl, dl              { Check to see if we have a trivial case }
-  jz    @@BMSNotFound       { If Length(MatchString) = 0 we're done }
-
-@@BMSInit:
-  dec   edx                 { Set up for BM Search }
-  add   esi, edx            { Set ESI to end of MatchString }
-  add   ecx, edi            { Set ECX to end of buffer }
-  add   edi, edx            { Set EDI to first check point }
-  mov   dh, [esi]           { Set DH to character we'll be looking for }
-  dec   esi                 { Dec ESI in prep for BMSFound loop }
-  std                       { Backward string ops }
-  jmp   @@BMSComp           { Jump to first comparison }
-
-@@BMSNext:
-  mov   al, [ebx+eax]       { Look up skip distance from table }
-  add   edi, eax            { Skip EDI ahead to next check point }
-
-@@BMSComp:
-  cmp   edi, ecx            { Have we reached end of buffer? }
-  jae   @@BMSNotFound       { If so, we're done }
-  mov   al, [edi]           { Move character from buffer into AL for comparison }
-
-  push  ebx                 { Save registers }
-  push  ecx
-  push  edx
-  push  eax                 { Push Char onto stack for CharUpper }
-  cld
-  call  CharUpper
-  std
-  pop   edx                 { Restore registers }
-  pop   ecx
-  pop   ebx
-
-  cmp   dh, al              { Compare }
-  jne   @@BMSNext           { If not equal, go to next checkpoint }
-
-  push  ecx                 { Save ECX }
-  dec   edi
-  xor   ecx, ecx            { Zero ECX }
-  mov   cl, dl              { Move Length(MatchString) to ECX }
-  jecxz @@BMSFound          { If ECX is zero, string is found }
-
-@@StringComp:
-  mov   al, [edi]           { Get char from buffer }
-  dec   edi                 { Dec buffer index }
-
-  push  ebx                 { Save registers }
-  push  ecx
-  push  edx
-  push  eax                 { Push Char onto stack for CharUpper }
-  cld
-  call  CharUpper
-  std
-  pop   edx                 { Restore registers }
-  pop   ecx
-  pop   ebx
-
-  mov   ah, al              { Move buffer char to AH }
-  lodsb                     { Get MatchString char }
-  cmp   ah, al              { Compare }
-  loope @@StringComp        { OK?  Get next character }
-  je    @@BMSFound          { Matched! }
-
-  xor   ah, ah              { Zero AH }
-  mov   al, dl              { Move Length(MatchString) to AL }
-  sub   al, cl              { Calculate offset that string didn't match }
-  add   esi, eax            { Move ESI back to end of MatchString }
-  add   edi, eax            { Move EDI to pre-string compare location }
-  inc   edi
-  mov   al, dh              { Move character back to AL }
-  pop   ecx                 { Restore ECX }
-  jmp   @@BMSNext           { Do another compare }
-
-@@BMSFound:                 { EDI points to start of match }
-  mov   edx, BufPtr         { Move pointer to buffer into EDX }
-  sub   edi, edx            { Calculate position of match }
-  mov   eax, edi
-  inc   eax
-  mov   esi, Pos
-  mov   [esi], eax          { Set Pos to position of match }
-  mov   eax, 1              { Set result to True }
-  pop   ecx                 { Restore ESP }
-  jmp   @@BMSDone
-
-@@BMSNotFound:
-  xor   eax, eax            { Set result to False }
-
-@@BMSDone:
-  cld                       { Restore direction flag }
-  pop   ebx                 { Restore registers }
-  pop   esi
-  pop   edi
-end;
-{$ENDIF}
-{$ENDIF}
-
 
 function CharStrPChar(Dest : PChar; C : Char;
                       Len : Cardinal) : PChar; register;
@@ -972,7 +353,6 @@ function CharStrPChar(Dest : PChar; C : Char;
    Changes:
      03/2011, AB: PUREPASCAL-version added }
 
-{$IFDEF PUREPASCAL}
 begin
   Dest[Len] := #0;
   while Len>0 do begin
@@ -982,53 +362,6 @@ begin
   Result := Dest;
 end;
 
-{$ELSE}
-asm
-  push    edi            { Save EDI-about to change it }
-  push    eax            { Save Dest pointer for return }
-  mov     edi, eax       { Point EDI to Dest }
-  cld                    { Forward! }
-
-{$IFDEF UNICODE}
-  mov     ax, dx         { ax = C }
-  shr     ecx,1
-  jnc     @@even
-  stosw                  { store first char (if C is odd) }
-
-@@even:
-  jecxz    @@Done        { Done if ECX=0 }
-  shl     eax, $10
-  mov     ax, dx         { duplicate character }
-  rep     stosd
-
-@@Done:
-  xor     ax,ax          { Add null terminator }
-  stosw
-
-{$ELSE}
-  mov     dh, dl         { Dup character 4 times }
-  mov     eax, edx
-  shl     eax, $10
-  mov     ax, dx
-
-  mov     edx, ecx       { Save Len }
-
-  shr     ecx, 2         { Store dword char chunks first }
-  rep     stosd
-  mov     ecx, edx       { Store remaining characters }
-  and     ecx, 3
-  rep     stosb
-
-  xor     al,al          { Add null terminator }
-  stosb
-{$ENDIF}
-
-  pop     eax            { Return Dest pointer }
-  pop     edi            { Restore orig value of EDI }
-end;
-{$ENDIF}
-
-
 function DetabPChar(Dest : PChar; Src : PChar; TabSize : Byte) : PChar; register;
   { -Expand tabs in a string to blanks on spacing TabSize
 
@@ -1036,8 +369,7 @@ function DetabPChar(Dest : PChar; Src : PChar; TabSize : Byte) : PChar; register
      10/2010, AB: unicode version of this procedure.
      03/2011, AB: PUREPASCAL-version added }
 
-{$IFDEF PUREPASCAL}
-  var
+var
   i, j: Integer;
   k: SmallInt;
   ch: Char;
@@ -1059,91 +391,6 @@ begin
   until ch=#0;
   result := Dest;
 end;
-
-{$ELSE}
-  asm
-  push    eax           { Save Dest for return value }
-  push    edi           { Save EDI, ESI and EBX, we'll be changing them }
-  push    esi
-  push    ebx
-
-  mov     esi, edx      { ESI -> Src }
-  mov     edi, eax      { EDI -> Dest }
-  xor     ebx, ebx      { Get TabSize in EBX }
-  add     bl, cl
-  jz      @@Done        { Exit if TabSize is zero }
-
-  cld                   { Forward! }
-  xor     edx, edx      { Set output length to zero }
-
-{$IFDEF UNICODE}
-@@Next:
-  lodsw                 { Get next input character }
-  or      ax, ax        { Is it a null? }
-  jz      @@Done        { Yes-all done }
-  cmp     ax, 09        { Is it a tab? }
-  je      @@Tab         { Yes, compute next tab stop }
-  stosw                 { No, store to output }
-  inc     edx           { Increment output length }
-  jmp     @@Next        { Next character }
-
-@@Tab:
-  push    edx           { Save output length }
-  mov     eax, edx      { Get current output length in DX:AX }
-  xor     edx, edx
-  div     ebx           { Output length MOD TabSize in DX }
-  mov     ecx, ebx      { Calc number of spaces to insert... }
-  sub     ecx, edx      { = TabSize - Mod value }
-  pop     edx
-  add     edx, ecx      { Add count of spaces into current output length }
-
-  mov     eax,$0020     { Blank in AX }
-  rep     stosw         { Store blanks }
-  jmp     @@Next        { Back for next input }
-
-@@Done:
-  xor     ax,ax         { Store final null terminator }
-  stosw
-{$ELSE}
-@@Next:
-  lodsb                 { Get next input character }
-  or      al, al        { Is it a null? }
-  jz      @@Done        { Yes-all done }
-  cmp     al, 09        { Is it a tab? }
-  je      @@Tab         { Yes, compute next tab stop }
-  stosb                 { No, store to output }
-  inc     edx           { Increment output length }
-  jmp     @@Next        { Next character }
-
-@@Tab:
-  push    edx           { Save output length }
-  mov     eax, edx      { Get current output length in DX:AX }
-  xor     edx, edx
-  div     ebx           { Output length MOD TabSize in DX }
-  mov     ecx, ebx      { Calc number of spaces to insert... }
-  sub     ecx, edx      { = TabSize - Mod value }
-  pop     edx
-  add     edx, ecx      { Add count of spaces into current output length }
-
-  mov     eax,$2020     { Blank in AH, Blank in AL }
-  shr     ecx, 1        { Store blanks }
-  rep     stosw
-  adc     ecx, ecx
-  rep     stosb
-  jmp     @@Next        { Back for next input }
-
-@@Done:
-  xor     al,al         { Store final null terminator }
-  stosb
-{$ENDIF}
-
-  pop     ebx           { Restore caller's EBX, ESI and EDI }
-  pop     esi
-  pop     edi
-  pop     eax           { Return Dest }
-end;
-{$ENDIF}
-
 
 function HexBPChar(Dest : PChar; B : Byte) : PChar;
   {-Return hex string for byte}
@@ -1198,7 +445,6 @@ function LoCaseChar(C: Char) : Char; register;
      03/2011, AB: PUREPASCAL-version added
                   Bugfix: function returned an uppercase character }
 
-{$IFDEF PUREPASCAL}
 begin
   { CharLower is defined as function CharLower(P:PChar): PChar.
     However, this Windows-function will transform a character C to
@@ -1206,19 +452,6 @@ begin
     case, the new charater will be returned. }
   result := Char(CharLower(PChar(C)));
 end;
-
-{$ELSE}
-asm
-{$IFDEF UNICODE}
-  movzx eax, ax
-{$ELSE}
-  movzx eax, al
-{$ENDIF}
-  push  eax
-  call  CharLower
-end;
-{$ENDIF}
-
 
 function OctalLPChar(Dest : PChar; L : LongInt) : PChar;
   {-Return the octal PChar string for a long integer
@@ -1243,57 +476,11 @@ function StrChDeletePrim(P : PChar; Pos : Cardinal) : PChar; register;
    Changes:
      03/2011, AB: PUREPASCAL-version added
                   Bugfix: both unicode & ansi-version failed for Pos=StrLen(P) }
-
-{$IFDEF PUREPASCAL}
 begin
   result := P;
   if Pos < StrLen(P) then
     StrCopy(P + Pos, P + Pos + 1);
 end;
-
-{$ELSE}
-{$IFDEF UNICODE}
-begin
-  result := P;
-  if Pos < StrLen(P) then
-    StrCopy(P + Pos, P + Pos + 1);
-end;
-
-{$ELSE}
-asm
-  push   edi             { Save because we will be changing them }
-  push   esi
-  push   ebx
-
-  mov    ebx, eax        { Save P to EDI & EBX }
-  mov    edi, eax
-
-  xor    al, al          { Zero }
-  or     ecx, -1         { Set ECX to $FFFFFFFF }
-  cld
-  repne  scasb           { Find null terminator }
-  not    ecx
-  dec    ecx             { ECX = StrLen(P) }
-  jecxz  @@ExitPoint
-  sub    ecx, edx        { Calc number to move }
-  jbe    @@ExitPoint     { Exit if Pos >= StrLen }
-
-  mov    edi, ebx
-  add    edi, edx        { Point to position to adjust }
-  mov    esi, edi
-  inc    esi             { Offset for source string }
-  inc    ecx             { One more to include null terminator }
-  rep    movsb           { Adjust the string }
-@@ExitPoint:
-
-  mov    eax, ebx
-  pop    ebx             { restore registers }
-  pop    esi
-  pop    edi
-end;
-{$ENDIF}
-{$ENDIF}
-
 
 function StrChInsertPrim(Dest : PChar; C : Char;
                          Pos : Cardinal) : PChar; register;
@@ -1305,8 +492,6 @@ function StrChInsertPrim(Dest : PChar; C : Char;
      03/2011, AB: PUREPASCAL-version added
                   improved performace of unicode-version
                   Bugfix: Ansi-Version failed for Pos=StrLen(Dest) }
-
-{$IFDEF PUREPASCAL}
 var
   L: Cardinal;
 begin
@@ -1322,65 +507,6 @@ begin
   end;
 end;
 
-{$ELSE}
-asm
-  push   eax             {save because we will be changing them}
-  push   edi
-  push   esi
-  push   ebx
-
-  xor    ebx, ebx        {zero}
-  mov    ebx, ecx        {move POS to ebx}
-
-  mov    esi, eax        {copy Dest to ESI and EDI}
-  mov    edi, eax
-
-  xor    ax, ax          {zero}
-  or     ecx, -1         {set ECX to $FFFFFFFF}
-  cld                    {ensure forward}
-
-{$IFDEF UNICODE}
-  repne  scasw           {find null terminator}
-
-  not    ecx             {calc length (including null)}
-  std                    {backwards string ops}
-  lea    esi, [edi - 2]  {point to end of source string}
-  sub    ecx, ebx        {calculate number to do}
-  ja     @@1             {append if Pos greater than strlen }
-  mov    ecx, 1
-
-@@1:
-  rep    movsw           {adjust tail of string}
-  mov    word [edi], dx  {insert the new character}
-
-{$ELSE}
-  repne  scasb           {find null terminator}
-
-  not    ecx             {calc length (including null)}
-  std                    {backwards string ops}
-  add    esi, ecx
-  dec    esi             {point to end of source string}
-  sub    ecx, ebx        {calculate number to do}
-  ja     @@1             {append if Pos greater than strlen}
-  mov    ecx, 1
-
-@@1:
-  rep    movsb           {adjust tail of string}
-  mov    byte [edi], dl  {insert the new character}
-
-{$ENDIF}
-
-@@ExitPoint:
-
-  cld                    {be a good neighbor}
-  pop    ebx             {restore registers}
-  pop    esi
-  pop    edi
-  pop    eax
-end;
-{$ENDIF}
-
-
 function StrChPos(P : PChar; C : Char;
                   var Pos : Cardinal): Boolean; register;
   {-Sets Pos to position of character C within string P returns True if found
@@ -1389,8 +515,6 @@ function StrChPos(P : PChar; C : Char;
      01/2010, SZ: Unicode verified 27.01.2010
      03/2011, AB: PUREPASCAL-version added (identical to unicode-version)
      09/2011, AB: Fix for issue 3405788 as suggested by Wolfgang Klein }
-
-{$IFDEF PUREPASCAL}
 var
   Tmp: PChar;
 begin
@@ -1399,60 +523,6 @@ begin
   if Result then
     Pos := Tmp - P;
 end;
-
-{$ELSE}
-{$IFDEF UNICODE}
-var
-  Tmp: PChar;
-begin
-  Tmp := StrScan(P, C);
-  Result := Tmp <> nil;
-  if Result then
-    Pos := Tmp - P;
-end;
-
-{$ELSE}
-asm
-  push   esi               {save since we'll be changing}
-  push   edi
-  push   ebx
-  mov    esi, ecx          {save Pos}
-
-  cld                      {forward string ops}
-  mov    edi, eax          {copy P to EDI}
-  or     ecx, -1
-  xor    eax, eax          {zero}
-  mov    ebx, edi          {save EDI to EBX}
-  repne  scasb             {search for NULL terminator}
-  not    ecx
-  dec    ecx               {ecx has len of string}
-  jecxz  @@NotFound        {if len of P = 0 then done}
-
-  mov    edi, ebx          {reset EDI to beginning of string}
-  mov    al, dl            {copy C to AL}
-  repne  scasb             {find C in string}
-  jne    @@NotFound
-
-  mov    ecx, edi          {calculate position of C}
-  sub    ecx, ebx
-  dec    ecx               {ecx holds found position}
-
-  mov    [esi], ecx        {store location}
-  mov    eax, 1            {return true}
-  jmp    @@ExitCode
-
-@@NotFound:
-  xor    eax, eax
-
-@@ExitCode:
-
-  pop    ebx               {restore registers}
-  pop    edi
-  pop    esi
-end;
-{$ENDIF}
-{$ENDIF}
-
 
 procedure StrInsertChars(Dest : PChar; Ch : Char; Pos, Count : Word);
   {-Insert count instances of Ch into S at Pos
@@ -1497,8 +567,6 @@ function StrStDeletePrim(P : PChar; Pos, Count : Cardinal) : PChar; register;
      03/2011, AB: Bugfixes: function did not work in several cases like
                             P='' or Pos=0 & Count>StrLen(P)
                   Added PUREPASCAL version }
-
-{$IFDEF PUREPASCAL}
 var
   LP: Cardinal;
 begin
@@ -1512,83 +580,11 @@ begin
     Move(P[Pos+Count], P[Pos], (LP-Pos-Count+1)*SizeOf(Char));
 end;
 
-{$ELSE}
-asm
-  push   eax             {save because we will be changing them}
-  push   edi
-  push   esi
-  push   ebx
-
-  mov    ebx, ecx        {move Count to EBX}
-  mov    esi, eax        {move P to ESI and EDI}
-  mov    edi, eax
-
-  xor    eax, eax        {null}
-  or     ecx, -1
-  cld
-
-{$IFDEF UNICODE}
-  repne  scasw           {find null terminator}
-  not    ecx             {calc length}
-  dec    ecx             {ECX = StrLen(P) }
-  jecxz  @@ExitPoint
-
-  sub    ecx, edx
-  jle    @@ExitPoint     {nothing to do if StrLen(P)<=Pos }
-
-  lea    edi, [esi + 2*edx] {edi points to first character to delete }
-
-  sub    ecx, ebx
-  jg     @@L1
-
-  stosw                  {delete everything starting at edi}
-  jmp    @@ExitPoint
-
-@@L1:
-  lea    esi, [edi + 2*ebx]
-  inc    ecx
-  rep    movsw           {adjust the string}
-
-{$ELSE}
-
-  repne  scasb           {find null terminator}
-  not    ecx             {calc length}
-  dec    ecx             {ECX = StrLen(P) }
-  jecxz  @@ExitPoint
-
-  sub    ecx, edx
-  jle    @@ExitPoint     {nothing to do if StrLen(P)<=Pos }
-
-  lea    edi, [esi + edx] {edi points to first character to delete }
-
-  sub    ecx, ebx
-  jg     @@L1
-
-  stosb                  {delete everything starting at edi}
-  jmp    @@ExitPoint
-
-@@L1:
-  lea    esi, [edi + ebx]
-  inc    ecx
-  rep    movsb           {adjust the string}
-
-{$ENDIF}
-@@ExitPoint:
-
-  pop    ebx            {restore registers}
-  pop    esi
-  pop    edi
-  pop    eax
-end;
-{$ENDIF}
-
-
 function StrStInsert(Dest : PChar; S1, S2 : PChar; Pos : Cardinal) : PChar;
 begin
   StrCopy(Dest, S1);
   Result := StrStInsertPrim(Dest, S2, Pos);
 end;
-
 
 function StrStInsertPrim(Dest : PChar; S : PChar;
                          Pos : Cardinal) : PChar; register;
@@ -1599,7 +595,6 @@ function StrStInsertPrim(Dest : PChar; S : PChar;
      01/2010, SZ: Unicode verified 27.01.2010
      03/2011, AB: Added PUREPASCAL version }
 
-{$IFDEF PUREPASCAL}
 var
   LS, LD: Cardinal;
 begin
@@ -1616,103 +611,12 @@ begin
                          { insert S  into Dest }
 end;
 
-{$ELSE}
-asm
-  push   eax             {save because we will be changing them}
-  push   edi
-  push   esi
-  push   ebx
-
-  mov    ebx, ecx        {move POS to ebx}
-  mov    esi, eax        {copy Dest to ESI, S to EDI}
-  mov    edi, edx
-
-  xor    ax, ax          {zero}
-  or     ecx, -1         {set ECX to $FFFFFFFF}
-  cld                    {ensure forward}
-
-{$IFDEF UNICODE}
-  repne  scasw           {find null terminator}
-  not    ecx             {calc length of source string (including null)}
-  dec    ecx             {length without null}
-  jecxz  @@ExitPoint     {if source length = 0, exit}
-  push   ecx             {save length for later}
-
-  mov    edi, esi        {reset EDI to Dest}
-  or     ecx, -1
-  repne  scasw           {find null}
-  not    ecx             {length of dest string}
-
-  cmp    ebx, ecx
-  jb     @@1
-  mov    ebx, ecx        { if Pos>StrLen(Dest), append }
-  dec    ebx
-
-@@1:
-  std                    {backwards string ops}
-  pop    eax             {restore length of S from stack}
-  lea    edi, [edi+2*eax-2] {set EDI S beyond end of Dest}
-  lea    esi, [esi+2*ecx-2] {set ESI to end of Dest}
-  sub    ecx, ebx        {# of chars in Dest that are past Pos}
-  rep    movsw           {adjust tail of string}
-
-  lea    esi, [edx+2*eax-2] {set ESI to end of S}
-  mov    ecx, eax        {# of chars in S}
-  rep    movsw           {copy S into Dest}
-{$ELSE}
-  repne  scasb           {find null terminator}
-  not    ecx             {calc length of source string (including null)}
-  dec    ecx             {length without null}
-  jecxz  @@ExitPoint     {if source length = 0, exit}
-  push   ecx             {save length for later}
-
-  mov    edi, esi        {reset EDI to Dest}
-  or     ecx, -1
-  repne  scasb           {find null}
-  not    ecx             {length of dest string}
-
-  cmp    ebx, ecx
-  jb     @@1
-  mov    ebx, ecx
-  dec    ebx
-
-@@1:
-  std                    {backwards string ops}
-  pop    eax             {restore length of S from stack}
-  add    edi, eax        {set EDI S beyond end of Dest}
-  dec    edi             {back up one for null}
-
-  add    esi, ecx        {set ESI to end of Dest}
-  dec    esi             {back up one for null}
-  sub    ecx, ebx        {# of chars in Dest that are past Pos}
-  rep    movsb           {adjust tail of string}
-
-  mov    esi, edx        {set ESI to S}
-  add    esi, eax        {set ESI to end of S}
-  dec    esi             {back up one for null}
-  mov    ecx, eax        {# of chars in S}
-  rep    movsb           {copy S into Dest}
-{$ENDIF}
-
-  cld                    {be a good neighbor}
-
-@@ExitPoint:
-  pop    ebx             {restore registers}
-  pop    esi
-  pop    edi
-  pop    eax
-end;
-{$ENDIF}
-
-
 function StrStPos(P, S : PChar; var Pos : Cardinal) : boolean; register;
   {-Sets Pos to position of S in P, returns True if found
 
    Changes:
      01/2010, SZ: Unicode verified 27.01.2010
      03/2011, AB: Added PUREPASCAL version (identical to unicode-version) }
-
-{$IFDEF PUREPASCAL}
 var
   Q: PChar;
 begin
@@ -1728,95 +632,6 @@ begin
     Result := True;
   end;
 end;
-
-{$ELSE}
-{$IFDEF UNICODE}
-var
-  Q: PChar;
-begin
-  Q := StrPos(P, S);
-  if Q = nil then
-  begin
-    Pos := 0;
-    Result := False;
-  end
-  else
-  begin
-    Pos := Q - P;
-    Result := True;
-  end;
-end;
-{$ELSE}
-asm
-  push   edi                 { Save registers }
-  push   esi
-  push   ebx
-  push   ecx
-
-  mov    ebx, eax            { Move P to EBX }
-  mov    edi, edx            { Move S to EDI & ESI }
-  mov    esi, edx
-
-  xor    eax, eax            { Zero EAX }
-  or     ecx, -1             { Set ECX to FFFFFFFF }
-  repne  scasb               { Find null at end of S }
-  not    ecx
-
-  mov    edx, ecx            { Save length to EDX }
-  dec    edx                 { EDX has len of S }
-  test   edx, edx
-  jz     @@NotFound          { If len of S = 0 then done }
-
-  mov    edi, ebx            { Set EDI to beginning of P }
-  or     ecx, -1             { Set ECX to FFFFFFFF }
-  repne  scasb               { Find null at end of P }
-  not    ecx
-  dec    ecx                 { ECX has len of P }
-  jcxz   @@NotFound          { If len of P = 0 then done }
-
-  dec    edx
-  sub    ecx,edx             { Max chars to search }
-  jbe    @@NotFound          { Done if len S > len P }
-  lodsb                      { Get first char of S in AL }
-  mov    edi,ebx             { Set EDI to beginning of EDI }
-
-@@Next:
-  repne  scasb               { Find first char of S in P }
-  jne    @@NotFound          { If not found then done }
-  test   edx, edx            { If length of S was one then found }
-  jz     @@Found
-  push   ecx
-  push   edi
-  push   esi
-  mov    ecx,edx
-  repe   cmpsb               { See if remaining chars in S match }
-  pop    esi
-  pop    edi
-  pop    ecx
-  je     @@Found             { Yes, so found }
-  jmp    @@Next              { Look for next first char occurrence }
-
-@@NotFound:
-  pop    ecx
-  xor    eax,eax             { Set return to False }
-  jmp    @@ExitPoint
-
-@@Found:
-  dec    edi                 { Calc position of found string }
-  mov    eax, edi
-  sub    eax, ebx
-  pop    ecx
-  mov    [ecx], eax
-  mov    eax, 1              { Set return to True }
-
-@@ExitPoint:
-  pop    ebx                 { Restore registers }
-  pop    esi
-  pop    edi
-end;
-{$ENDIF}
-{$ENDIF}
-
 
 function StrToLongPChar(S : PChar; var I : LongInt) : Boolean;
   {-Convert a string to a longint, returning true if successful}
@@ -2009,8 +824,6 @@ function TrimTrailPrimPChar(S : PChar) : PChar; register;
                   Bugfix: loop for deleting whitespace in the ansi-version did
                           not stop at the beginning of the string (function could
                           wreak havoc if S = '  '). }
-
-{$IFDEF PUREPASCAL}
 var
   PEnd: PChar;
 begin
@@ -2020,57 +833,6 @@ begin
   PEnd[1] := #0;
   Result := S;
 end;
-
-{$ELSE}
-asm
-   cld
-   push   edi
-   mov    edx, eax
-   mov    edi, eax
-   or     ecx, -1
-   xor    ax, ax
-
-{$IFDEF UNICODE}
-   repne  scasw
-   not    ecx
-   dec    ecx
-   jecxz  @@ExitPoint
-   sub    edi,2
-   inc    ecx
-
-@@1:
-   sub    edi,2
-   cmp    word ptr [edi], 32
-   ja     @@stop
-   dec    ecx
-   jnz    @@1
-@@stop:
-   mov    word ptr [edi+2], ax
-
-{$ELSE}
-   repne  scasb
-   not    ecx
-   dec    ecx
-   jecxz  @@ExitPoint
-   dec    edi
-   inc    ecx
-
-@@1:
-   dec    edi
-   cmp    byte ptr [edi],' '
-   ja     @@stop
-   dec    ecx
-   jnz    @@1
-@@stop:
-   mov    byte ptr [edi+1], al
-{$ENDIF}
-
-@@ExitPoint:
-   mov    eax, edx
-   pop    edi
-end;
-{$ENDIF}
-
 
 function TrimTrailPChar(Dest, S : PChar) : PChar;
   {-Return a string with trailing white space removed}
@@ -2085,8 +847,6 @@ function UpCaseChar(C: Char) : Char; register;
 
    Changes:
      03/2011, AB: PUREPASCAL-version added }
-
-{$IFDEF PUREPASCAL}
 begin
   { CharUpper is defined as function CharUpper(P:PChar): PChar.
     However, this Windows-function will transform a character C to
@@ -2094,29 +854,8 @@ begin
     case, the new charater will be returned. }
   result := Char(CharUpper(PChar(C)));
 end;
-{$ELSE}
-asm
-{$IFDEF UNICODE}
-  movzx eax, ax
-{$ELSE}
-  movzx eax, al
-{$ENDIF}
-  push  eax
-  call  CharUpper
-end;
-{$ENDIF}
 
-
-function ovcCharInSet(C: Char; const CharSet: TOvcCharSet): Boolean;
-begin
-{$IFDEF UNICODE}
-  Result := SysUtils.CharInSet(C, CharSet);
-{$ELSE}
-  Result := C in CharSet;
-{$ENDIF}
-end;
-
-function ovc32StringIsCurrentCodePage(const S: {$IFDEF UNICODE}UnicodeString{$ELSE}WideString{$ENDIF}): Boolean;
+function ovc32StringIsCurrentCodePage(const S: string): Boolean;
 // returns True if a string can be displayed using the current system codepage
 const
   WC_NO_BEST_FIT_CHARS = $00000400;
@@ -2148,14 +887,7 @@ var
   LenS, Len: Integer;
 begin
   // A.B. StrLen(S)=0 does not work in Delphi 2006
-  {$IFDEF UNICODE}
   LenS := StrLen(S);
-  {$ELSE}
-  LenS := 0;
-  if Assigned(S) then begin
-    while S[LenS]<>#0 do Inc(LenS);
-  end;
-  {$ENDIF}
 
   if LenS=0 then
   begin

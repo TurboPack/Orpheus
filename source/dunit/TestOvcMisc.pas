@@ -135,13 +135,11 @@ type
     res: string;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}4{$ELSE}3{$ENDIF}] of TData =
+  cSomeData: array[0..4] of TData =
     ((s:'1234567890'; mi: 10; ma:50; res:'1234567890'),
      (s:'1234567890'; mi: 5;  ma:50; res:'12345.'),
      (s:'1234567890'; mi: 0;  ma:50; res:'1234...'),
-{$IFDEF UNICODE}
      (s:'ǄǇǌǄǇǌǄǇǌǄǇǌ'; mi: 0;  ma:50; res:'ǄǇ...'),
-{$ENDIF}
      (s:'';           mi: 0;  ma:50; res:''));
 var
   i: Integer;
@@ -170,7 +168,7 @@ type
     res: Boolean;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}12{$ELSE}8{$ENDIF}] of TData =
+  cSomeData: array[0..12] of TData =
     ((s1:'';          s2:'';           res:False),
      (s1:'Delphi';    s2:'Delphi';     res:True),
      (s1:'Delphi';    s2:'delphi';     res:True),
@@ -179,12 +177,10 @@ const
      (s1:'Orpheu';    s2:'Orpheus';    res:True),
      (s1:'orpheus';   s2:'';           res:False),
      (s1:'';          s2:'orpheus';    res:False),
-{$IFDEF UNICODE}
      (s1:'Unicode';   s2:'UnicodeǄǇǌ'; res:True),
      (s1:'╒═╕';       s2:'╒╒═╕═╕';     res:False),
      (s1:'╒═╕';       s2:'╒═╕═╕';      res:True),
      (s1:'ΑΒΓΔ';      s2:'αβγδ';       res:True),
-{$ENDIF}
      (s1:'Delphi XE'; s2:'DelphiXE';   res:False));
 var
   i: Integer;

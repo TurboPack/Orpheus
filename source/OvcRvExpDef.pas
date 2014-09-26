@@ -32,9 +32,7 @@ unit ovcrvexpdef;
 
 interface
 uses
-  Windows, SysUtils,
-  {$IFDEF VERSION6} Variants, {$ENDIF}
-  OvcRvIdx, Classes;
+  Windows, SysUtils, Variants, OvcRvIdx, Classes;
 
 type
   TOvcRvExpression = class;
@@ -912,10 +910,8 @@ begin
       case FType of
       dtString,
       dtFloat,
-      dtInteger
-      {$IFDEF VERSION4},
-      dtDWord
-      {$ENDIF}:
+      dtInteger,
+      dtDWord:
       ;
       else
         SQLError('Operator/operand mismatch');
@@ -923,10 +919,8 @@ begin
     aoMinus :
       case FType of
       dtFloat,
-      dtInteger
-      {$IFDEF VERSION4},
-      dtDWord
-      {$ENDIF}:
+      dtInteger,
+      dtDWord:
         ;
       else
         SQLError('Operator/operand mismatch');
@@ -945,10 +939,8 @@ begin
         case Term[i - 1].GetType of
         dtString,
         dtFloat,
-        dtInteger
-        {$IFDEF VERSION4},
-        dtDWord
-        {$ENDIF}:
+        dtInteger,
+        dtDWord:
           ;
         else
           SQLError('Operator/operand mismatch');
@@ -956,11 +948,8 @@ begin
       aoMinus :
         case Term[i - 1].GetType of
         dtFloat,
-        dtInteger
-        {$IFDEF VERSION4},
-        dtDWord
-        {$ENDIF}:
-         ;
+        dtInteger,
+        dtDWord:
         else
           SQLError('Operator/operand mismatch');
         end;
@@ -1081,10 +1070,8 @@ begin
     moMul, moDiv :
       case FType of
       dtFloat,
-      dtInteger
-      {$IFDEF VERSION4},
-      dtDWord
-      {$ENDIF}:
+      dtInteger,
+      dtDWord:
         ;
       else
         SQLError('Operator/operand mismatch');
@@ -1095,10 +1082,8 @@ begin
       moMul, moDiv :
         case Factor[i - 1].GetType of
         dtFloat,
-        dtInteger
-      {$IFDEF VERSION4},
-      dtDWord
-      {$ENDIF}:
+        dtInteger,
+        dtDWord:
           ;
         else
           SQLError('Operator/operand mismatch');
@@ -2041,16 +2026,12 @@ begin
     dtCustom :
       TypeMismatch;
     dtFloat,
-    dtInteger
-    {$IFDEF VERSION4},
-    dtDWord
-    {$ENDIF}:
+    dtInteger,
+    dtDWord:
       case ExpectedType of
       dtFloat,
-      dtInteger
-      {$IFDEF VERSION4},
-      dtDWord
-      {$ENDIF}:
+      dtInteger,
+      dtDWord:
         ;
       else
         TypeMismatch;
@@ -2154,10 +2135,8 @@ procedure TOvcRvExpAggregate.MatchType(ExpectedType: TOvcDRDataType);
 begin
   case ExpectedType of
   dtFloat,
-  dtInteger
-  {$IFDEF VERSION4},
-  dtDWord
-  {$ENDIF}:
+  dtInteger,
+  dtDWord:
     ;
   else
     TypeMismatch;
@@ -2549,7 +2528,7 @@ begin
     and SimpleExp.IsConstant
     and ((EscapeExp = nil) or EscapeExp.IsConstant) then begin
       S := SimpleExp.GetValue(nil);
-      if not ovcCharInSet(S[1], ['%', '_']) then
+      if not CharInSet(S[1], ['%', '_']) then
         Result := True;
     end;
 end;
@@ -2596,7 +2575,7 @@ begin
   Result := SimpleExp.GetValue(Data);
   P := 1;
   while (P <= length(Result))
-    and not ovcCharInSet(Result[P], ['%', '_']) do
+    and not CharInSet(Result[P], ['%', '_']) do
       inc(P);
   dec(P);
   if P < length(Result) then
@@ -3144,10 +3123,8 @@ procedure TOvcRvExpFloatLiteral.MatchType(ExpectedType: TOvcDRDataType);
 begin
   case ExpectedType of
   dtFloat,
-  dtInteger
-  {$IFDEF VERSION4},
-  dtDWord
-  {$ENDIF}:
+  dtInteger,
+  dtDWord:
     ;
   else
     TypeMismatch;
@@ -3186,10 +3163,8 @@ procedure TOvcRvExpIntegerLiteral.MatchType(ExpectedType: TOvcDRDataType);
 begin
   case ExpectedType of
   dtFloat,
-  dtInteger
-  {$IFDEF VERSION4},
-  dtDWord
-  {$ENDIF}:
+  dtInteger,
+  dtDWord:
     ;
   else
     TypeMismatch;

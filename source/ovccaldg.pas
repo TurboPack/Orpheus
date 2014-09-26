@@ -45,7 +45,7 @@ uses
   OvcBase, OvcConst, OvcData, OvcExcpt, OvcCal, OvcDlg;
 
 type
-  {.Z+}
+
   TOvcfrmCalendarDlg = class(TForm)
     btnHelp: TButton;
     Panel1: TPanel;
@@ -54,11 +54,11 @@ type
     OvcCalendar1: TOvcCalendar;
     procedure OvcCalendar1DblClick(Sender: TObject);
   end;
-  {.Z-}
+
 
 type
   TOvcCalendarDialog = class(TOvcBaseDialog)
-  {.Z+}
+
   protected {private}
     {property variables}
     FCalendar  : TOvcCalendar;
@@ -68,7 +68,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function Execute : Boolean;
       override;
@@ -97,11 +97,7 @@ implementation
 
 constructor TOvcCalendarDialog.Create(AOwner : TComponent);
 begin
-{$IFDEF VERSION5}
   if not ((AOwner is TCustomForm) or (Owner is TCustomFrame)) then
-{$ELSE}
-  if not (AOwner is TForm) then
-{$ENDIF}
     raise EOvcException.Create(GetOrphStr(SCOwnerMustBeForm));
 
   inherited Create(AOwner);
@@ -111,11 +107,7 @@ begin
 
   FCalendar := TOvcCalendar.Create(nil);
   FCalendar.Visible := False;
-{$IFDEF VERSION5}
   FCalendar.Parent := AOwner as TWinControl;
-{$ELSE}
-  FCalendar.Parent := AOwner as TForm;
-{$ENDIF}
 end;
 
 destructor TOvcCalendarDialog.Destroy;

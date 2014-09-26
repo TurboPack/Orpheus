@@ -42,8 +42,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  StdCtrls, OvcSpeed, OvcBase, OvcState, ExtCtrls, OvcLkOut;
+  DesignIntf, DesignEditors, StdCtrls, OvcSpeed, OvcBase, OvcState, ExtCtrls, OvcLkOut;
 
 type
   TOvcfrmLkOutEd = class(TForm)
@@ -93,24 +92,12 @@ type
   public
     { Public declarations }
     Bar : TOvcLookOutBar;
-    {$IFDEF VERSION4}
     Designer   : IDesigner;
-    {$ELSE}
-    Designer   : TDesigner;
-    {$ENDIF}
     procedure PopulateFolderList;
     procedure PopulateItemList;
   end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure EditLookOut(Designer : IDesigner; Bar : TOvcLookOutBar);
-  {$ELSE}
-    procedure EditLookOut(Designer : IFormDesigner; Bar : TOvcLookOutBar);
-  {$ENDIF}
-{$ELSE}
-  procedure EditLookOut(Designer : TFormDesigner; Bar : TOvcLookOutBar);
-{$ENDIF}
+  procedure EditLookOut(Designer : IDesigner; Bar : TOvcLookOutBar);
 
 implementation
 
@@ -324,15 +311,7 @@ begin
   end;
 end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure EditLookOut(Designer : IDesigner; Bar : TOvcLookOutBar);
-  {$ELSE}
-    procedure EditLookOut(Designer : IFormDesigner; Bar : TOvcLookOutBar);
-  {$ENDIF}
-{$ELSE}
-  procedure EditLookOut(Designer : TFormDesigner; Bar : TOvcLookOutBar);
-{$ENDIF}
+procedure EditLookOut(Designer : IDesigner; Bar : TOvcLookOutBar);
 var
   OvcfrmLkOutEd: TOvcfrmLkOutEd;
   i : Integer;

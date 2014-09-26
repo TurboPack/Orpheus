@@ -47,7 +47,8 @@ uses
 type
   TOvcBaseTableCell = class(TOvcTableCellAncestor)
     protected {private}
-      {.Z+}
+      
+
       {property fields - even size}
       FColor      : TColor;
       FFont       : TFont;
@@ -80,7 +81,7 @@ type
       FOnMouseMove : TMouseMoveEvent;
       FOnMouseUp   : TMouseEvent;
       FOnOwnerDraw : TCellPaintNotifyEvent;
-      {.Z-}
+
 
       tcBadColorValue  : boolean;
       tcBadFontValue   : boolean;
@@ -91,7 +92,8 @@ type
       procedure SetAbout(const Value : string);
 
     protected
-      {.Z+}
+      
+
       {property access}
       function GetColor : TColor;
       function GetCellEditor : TControl; virtual;
@@ -128,7 +130,7 @@ type
       procedure tcRetrieveTableFont;
       function tcRetrieveTableLockedCols : TColNum;
       function tcRetrieveTableLockedRows : TRowNum;
-      {.Z-}
+
 
       {properties}
       property Color : TColor
@@ -204,7 +206,8 @@ type
          read FOnOwnerDraw write FOnOwnerDraw;
 
     public {protected}
-      {.Z+}
+      
+
       {internal use only methods}
       procedure Notification(AComponent: TComponent; Operation: TOperation); override;
       procedure tcResetTableValues; override;
@@ -216,7 +219,7 @@ type
         virtual;
       procedure SpecialCellDataTransfer(Field : TObject; Data : Pointer; Purpose : TOvcCellDataPurpose);
         virtual;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;
@@ -235,9 +238,9 @@ type
       function CanSaveEditedData(SaveValue : boolean) : boolean; virtual;
       function CanStopEditing(SaveValue : boolean) : boolean; {for Orpheus 1.0 compatibility}
       function FilterTableKey(var Msg : TWMKey) : TOvcTblKeyNeeds; virtual;
-      {.Z+}
+
       procedure PostMessageToTable(Msg, wParam, lParam : longint);
-      {.Z-}
+
       procedure SendKeyToTable(var Msg : TWMKey);
       procedure SaveEditedData(Data : pointer); virtual;
       procedure StartEditing(RowNum : TRowNum; ColNum : TColNum;
@@ -251,14 +254,14 @@ type
       function TableWantsTab : boolean;
 
       {painting}
-      {.Z+}
+
       function DoOwnerDraw(TableCanvas : TCanvas;
                      const CellRect    : TRect;
                            RowNum      : TRowNum;
                            ColNum      : TColNum;
                      const CellAttr    : TOvcCellAttributes;
                            Data        : pointer) : boolean; virtual;
-      {.Z-}
+
       procedure Paint(TableCanvas : TCanvas;
                 const CellRect    : TRect;
                       RowNum      : TRowNum;
@@ -294,7 +297,7 @@ type
 
   TOvcTableCells = class
     protected {private}
-      {.Z+}
+
       {property fields}
       FMatrix       : TOvcSparseArray;
       FOnCfgChanged : TNotifyEvent;
@@ -302,10 +305,10 @@ type
 
       {other fields}
       tcCellAttrCount : longint; {count of non-blank cells}
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       function GetAccess(RowNum : TRowNum; ColNum : TColNum) : TOvcTblAccess;
       function GetAdjust(RowNum : TRowNum; ColNum : TColNum) : TOvcTblAdjust;
       function GetCell(RowNum : TRowNum; ColNum : TColNum) : TOvcBaseTableCell;
@@ -317,10 +320,10 @@ type
       procedure SetCell(RowNum : TRowNum; ColNum : TColNum; BTC : TOvcBaseTableCell);
       procedure SetColor(RowNum : TRowNum; ColNum : TColNum; C : TColor);
       procedure SetFont(RowNum : TRowNum; ColNum : TColNum; F : TFont);
-      {.Z-}
+
 
     public {protected}
-      {.Z+}
+
       {internal use only methods}
       procedure tcNotifyCellDeletion(Cell : TOvcBaseTableCell);
       procedure tcDoCfgChanged;
@@ -329,7 +332,7 @@ type
          write FOnCfgChanged;
       property Table : TOvcTableAncestor
          read FTable write FTable;
-      {.Z-}
+
 
     public
       constructor Create(ATable : TOvcTableAncestor);

@@ -145,7 +145,7 @@ type
   end;
 
   TOvcBorderParent = class(TOvcCustomControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBorders       : TOvcBorders;
@@ -451,21 +451,13 @@ end;
 
 procedure TOvcBorderParent.LabelAttach(Sender : TObject; Value : Boolean);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
   S  :string;
 begin
   if csLoading in ComponentState then
     Exit;
 
-{$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-{$ELSE}
-  PF := TForm(GetParentForm(Self));
-{$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -505,21 +497,13 @@ end;
 
 procedure TOvcBorderParent.Notification(AComponent : TComponent; Operation: TOperation);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then begin
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-      {$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-      {$ELSE}
-      PF := TForm(GetParentForm(Self));
-      {$ENDIF}
       if Assigned(PF) and not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;
         FLabelInfo.ALabel := nil;

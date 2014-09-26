@@ -41,9 +41,8 @@ unit ovcsplit;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, SysUtils, Messages, Classes, Graphics, Controls, Forms, Dialogs,
-  Buttons, ExtCtrls, OvcBase, OvcData;
+  Types, Windows, SysUtils, Messages, Classes, Graphics, Controls, Forms,
+  Dialogs, Buttons, ExtCtrls, OvcBase, OvcData;
 
 type
   TSplitterOrientation = (soVertical, soHorizontal);
@@ -51,7 +50,7 @@ type
 type
   {section to act as parent for components}
   TOvcSection = class(TOvcCollectibleControl)
-  {.Z+}
+
   protected {private}
     {windows message response methods}
     procedure WMNCHitTest(var Msg : TWMNCHitTest);
@@ -63,7 +62,7 @@ type
 
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
   published
     property Color default clBtnFace;
     property Height stored False;
@@ -73,7 +72,7 @@ type
   end;
 
   TOvcSplitter = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property variables}
     FAllowResize      : Boolean;
@@ -133,10 +132,8 @@ type
   protected
     procedure AncestorNotFound(Reader: TReader; const ComponentName: string;
       ComponentClass: TPersistentClass; var Component: TComponent);
-    {$IFDEF Version4}
     procedure Resize;
       override;
-    {$ENDIF}
     procedure CreateParams(var Params : TCreateParams);
       override;
     procedure CreateWnd;
@@ -164,7 +161,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
 
     {public methods}
     procedure Center;
@@ -185,11 +182,11 @@ type
     property AutoUpdate : Boolean
       read FAutoUpdate write SetAutoUpdate
       default False;
-  {.Z+}
+
     property BorderStyle : TBorderStyle
       read FBorderStyle write SetBorderStyle
       default bsNone;
-  {.Z-}
+
     property ColorLeft : TColor
       read FColorLeft write SetColorLeft
       default clBlack;
@@ -218,10 +215,8 @@ type
       read FOnResize write FOnResize;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D default True;
@@ -351,7 +346,6 @@ begin
   sSetSectionInfo;
 end;
 
-{$IFDEF Version4}
 procedure TOvcSplitter.ReSize;
 begin
   inherited Resize;
@@ -367,7 +361,6 @@ begin
   end;
   DoOnResize;
 end;
-{$ENDIF}
 
 destructor TOvcSplitter.Destroy;
 begin

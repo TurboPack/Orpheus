@@ -42,8 +42,8 @@ unit OvcTCHeaderExtended;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, SysUtils, Graphics, Classes, Controls, OvcTCmmn, OvcTCell, OvcTCStr, OvcMisc, ovctchdr;
+  UITypes, Windows, SysUtils, Graphics, Classes, Controls, OvcTCmmn, OvcTCell,
+  OvcTCStr, OvcMisc, ovctchdr;
 
 type
   TOvcTCColHeadExtendedInfoItem = class(TCollectionItem)
@@ -88,12 +88,12 @@ type
 
   TOvcTCColHeadExtended = class(TOvcTCCustomColHead)
     protected {private}
-      {.Z+}
+
       FHeadings      : TOvcTCColHeadExtendedInfoItems;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetHeadings(H : TOvcTCColHeadExtendedInfoItems);
 
       procedure tcPaint(TableCanvas : TCanvas;
@@ -102,12 +102,12 @@ type
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
 
      public {protected}
-      {.Z+}
+
       procedure chColumnsChanged(ColNum1, ColNum2 : TColNum; Action : TOvcTblActions); override;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;

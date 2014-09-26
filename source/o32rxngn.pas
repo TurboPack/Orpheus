@@ -77,16 +77,11 @@ unit o32rxngn;
 interface
 
 uses
-  Classes, SysUtils, O32IntDeq, O32IntLst{$IFDEF UNICODE}, o32WideCharSet{$ENDIF};
+  Classes, SysUtils, O32IntDeq, O32IntLst, o32WideCharSet;
 
 type
   PO32CharSet = ^TO32CharSet;
-{$IFDEF UNICODE}
   TO32CharSet = TWideCharSet; // set of Ansichar;
-{$ELSE}
-  TO32CharSet = set of Char;
-{$ENDIF}  
-
 
   TO32NFAMatchType = ( {types of matching performed...}
      mtNone,           {..no match (an epsilon no-cost move)}
@@ -757,7 +752,7 @@ begin
   end;
   {if the current char is a metacharacter (at least in terms of a
    character class), it's an error}
-  if ovcCharInSet(FPosn^, [']', '-']) then begin
+  if CharInSet(FPosn^, [']', '-']) then begin
     FErrorCode := recMetaChar;
     Result := #0;
     Exit;
@@ -784,7 +779,7 @@ begin
     Exit;
   end;
   {if the current char is one of the metacharacters, it's an error}
-  if ovcCharInSet(FPosn^, MetaCharacters) then begin
+  if CharInSet(FPosn^, MetaCharacters) then begin
     Result := ErrorState;
     FErrorCode := recMetaChar;
     Exit;
@@ -993,7 +988,7 @@ begin
   if (FPosn^ = '(') or
      (FPosn^ = '[') or
      (FPosn^ = '.') or
-     ((FPosn^ <> #0) and not ovcCharInSet(FPosn^, MetaCharacters)) then begin
+     ((FPosn^ <> #0) and not CharInSet(FPosn^, MetaCharacters)) then begin
     if FLogging then writeln(Log, 'concatenation');
 
     {the initial factor's end state does not exist yet (although there

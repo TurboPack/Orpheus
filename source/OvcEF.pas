@@ -43,7 +43,7 @@ interface
 
 uses
   Windows, Classes, ClipBrd, Controls, Forms, Graphics, Menus, Messages,
-  SysUtils, {$IFDEF VERSION6} Variants, {$ENDIF}
+  SysUtils, Variants,
   OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData, OvcExcpt,
   OvcIntl, OvcMisc, OvcStr, OvcUser, OvcDate, OvcBordr,imm,dialogs;
 
@@ -87,7 +87,8 @@ type
 
   {abstract entry field class}
   TOvcBaseEntryField = class(TOvcCustomControlEx)
-  {.Z+}
+  
+
   protected {private}
     {property instance variables}
     FAutoSize          : Boolean;      {size control when font changes}
@@ -171,7 +172,7 @@ type
     procedure SetAsStDate(Value : TStDate);
     procedure SetAsStTime(Value : TStTime);
     procedure SetAsVariant(Value : Variant);
-    procedure SetAutoSize(Value : Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value : Boolean); override;
     procedure SetBorderStyle(Value : TBorderStyle);
     procedure SetDecimalPlaces(Value : Byte);
     procedure SetEpoch(Value : Integer);
@@ -454,7 +455,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
 
     procedure ClearContents;
       {-clear the contents of the entry field}
@@ -559,10 +560,11 @@ type
     property EverModified : Boolean
       read GetEverModified write SetEverModified;
 
-  {.Z+}
+  
+
     property InsertMode : Boolean
       read GetInsertMode write SetInsertMode;
-  {.Z-}
+
 
     property IntlSupport : TOvcIntlSup
       read FIntlSup write SetIntlSupport;
@@ -1205,7 +1207,7 @@ begin
   I := 0;
   L := StrLen(St);
   while St^ <> #0 do begin
-    if ovcCharInSet(St^, PictureChars) then
+    if CharInSet(St^, PictureChars) then
       Inc(I)
     else case St^ of
       pmFloatDollar, pmComma : Inc(I);
@@ -1306,7 +1308,7 @@ procedure TOvcBaseEntryField.efChangeMask(Mask : PChar);
   {-change the picture mask}
 var
   BufS: string;                      //SZ Unicode
-  Buf: array[0..MaxEditLen] of {$IFDEF UNICODE}Word{$ELSE}Byte{$ENDIF};
+  Buf: array[0..MaxEditLen] of Word;
 begin
   if (Mask <> nil) and (Mask^ <> #0) then begin
     if csLoading in ComponentState then begin
@@ -1352,20 +1354,20 @@ begin
     pmAnyChar, pmForceUpper, pmForceLower, pmForceMixed :
       ;
     pmMonthName, pmMonthNameU, pmAlpha, pmUpperAlpha, pmLowerAlpha :
-      Result := IsCharAlpha(Ch) or ovcCharInSet(Ch, AlphaCharSet);  //SZ: AlphaCharSet works only for ANSI characters; we need to check for [' ', '-', '.', ','] as well
+      Result := IsCharAlpha(Ch) or CharInSet(Ch, AlphaCharSet);  //SZ: AlphaCharSet works only for ANSI characters; we need to check for [' ', '-', '.', ','] as well
     pmDecimal :
-      Result := ovcCharInSet(Ch, RealCharSet);
+      Result := CharInSet(Ch, RealCharSet);
     pmWhole :
-      Result := (Ch = '-') or ovcCharInSet(Ch, IntegerCharSet);
+      Result := (Ch = '-') or CharInSet(Ch, IntegerCharSet);
     pmMonth, pmMonthU, pmDay, pmDayU, pmYear,
     pmHour, pmHourU, pmSecond, pmSecondU,
     pmPositive :
-      Result := ovcCharInSet(Ch, IntegerCharSet);
+      Result := CharInSet(Ch, IntegerCharSet);
     pmHexadecimal :
       case Ch of
         'A'..'F' : ;
       else
-        Result := ovcCharInSet(Ch, IntegerCharSet);
+        Result := CharInSet(Ch, IntegerCharSet);
       end;
     pmOctal :
       case Ch of
@@ -1388,10 +1390,10 @@ begin
       case Ch of
         '+', 'E' : ;
         else
-          Result := ovcCharInSet(Ch, RealCharSet);
+          Result := CharInSet(Ch, RealCharSet);
       end;
     pmUser1..pmUser8 :
-      Result := ovcCharInSet(Ch, UserData.UserCharSet[PicChar]);
+      Result := CharInSet(Ch, UserData.UserCharSet[PicChar]);
   end;
 end;
 
@@ -1431,11 +1433,7 @@ begin
     GlobalUnlock(H);
 
     {give the handle to the clipboard}
-    {$IFNDEF UNICODE}
-    Clipboard.SetAsHandle(CF_TEXT, H);
-    {$ELSE}
     Clipboard.SetAsHandle(CF_UNICODETEXT, H);
-    {$ENDIF}
   end;
 end;
 
@@ -1767,11 +1765,7 @@ begin
   end;
 
   if Assigned(C) then
-    {$IFDEF VERSION5}
     if (GetImmediateParentForm(C) = GetImmediateParentForm(Self)) then
-    {$ELSE}
-    if GetParentForm(C) = GetParentForm(Self) then
-    {$ENDIF}
       Result := True;
 end;
 
@@ -2132,7 +2126,7 @@ begin
   {ignored. the only way for the null character to get here}
   {is by changing a key after it has been entered , probably}
   {in a key preview event handler}
-  if (Cmd = ccChar) and (Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam)) = #0) then
+  if (Cmd = ccChar) and (Char(Msg.wParam) = #0) then
     Exit;
 
   {filter out commands that are inappropriate in read-only mode}
@@ -2341,7 +2335,7 @@ var
     else begin
       Result := 0;
       for I := DotPos+1 to MaxLength-1 do
-        if ovcCharInSet(efNthMaskChar(I), PictureChars) then
+        if CharInSet(efNthMaskChar(I), PictureChars) then
           Inc(Result)
         else
           Break;
@@ -3924,11 +3918,7 @@ end;
 
 function TOvcBaseEntryField.GetDefStrType: TVarType;
 begin
-{$IFDEF UNICODE}
   Result := varUString;
-{$ELSE}
-  Result := varString;
-{$ENDIF}
 end;
 
 procedure TOvcBaseEntryField.SetAsVariant(Value : Variant);
@@ -3978,7 +3968,7 @@ begin
         {try to convert it into a string}
         SetAsString(VarAsType(Value, GetDefStrType));
     varString   : SetAsString(Value);
-{$IFDEF UNICODE}varUString: SetAsString(Value);{$ENDIF}
+    varUString: SetAsString(Value);
   end;
 end;
 
@@ -4665,11 +4655,7 @@ procedure TOvcBaseEntryField.WMPaste(var Msg : TWMPaste);
 var
   H  : THandle;
 begin
-  {$IFNDEF UNICODE}
-  H := Clipboard.GetAsHandle(CF_TEXT);
-  {$ELSE}
   H := Clipboard.GetAsHandle(CF_UNICODETEXT);
-  {$ENDIF}
   if H <> 0 then begin
     TMessage(Msg).lParam := LongInt(GlobalLock(H));
     efPerformEdit(TMessage(Msg), ccPaste);

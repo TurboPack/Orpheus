@@ -29,17 +29,9 @@
 
 {$I OVC.INC}
 
-{$IFDEF VERSION7}
   {$WARN UNSAFE_CODE OFF}
   {$WARN UNSAFE_TYPE OFF}
   {$WARN UNSAFE_CAST OFF}
-{$ENDIF}
-
-{For BCB 3.0 package support.}
-{$IFDEF VER110}
-  {$ObjExportAll On}
-{$ENDIF}
-
 
 {---Global compiler defines for Delphi 2.0---}
 {$A+} {Word Align Data}
@@ -285,7 +277,6 @@ end;
 
 
 procedure ExchangeLongInts(var I, J : LongInt); register;
-{$IFDEF PUREPASCAL}
 var
   K : LongInt;
 begin
@@ -293,16 +284,6 @@ begin
   I := J;
   J := K;
 end;
-{$ELSE}
-asm
-  mov  ecx, [eax]
-  push ecx
-  mov  ecx, [edx]
-  mov  [eax], ecx
-  pop  ecx
-  mov  [edx], ecx
-end;
-{$ENDIF}
 
 function ResolveEpoch(Year, Epoch : Integer) : Integer;
   {-Convert 2-digit year to 4-digit year according to Epoch}

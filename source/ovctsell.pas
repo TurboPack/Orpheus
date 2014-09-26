@@ -106,7 +106,7 @@ type
 
   TOvcSelectionList = class           {class to manage list of selected cells}
     protected {private}
-      {.Z+}
+
       {even sized}
       slArray : POvcSelColArray;      {array of arrays of row ranges}
       slColCount : TColNum;           {number of columns in slArray}
@@ -123,12 +123,12 @@ type
       {odd sized}
       slSelecting : boolean;          {current range is for selection}
       slEmptyRange : boolean;         {current range is empty}
-      {.Z-}
+
     protected
-      {.Z+}
+
       procedure slDeselectCellRangeInCol(Row1, Row2 : TRowNum; ColNum : TColNum);
       procedure slSelectCellRangeInCol(Row1, Row2 : TRowNum; ColNum : TColNum);
-      {.Z-}
+
     public
       constructor Create(RowCount : TRowNum; ColCount : TColNum);
         {-Create a new instance for RowCount rows & ColCount columns}

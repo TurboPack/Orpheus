@@ -47,7 +47,7 @@ uses
 type
   {class for implementing user-defined mask and substitution characters}
   TOvcUserData = class(TObject)
-  {.Z+}
+
   protected {private}
     FUserCharSets : TUserCharSets;
     FForceCase    : TForceCase;
@@ -69,7 +69,7 @@ type
 
   public
     constructor Create;
-  {.Z+}
+
 
     property ForceCase[Index : TForceCaseRange] : TCaseChange
       read GetForceCase

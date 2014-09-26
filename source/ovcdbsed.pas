@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbSliderEdit = class(TOvcCustomSliderEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment  : TAlignment;
     FAutoUpdate : Boolean;
@@ -95,7 +96,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -105,7 +106,8 @@ type
     property DataSource : TDataSource
       read GetDataSource write SetDataSource;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly write SetReadOnly;
 
@@ -114,18 +116,16 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
 
     procedure PopupClose(Sender : TObject);
       override;
     procedure PopupOpen;
       override;
-  {.Z-}
+
 
     {public properties}
     property Field : TField
@@ -135,11 +135,9 @@ type
   TOvcDbSliderEdit = class(TOvcCustomDbSliderEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec default False;
     property AutoSelect;
@@ -203,7 +201,7 @@ uses
 const
   {field types supported}
   SupportedFieldTypes : set of  TFieldType = [ftSmallint, ftInteger,
-    ftWord, ftFloat, ftCurrency, ftBCD {$IFDEF VERSION4}, ftLargeint {$ENDIF}];
+    ftWord, ftFloat, ftCurrency, ftBCD, ftLargeint];
 
 
 {*** TOvcCustomDbSliderEdit ***}
@@ -392,12 +390,12 @@ end;
 
 procedure TOvcCustomDbSliderEdit.KeyPress(var Key : Char);
 begin
-  if AllowIncDec and ovcCharInSet(Key, ['+', '-']) then
+  if AllowIncDec and CharInSet(Key, ['+', '-']) then
     FDataLink.Edit;
 
   inherited KeyPress(Key);
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;
@@ -551,7 +549,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomDbSliderEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -563,6 +560,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

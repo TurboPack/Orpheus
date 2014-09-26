@@ -84,142 +84,7 @@ type
 implementation
 
 uses
-  Mask, SysUtils, O32VlReg {$IFDEF VERSION6}, MaskUtils{$ENDIF}, OVCStr;
-
-{$IFNDEF VERSION6}
-  { These are declared in the implementation section of the VCL unit Mask.pas, }
-  { so I had to copy them here so that I could use it.  Delphi 6 has made them }
-  { available by moving them to MaskUtils.pas and making them globally         }
-  { available }
-  function MaskGetCharType(const EditMask: string;
-                           MaskOffset: Integer): TMaskCharType;
-  var
-    MaskChar: Char;
-  begin
-    Result := mcLiteral;
-    MaskChar := #0;
-    if MaskOffset <= Length(EditMask) then
-      MaskChar := EditMask[MaskOffset];
-    if MaskOffset > Length(EditMask) then
-      Result := mcNone
-
-    else if ByteType(EditMask, MaskOffset) <> mbSingleByte then
-      Result := mcLiteral
-
-    else if (MaskOffset > 1) and (EditMask[MaskOffset - 1] = mDirLiteral) and
-        (ByteType(EditMask, MaskOffset - 1) = mbSingleByte) and
-        not ((MaskOffset > 2) and (EditMask[MaskOffset - 2] = mDirLiteral) and
-        (ByteType(EditMask, MaskOffset - 2) = mbSingleByte)) then
-      Result := mcLiteral
-
-    else if (MaskChar = MaskFieldSeparator) and
-           (Length(EditMask) >= 4) and
-           (MaskOffset > Length(EditMask) - 4) then
-      Result := mcFieldSeparator
-
-    else if (Length(EditMask) >= 4) and
-           (MaskOffset > (Length(EditMask) - 4)) and
-           (EditMask[MaskOffset - 1] = MaskFieldSeparator) and
-           not ((MaskOffset > 2) and (EditMask[MaskOffset - 2] = mDirLiteral) and
-           (ByteType(EditMask, MaskOffset - 2) <> mbTrailByte)) then
-      Result := mcField
-
-    else if MaskChar in [mMskTimeSeparator, mMskDateSeparator] then
-      Result := mcIntlLiteral
-
-    else if MaskChar in [mDirReverse, mDirUpperCase, mDirLowerCase,
-        mDirLiteral] then
-      Result := mcDirective
-
-    else if MaskChar in [mMskAlphaOpt, mMskAlphaNumOpt, mMskAsciiOpt,
-        mMskNumSymOpt, mMskNumericOpt] then
-      Result := mcMaskOpt
-
-    else if MaskChar in [mMskAlpha, mMskAlphaNum, mMskAscii, mMskNumeric] then
-      Result := mcMask;
-  end;
-  {=====}
-
-  function MaskOffsetToOffset(const EditMask: String; MaskOffset: Integer): Integer;
-  var
-    I: Integer;
-    CType: TMaskCharType;
-  begin
-    Result := 0;
-    for I := 1 to MaskOffset do
-    begin
-      CType := MaskGetCharType(EditMask, I);
-      if not (CType in [mcDirective, mcField, mcFieldSeparator]) then
-        Inc(Result);
-    end;
-  end;
-  {=====}
-
-  function OffsetToMaskOffset(const EditMask: string; Offset: Integer): Integer;
-  var
-    I: Integer;
-    Count: Integer;
-    MaxChars: Integer;
-  begin
-    MaxChars  := MaskOffsetToOffset(EditMask, Length(EditMask));
-    if Offset > MaxChars then
-    begin
-      Result := -1;
-      Exit;
-    end;
-
-    Result := 0;
-    Count := Offset;
-    for I := 1 to Length(EditMask) do
-    begin
-      if not (mcDirective = MaskGetCharType(EditMask, I)) then begin
-        Dec(Count);
-        if Count < 0 then
-          Exit;
-      end;
-      Inc(Result);
-    end;
-  end;
-  {=====}
-
-  function MaskIntlLiteralToChar(IChar: Char): Char;
-  begin
-    Result := IChar;
-    case IChar of
-      mMskTimeSeparator: Result := TimeSeparator;
-      mMskDateSeparator: Result := DateSeparator;
-    end;
-  end;
-  {=====}
-
-  function MaskGetCurrentDirectives(const EditMask: string;
-    MaskOffset: Integer): TMaskDirectives;
-  var
-    I: Integer;
-    MaskChar: Char;
-  begin
-    Result := [];
-    for I := 1 to Length(EditMask) do
-    begin
-      MaskChar := EditMask[I];
-      if (MaskChar = mDirReverse) then
-        Include(Result, mdReverseDir)
-      else if (MaskChar = mDirUpperCase) and (I < MaskOffset) then
-      begin
-        Exclude(Result, mdLowerCase);
-        if not ((I > 1) and (EditMask[I-1] = mDirLowerCase)) then
-          Include(Result, mdUpperCase);
-      end
-      else if (MaskChar = mDirLowerCase) and (I < MaskOffset) then
-      begin
-        Exclude(Result, mdUpperCase);
-        Include(Result, mdLowerCase);
-      end;
-    end;
-    if MaskGetCharType(EditMask, MaskOffset) = mcLiteral then
-      Include(Result, mdLiteralChar);
-  end;
-{$ENDIF}
+  Mask, SysUtils, O32VlReg, MaskUtils, OVCStr;
 
 {===== TO32ParadoxValidator ==========================================}
 
@@ -389,7 +254,7 @@ begin
         end;
       mMskAscii, mMskAsciiOpt:
         begin
-          if ovcCharInSet(NewChar, LeadBytes) and TestChar(NewChar) then
+          if CharInSet(NewChar, LeadBytes) and TestChar(NewChar) then
           begin
             Result := False;
             Exit;
@@ -406,7 +271,7 @@ begin
         end;
       mMskAlpha, mMskAlphaOpt, mMskAlphaNum, mMskAlphaNumOpt:
         begin
-          if ovcCharInSet(NewChar, LeadBytes) then
+          if CharInSet(NewChar, LeadBytes) then
           begin
             if TestChar(NewChar) then
               Result := False;

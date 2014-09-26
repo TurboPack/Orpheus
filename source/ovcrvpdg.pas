@@ -83,7 +83,7 @@ type
   TOvcRvPOptions = set of TOvcRVPOption;
 
   TOvcRvPrintDialog = class(TOvcBaseDialog)
-  {.Z+}
+
   protected {private}
     {property variables}
     FCaption : string;
@@ -99,7 +99,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     property SelectedCheckedInit : Boolean
       read FSelectedCheckedInit write FSelectedCheckedInit;

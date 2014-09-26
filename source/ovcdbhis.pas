@@ -28,10 +28,6 @@
 
 {$I OVC.INC}
 
-{$IFNDEF VERSION3}
-!! Error - The DBISAM engine helper class is for D3+, BCB3+ only
-{$ENDIF}
-
 {$B-} {Complete Boolean Evaluation}
 {$I+} {Input/Output-Checking}
 {$P+} {Open Parameters}

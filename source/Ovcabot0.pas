@@ -41,9 +41,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  ExtCtrls, OvcVer, OvcURL, ShellAPI;
+  StdCtrls, DesignIntf, DesignEditors, ExtCtrls, OvcVer, OvcURL, ShellAPI;
 
 type
   TOvcfrmAboutForm = class(TForm)

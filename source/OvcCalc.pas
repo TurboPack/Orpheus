@@ -41,9 +41,9 @@ unit ovccalc;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls, Forms, Graphics,
-  Menus, Messages, StdCtrls, SysUtils, OvcData, OvcConst, OvcBase, OvcMisc;
+  UITypes, Types, Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls,
+  Forms, Graphics, Menus, Messages, StdCtrls, SysUtils, OvcData, OvcConst, OvcBase,
+  OvcMisc;
 
 type
   TOvcCalculatorButton = (
@@ -103,7 +103,7 @@ const
 
 type
   TOvcCalcColors = class(TPersistent)
-  {.Z+}
+
   private
     {property variables}
     FUpdating     : Boolean;
@@ -133,7 +133,6 @@ type
 
     property OnChange : TNotifyEvent
       read FOnChange write FOnChange;
-  {.Z-}
 
   published
     property ColorScheme : TOvcCalcColorScheme
@@ -157,17 +156,16 @@ type
   end;
 
 type
-  {.Z+}
+
   TOvcCalcPanel = class(TPanel)
   protected
     procedure Click;
       override;
   public
   end;
-  {.Z-}
 
 type
-  {.Z+}
+
   TOvcCustomCalculatorEngine = class
   protected {private}
     {property variables}
@@ -206,10 +204,9 @@ type
     property State : TOvcCalcStates
       read cState write cState;
   end;
-  {.Z-}
 
 type
-  {.Z+}
+
   TOvcCalcTape = class(TObject)
   protected {private}
     {property variables}
@@ -294,7 +291,6 @@ type
     property Width : Integer
       read GetWidth write SetWidth;
   end;
-  {.Z-}
 
 type
   TOvcCalcButtonPressedEvent =
@@ -306,7 +302,7 @@ type
   TOvcCalculatorOptions = set of TOvcCalculatorOption;
 
   TOvcCustomCalculator = class(TOvcCustomControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBorderStyle       : TBorderStyle;
@@ -428,7 +424,6 @@ type
       override;
     procedure Paint;
       override;
-  {.Z-}
 
     {protected properties}
     property BorderStyle : TBorderStyle
@@ -455,7 +450,7 @@ type
       read FOnButtonPressed  write FOnButtonPressed;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     constructor CreateEx(AOwner : TComponent; AsPopup : Boolean);
@@ -467,7 +462,6 @@ type
     procedure PushOperand(const Value : Extended);
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
 
     procedure CopyToClipboard;
     procedure PasteFromClipboard;
@@ -491,11 +485,9 @@ type
   TOvcCalculator = class(TOvcCustomCalculator)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle default bsNone;
@@ -766,20 +758,13 @@ begin
   if Assigned(taListBox) then begin
     if not Value and taListBox.Visible then begin
       if csDesigning in taListBox.Owner.ComponentState then begin
-        {$IFDEF VERSION4}
         taListBox.Visible := Value;
         taListBox.Height := 0;
-        {$ELSE}
-        taListBox.Free;
-        taListBox := nil;
-        {$ENDIF}
       end else
         taListBox.Visible := Value;
     end else if Value and not taListBox.Visible then begin
       taListBox.Visible := Value;
-      {$IFDEF VERSION4}
       taListBox.Height := taHeight;
-      {$ENDIF}
     end;
   end else if Value then begin
     ValidateListBox;
@@ -1022,7 +1007,7 @@ begin
           else if AllSame(copy(S, 1, -Diff)) then
             S := copy(S,-Diff + 1, Length(S));
         end else begin
-          if AllSame(S) and (not ovcCharInSet(S[1], ['0'..'9'])) then
+          if AllSame(S) and (not CharInSet(S[1], ['0'..'9'])) then
             if Diff >= 0 then
               S := S + StringOfChar(S[1], Diff)
             else
@@ -2368,7 +2353,7 @@ begin
     cClearAll;
     for I := 1 to Length(S) do begin
       C := S[I];
-      if ovcCharInSet(C, ['0'..'9', FormatSettings.DecimalSeparator, '.', '+', '-', '*', '/', '=', '%']) then
+      if CharInSet(C, ['0'..'9', FormatSettings.DecimalSeparator, '.', '+', '-', '*', '/', '=', '%']) then
         KeyPress(C);
     end;
   end;

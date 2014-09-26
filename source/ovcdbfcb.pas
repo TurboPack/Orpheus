@@ -48,7 +48,8 @@ type
   TOvcFieldTypeSet = set of TFieldType;
 
   TOvcDbFieldComboBox = class(TOvcBaseComboBox)
-  {.Z+}
+  
+
   protected {private}
     FDataLink         : TFieldDataLink;
     FOmitFields       : TOvcFieldTypeSet;
@@ -77,13 +78,10 @@ type
       override;
     procedure Populate;
 
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     property FieldName : string
       read GetFieldName;
@@ -103,11 +101,9 @@ type
       write SetShowHiddenFields
         default False;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;
@@ -300,7 +296,6 @@ begin
   end;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbFieldComboBox.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -312,6 +307,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

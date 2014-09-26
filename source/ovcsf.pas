@@ -54,7 +54,7 @@ type
 
 type
   TOvcCustomSimpleField = class(TOvcBaseEntryField)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FSimpleDataType : TSimpleDataType;  {data type for this field}
@@ -106,7 +106,7 @@ type
     function efValidateField : Word;
       override;
       {-validate contents of field; result is error code or 0}
-  {.Z-}
+
 
     {public properties}
     property DataType : TSimpleDataType
@@ -123,11 +123,9 @@ type
   published
     {inherited properties}
     property DataType;       {needs to loaded before most other properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property BorderStyle;
     property CaretIns;
@@ -465,7 +463,7 @@ procedure TOvcCustomSimpleField.efEdit(var Msg : TMessage; Cmd : Word);
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           if (sefAcceptChar in sefOptions) and CharIsOk then begin
             Exclude(sefOptions, sefAcceptChar);
             Exclude(sefOptions, sefLiteral);
@@ -798,7 +796,7 @@ procedure TOvcCustomSimpleField.efEdit(var Msg : TMessage; Cmd : Word);
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           if sefAcceptChar in sefOptions then
             if CharIsOk then begin
               efEditSt[0] := Ch;
@@ -1959,7 +1957,7 @@ var
   Buf : array[0..1] of Char;
 begin
   if FPictureMask <> Value then begin
-    if ovcCharInSet(Value, SimplePictureChars) then begin
+    if CharInSet(Value, SimplePictureChars) then begin
       FPictureMask := Value;
       if csDesigning in ComponentState then begin
         efPicture[0] := Value;

@@ -47,7 +47,8 @@ uses
 
 type
   TOvcDbCalendar = class(TOvcCustomCalendar)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FAutoUpdate  : Boolean;
@@ -95,13 +96,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     property Field : TField
       read GetField;
@@ -120,11 +118,9 @@ type
       write SetDataSource;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle default bsNone;
@@ -393,7 +389,6 @@ begin
   inherited KeyPress(Key);
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbCalendar.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -405,6 +400,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

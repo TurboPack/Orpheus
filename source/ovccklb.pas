@@ -42,10 +42,8 @@ unit ovccklb;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
-  SysUtils, {$IFDEF VERSION4} ImgList, {$ENDIF} OvcBase, OvcData,
-  OvcLB, OvcMisc{$IFDEF VERSION7}, Themes{$ENDIF};
+  Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
+  SysUtils, ImgList, OvcBase, OvcData, OvcLB, OvcMisc, Themes;
 
 type
   TOvcCheckStyle = (csCheck, csX);
@@ -203,11 +201,9 @@ type
       read FOwnerDrawCheck write FOwnerDrawCheck;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle;
@@ -257,23 +253,15 @@ type
 
 implementation
 
-{$IFDEF VERSION7}
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices; inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
 
 type
   TCheckListBoxDataWrapper = class
@@ -329,11 +317,7 @@ var
   S : TOwnerDrawState;
 begin
   with Msg.DrawItemStruct^ do begin
-    {$IFNDEF VERSION5}
-      S := TOwnerDrawState(WordRec(LongRec(itemState).Lo).Lo);
-    {$ELSE}
       S := TOwnerDrawState(LongRec(itemState).Lo);
-    {$ENDIF}
 
     FGlyphWidth := (rcItem.Right-rcItem.Left + 1 + BoxMargin*2);
 
@@ -427,9 +411,7 @@ var
   R  : TRect;
   NR : TRect;
   tmp: string;
-  {$IFDEF VERSION7}
   ElementDetails: TThemedElementDetails;
-  {$ENDIF}
 begin
   NR := Classes.Rect(0, 0, Rect.Right - Rect.Left, Rect.Bottom - Rect.Top);
   clDrawBmp.Width  := NR.Right;
@@ -454,7 +436,6 @@ begin
   if {not} Odd(W) then
     Dec(W);
 
-  {$IFDEF VERSION7}
   if ThemesEnabled then
   begin
     if odChecked in AState then
@@ -482,14 +463,11 @@ begin
 
     ThemeServices.DrawElement(clDrawBmp.Canvas.Handle, ElementDetails, Classes.Rect(NR.Left + M, NR.Top + M, NR.Left + M + W, NR.Top + M + W));
   end;
-  {$ENDIF}
 
   {draw the box}
   X := NR.Left + M;
   Y := NR.Top + M;
-  {$IFDEF VERSION7}
   if not ThemesEnabled then
-  {$ENDIF}
   begin
     if odGrayed in AState then
       clDrawBmp.Canvas.Brush.Bitmap := clGrayBitmap
@@ -514,9 +492,7 @@ begin
   end;
 
   { Let the owner draw the check mark }
-  {$IFDEF VERSION7}
   if not ThemesEnabled then
-  {$ENDIF}
   begin
     if Assigned(FOwnerDrawCheck) then begin
       R := Classes.Rect(X + 3, Y + 3, X + W - 3, Y + W - 3);

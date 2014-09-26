@@ -41,10 +41,9 @@ unit ovcedcal;
 interface
 
 uses
-  {$IFDEF UNICODE} Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
-  StdCtrls, SysUtils, {$IFDEF VERSION4} MultiMon, {$ENDIF} OvcBase, OvcCal,
-  OvcConst, OvcData, OvcEdPop, OvcExcpt, OvcIntl, OvcMisc, OvcEditF, OvcDate;
+  Types, Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
+  StdCtrls, SysUtils, MultiMon, OvcBase, OvcCal, OvcConst, OvcData, OvcEdPop, OvcExcpt,
+  OvcIntl, OvcMisc, OvcEditF, OvcDate;
 
 type
   TOvcDateOrder = (doMDY, doDMY, doYMD);
@@ -166,11 +165,9 @@ type
   TOvcDateEdit = class(TOvcCustomDateEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec;
     property AutoSelect;
@@ -424,7 +421,7 @@ begin
 
   if (ReadOnly) then Exit;
 
-  if FAllowIncDec and ovcCharInSet(Key, ['+', '-']) then begin
+  if FAllowIncDec and CharInSet(Key, ['+', '-']) then begin
   {accept current date}
     DoExit;
     if FDate = 0 then
@@ -733,10 +730,8 @@ procedure TOvcCustomDateEdit.PopupOpen;
 var
   P       : TPoint;
   R       : TRect;
-  {$IFDEF VERSION4}
   F       : TCustomForm;
   MonInfo : TMonitorInfo;
-  {$ENDIF}
 begin
   if FCalendar.Visible then
   {already popped up, exit}
@@ -759,7 +754,6 @@ begin
 
   {determine the proper position}
   SystemParametersInfo(SPI_GETWORKAREA, 0, @R, 0);
-  {$IFDEF VERSION4}
   F := GetParentForm(Self);
   if Assigned(F) then begin
     FillChar(MonInfo, SizeOf(MonInfo), #0);
@@ -767,7 +761,6 @@ begin
     GetMonitorInfo(F.Monitor.Handle, @MonInfo);
     R := MonInfo.rcWork;
   end;
-  {$ENDIF}
   if FPopupAnchor = paLeft then
     P := ClientToScreen(Point(-3, Height-4))
   else {paRight}
@@ -869,14 +862,14 @@ begin
     try
       {parse the string into subfields using a string list to hold the parts}
       I1 := 1;
-      while (I1 <= Length(Value)) and not ovcCharInSet(Value[I1], ['0'..'9', 'A'..'Z']) do
+      while (I1 <= Length(Value)) and not CharInSet(Value[I1], ['0'..'9', 'A'..'Z']) do
         Inc(I1);
       while I1 <= Length(Value) do begin
         I2 := I1;
-        while (I2 <= Length(Value)) and ovcCharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
+        while (I2 <= Length(Value)) and CharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
           Inc(I2);
         StringList.Add(Copy(Value, I1, I2-I1));
-        while (I2 <= Length(Value)) and not ovcCharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
+        while (I2 <= Length(Value)) and not CharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
           Inc(I2);
         I1 := I2;
       end;
@@ -900,7 +893,7 @@ begin
         case FieldOrder[Field] of
           'M' :
             begin
-              if (S = '') or ovcCharInSet(S[1], ['0'..'9']) then begin
+              if (S = '') or CharInSet(S[1], ['0'..'9']) then begin
               {numeric month}
                 try
                   if S = '' then

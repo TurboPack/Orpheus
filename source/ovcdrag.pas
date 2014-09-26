@@ -44,7 +44,8 @@ uses
 
 type
   TOvcDragShow = class(TObject)
-  {.Z+}
+  
+
   protected
     dStretchBltMode   : Integer;
     dMemDC,dSMemDC,
@@ -72,7 +73,8 @@ type
     procedure DragMove(X, Y : Integer);
     procedure HideDragImage;
     procedure ShowDragImage;
-  {.Z+}
+  
+
   end;
 
 

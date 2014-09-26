@@ -57,18 +57,18 @@ type
 
   TOvcCellArray = class
     protected {private}
-      {.Z+}
+
       FArray : pointer;
       FLimit : Integer;
       FCount : Integer;
 
       DoUnusedBit : boolean;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       function GetEmpty : boolean;
-      {.Z-}
+
 
     public
       destructor Destroy; override;

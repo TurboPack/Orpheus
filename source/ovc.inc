@@ -40,193 +40,23 @@
 {$J+} {Writable constants}
 {$H+} {Huge strings}
 
-{General define indicating use under C++ Builder}
-{$IFDEF VER93}
-  {$DEFINE CBuilder}
-{$ENDIF}
-{$IFDEF VER110}
-  {$DEFINE CBuilder}
-  {$ObjExportAll On}
-{$ENDIF}
-{$IFDEF VER125}
-  {$DEFINE CBuilder}
-  {$ObjExportAll On}
-{$ENDIF}
-{$IFDEF VER130}
-  {$IFDEF BCB}
-    {$DEFINE CBuilder}
-    {$ObjExportAll On}
-  {$ENDIF}
-{$ENDIF}
-{$IFDEF VER140}                                                       {!!.04}
-  {$IFDEF BCB}                                                        {!!.04}
-    {$DEFINE CBuilder}                                                {!!.04}
-    {$ObjExportAll On}                                                {!!.04}
-  {$ENDIF}                                                            {!!.04}
-{$ENDIF}                                                              {!!.04}
-
-{$IFNDEF VER80}       {Delphi 1.0}
- {$DEFINE VERSION2}   {Delphi 2.0 and BCB 1 or higher}
-{$ENDIF}
-
-{$IFDEF VERSION2}
- {$IFNDEF VER90}      {Delphi 2.0}
-  {$IFNDEF VER93}     {BCB 1.0}
-   {$DEFINE VERSION3} {Delphi 3.0 or BCB 3.0}
-  {$ENDIF}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF VERSION3}
- {$IFNDEF VER100}     {Delphi 3}
-  {$IFNDEF VER110}    {BCB 3}
-   {$DEFINE VERSION4} {Delphi 4.0 or higher}
-  {$ENDIF}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF VERSION4}
- {$IFNDEF VER120}     {Delphi 4}
-  {$IFNDEF VER125}    {BCB 4}
-   {$DEFINE VERSION5} {Delphi 5.0 or higher}
-  {$ENDIF}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF VERSION5}
- {$IFNDEF VER130}     {Delphi 5}
-  {$IFNDEF VER135}    {BCB 5}
-   {$DEFINE VERSION6} {Delphi 6.0 or higher}
-  {$ENDIF}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF VERSION6}
- {$IFNDEF VER140}     {Delphi 6}
-  {$IFNDEF VER145}    {BCB 6}
-   {$DEFINE VERSION7} {Delphi 7.0 or higher}
-  {$ENDIF}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF VER200}
-  {$DEFINE VERSION2009}
-{$ENDIF}
-
-{$IFDEF VER210}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-{$ENDIF}
-
-{$IFDEF VER220}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-  {$DEFINE VERSIONXE}
-{$ENDIF}
-
-{$IFDEF VER230}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-  {$DEFINE VERSIONXE}
-  {$DEFINE VERSIONXE2}
-  {$DEFINE VERSIONXE2UP}
-{$ENDIF}
-
-{$IFDEF VER240}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-  {$DEFINE VERSIONXE}
-  {$DEFINE VERSIONXE2}
-  {$DEFINE VERSIONXE2UP}
-  {$DEFINE VERSIONXE3}
-{$ENDIF}
-
-{$IFDEF VER250}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-  {$DEFINE VERSIONXE}
-  {$DEFINE VERSIONXE2}
-  {$DEFINE VERSIONXE2UP}
-  {$DEFINE VERSIONXE3}
-  {$DEFINE VERSIONXE4}
-{$ENDIF}
-
-{$IFDEF VER260}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-  {$DEFINE VERSIONXE}
-  {$DEFINE VERSIONXE2}
-  {$DEFINE VERSIONXE2UP}
-  {$DEFINE VERSIONXE3}
-  {$DEFINE VERSIONXE4}
-  {$DEFINE VERSIONXE5}
-  {$DEFINE VERSIONXE5UP}
-{$ENDIF}
-
-{$IFDEF VER270}
-  {$DEFINE VERSION2009}
-  {$DEFINE VERSION2010}
-  {$DEFINE VERSIONXE}
-  {$DEFINE VERSIONXE2}
-  {$DEFINE VERSIONXE2UP}
-  {$DEFINE VERSIONXE3}
-  {$DEFINE VERSIONXE4}
-  {$DEFINE VERSIONXE5}
-  {$DEFINE VERSIONXE5UP}
-  {$DEFINE VERSIONXE6}
-  {$DEFINE VERSIONXE6UP}
-{$ENDIF}
-
-{$IFDEF VERSION2}
- {$IFNDEF VERSION3}
-  {$DEFINE VERSION2ONLY}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF VERSION3}
- {$IFNDEF VERSION4}
-  {$DEFINE VERSION3ONLY}
- {$ENDIF}
-{$ENDIF}
-
-{$IFDEF Win32}
-  {$A+} {Word Align Data}
-{$ELSE}
-  {$A-} {Byte Align Data}
-{$ENDIF}
-
-{$IFDEF VERSION6}
-  {$WARN SYMBOL_PLATFORM OFF}
-  {$IFDEF VERSION7}
-    {$B- Incomplete boolean evaluation}
-    {$H+ Long string support}
-    {$J+ Writeable typed constants}
-    {$P- No open string parameters}
-    {$T- No type-checked pointers}
-    {$V- No var string checking}
-    {$X+ Extended syntax}
-    {$Z1 Enumerations are word sized}
-    {$WARN UNIT_PLATFORM OFF}
-    {$WARN UNSAFE_CODE OFF}
-    {$WARN UNSAFE_TYPE OFF}
-    {$WARN UNSAFE_CAST OFF}
-    {$WARN UNIT_DEPRECATED OFF}
-  {$ENDIF}
-{$ENDIF}
-
-{ This define turns off all platform warnings in Delphi 6.  Delphi 6 }
-{ is cross-platform compatible with Kylix and all of Orpheus' Win32  }
-{ only stuff causes the compiler to throw a truckload of platform    }
-{ warnings when rebuilding packages.                                 }
+{$WARN SYMBOL_PLATFORM OFF}
+{$B- Incomplete boolean evaluation}
+{$H+ Long string support}
+{$J+ Writeable typed constants}
+{$P- No open string parameters}
+{$T- No type-checked pointers}
+{$V- No var string checking}
+{$X+ Extended syntax}
+{$Z1 Enumerations are word sized}
+{$WARN UNIT_PLATFORM OFF}
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_TYPE OFF}
+{$WARN UNSAFE_CAST OFF}
+{$WARN UNIT_DEPRECATED OFF}
 
 {.$DEFINE ZeroDateAsNull}
 {This define enables special handling for a zero date. If defined,   }
 {assigning 0 to a date field is treated the same as assigning the    }
 {constant "BadDate" (see manual) using the AsDateTime property.      }
 {Otherwise, 0 is treated as a valid date. (32-bit only)              }
-
-{Orpheus contains some x86-assembler-code which will not work in     }
-{win64. So we will use pure pascal-code in this case.                }
-{$IFDEF WIN64}
-  {$DEFINE PUREPASCAL}
-{$ENDIF}

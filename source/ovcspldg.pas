@@ -50,7 +50,7 @@ uses
   ExtCtrls, OvcDlg;
 
 type
-  {.Z+}
+
   TOvcSplashDialog = class;
 
   TOvcfrmSplashDlg = class(TForm)
@@ -64,10 +64,10 @@ type
     Dialog : TOvcSplashDialog;
   public
   end;
-  {.Z-}
+
 
   TOvcSplashDialog = class(TOvcBaseDialog)
-  {.Z+}
+
   protected {private}
     {property variables}
     FActive         : Boolean;
@@ -101,7 +101,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function Execute : Boolean;
       override;

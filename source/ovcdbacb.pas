@@ -45,7 +45,8 @@ uses
 
 type
   TOvcDbAliasComboBox = class(TOvcBaseComboBox)
-  {.Z+}
+  
+
   protected {private}
     FDbEngineHelper    : TOvcDbEngineHelperBase;
     FTableNameComboBox : TOvcDbTableNameComboBox;
@@ -62,7 +63,7 @@ type
     procedure SelectionChanged; override;
   public
     procedure Populate;
-  {.Z-}
+
     property AliasName : string
       read GetAliasName;
     property Path : string
@@ -79,11 +80,9 @@ type
       read FDbEngineHelper
       write FDbEngineHelper;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

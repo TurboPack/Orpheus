@@ -45,19 +45,14 @@ unit ovcedit;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, MMSystem, Classes, Controls, Forms, Graphics, Menus, Messages,
-  StdCtrls, SysUtils, OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData,
-  OvcEditN, OvcEditU, OvcExcpt, OvcFxFnt, OvcMisc, OvcStr, OvcEditP, OvcBordr;
+  Types, Windows, MMSystem, Classes, Controls, Forms, Graphics, Menus, Messages,
+  StdCtrls, SysUtils, OvcBase, OvcCaret, OvcColor, OvcConst, OvcCmd, OvcData, OvcEditN,
+  OvcEditU, OvcExcpt, OvcFxFnt, OvcMisc, OvcStr, OvcEditP, OvcBordr, UITypes;
 
 const
   MARGINPAD = 5;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollstyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   {Forward Declarations}
   TOvcCustomEditor = class;
 
@@ -814,11 +809,9 @@ type
     property OnUserCommand;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Controller;
@@ -864,19 +857,15 @@ type
     FFileName   : string;
     FMakeBackup : Boolean;
     FIsOpen     : Boolean;
-{$IFDEF UNICODE}
     FEncoding   : TEncoding;          {encoding of the file}
                                       {see LoadFromFile}
-{$ENDIF}
     {property methods}
     procedure SetFileName(const Value : string);
       {-set name of file being edited}
     procedure SetIsOpen(Value : Boolean);
       {-set if the file is open or not}
     procedure SetBackupExt(Value: string);
-{$IFDEF UNICODE}
     procedure SetEncoding(Value: TEncoding);
-{$ENDIF}
 
     {internal methods}
     function teFixFileName(const Value : string) : string;
@@ -889,31 +878,21 @@ type
   public
     constructor Create(AOwner : TComponent);
       override;
-{$IFDEF UNICODE}
     destructor Destroy;
       override;
-{$ENDIF}
 
     procedure Attach(Editor : TOvcCustomEditor);
       override;
     procedure NewFile(const Name : string);
       {-create a new file}
 
-{$IFDEF UNICODE}
     procedure LoadFromFile(const Name : string; const AEncoding : TEncoding = nil); dynamic;
-{$ELSE}
-    procedure LoadFromFile(const Name : string); dynamic;
-{$ENDIF}
       {-open the file for editing}
 
-{$IFDEF UNICODE}
     function suggestEncoding: TEncoding;
       {-suggest an encoding for SaveToFile based on FEncoding and the
         content of the editor. }
     procedure SaveToFile(const Name : string; const AEncoding: TEncoding = nil); dynamic;
-{$ELSE}
-    procedure SaveToFile(const Name : string); dynamic;
-{$ENDIF}
       {-write the text in the specified file}
 
     {public properties}
@@ -933,11 +912,9 @@ type
       read FMakeBackup
       write FMakeBackup;
 
-{$IFDEF UNICODE}
     property Encoding : TEncoding
       read FEncoding
       write SetEncoding;
-{$ENDIF}
 end;
 
   TOvcTextFileEditor = class(TOvcCustomTextFileEditor)
@@ -994,11 +971,9 @@ end;
     property OnUserCommand;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Controller;
@@ -1457,7 +1432,7 @@ begin
       {strip control chars}
       for I := 0 to StrLen(GPs)-1 do begin
         if FKeepClipboardChars then begin
-          if not ovcCharInSet(GPs[I], FClipboardChars) and (GPs[I] <= #32) then
+          if not CharInSet(GPs[I], FClipboardChars) and (GPs[I] <= #32) then
             GPs[I] := #32;
         end else if GPs[I] < #9 then
           GPs[I] := #32;
@@ -1525,11 +1500,7 @@ begin
   OpenClipboard(Handle);
   try
     EmptyClipboard;
-    {$IFDEF UNICODE}
     SetClipboardData(CF_UNICODETEXT, H);
-    {$ELSE}
-    SetClipboardData(CF_TEXT, H);
-    {$ENDIF}
   finally
     CloseClipboard;
   end;
@@ -2616,7 +2587,7 @@ begin
         Offset := 0;
         if Pos + BlockSize < SaveLen then begin
           {don't end block in cr/lf}
-          while ovcCharInSet(S[BlockSize+Offset], [#13, #10]) and
+          while CharInSet(S[BlockSize+Offset], [#13, #10]) and
                 (BlockSize+Offset < $FFF0) and
                 (Pos+BlockSize+Offset < SaveLen) do
             Inc(Offset);
@@ -2984,20 +2955,12 @@ end;
 
 procedure TOvcCustomEditor.edRecreateWnd;
 var
-{$IFDEF VERSION5}
   PF       : TWinControl;
-{$ELSE}
-  PF       : TForm;
-{$ENDIF}
   HadFocus : Boolean;
 begin
   HadFocus := Focused;
   if HadFocus then begin
-{$IFDEF VERSION5}
     PF := GetImmediateParentForm(Self);
-{$ELSE}
-    PF := TForm(GetParentForm(Self));
-{$ENDIF}
     if Assigned(PF) then
       SendMessage(PF.Handle, WM_NEXTDLGCTL, 0, 0);
   end;
@@ -5233,7 +5196,7 @@ begin
 
   OpenClipboard(Handle);
   try
-    H := GetClipboardData({$IFDEF UNICODE}CF_UNICODETEXT{$ELSE}CF_TEXT{$ENDIF});
+    H := GetClipboardData(CF_UNICODETEXT);
     if H <> 0 then begin
       P := PChar(GlobalLock(H));
       try
@@ -5280,7 +5243,7 @@ begin
         TopLine := edCurLine-Pred(edRows);
     ccChar : {process normal character input}
       if not ReadOnly then
-        edInsertChar(Char({$IFNDEF UNICODE}Lo{$ENDIF}(CharCode)));
+        edInsertChar(Char(CharCode));
     ccCopy : {copy highlighted text to clipboard}
       if edHaveHighlight then
         CopyToClipboard;
@@ -6455,19 +6418,14 @@ constructor TOvcCustomTextFileEditor.Create(AOwner : TComponent);
 begin
   inherited Create(AOwner);
 
-  {$IFDEF VERSION4}
   DoubleBuffered := true;
-  {$ENDIF}
 
   FBackupExt  := 'BAK';
   FIsOpen     := False;
   FMakeBackup := False;
-{$IFDEF UNICODE}
   FEncoding   := TEncoding.Default;
-{$ENDIF}
 end;
 
-{$IFDEF UNICODE}
 destructor TOvcCustomTextFileEditor.Destroy;
 begin
   if not TEncoding.IsStandardEncoding(FEncoding) then
@@ -6482,8 +6440,6 @@ begin
     FEncoding.Free;
   FEncoding := Value;
 end;
-{$ENDIF}
-
 
 procedure TOvcCustomTextFileEditor.Loaded;
 begin
@@ -6493,8 +6449,6 @@ begin
     LoadFromFile(FFileName);
 end;
 
-
-{$IFDEF UNICODE}
 
 { Load text from file 'Name'
   If no encoding 'AEncoding' is given, the method tries to derive the file's encoding from
@@ -6509,9 +6463,7 @@ var
   sBuffer, P1, P2 : PChar;
   sLine           : string;
   BOMSize, i      : Integer;
-{$IFDEF VERSIONXE}
   DefEncoding     : TEncoding;
-{$ENDIF}
 begin
   if Name = '' then
     Exit;
@@ -6537,18 +6489,16 @@ begin
       end;
 
       {Set the default encoding}
-{$IFDEF VERSIONXE}
       if Assigned(AEncoding) then
         DefEncoding := AEncoding
       else
         DefEncoding := TEncoding.Default;
-{$ENDIF}
       {clear the current encoding and set it according to the buffer's content (the
        BOM at the beginning of the buffer)}
       if not TEncoding.IsStandardEncoding(FEncoding) then
         FEncoding.Free;
       FEncoding := nil;
-      BOMSize := TEncoding.GetBufferEncoding(Buffer, FEncoding {$IFDEF VERSIONXE}, DefEncoding{$ENDIF});
+      BOMSize := TEncoding.GetBufferEncoding(Buffer, FEncoding, DefEncoding);
 
       {there might be null-characters (nc's) in the buffer; 'GetString' will cut off the
        input at this point - which might not be wanted. So we transform nc's into spaces
@@ -6603,92 +6553,6 @@ begin
   end;
 end;
 
-{$ELSE}
-
-procedure TOvcCustomTextFileEditor.LoadFromFile(const Name : string);
-const
-  BufSize = (MaxSmallInt + 1) * SizeOf(Char);
-type
-  SBuf = array[0..BufSize-1] of Char;
-var
-  F          : System.Text;
-  S, Buf     : ^SBuf;
-begin
-  if Name = '' then
-    Exit;
-
-  {save FileName}
-  FFileName := teFixFileName(Name);
-  Buf := nil;
-  S := nil;
-  try
-    {display hourglass}
-    Screen.Cursor := crHourGlass;
-    try
-      {open the file}
-      System.Assign(F, FFileName);
-      Reset(F);
-      try {finally}
-        {get line buffer}
-        New(S);
-
-        {get buffer for text file - no problem if we can't, just slower}
-        try
-          GetMem(Buf, BufSize);
-          if Assigned(Buf) then
-            System.SetTextBuf(F, Buf^, BufSize);
-        except
-          on EOutOfMemory do {nothing}
-          else
-            raise;
-        end;
-
-        {delete existing text and allow display to be refreshed}
-        {if HandleAllocated then begin}
-          DeleteAll(True);
-          Update;
-        {end;}
-
-        {read the file}
-        while not Eof(F) do begin
-          System.ReadLn(F, S^);
-
-          case AppendPara(PChar(S)) of
-            0              : {};
-            oeTooManyBytes : raise EEditorError.Create(GetOrphStr(SCTooManyBytes), 0);
-            oeTooManyParas : raise EEditorError.Create(GetOrphStr(SCTooManyParas), 0);
-            oeParaTooLong  : raise EEditorError.Create(GetOrphStr(SCParaTooLong), 0);
-          else
-            raise EEditorError.Create(GetOrphStr(SCOutOfMemory), 0);
-          end;
-        end;
-
-        {reset the scroll bars}
-        ResetScrollBars(True);
-      finally
-        {close the file}
-        Close(F);
-
-        {dispose of buffer}
-        if Assigned(S) then
-          FreeMem(S, BufSize);
-        if Assigned(Buf) then
-          FreeMem(Buf, BufSize);
-      end;
-    finally
-      {restore original cursor}
-      Screen.Cursor := crDefault;
-    end;
-    FIsOpen := True;
-  except
-    IsOpen := False;
-    if not (csLoading in ComponentState) then
-      raise;
-  end;
-end;
-
-{$ENDIF}
-
 procedure TOvcCustomTextFileEditor.NewFile(const Name : string);
   {-create a new file}
 begin
@@ -6701,12 +6565,10 @@ begin
   {reset file name}
   FileName := Name;
 
-{$IFDEF UNICODE}
   if not TEncoding.IsStandardEncoding(FEncoding) then
     FreeAndNil(FEncoding);
 
   FEncoding := TEncoding.Default;
-{$ENDIF}
 end;
 
 
@@ -6725,9 +6587,6 @@ begin
   end;
 end;
 
-
-{$IFDEF UNICODE}
-
 function TOvcCustomTextFileEditor.suggestEncoding: TEncoding;
   {-suggest an encoding for SaveToFile (either FEncoding or
     TEncoding.UTF8) - based on the content of the editor. }
@@ -6741,7 +6600,7 @@ begin
   else begin
     {otherwise we have to check whether the text can be represented by the codepage}
     I := ParaCount;
-    while (I>0) and (ovc32StringIsCurrentCodePage(GetParaPointer(I){$IFDEF VERSIONXE}, FEncoding.Codepage{$ENDIF})) do
+    while (I>0) and (ovc32StringIsCurrentCodePage(GetParaPointer(I), FEncoding.Codepage)) do
       Dec(I);
     if I>0 then
       {'FEncoding' cannot be used - suggest UTF8 instead}
@@ -6798,7 +6657,7 @@ begin
         sBuffer := GetParaPointer(I);
         for J := 1 to Length(sBuffer) do begin
           if FKeepClipboardChars then begin
-            if not ovcCharInSet(sBuffer[J], FClipboardChars) and (sBuffer[J] <= #32) then
+            if not CharInSet(sBuffer[J], FClipboardChars) and (sBuffer[J] <= #32) then
               sBuffer[J] := #32;
           end else if sBuffer[J] < #9 then
             sBuffer[J] := #32;
@@ -6823,99 +6682,6 @@ begin
   {clear the modified flag}
   SetModified(False);
 end;
-
-{$ELSE}
-
-procedure TOvcCustomTextFileEditor.SaveToFile(const Name : string);
-  {-write the current file to disk}
-const
-  BufSize = 8192 * SizeOf(Char);
-var
-  F     : System.Text;
-  I, PC : LongInt;
-  J     : Longint;
-  Buf   : Pointer;
-  S     : PChar;
-  S2    : PChar;
-
-begin
-  if csDesigning in ComponentState then
-    Exit;
-
-  if Name = '' then
-    Exit;
-
-  Buf := nil;
-
-  {display hourglass}
-  Screen.Cursor := crHourGlass;
-  try
-    {make backup file if appropriate}
-    if FMakeBackup then
-      MakeBakFile(Name,FBackupExt);
-
-    {open the file}
-    System.Assign(F, Name);
-    System.ReWrite(F);
-    try
-      {get buffer for text file - no problem if we can't, just slower}
-      try
-        GetMem(Buf, BufSize);
-        if Assigned(Buf) then
-          System.SetTextBuf(F, Buf^, BufSize);
-      except
-        on EOutOfMemory do {nothing}
-        else
-          raise;
-      end;
-
-      {allocate memory for copy buffer}
-      GetMem(S2, edParas.MaxParaLen * SizeOf(Char));
-      try
-        {get number of paragraphs}
-        PC := ParaCount;
-
-        {create the file}
-        I := 1;
-        repeat
-          S := GetParaPointer(I);
-
-          {make a copy to alter}
-          StrCopy(S2, S);
-          for J := 0 to LongInt(StrLen(S2))-1 do begin
-            if FKeepClipboardChars then begin
-              if not ovcCharInSet(S2[J], FClipboardChars) and (S2[J] <= #32) then
-                S2[J] := #32;
-            end else if S2[J] < #9 then
-              S2[J] := #32;
-          end;
-
-          if (I < PC) or (S2[0] <> #0) then
-            System.WriteLn(F, S2);
-
-          Inc(I);
-        until (I > PC);
-      finally
-        FreeMem(S2, edParas.MaxParaLen);
-      end;
-    finally
-      {close the file}
-      Close(F);
-
-      {dispose of text buffer}
-      if Assigned(Buf) then
-        FreeMem(Buf, BufSize);
-    end;
-  finally
-    {restore cursor}
-    Screen.Cursor := crDefault;
-  end;
-
-  {clear the modified flag}
-  SetModified(False);
-end;
-
-{$ENDIF}
 
 procedure TOvcCustomTextFileEditor.SetFileName(const Value : string);
   {-set name of file being edited}

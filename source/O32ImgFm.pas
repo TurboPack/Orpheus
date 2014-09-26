@@ -57,7 +57,7 @@ type
     function  GetAbout: string;
     procedure SetAbout(const Value : string);
     function  GetCanvas: TCanvas;
-    procedure SetAutoSize(Value: Boolean); {$IFDEF VERSION6}override;{$ENDIF}
+    procedure SetAutoSize(Value: Boolean); override;
     procedure SetDragControl(Control: TComponent);
     procedure SetPicture(Value: TBitmap);
     procedure AdjustFormSize;
@@ -120,11 +120,7 @@ constructor TO32CustomImageForm.Create(AOwner: TComponent);
 
   { Create a callable window proc pointer which will be used to replace the }
   { parent forms default WndProc with our NewWndProc }
-  {$IFDEF VERSION6}
     NewWndProc := Classes.MakeObjectInstance(ifWndProc);
-  {$ELSE}
-    NewWndProc := MakeObjectInstance(ifWndProc);
-  {$ENDIF}
 
   FOpaqueRgn := 0;
   FAutoSize := true;

@@ -86,7 +86,8 @@ type
   end;
 
   TOvcDbRvField = class(TOvcRvField)
-  {.Z+}
+  
+
   protected
   published
     {inherited properties}
@@ -95,7 +96,7 @@ type
     property CanSort stored false;
     property DefaultPrintWidth stored false;
     property DefaultWidth stored false;
-  {.Z-}
+
   end;
 
   TOvcDbRVEnumEvent =
@@ -170,12 +171,10 @@ type
     procedure EnumerateSelected(UserData : Pointer); override;
     procedure EnumerateEx(Backwards, SelectedOnly: Boolean; StartAfter: Pointer;
       UserData : Pointer); override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
 
   published
     property Controller; {must be first}
@@ -189,11 +188,9 @@ type
     property ActiveView;
     property Align;
     property AutoCenter;
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property BorderStyle;
     property Ctl3D;
     property ColumnResize;
@@ -405,11 +402,7 @@ begin
       if Assigned(Fld)
       and (Fld.DataType in [ftString, ftSmallint, ftInteger, ftWord,
                             ftBoolean, ftFloat, ftCurrency, ftDate, ftTime,
-                            ftDateTime, ftAutoInc
-                            {$IFDEF Version5},
-                            ftWideString
-                            ,ftLargeint
-                            {$ENDIF}]) then begin
+                            ftDateTime, ftAutoInc, ftWideString,ftLargeint]) then begin
         FieldList.Add(Fld);
         Col := TOvcDbRvField(Fields.Add);
         Col.Name := CreateValidFieldName(Name+Fld.FieldName);
@@ -428,9 +421,7 @@ begin
           Col.DataType := dtBoolean;
         ftFloat,
         ftCurrency,
-        {$IFDEF Version5}
         ftLargeInt,
-        {$ENDIF}
         ftBCD :
           Col.DataType := dtFloat;
         ftDate,
@@ -544,12 +535,12 @@ function TOvcDbReportView.CreateValidFieldName(const FieldName : string) : strin
 var
   i : Integer;
 begin
-  if ovcCharInSet(FieldName[1], ['A'..'Z','a'..'z']) then
+  if CharInSet(FieldName[1], ['A'..'Z','a'..'z']) then
     Result := FieldName[1]
   else
     Result := '_';
   for i := 2 to length(FieldName) do
-    if ovcCharInSet(FieldName[i], ['A'..'Z','a'..'z','0'..'9']) then
+    if CharInSet(FieldName[i], ['A'..'Z','a'..'z','0'..'9']) then
       Result := Result + FieldName[i]
     else
       Result := Result + '_';
@@ -609,10 +600,7 @@ begin
   ActiveRecord := FDataLink.ActiveRecord;
   try
     case TField(FieldList[FieldIndex]).DataType of
-    {$IFDEF Version5}
-    ftWideString,
-    {$ENDIF}
-    ftString :
+    ftWideString, ftString :
       begin
         if FKeySearch and (Data1 = Pointer($FFFFFFFF)) then
           S1 := FSearchString
@@ -664,9 +652,7 @@ begin
       end;
     ftFloat,
     ftCurrency,
-    {$IFDEF Version5}
     ftLargeInt,
-    {$ENDIF}
     ftDate,
     ftTime,
     ftDateTime :
@@ -705,11 +691,7 @@ end;
 function TOvcDbReportView.DoGetFieldAsFloat(Data : Pointer; FieldIndex : Integer) : double;
 begin
   case TField(FieldList[FieldIndex]).DataType of
-  ftSmallint, ftInteger, ftWord, ftFloat,
-  {$IFDEF Version5}
-  ftLargeInt,
-  {$ENDIF}
-  ftCurrency, ftAutoInc:;
+  ftSmallint, ftInteger, ftWord, ftFloat, ftLargeInt, ftCurrency, ftAutoInc:;
   else
     Result := 0;
     exit;
@@ -780,11 +762,8 @@ end;
 
 procedure TOvcDbReportView.DoKeySearch(FieldIndex : Integer; const SearchString : string);
 begin
-  if (TField(FieldList[FieldIndex]).DataType = ftString)
-  {$IFDEF Version5}
-  or (TField(FieldList[FieldIndex]).DataType = ftWideString)
-  {$ENDIF}
-  then begin
+  if (TField(FieldList[FieldIndex]).DataType = ftString) or (TField(FieldList[FieldIndex]).DataType = ftWideString) then
+  begin
     FKeySearch := True;
     FSearchString := SearchString;
     try
@@ -957,7 +936,6 @@ begin
   end;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbReportView.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -969,7 +947,6 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 { rewritten}
 procedure TOvcDbReportView.DataSetChanged;

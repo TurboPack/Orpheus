@@ -297,7 +297,7 @@ type
     res: string;
   end;
 const
-  cSomeStrings: array[0..{$IFNDEF UNICODE}9{$ELSE}12{$ENDIF}] of TData =
+  cSomeStrings: array[0..12] of TData =
     ((Dest: '1234567890'; Pos:  0; Src: 'abcde'; res: 'abcde1234567890'),
      (Dest: '1234567890'; Pos:  5; Src: 'abcde'; res: '12345abcde67890'),
      (Dest: '1234567890'; Pos: 10; Src: 'abcde'; res: '1234567890abcde'),
@@ -307,13 +307,10 @@ const
      (Dest: '';           Pos:  5; Src: 'abcde'; res: ''),
      (Dest: '1234567890'; Pos:  4; Src: '';      res: '1234567890'),
      (Dest: '1234567890'; Pos:  4; Src: 'a';     res: '1234a567890'),
-     (Dest: '1234567890'; Pos:  4; Src: 'ab';    res: '1234ab567890')
-{$IFDEF UNICODE}
-     ,
+     (Dest: '1234567890'; Pos:  4; Src: 'ab';    res: '1234ab567890'),
      (Dest: 'ГЖЙПФΣΔШд'; Pos:  4; Src: 'ÐàÿĘ';    res: 'ГЖЙПÐàÿĘФΣΔШд'),
      (Dest: 'ГЖЙПФΣΔШд'; Pos:  4; Src: 'Ð';       res: 'ГЖЙПÐФΣΔШд'),
      (Dest: 'ГЖЙПФΣΔШд'; Pos:  9; Src: 'Ðàÿ';     res: 'ГЖЙПФΣΔШдÐàÿ')
-{$ENDIF}
     );
 var
   i, j: Integer;
@@ -342,11 +339,7 @@ end;
 procedure TestOvcEditUClass.TestedWhiteSpace;
 const
   cSomeChars: array[0..3] of Char =
-{$IFDEF UNICODE}
     ('a', ' ', #9, 'Ġ');
-{$ELSE}
-    ('a', ' ', #9, 'Ä');
-{$ENDIF}
   cResults: array[0..3] of Boolean =
     (False, True, True, False);
 var

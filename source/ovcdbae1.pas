@@ -42,8 +42,7 @@ interface
 
 uses
   Windows, Classes, Graphics, Forms, Controls, Buttons, StdCtrls, SysUtils,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  OvcConst, OvcData;
+  DesignIntf, DesignEditors, OvcConst, OvcData;
 
 type
   TOvcfrmDbAeSimpleMask = class(TForm)

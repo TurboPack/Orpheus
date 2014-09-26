@@ -43,7 +43,8 @@ interface
 uses
   OvcConst, OvcData;
 
-{.Z+}
+
+
 type
   UndoType = (
     utSavePos,   {save a position}
@@ -172,7 +173,7 @@ type
     function  CountWhiteSpace(Pos : Integer) : Word;
       {-count amount of white space prior to Pos}
   end;
-{.Z-}
+
 
 
 implementation

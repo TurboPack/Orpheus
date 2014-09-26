@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbDateEdit = class(TOvcCustomDateEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment    : TAlignment;
     FAutoUpdate   : Boolean;
@@ -96,7 +97,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -108,7 +109,8 @@ type
     property PreserveTime : Boolean
       read FPreserveTime write FPreserveTime;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly
       write SetReadOnly;
@@ -118,18 +120,16 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
 
     procedure PopupClose(Sender : TObject);
       override;
     procedure PopupOpen;
       override;
-  {.Z-}
+
 
     {public properties}
     property Field : TField
@@ -139,11 +139,9 @@ type
   TOvcDbDateEdit = class(TOvcCustomDbDateEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec;
     property AutoSelect;
@@ -443,14 +441,14 @@ begin
   inherited KeyPress(Key);
 
 {  NeedsUpdating := (AllowIncDec and (Key in ['+', '-']));}
-  NeedsUpdating := (AllowIncDec and ovcCharInSet(TheKey, ['+', '-']));
+  NeedsUpdating := (AllowIncDec and CharInSet(TheKey, ['+', '-']));
 
   if (NeedsUpdating) then begin
     FDataLink.Edit;
     FDataLink.Field.AsDateTime := FDate;
   end;
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;
@@ -631,7 +629,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomDbDateEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -643,6 +640,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

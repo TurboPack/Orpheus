@@ -41,9 +41,8 @@ unit ovcprcbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Printers,
-  ExtCtrls, OvcCmbx, OvcMisc{$IFNDEF VERSION5}, StdCtrls{$ENDIF};
+  UITypes, Windows, Messages, SysUtils, Classes, Graphics, Controls, Printers,
+  ExtCtrls, OvcCmbx, OvcMisc, StdCtrls;
 
 type
   TOvcPrinterComboBox = class(TOvcBaseComboBox)
@@ -67,11 +66,9 @@ type
     property SelectPrinter : Boolean
       read FSelectPrinter write FSelectPrinter
       default True;
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

@@ -41,10 +41,8 @@ unit OvcEfPe;
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  StdCtrls, ExtCtrls, OvcBase, OvcData, OvcEF, OvcNF, OvcPB, OvcPF, OvcSF,
-  OvcStr;
+  Windows, Classes, Graphics, Forms, Controls, Buttons, DesignIntf, DesignEditors,
+  StdCtrls, ExtCtrls, OvcBase, OvcData, OvcEF, OvcNF, OvcPB, OvcPF, OvcSF, OvcStr;
 
 type
   TOvcfrmEfRange = class(TForm)
@@ -177,7 +175,7 @@ var
     else begin
       Result := 0;
       for I := DotPos+1 to EF.MaxLength-1 do
-        if ovcCharInSet(EF.efNthMaskChar(I), PictureChars) then
+        if CharInSet(EF.efNthMaskChar(I), PictureChars) then
           Inc(Result)
         else
           Break;

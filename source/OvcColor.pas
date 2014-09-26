@@ -45,7 +45,8 @@ uses
 
 type
   TOvcColors = class(TPersistent)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FBackColor     : TColor;   {background color}
@@ -87,7 +88,7 @@ type
       override;
     constructor Create(FG, BG : TColor);
       virtual;
-  {.Z-}
+
 
     property OnColorChange : TNotifyEvent
       read FOnColorChange

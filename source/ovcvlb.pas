@@ -43,7 +43,7 @@ interface
 
 uses
   Windows, Classes, Controls, Forms, Graphics, StdCtrls, Menus, Messages, Types,
-  SysUtils, OvcBase, OvcData, OvcCmd, OvcConst, OvcMisc, OvcExcpt, OvcColor;
+  SysUtils, OvcBase, OvcData, OvcCmd, OvcConst, OvcMisc, OvcExcpt, OvcColor, UITypes;
 
 const
   vlbMaxTabStops = 128;             {maximum number of tab stops}
@@ -122,12 +122,8 @@ type
   TBuffer = array[0..255] of Char;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   TOvcCustomVirtualListBox = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property variables}
     FItemIndex         : LongInt;     {selected item}
@@ -382,7 +378,7 @@ type
         descendants can turn off the behavior.}
     function IsValidIndex(Index : LongInt) : Boolean;
 
-  {.Z-}
+
 
     {protected properties}
     property AutoRowHeight : Boolean
@@ -441,12 +437,12 @@ type
 
   public
 
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor  Destroy;
       override;
-  {.Z-}
+
 
     procedure BeginUpdate; virtual;
       {-user is updating the list items--don't paint}
@@ -520,11 +516,9 @@ type
     property OnUserCommand;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Controller;

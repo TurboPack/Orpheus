@@ -57,7 +57,8 @@ type
     of object;
 
   TOvcCustomTimeEdit = class(TOvcCustomEdit)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FDurationDisplay     : TOvcDurationDisplay;
@@ -98,7 +99,7 @@ type
     procedure SetTime(Value : TDateTime);
     procedure SetTimeText(Value : string);
       dynamic;
-  {.Z-}
+
 
     {protected properties}
     property DefaultToPM  : Boolean
@@ -127,10 +128,11 @@ type
       read FOnSetTime write FOnSetTime;
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
      function FormatTime(Value : TDateTime) : string;
       dynamic;
@@ -149,11 +151,9 @@ type
   TOvcTimeEdit = class(TOvcCustomTimeEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSelect;
     property AutoSize;
@@ -176,9 +176,7 @@ type
     property MaxLength;
     property NowString;
     property OEMConvert;
-    {$IFDEF VERSION4}
     property ParentBiDiMode;
-    {$ENDIF}
     property ParentColor;
     property ParentCtl3D;
     property ParentFont;
@@ -201,9 +199,7 @@ type
     property OnDblClick;
     property OnDragDrop;
     property OnDragOver;
-    {$IFDEF VERSION4}
     property OnEndDock;
-    {$ENDIF}
     property OnEndDrag;
     property OnEnter;
     property OnExit;
@@ -445,11 +441,11 @@ var
 begin
   {parse the string into subfields using a string list to hold the parts}
   I1 := 1;
-  while (I1 <= Length(Value)) and not ovcCharInSet(Value[I1], ['0'..'9', 'A'..'Z']) do
+  while (I1 <= Length(Value)) and not CharInSet(Value[I1], ['0'..'9', 'A'..'Z']) do
     Inc(I1);
   while I1 <= Length(Value) do begin
     I2 := I1;
-    while (I2 <= Length(Value)) and ovcCharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
+    while (I2 <= Length(Value)) and CharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
       Inc(I2);
 
     T := Copy(Value, I1, I2-I1);
@@ -458,14 +454,14 @@ begin
     while Length(T) > 0 do begin
       I := 1;
       case T[1] of
-        'A'..'Z' : while ovcCharInSet(T[I], ['A'..'Z']) do Inc(I);
-        '0'..'9' : while ovcCharInSet(T[I], ['0'..'9']) do Inc(I);
+        'A'..'Z' : while CharInSet(T[I], ['A'..'Z']) do Inc(I);
+        '0'..'9' : while CharInSet(T[I], ['0'..'9']) do Inc(I);
       end;
       S.Add(Copy(T, 1, I-1));
       Delete(T, 1, I-1);
     end;
 
-    while (I2 <= Length(Value)) and not ovcCharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
+    while (I2 <= Length(Value)) and not CharInSet(Value[I2], ['0'..'9', 'A'..'Z']) do
       Inc(I2);
     I1 := I2;
   end;
@@ -531,7 +527,7 @@ begin
             {if more fields, see if next field is units for this one}
             if Field < FieldCount then begin
               S := FieldList[Field]; {get next field value}
-              if not ovcCharInSet(S[1], ['0'..'9']) then begin
+              if not CharInSet(S[1], ['0'..'9']) then begin
                 if PartialCompare(S, GetOrphStr(SCHoursName)) then begin
                   Hours := V;
                   FoundUnits := True;
@@ -615,7 +611,7 @@ begin
         case Field of
           1 :
             begin
-              if (S = '') or ovcCharInSet(S[1], ['0'..'9']) then begin
+              if (S = '') or CharInSet(S[1], ['0'..'9']) then begin
                 V := StrToIntDef(S, 0);
                 if FTimeMode = tmDuration then begin
                   case FPrimaryField of
@@ -636,7 +632,7 @@ begin
             end;
           2 :
             begin
-              if (S = '') or ovcCharInSet(S[1], ['0'..'9']) then begin
+              if (S = '') or CharInSet(S[1], ['0'..'9']) then begin
                 V := StrToIntDef(S, 0);
                 if FTimeMode = tmDuration then begin
                   case FPrimaryField of
@@ -654,7 +650,7 @@ begin
             end;
           3 :
             begin
-              if (S = '') or ovcCharInSet(S[1], ['0'..'9']) then begin
+              if (S = '') or CharInSet(S[1], ['0'..'9']) then begin
                 V := StrToIntDef(S, 0);
                 if FTimeMode = tmDuration then begin
                   case FPrimaryField of

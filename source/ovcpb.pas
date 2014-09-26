@@ -47,7 +47,7 @@ uses
 
 type
   TOvcPictureBase = class(TOvcBaseEntryField)
-  {.Z+}
+
   protected {private}
     pfSemiLits   : Byte;               {# of semi-literals in field}
     pfPicFlags   : TPictureFlags;      {picture flags array}
@@ -136,7 +136,7 @@ type
       {-combines S with the picture mask and updates the edit string}
     function ValidateContents(ReportError : Boolean) : Word;
       override;
-  {.Z-}
+
   end;
 
 
@@ -305,7 +305,7 @@ begin
   end else begin
     FillChar(pfPicFlags, MaxLength+1, pflagLiteral);
     for I := 0 to MaxLength-1 do
-      if ovcCharInSet(efNthMaskChar(I), PictureChars) then
+      if CharInSet(efNthMaskChar(I), PictureChars) then
         pfPicFlags[I] := pflagFormat
       else
         case efNthMaskChar(I) of

@@ -46,7 +46,8 @@ uses
 
 type
   TOvcCustomDbNumberEdit = class(TOvcCustomNumberEdit)
-  {.Z+}
+  
+
   protected {private}
     FAlignment  : TAlignment;
     FAutoUpdate : Boolean;
@@ -95,7 +96,7 @@ type
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoUpdate : Boolean
@@ -110,7 +111,8 @@ type
       read GetDataSource
       write SetDataSource;
 
-  {.Z+}
+  
+
     property ReadOnly : Boolean {hides ancestor's ReadOnly property}
       read GetReadOnly
       write SetReadOnly;
@@ -120,18 +122,16 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
 
     procedure PopupClose(Sender : TObject);
       override;
     procedure PopupOpen;
       override;
-  {.Z-}
+
 
     {public properties}
     property Field : TField
@@ -141,11 +141,9 @@ type
   TOvcDbNumberEdit = class(TOvcCustomDbNumberEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec;
     property AutoSelect;
@@ -205,7 +203,7 @@ type
 implementation
 
 uses
-  ovcstr;
+  SysUtils;
 
 const
   NumFieldTypes : set of  TFieldType =
@@ -396,12 +394,12 @@ end;
 
 procedure TOvcCustomDbNumberEdit.KeyPress(var Key : Char);
 begin
-  if AllowIncDec and ovcCharInSet(Key, ['+', '-']) then
+  if AllowIncDec and CharInSet(Key, ['+', '-']) then
     FDataLink.Edit;
 
   inherited KeyPress(Key);
 
-  if ovcCharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
+  if CharInSet(Key, [#32..#255]) and (FDataLink.Field <> nil) and
      not FDataLink.Field.IsValidChar(Key) then begin
     MessageBeep(0);
     Key := #0;
@@ -551,7 +549,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcCustomDbNumberEdit.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -563,6 +560,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

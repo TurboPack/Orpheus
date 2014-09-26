@@ -47,10 +47,9 @@ unit ovcviewr;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
-  SysUtils, OvcBase, OvcCaret, OvcCmd, OvcColor, OvcConst, OvcData, OvcExcpt,
-  OvcFxFnt, OvcMisc, OvcStr, OvcBordr, OvcEditU;
+  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls, SysUtils,
+  OvcBase, OvcCaret, OvcCmd, OvcColor, OvcConst, OvcData, OvcExcpt, OvcFxFnt, OvcMisc,
+  OvcStr, OvcBordr, OvcEditU, UITypes;
 
 type
   {text position record for viewer}
@@ -69,13 +68,9 @@ const
   MaxSmallInt          = High(SmallInt);
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   {The ancestor viewer class}
   TOvcBaseViewer = class(TOvcCustomControlEx)
-  {.Z+}
+
   protected {private}
     {property fields - persistent}
     FBorders          : TOvcBorders;
@@ -304,14 +299,14 @@ type
       write FOnUserCommand;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
-  {.Z-}
+
 
     function CheckLine(LineNum : LongInt) : LongInt;
       virtual;
@@ -381,7 +376,7 @@ type
       stored False;
   end;
 
-  {.Z+}
+
   {TOrTextFileViewer related definitions}
   TStringNode = class
   protected
@@ -416,10 +411,10 @@ type
     function Nth(N : LongInt) : TStringNode;
       {-Return a pointer to the Nth node in the list}
   end;
-  {.Z-}
+
 
   TOvcCustomTextFileViewer = class(TOvcBaseViewer)
-  {.Z+}
+
   protected {private}
     {properties}
     FFileName : PString;
@@ -437,7 +432,7 @@ type
   protected
     function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
       override;
-  {.Z-}
+
 
     {properties}
     property FileName : string
@@ -449,12 +444,12 @@ type
       write SetIsOpen;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function CheckLine(LineNum : LongInt) : LongInt;
       override;
@@ -484,11 +479,9 @@ type
     property ShowCaret default True;
     property TabSize default 8;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D;
@@ -526,7 +519,7 @@ type
     property OnStartDrag;
   end;
 
-{.Z+}
+
 {TOrFileViewer related definitions}
 const
   {--DO NOT CHANGE ANY OF THE FOLLOWING CONSTANTS--}
@@ -553,11 +546,11 @@ type
 type
   PfvPageArray = ^TfvPageArray;
   TfvPageArray = array[0..Pred(MaxPageCount)] of TfvPageRec;
-{.Z-}
+
 
 type
   TOvcCustomFileViewer = class(TOvcBaseViewer)
-  {.Z+}
+
   protected {private}
     {properties}
     FBufferPageCount : integer;     {Number of pages in fvPages}
@@ -615,7 +608,7 @@ type
     {virtual methods}
     function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
       override;
-  {.Z-}
+
 
     {properties}
     property BufferPageCount : integer
@@ -639,12 +632,12 @@ type
       write SetIsOpen;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     {other methods}
     function CheckLine(LineNum : LongInt) : LongInt;
@@ -681,11 +674,9 @@ type
     property ShowCaret default True;
     property TabSize default 8;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D;
@@ -788,7 +779,6 @@ function CalcEffCol(S : PChar; ActCol : Word; TabSize : Byte) : Word; register;
    Changes:
      03/2011, AB: Added PUREPASCAL-version, changed types of parameters }
 
-{$IFDEF PUREPASCAL}
 begin
   result := 0;
   while (ActCol>0) and (S^ <> #0) do begin
@@ -801,86 +791,15 @@ begin
   end;
 end;
 
-{$ELSE}
-asm
-  push  ebx
-  push  esi
-
-  mov   esi, eax        {esi = S}
-  xor   eax, eax        {eax = 0}
-  or    dx, dx
-  jz    @@Exit          {nothing to do if ActCol=0}
-
-  movzx bx, cl          {bx = TabSize}
-  mov   cx, dx          {cx = ActCol}
-
-{$IFDEF UNICODE}
-@@DoNextChar:
-  mov  dx, [esi]        {get next char}
-  or   dx, dx
-  jz   @@Exit           {done if end of S reached}
-  inc  esi
-  inc  esi
-  cmp  dx, 9            {is it a <tab>?}
-{$ELSE}
-@@DoNextChar:
-  mov  dl, [esi]        {get next char}
-  or   dl, dl
-  jz   @@Exit           {done if end of S reached}
-  inc  esi
-  cmp  dl, 9            {is it a <tab>?}
-{$ENDIF}
-  je   @@DoTab          {yes, go process tab}
-  inc  eax              {no:  increment eff col}
-  dec  cx               {     and decrement actual col}
-  jnz  @@DoNextChar     {go back for next char if one there}
-  jmp  @@Exit           {otherwise exit}
-@@DoTab:
-  xor  edx,edx          {dx = 0: prepare for div}
-  div  bx               {divide eff col by tabsize}
-  inc  eax              {add one}
-  mul  bx               {multiply by tabsize}
-  dec  cx               {decrement actual col}
-  jnz  @@DoNextChar   {go back for next Char if one there}
-@@Exit:
-  pop  esi
-  pop  ebx
-end;
-{$ENDIF}
-
-
 function IsWhiteSpace(C : Char) : Boolean;
   {-Return True if a Char is 'white' space
 
    Changes:
      03/2011, AB: Added PUREPASCAL-version }
 
-{$IFDEF PUREPASCAL}
 begin
   result := (C=' ') or (C=#9);
 end;
-{$ELSE}
-asm
-  mov  edx, eax
-  xor  eax, eax
-{$IFDEF UNICODE}
-  cmp  dx, 9h
-  je   @@ReturnTrue
-  cmp  dx, 20h
-{$ELSE}
-  cmp  dl, 9h
-  je   @@ReturnTrue
-  cmp  dl, 20h
-{$ENDIF}
-  jne  @@Exit
-
-@@ReturnTrue:
-  inc  eax
-
-@@Exit:
-end;
-{$ENDIF}
-
 
 procedure InsertHexPair(Dest : PChar; C : AnsiChar); register;
   {-Convert C to hex and store in Dest[0] and Dest[1]
@@ -890,37 +809,10 @@ procedure InsertHexPair(Dest : PChar; C : AnsiChar); register;
 
 const
   HexDigits : array[0..$F] of AnsiChar = '0123456789ABCDEF';
-{$IFDEF PUREPASCAL}
 begin
   Dest[0] := Char(HexDigits[Ord(C) shr 4]);
   Dest[1] := Char(HexDigits[Ord(C) and 15]);
 end;
-{$ELSE}
-  asm
-  push edi
-
-  mov  edi, eax
-  mov  ecx, offset HexDigits
-  mov  dh, dl
-  and  dh, 0Fh
-  shr  dl, 4
-  xor  eax, eax
-  mov  al, dl
-  mov  dl, [ecx+eax]
-  mov  al, dh
-  mov  dh, [ecx+eax]
-  mov  ax, dx
-{$IFDEF UNICODE}
-  shl eax, 8
-  shr ax, 8
-  stosd
-{$ELSE}
-  stosw
-{$ENDIF}
-  pop  edi
-end;
-{$ENDIF}
-
 
 function PosEqual(const P1, P2 : TOvcTextPos) : Boolean;
   {-Return True if two text positions are the same}
@@ -948,45 +840,6 @@ begin
     ((R.Start.Line = R.Stop.Line) and (R.Start.Col > R.Stop.Col));
 end;
 
-(* Changes:
-     03/2011 AB, This function is redundant; we now use edHaveTabs from OvcEditU.pas
-function LineHasTabs(S : PChar; Len : integer) : Boolean; register;
-  {-Return True if a string has tab characters}
-{$IFDEF UNICODE}
-asm
-  push  edi
-
-  mov   edi, eax
-  mov   ecx, edx
-  mov   ax, 9h
-  cld
-  repne scasw
-  mov   eax, 0
-  jne   @@Exit
-  inc   eax
-
-@@Exit:
-  pop   edi
-end;
-{$ELSE}
-asm
-  push  edi
-
-  mov   edi, eax
-  mov   ecx, edx
-  mov   al, 9h
-  cld
-  repne scasb
-  mov   eax, 0
-  jne   @@Exit
-  inc   eax
-
-@@Exit:
-  pop   edi
-end;
-{$ENDIF}
-*)
-
 
 procedure MapUnknownChars(S : PChar; Len : integer;
                           FirstChar, LastChar, DefChar : Char); register;
@@ -1000,39 +853,6 @@ begin
     else if S[I] = #0 then
       Exit;
 end;
-(*asm
-  push ebx              {save ebx}
-
-  or edx, edx           {is Len <= 0?}
-  jle @@Exit            {yes, exit now}
-  mov  ch, LastChar     {cl = FirstChar, ch = LastChar}
-  mov  bl, DefChar      {bl = DefChar}
-
-@@GetNextChar:
-  mov  bh, [eax]        {get next char from S}
-  or   bh, bh           {is it the terminator?}
-  jz   @@Exit           {yes, exit now}
-
-  cmp  bh, cl           {is it < FirstChar?}
-  jb   @@CvtChar        {yes, go convert}
-
-  cmp  bh, ch           {is it > LastChar?}
-  ja   @@CvtChar        {yes, go convert}
-
-  inc  eax              {move char pointer in S}
-  dec  edx              {dec Len}
-  jnz  @@GetNextChar    {if Len > 0 go do next char}
-  jmp  @@Exit           {all over}
-
-@@CvtChar:
-  mov  [eax], bl        {convert the current char}
-  inc  eax              {move char pointer in S}
-  dec  edx              {dec Len}
-  jnz  @@GetNextChar    {if Len > 0 go do next char}
-
-@@Exit:
-  pop  ebx              {restore old ebx}
-end;  *)
 
 {*** TOvcBaseViewer ***}
 
@@ -1233,11 +1053,7 @@ begin
   else begin
     try
       EmptyClipboard;
-      {$IFDEF UNICODE}
       SetClipboardData(CF_UNICODETEXT, MemHandle);
-      {$ELSE}
-      SetClipboardData(CF_TEXT, MemHandle);
-      {$ENDIF}
     finally
       CloseClipboard;
     end;
@@ -3535,9 +3351,7 @@ end;
 function TOvcCustomFileViewer.fvGetLineAsText(LineNum : LongInt; var Len : integer) : PChar;
 var
   CharsLeft : integer;
-{$IFDEF PUREPASCAL}
   ch: AnsiChar;
-{$ENDIF}
 begin
   {go to the specified line}
   fvGotoTextLine(LineNum);
@@ -3562,7 +3376,6 @@ begin
     { Warning: 'CharsLeft' is the number of characters left MINUS 1 }
     CharsLeft := MinL((FileSize - fvWorkOffset - 1), High(integer));
 
-    {$IFDEF PUREPASCAL}
     repeat
       if fvWorkPtr=fvWorkEnd then begin
         fvWorkOffset := fvWorkOffset + Len;
@@ -3581,74 +3394,6 @@ begin
     until (CharsLeft<0) or (Len>=LineBufSize);
     fvLnBuf[Len] := #0;
     Dec(Len);
-
-    {$ELSE}
-    asm
-      push ebx
-      push edi
-      push esi
-
-      mov  edi, Self
-      mov  edx, [edi].fvWorkEnd
-      mov  esi, [edi].fvWorkPtr
-      mov  edi, [edi].fvLnBuf
-      mov  ebx, CharsLeft
-      mov  ecx, LineBufSize-1
-
-    @@GetNextChar:
-      cmp  esi, edx
-      jb   @@InsertNextChar
-
-      push edi                             {save registers}
-      push ecx
-      mov  edi, Self                       {load self pointer}
-      mov  [edi].fvWorkPtr, esi            {adjust fvWorkPtr}
-      mov  eax, CharsLeft                  {adjust fvWorkOffset}
-      sub  eax, ebx
-      add  [edi].fvWorkOffset, eax
-      mov  eax, edi
-      call fvGetWorkingChar                {get next page buffer}
-      or   al, al                          {check for EOF: set zero flag}
-      pop  ecx                             {restore registers}
-      pop  eax
-      mov  edx, [edi].fvWorkEnd            {reload registers}
-      mov  esi, [edi].fvWorkPtr
-      mov  edi, eax
-      jz   @@AppendNull                    {if zf set, t'was EOF}
-
-    @@InsertNextChar:
-      cld                                  {go forward}
-      lodsb                                {next character into al}
-      cmp  al,13                           {is it a CR?}
-      je   @@AppendNull                    {if so, we're done}
-      or   al,al                           {is it a null?}
-      jnz  @@DoInsert
-      mov  al, ' '                         {if so, translate to space}
-
-    @@DoInsert:
-    {$IFDEF UNICODE}
-      xor ah,ah
-      stosw                                {store the character}
-    {$ELSE}
-      stosb                                {store the character}
-    {$ENDIF}
-      sub  ebx,1                           {decrement CharsLeft count}
-      jb   @@AppendNull                    {any chars left?}
-      loop @@GetNextChar                   {do it again if room in fvLnBuf}
-
-    @@AppendNull:
-    {$IFDEF UNICODE}
-      xor  ax,ax                            {append a null}
-      stosw
-    {$ELSE}
-      xor  al,al                            {append a null}
-      stosb
-    {$ENDIF}
-      pop  esi
-      pop  edi
-      pop  ebx
-    end;
-    {$ENDIF}
 
     Len := StrLen(fvLnBuf);
     fvLnBufLen := Len;
@@ -3826,10 +3571,8 @@ var
   LocalNL       : LongInt;
   LastLineLen   : integer;
   Delta1, Delta2, Delta3, Delta4, Delta5 : LongInt;
-{$IFDEF PUREPASCAL}
   ptr: PAnsiChar;
   bof, eof, cont: Boolean;
-{$ENDIF}
 begin
   {is this line beyond the end?}
   if (fvLastLine >= 0) and (Line > fvLastLine) then
@@ -3890,7 +3633,6 @@ begin
 
     {do we need to search forwards for the line?}
     if (LineDelta > 0) then begin
-{$IFDEF PUREPASCAL}
       { repeat moving 'fvWorkPtr' to the first character of the next line until we reach
         the given line ('line') }
       repeat
@@ -3929,96 +3671,6 @@ begin
         end;
       until (LocalNL=Line) or EoF;
 
-{$ELSE}
-      asm
-        {Note: the following is slightly complicated by the need
-               to calculate the length of the last line scanned
-               through. If we do hit the last line of all, this
-               value will be used to calculate fvLastLineOffset.}
-        push  edi
-        push  esi
-
-        xor   eax, eax
-        mov   LastLineLen, eax
-        jmp   @@PrepareForSearch
-
-
-      @@LoadNextPage:
-        add   LastLineLen, eax
-        mov   edi, Self
-        add   [edi].fvWorkPtr, esi
-        add   [edi].fvWorkOffset, esi
-
-        mov   eax, edi
-        call  fvGetWorkingChar
-        or    al, al
-        jz    @@ExitAsmBlock
-
-      @@PrepareForSearch:
-        mov   edx, Line
-        mov   edi, Self
-        mov   esi, [edi].fvWorkEnd
-        mov   edi, [edi].fvWorkPtr
-        sub   esi, edi
-        mov   ecx, esi
-
-      @@SearchForNextCR:
-        mov   eax, ecx
-        jecxz @@LoadNextPage
-        cld
-        push  ecx
-        mov   al, 13
-        repne scasb
-        pop   eax
-        jne   @@LoadNextPage
-
-        or    ecx, ecx
-        jnz   @@CheckForLF
-
-        add   LastLineLen, eax
-        mov   edi, Self
-        add   [edi].fvWorkPtr, esi
-        add   [edi].fvWorkOffset, esi
-
-        mov   eax, edi
-        call  fvGetWorkingChar
-        or    al, al
-        jz    @@ExitAsmBlock
-
-        mov   edx, Line
-        mov   edi, Self
-        xor   esi, esi
-        mov   esi, [edi].fvWorkEnd
-        mov   edi, [edi].fvWorkPtr
-        sub   esi, edi
-        mov   ecx, esi
-
-      @@CheckForLF:
-        cmp   Byte ptr [edi], 10
-        jne   @@CheckForTargetLine
-        inc   edi
-        dec   ecx
-
-      @@CheckForTargetLine:
-        xor   eax, eax
-        mov   LastLineLen, eax
-
-        inc   LocalNL
-        cmp   LocalNL, edx
-        jne   @@SearchForNextCR
-
-        sub   esi, ecx
-
-        mov   edi, Self
-        add   [edi].fvWorkOffset, esi
-        add   [edi].fvWorkPtr, esi
-
-      @@ExitAsmBlock:
-        pop   esi
-        pop   edi
-      end;
-{$ENDIF}
-
       {did we hit the end of the file?}
       if (fvWorkOffset >= FileSize) then begin
         {account for the length of the last line}
@@ -4051,7 +3703,6 @@ begin
         fvGetWorkingChar;
       end;
 
-{$IFDEF PUREPASCAL}
       repeat
         repeat
           ptr := fvWorkPtr;
@@ -4079,58 +3730,6 @@ begin
       Inc(fvWorkPtr);
       Inc(fvWorkOffset);
       fvGetWorkingChar;
-{$ELSE}
-      asm
-        push edi
-        push esi
-        jmp  @@PrepareForSearch
-
-      @@LoadPrevPage:
-        {when this point is reached SI has the number of chars
-         that have been searched through in the current buffer}
-        mov   edi, Self
-        sub   [edi].fvWorkPtr, esi
-        sub   [edi].fvWorkOffset, esi
-
-        cmp   [edi].fvWorkOffset, -1
-        je    @@ExitAsmBlock
-
-        cld
-        mov   eax, edi
-        call  fvGetWorkingChar      {get next page buffer}
-
-      @@PrepareForSearch:
-        mov   edx, Line
-        mov   edi, Self
-        mov   esi, [edi].fvWorkBeg
-        mov   edi, [edi].fvWorkPtr
-        mov   ecx, edi
-        sub   ecx, esi
-        inc   ecx
-        mov   esi, ecx
-        std
-
-      @@SearchForPrevCR:
-        mov   al, 13
-        repne scasb
-        jne   @@LoadPrevPage
-        sub   LocalNL, 1
-        cmp   LocalNL, edx
-        jne   @@SearchForPrevCR
-        sub   esi, ecx
-        dec   esi
-
-        mov   edi, Self
-        sub   [edi].fvWorkOffset, esi
-        sub   [edi].fvWorkPtr, esi
-
-      @@ExitAsmBlock:
-        cld
-        pop  esi
-        pop  edi
-      end;
-{$ENDIF}
-
       {Point to next character after end of previous line}
       Inc(fvWorkOffset);
       Inc(fvWorkPtr);

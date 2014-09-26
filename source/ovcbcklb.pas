@@ -41,8 +41,7 @@ unit ovcbcklb;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
+  Types, Windows, Classes, Controls, Forms, Graphics, Menus, Messages, StdCtrls,
   SysUtils, OvcBase, OvcLB;
 
 const
@@ -59,7 +58,7 @@ const
 
 type
   TOvcBasicCheckList = class(TOvcCustomListBox)
-  {.Z+}
+
   protected {private}
     {property variables}
     FBoldX          : Boolean;      {true for bold X in box}
@@ -140,7 +139,6 @@ type
       override;
     property Canvas;
 
-  {.Z-}
     property Glyphs[Index : Integer] : TBitmap
       read GetGlyphs
       write SetGlyphs;
@@ -198,11 +196,9 @@ type
 
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Align;
     property BorderStyle;
@@ -275,11 +271,7 @@ var
   G     : TBitmap;
 begin
   with Msg.DrawItemStruct^ do begin
-    {$IFNDEF VERSION5}
-    State := TOwnerDrawState(WordRec(LongRec(itemState).Lo).Lo);
-    {$ELSE}
     State := TOwnerDrawState(LongRec(itemState).Lo);
-    {$ENDIF}
     Canvas.Handle := hDC;
     Canvas.Font := Font;
     Canvas.Brush := Brush;

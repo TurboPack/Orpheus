@@ -42,9 +42,8 @@ unit o32flxbn;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Controls, Messages, Buttons, Graphics, Classes, OvcBase, OvcVer,
-  Grids, StdCtrls{$IFDEF VERSION4}, O32MouseMon{$ENDIF}, OvcMisc;
+  UITypes, Types, Windows, Controls, Messages, Buttons, Graphics, Classes,
+  OvcBase, OvcVer, Grids, StdCtrls, O32MouseMon, OvcMisc;
 
 type
   {forward declarations}
@@ -137,14 +136,12 @@ type
 
     {message handlers}
     procedure CMLostFocus  (var Message : TMessage);     message WM_KILLFOCUS;
-    {$IFDEF VERSION4}
 
 { - HWnd changed to TOvcHWnd for BCB Compatibility}
     procedure MouseMonitor(const MouseMessage: Integer;
                            const wParam, lParam: Integer;
                            const ScreenPt: TPoint;
                            const MouseWnd: TOvcHwnd{hWnd});
-    {$ENDIF}
     procedure CNDrawItem   (var Message: TWMDrawItem);   message CN_DRAWITEM;
 
     {property methods}
@@ -157,9 +154,7 @@ type
     procedure SetPopGlyph(Value: TBitmap);
     procedure SetSelection(Value: Integer);
     procedure SetPopPosition(Value: TO32FlexButtonPopPosition);
-    {$IFDEF VERSION4}
     procedure SetWheelSelection(Value: Boolean);
-    {$ENDIF}
     procedure DoMenuClick(Selection: Integer);
     {internal methods}
     procedure MouseInMenu(Value: Boolean);
@@ -199,10 +194,8 @@ type
       read FPopWidth write FPopWidth;
     property SmartPop: Boolean
       read FSmartPop write FSmartPop;
-    {$IFDEF VERSION4}
     property WheelSelection: Boolean
       read FWheelSelection write SetWheelSelection;
-    {$ENDIF}
     property OnClick: TO32FlexButtonItemEvent
       read FOnClick write FOnClick;
     property OnMenuPop: TNotifyEvent
@@ -218,9 +211,7 @@ type
     property About;
     property ActiveItem default -1;
     property ItemCollection;
-    {$IFDEF VERSION4}
     property WheelSelection; {default True;}
-    {$ENDIF}
     property MenuColor;
     property PopPosition default ppBottomRight;
     property PopRowCount default 5;
@@ -466,9 +457,7 @@ end;
 
 destructor TO32CustomFlexButton.Destroy;
 begin
-  {$IFDEF VERSION4}
   StopMouseMonitor(MouseMonitor);
-  {$ENDIF}
   FItems.Free;
   FPopGlyph.Free;
   FCanvas.Free;
@@ -649,7 +638,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 procedure TO32CustomFlexButton.SetWheelSelection(Value: Boolean);
 begin
   if FWheelSelection = Value then
@@ -663,7 +651,6 @@ begin
   end;
 end;
 {=====}
-{$ENDIF}
 
 procedure TO32CustomFlexButton.DoMenuClick(Selection: Integer);
 begin
@@ -698,7 +685,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 { - HWnd changed to TOvcHWnd for BCB Compatibility}
 procedure TO32CustomFlexButton.MouseMonitor(const MouseMessage: Integer;
                                             const wParam, lParam: Integer;
@@ -718,7 +704,6 @@ begin
   end;
 end;
 {=====}
-{$ENDIF}
 
 procedure TO32CustomFlexButton.CNDrawItem(var Message: TWMDrawItem);
 begin
@@ -852,12 +837,10 @@ begin
     ActiveItem := 0;
   if FPopupMenu <> nil then
     FPopupMenu.BGColor := FMenuColor;
-{$IFDEF VERSION4}
 {Fix for problem 673218 and 1093481, exclude code from D3 that do not
  support mousewheel operations. Fix provided by marcus fuchs}
   if WheelSelection and (not (csDesigning in ComponentState)) then
       StartMouseMonitor(MouseMonitor);
-{$ENDIF}
   inherited;
 end;
 {=====}

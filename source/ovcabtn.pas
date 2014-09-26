@@ -51,7 +51,7 @@ type
 
 type
   TOvcAttachedButton = class(TBitBtn)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FAttachedControl : TWinControl;
@@ -97,7 +97,6 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
 
   published
     property About : string
@@ -237,11 +236,7 @@ begin
   ControlStyle := ControlStyle - [csSetCaption];
 
   {create a callable window proc pointer}
-  {$IFDEF VERSION6}
     abNewWndProc := Classes.MakeObjectInstance(abWndProc);
-  {$ELSE}
-    abNewWndProc := MakeObjectInstance(abWndProc);
-  {$ENDIF}
 
   {initialize inherited properties}
   Width  := 21;
@@ -271,11 +266,7 @@ begin
   abUnHookControl;
   FAttachedControl := nil;
 
-  {$IFDEF VERSION6}
-    Classes.FreeObjectInstance(abNewWndProc);
-  {$ELSE}
-    FreeObjectInstance(abNewWndProc);
-  {$ENDIF}
+  Classes.FreeObjectInstance(abNewWndProc);
   abNewWndProc := nil;
 
   inherited Destroy;

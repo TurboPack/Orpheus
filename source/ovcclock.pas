@@ -248,10 +248,8 @@ type
   TOvcClock = class(TOvcCustomClock)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property About;
     property Active;
     property Align;

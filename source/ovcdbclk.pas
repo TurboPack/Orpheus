@@ -72,12 +72,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
     property Field : TField
       read GetField;
 
@@ -91,10 +89,8 @@ type
       write SetDataSource;
 
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property About;
     property Align;
     property Color;
@@ -247,7 +243,6 @@ begin
   Refresh;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbClock.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -259,6 +254,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

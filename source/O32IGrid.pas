@@ -45,18 +45,13 @@ unit o32igrid;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, Graphics, Classes, Forms, Mask, StdCtrls, ExtCtrls, Grids,
-  Messages, Controls, OvcBase, OvcCmbx, OvcClrCb, ovcftcbx;
+  Types, Windows, Graphics, Classes, Forms, Mask, StdCtrls, ExtCtrls, Grids, Messages,
+  Controls, OvcBase, OvcCmbx, OvcClrCb, ovcftcbx, UITypes;
 
 const
   ScrollBarWidth = 16;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   {Forward Declarations}
   TO32CustomInspectorGrid = class;
 
@@ -106,10 +101,8 @@ type
     procedure CreateParams(var Params: TCreateParams); override;
     procedure Changed(Sender: TObject);
     procedure DblClick; override;
-    {$IFDEF VERSION4}
     function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint): Boolean; override;
-    {$ENDIF}
     function EditCanModify: Boolean; override;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyPress(var Key: Char); override;
@@ -123,21 +116,9 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure Deselect;
     procedure Hide;
-    {$IFNDEF VERSION4}
-      {$IFNDEF CBUILDER}
-        {D3}
-        procedure Invalidate; override;
-        procedure SetFocus; override;
-      {$ELSE}
-        {BCB3}
-        procedure Invalidate; reintroduce;
-        procedure SetFocus; reintroduce;
-      {$ENDIF}
-    {$ELSE}
     {D4, 5 ...}
     procedure Invalidate; reintroduce;
     procedure SetFocus; reintroduce;
-    {$ENDIF}
     procedure Move(const Loc: TRect);
     function PosEqual(const Rect: TRect): Boolean;
     procedure UpdateLoc(const Loc: TRect);
@@ -162,10 +143,8 @@ type
     procedure Changed(Sender: TObject);
     procedure DblClick; override;
     procedure DropDownList(Value: Boolean);
-    {$IFDEF VERSION4}
     function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint): Boolean; override;
-    {$ENDIF}
     function  EditCanModify: Boolean;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyPress(var Key: Char); override;
@@ -201,11 +180,9 @@ type
     procedure Changed(Sender: TObject);
     procedure DblClick; override;
     procedure DropDownList(Value: Boolean);
-    {$IFDEF VERSION4}
     function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint): Boolean; override;
     procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
-    {$ENDIF}
     function  EditCanModify: Boolean;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyPress(var Key: Char); override;
@@ -241,11 +218,9 @@ type
     procedure Changed(Sender: TObject);
     procedure DblClick; override;
     procedure DropDownList(Value: Boolean);
-    {$IFDEF VERSION4}
     function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint): Boolean; override;
     procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
-    {$ENDIF}
     function  EditCanModify: Boolean;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyPress(var Key: Char); override;
@@ -598,12 +573,7 @@ type
     procedure MouseUp(Button: TMouseButton; Shift: TShiftState;
                 X, Y: Integer); override;
 
-    {$IFNDEF VERSION4}
-        {D3}
-        procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); dynamic;
-    {$ELSE}
-      procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); reintroduce; dynamic;
-    {$ENDIF}
+    procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); reintroduce; dynamic;
 
     function BoxRect(ALeft, ATop, ARight, ABottom: Longint): TRect;
     procedure DoExit; override;
@@ -612,13 +582,11 @@ type
     function CanGridAcceptKey(Key: Word; Shift: TShiftState): Boolean; dynamic;
     function CanEditModify: Boolean; dynamic;
     function CanEditShow: Boolean; virtual;
-    {$IFDEF VERSION4}
     function DoMouseWheelDown(Shift: TShiftState; MousePos: TPoint): Boolean; override;
     function DoMouseWheelUp(Shift: TShiftState; MousePos: TPoint): Boolean; override;
     procedure DoOnExpand(Index: Integer);
     procedure DoOnCollapse(Index: Integer);
     procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
-    {$ENDIF}
     function GetEditText(ACol, ARow: Longint): string; dynamic;
     procedure SetEditText(ACol, ARow: Longint; const Value: string); dynamic;
     function GetEditMask(ACol, ARow: Longint): string; dynamic;
@@ -762,13 +730,9 @@ type
   TO32InspectorGrid = class(TO32CustomInspectorGrid)
   published
     property Align;
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
-    {$IFDEF VERSION5}
     property OnContextPopup;
-    {$ENDIF}
     property AutoExpand;
     property CaptionTextColor;
     property ChildIndentation;
@@ -819,11 +783,9 @@ type
     property OnMouseDown;
     property OnMouseMove;
     property OnMouseUp;
-    {$IFDEF VERSION4}
     property OnMouseWheelDown;
     property OnMouseWheelUp;
     property OnMouseWheel;
-    {$ENDIF}
   end;
 
 
@@ -845,25 +807,6 @@ type
   end;
 
 {===== Local Methods =================================================}
-
-{$IFNDEF VERSION4}
-function Min(Val1, Val2: Integer): Integer;
-begin
-  if Val1 < Val2 then
-    result := Val1
-  else
-    result := Val2;
-end;
-
-function Max(Val1, Val2: Integer): Integer;
-begin
-  if Val1 > Val2 then
-    result := Val1
-  else
-    result := Val2;
-end;
-{$ENDIF}
-
 
 function GridRect(Coord1, Coord2: TGridCoord): TGridRect;
 begin
@@ -971,7 +914,7 @@ begin
     LongSize := OldSize + Amount;
     if LongSize < 0 then
       raise EInvalidGridOperation.Create(STooManyDeleted)
-    else if LongSize >= {$IFDEF VERSIONXE2}MaxInt{$ELSE}MaxListSize{$ENDIF} - 1 then
+    else if LongSize >= MaxInt - 1 then
       raise EInvalidGridOperation.Create(SGridTooLarge);
     NewSize := Cardinal(LongSize);
     if NewSize > 0 then Inc(NewSize);
@@ -1034,9 +977,7 @@ begin
   BorderStyle := bsNone;
   OnChange := Changed;
   Updating := false;
-  {$IFDEF VERSION4}
   DoubleBuffered := False;
-  {$ENDIF}
 end;
 {=====}
 
@@ -1101,14 +1042,12 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32GridEdit.DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
   MousePos: TPoint): Boolean;
 begin
   Result := Grid.DoMouseWheel(Shift, WheelDelta, MousePos);
 end;
 {=====}
-{$ENDIF}
 
 function TO32GridEdit.EditCanModify: Boolean;
 begin
@@ -1196,7 +1135,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -1360,9 +1299,7 @@ begin
   TabStop := False;
   OnChange := Changed;
   Updating := false;
-  {$IFDEF VERSION4}
   DoubleBuffered := False;
-  {$ENDIF}
 
   ControlStyle := ControlStyle - [csFixedWidth, csFixedHeight, csFramed];
   Height := 15;
@@ -1439,14 +1376,12 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32GridCombo.DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
   MousePos: TPoint): Boolean;
 begin
   Result := Grid.DoMouseWheel(Shift, WheelDelta, MousePos);
 end;
 {=====}
-{$ENDIF}
 
 function TO32GridCombo.EditCanModify: Boolean;
 begin
@@ -1533,7 +1468,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -1669,9 +1604,7 @@ begin
   TabStop := False;
   OnChange := Changed;
   Updating := false;
-  {$IFDEF VERSION4}
   DoubleBuffered := False;
-  {$ENDIF}
   ControlStyle := ControlStyle - [csFixedHeight];
   Height := 15;
 end;
@@ -1746,14 +1679,12 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32GridColorCombo.DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
   MousePos: TPoint): Boolean;
 begin
   Result := Grid.DoMouseWheel(Shift, WheelDelta, MousePos);
 end;
 {=====}
-{$ENDIF}
 
 function TO32GridColorCombo.EditCanModify: Boolean;
 begin
@@ -1840,7 +1771,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -1889,7 +1820,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 procedure TO32GridColorCombo.WMMouseWheel(var Msg : TMessage);
 var
   Delta: integer;
@@ -1903,7 +1833,6 @@ begin
      FGrid.FocusCell(1, FGrid.ActiveRow - 1, true);
 end;
 {=====}
-{$ENDIF}
 
 procedure TO32GridColorCombo.Deselect;
 begin
@@ -1999,9 +1928,7 @@ begin
   TabStop := False;
   OnChange := Changed;
   Updating := false;
-  {$IFDEF VERSION4}
   DoubleBuffered := False;
-  {$ENDIF}
   ControlStyle := ControlStyle - [csFixedHeight];
 end;
 {=====}
@@ -2074,14 +2001,12 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32GridFontCombo.DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
   MousePos: TPoint): Boolean;
 begin
   Result := Grid.DoMouseWheel(Shift, WheelDelta, MousePos);
 end;
 {=====}
-{$ENDIF}
 
 function TO32GridFontCombo.EditCanModify: Boolean;
 begin
@@ -2168,7 +2093,7 @@ var
   Selection: TSelection;
 begin
   Grid.KeyPress(Key);
-  if ovcCharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
+  if CharInSet(Key, [#32..#255]) and not Grid.CanEditAcceptKey(Key) then
   begin
     Key := #0;
     MessageBeep(0);
@@ -2217,7 +2142,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 procedure TO32GridFontCombo.WMMouseWheel(var Msg : TMessage);
 var
   Delta: integer;
@@ -2231,7 +2155,6 @@ begin
      FGrid.FocusCell(1, FGrid.ActiveRow - 1, true);
 end;
 {=====}
-{$ENDIF}
 
 procedure TO32GridFontCombo.Deselect;
 begin
@@ -2643,11 +2566,7 @@ begin
     if FIGrid.ItemCollection.Count - 1 > Index then
       for I := FIGrid.ItemCollection.Count - 1 downto Index + 1 do begin
         if (FIGrid.Items[I].Parent = self) then
-        {$IFDEF VERSION5}
            FIGrid.ItemCollection.Delete(I);
-        {$ELSE}
-          FIGrid.ItemCollection.Items[I].Free;
-        {$ENDIF}
       end;
   end;
   FreeObject; {if any}
@@ -2673,9 +2592,7 @@ begin
       end;
     end;
     Expanded := false;
-    {$IFDEF VERSION4}
     FIGrid.DoOnCollapse(Index);
-    {$ENDIF}
   end;
 end;
 {=====}
@@ -2696,9 +2613,7 @@ begin
       end;
     end;
     Expanded := (VisibleKids > 0);
-    {$IFDEF VERSION4}
     if Expanded then FIGrid.DoOnExpand(Index);
-    {$ENDIF}
   end;
 end;
 {=====}
@@ -2713,11 +2628,7 @@ begin
     if FIGrid.ItemCollection.Count - 1 > Index then
       for I := FIGrid.ItemCollection.Count - 1 downto Index + 1 do begin
         if (FIGrid.Items[I].Parent = self) then
-        {$IFDEF VERSION5}
            FIGrid.ItemCollection.Delete(I);
-        {$ELSE}
-          FIGrid.ItemCollection.Items[I].Free;
-        {$ENDIF}
       end;
   end;
 end;
@@ -3428,9 +3339,7 @@ begin
     ControlStyle := GridStyle + [csFramed];
 
   // To prevent flickering
-  {$IFDEF VERSION4}
   DoubleBuffered := true;
-  {$ENDIF}
 
   FItems := TO32InspectorItems.Create(Self, TO32InspectorItem);
   FExpandGlyph := TBitmap.Create;
@@ -4893,13 +4802,8 @@ begin
       NewTopLeft.Y := CalcScrollBar(NewTopLeft.Y, 1);
     until (NewTopLeft.Y <= FixedRows) or (NewTopLeft.Y >= MaxTopLeft.Y)
       or (RowHeights[NewTopLeft.Y] > 0) or (Temp = NewTopLeft.Y);
-  {$IFDEF VERSION4}
   NewTopLeft.X := Math.Max(0, Math.Min(MaxTopLeft.X, NewTopLeft.X));
   NewTopLeft.Y := Math.Max(FixedRows, Math.Min(MaxTopLeft.Y, NewTopLeft.Y));
-  {$ELSE}
-  NewTopLeft.X := Max(0, Min(MaxTopLeft.X, NewTopLeft.X));
-  NewTopLeft.Y := Max(FixedRows, Min(MaxTopLeft.Y, NewTopLeft.Y));
-  {$ENDIF}
   if (NewTopLeft.X <> FTopLeft.X) or (NewTopLeft.Y <> FTopLeft.Y) then
     MoveTopLeft(NewTopLeft.X, NewTopLeft.Y);
 end;
@@ -5957,7 +5861,7 @@ end;
 {=====}
 procedure TO32CustomInspectorGrid.WMChar(var Msg: TWMChar);
 begin
-  if (goEditing in Options) and ovcCharInSet(Char(Msg.CharCode), [^H, #32..#255]) then
+  if (goEditing in Options) and CharInSet(Char(Msg.CharCode), [^H, #32..#255]) then
     ShowEditorChar(Char(Msg.CharCode))
   else
     inherited;
@@ -6230,7 +6134,6 @@ begin
 end;
 {=====}
 
-{$IFDEF VERSION4}
 function TO32CustomInspectorGrid.DoMouseWheelDown(Shift: TShiftState; MousePos: TPoint): Boolean;
 begin
   Result := inherited DoMouseWheelDown(Shift, MousePos);
@@ -6282,7 +6185,6 @@ begin
      FocusCell(1, ActiveRow - 1, true);
 end;
 {=====}
-{$ENDIF}
 
 function TO32CustomInspectorGrid.CheckColumnDrag(var Origin,
   Destination: Integer; const MousePt: TPoint): Boolean;
@@ -6431,11 +6333,7 @@ begin
   end;
 
   if (FItems.Count > 0) and (Index < FItems.Count) then
-    {$IFDEF VERSION5}
       FItems.Delete(Index);
-    {$ELSE}
-      FItems.Items[Index].Free;
-    {$ENDIF}
 end;
 {=====}
 

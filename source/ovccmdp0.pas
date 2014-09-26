@@ -41,8 +41,7 @@ unit ovccmdp0;
 interface
 
 uses
-  Windows, Buttons, Classes, Controls, Dialogs, Forms,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
+  Windows, Buttons, Classes, Controls, Dialogs, Forms, DesignIntf, DesignEditors,
   Graphics, Menus, Messages, StdCtrls, SysUtils, Tabs, OvcData, OvcCmd, OvcMisc,
   OvcCmdP1, OvcExcpt, OvcConst, ExtCtrls;
 
@@ -586,7 +585,7 @@ begin
       S := lbCommands.Items[CR.Cmd];
       if System.Copy(S, 1, 6) = GetOrphStr(SCccUser) then begin
         {get the user number from the string}
-        while (Length(S) > 0) and (not ovcCharInSet(S[1], ['0'..'9'])) do
+        while (Length(S) > 0) and (not CharInSet(S[1], ['0'..'9'])) do
           System.Delete(S, 1, 1);
 
         {assign user number to the command code}

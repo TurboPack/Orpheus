@@ -122,7 +122,7 @@ begin
   begin
     for iCount := 1 to Length(AText) do
     begin
-      Result := ovcCharInSet(AText[iCount], FValidChars);
+      Result := CharInSet(AText[iCount], FValidChars);
       if not Result then
         Break;
     end;
@@ -131,7 +131,7 @@ end;
 
 procedure TOVCTCCustomEdt.KeyPress(var Key: Char);
 begin
-  if (Key > #32) and (FValidChars <> []) and (not ovcCharInSet(Key, FValidChars)) then
+  if (Key > #32) and (FValidChars <> []) and (not CharInSet(Key, FValidChars)) then
     Key := #0;
   inherited KeyPress(Key);
 end;

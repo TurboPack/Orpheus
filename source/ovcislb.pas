@@ -45,7 +45,8 @@ uses
   SysUtils, OvcBase, OvcData, OvcISEB;
 
 type
-  {.Z+}
+  
+
   TOvcSearchEdit = class(TOvcBaseISE)
   public
     procedure PerformSearch;
@@ -60,10 +61,11 @@ type
     procedure Click;
       override;
   end;
-  {.Z-}
+
 
   TOvcSearchList = class(TOvcCustomControlEx)
-  {.Z+}
+  
+
   protected {private}
     {property variables}
     FBorderStyle : TBorderStyle;
@@ -124,7 +126,7 @@ type
       override;
     procedure SetBounds(ALeft, ATop, AWidth, AHeight : Integer);
       override;
-  {.Z-}
+
 
     {public properties}
     property Canvas;
@@ -198,10 +200,8 @@ type
       write SetOnChange;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Align;
     property Color;
     property Ctl3D;

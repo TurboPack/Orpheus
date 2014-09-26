@@ -53,7 +53,7 @@ type
 
 type
   TOvcCustomNumericField = class(TOvcPictureBase)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FNumericDataType   : TNumericDataType;
@@ -135,7 +135,7 @@ type
     function efValidateField : Word;
       override;
       {-validate contents of field; result is error code or 0}
-  {.Z-}
+
 
     {public properties}
     property DataType : TNumericDataType
@@ -151,11 +151,9 @@ type
   published
     {inherited properties}
     property DataType;              {needs to loaded before most other properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property BorderStyle;
     property CaretIns;
@@ -654,7 +652,7 @@ begin  {edit}
   case Cmd of
     ccChar :
       begin
-        Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+        Ch := Char(Msg.wParam);
         if not (sefAcceptChar in sefOptions) then
           Exit
         else begin

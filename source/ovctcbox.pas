@@ -47,14 +47,14 @@ uses
 type
   TOvcTCCustomCheckBox = class(TOvcTCCustomGlyph)
     protected {private}
-      {.Z+}
+
       FAllowGrayed : boolean;
 
       FatherValue : Integer;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetAllowGrayed(AG : boolean);
 
       procedure GlyphsHaveChanged(Sender : TObject);
@@ -64,7 +64,7 @@ type
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;
@@ -118,27 +118,18 @@ type
 
 implementation
 
-{$IFDEF VERSION2010}
 uses
   Themes;
 
 function ThemesEnabled: Boolean;// inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices;// inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
-
 
 {===TOvcTCCustomCheckBox creation/destruction========================}
 constructor TOvcTCCustomCheckBox.Create(AOwner : TComponent);
@@ -191,18 +182,15 @@ procedure TOvcTCCustomCheckBox.tcPaint(TableCanvas : TCanvas;
   var
     B : ^TCheckBoxState absolute Data;
     Value : integer;
-{$IFDEF VERSION2010}
     Details: TThemedElementDetails;
     R: TRect;
     w, h, dw, dh: Integer;
-{$ENDIF}
   begin
     if (Data = nil) then
       inherited tcPaint(TableCanvas, CellRect, RowNum, ColNum, CellAttr, nil)
     else
       begin
         Value := ord(B^);
-{$IFDEF VERSION2010}
         if ThemesEnabled and CellGlyphs.IsDefault then begin
           inherited tcPaint(TableCanvas, CellRect, RowNum, ColNum, CellAttr, nil);
           w  := GetSystemMetrics(SM_CXMENUCHECK);
@@ -247,7 +235,6 @@ procedure TOvcTCCustomCheckBox.tcPaint(TableCanvas : TCanvas;
             TableCanvas.Pen.Width := TableCanvas.Pen.Width + 1;
           end;
         end else
-{$ENDIF}
           inherited tcPaint(TableCanvas, CellRect, RowNum, ColNum, CellAttr, @Value);
       end;
   end;

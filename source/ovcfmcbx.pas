@@ -41,9 +41,8 @@ unit ovcfmcbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Messages, SysUtils, Classes, Graphics, Registry, OvcCmbx
-  {$IFNDEF VERSION5}, StdCtrls{$ENDIF};
+  Types, Windows, Messages, SysUtils, Classes, Graphics, Registry, OvcCmbx,
+  StdCtrls;
 
 type
   TOvcAssociationComboBox = class(TOvcBaseComboBox)
@@ -73,11 +72,9 @@ type
 
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSearch;
     property Color;

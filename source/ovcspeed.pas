@@ -42,16 +42,14 @@ unit ovcspeed;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, ExtCtrls, Graphics, Forms,
-  {$IFDEF VERSION4} ActnList, ImgList, {$ENDIF} Messages, SysUtils,
-  OvcBase, OvcMisc;
+  Types, Windows, Buttons, Classes, Controls, ExtCtrls, Graphics, Forms,
+  ActnList, ImgList, Messages, SysUtils, OvcBase, OvcMisc;
 
 type
   TOvcButtonState = (obsUp, obsDown, obsInactive, obsDisabled);
 
   TOvcCustomSpeedButton = class(TOvcGraphicControl)
-  {.Z+}
+
   protected {private}
     {property variables}
     FAutoRepeat      : Boolean;
@@ -120,10 +118,8 @@ type
       message WM_RBUTTONUP;
 
   protected
-    {$IFDEF VERSION4}
     procedure ActionChange(Sender: TObject; CheckDefaults: Boolean);
       override;
-    {$ENDIF}
     function GetPalette : hPalette;
       override;
     procedure Loaded;
@@ -136,7 +132,7 @@ type
       override;
     procedure Paint;
       override;
-  {.Z-}
+
 
     {protected properties}
     property AutoRepeat : Boolean
@@ -167,12 +163,12 @@ type
       read GetWordWrap write SetWordWrap;
 
   public
-  {.Z+}
+
     constructor Create(AOwner : TComponent);
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     procedure SimulatedClick;
   end;
@@ -195,11 +191,9 @@ type
     property WordWrap default False;
 
     {inherited properties}
-    {$IFDEF VERSION4}
     property Action;
     property Anchors;
     property Constraints;
-    {$ENDIF}
     property Caption;
     property Enabled;
     property Font;
@@ -615,7 +609,6 @@ end;
 
 {*** TOvcCustomSpeedButton ***}
 
-{$IFDEF VERSION4}
 procedure TOvcCustomSpeedButton.ActionChange(Sender : TObject; CheckDefaults : Boolean);
 
   procedure CopyImage(ImageList : TCustomImageList; Index : Integer);
@@ -640,7 +633,6 @@ begin
         CopyImage(ActionList.Images, ImageIndex);
     end;
 end;
-{$ENDIF}
 
 procedure TOvcCustomSpeedButton.SimulatedClick;
 var

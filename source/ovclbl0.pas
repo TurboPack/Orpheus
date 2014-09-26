@@ -40,11 +40,9 @@ unit ovclbl0;
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors, {$ELSE} DsgnIntf, {$ENDIF}
-  Menus, IniFiles, OvcLbl2, TypInfo, OvcCmbx, OvcClrCb, OvcLabel, OvcBase,
-  OvcData;
+  SysUtils, Windows, Messages, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls,
+  ExtCtrls, DesignIntf, DesignEditors, Menus, IniFiles, OvcLbl2, TypInfo, OvcCmbx,
+  OvcClrCb, OvcLabel, OvcBase, OvcData;
 
 type
   TfrmOvcLabel = class(TForm)

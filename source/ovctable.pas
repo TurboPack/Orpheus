@@ -48,17 +48,12 @@ unit ovctable;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, SysUtils, Messages, Graphics, Classes, Controls, Forms, StdCtrls,
-  Menus, Dialogs, OvcMisc, OvcData, OvcConst, OvcBase, OvcCmd, OvcTCmmn,
-  OvcTCAry, OvcTSelL, OvcTCell, OvcTCHdr, OvcTGPns,
-  OvcTbClr, OvcTbRws, OvcTbCls, OvcDrag;
+  Types, Windows, SysUtils, Messages, Graphics, Classes, Controls, Forms, StdCtrls,
+  Menus, Dialogs, OvcMisc, OvcData, OvcConst, OvcBase, OvcCmd, OvcTCmmn, OvcTCAry,
+  OvcTSelL, OvcTCell, OvcTCHdr, OvcTGPns, OvcTbClr, OvcTbRws, OvcTbCls, OvcDrag,
+  UITypes;
 
 type
-  {$IFDEF VERSIONXE3}
-  TScrollStyle = System.UITypes.TScrollStyle;
-  {$ENDIF}
-
   TOvcCustomTable = class(TOvcTableAncestor)
     {-The custom class for tables}
     protected {private}
@@ -678,11 +673,9 @@ type
 
       property OldRowColBehavior default false;
 
-      {$IFDEF VERSION4}
       property Anchors;
       property Constraints;
       property DragKind;
-      {$ENDIF}
       property Access default otxNormal;
       property Adjust default otaCenterLeft;
       property Align;
@@ -5096,7 +5089,6 @@ var
   RowInx: TRowNum;
   RowAttr: TOvcRowAttributes;
   RowNum    : TRowNum;
-  ColNum    : TColNum;
 begin
   {Delphi bug fix - refresh the canvas handle to force brush to be recreated}
   Canvas.Refresh;

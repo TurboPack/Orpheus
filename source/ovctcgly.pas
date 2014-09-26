@@ -49,16 +49,16 @@ uses
 type
   TOvcTCGlyphEdit = class(TCustomControl)
     protected {private}
-      {.Z+}
+
       FValue  : Integer;
       FCell   : TOvcBaseTableCell;
       FRow    : TRowNum;
       FCol    : TColNum;
       FCellAttr : TOvcCellAttributes;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetValue(V : integer);
 
       procedure WMGetDlgCode(var Msg : TMessage); message WM_GETDLGCODE;
@@ -66,7 +66,7 @@ type
       procedure WMKillFocus(var Msg : TWMKillFocus); message WM_KILLFOCUS;
       procedure WMLButtonDown(var Msg : TWMMouse); message WM_LBUTTONDOWN;
       procedure WMSetFocus(var Msg : TWMSetFocus); message WM_SETFOCUS;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;
@@ -80,13 +80,13 @@ type
 
   TOvcTCCustomGlyph = class(TOvcTCBaseBitMap)
     protected {private}
-      {.Z+}
+
       FCellGlyphs : TOvcCellGlyphs;
       FEdit       : TOvcTCGlyphEdit;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       function GetCellEditor : TControl; override;
       procedure SetCellGlyphs(CBG : TOvcCellGlyphs);
 
@@ -99,7 +99,7 @@ type
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
 
       {properties}
       property CellGlyphs : TOvcCellGlyphs

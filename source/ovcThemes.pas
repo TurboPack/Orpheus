@@ -35,7 +35,7 @@ unit ovcThemes;
 interface
 
 uses
-  Windows, Graphics{$IFDEF VERSIONXE2}, System.UITypes{$ENDIF}{$IFDEF VERSION2010}, Themes, UxTheme{$ENDIF};
+  Windows, Graphics, UITypes, Themes, UxTheme;
 
 type
   TovcThemes = class(TObject)
@@ -46,38 +46,27 @@ type
 
 implementation
 
-{$IFDEF VERSION2010}
 uses
   SysUtils;
 
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices; inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
 
 { TovcThemes }
 
 class procedure TovcThemes.DrawSelection(Canvas: TCanvas; ARect: TRect);
-{$IFDEF VERSION2010}
   var
   LTheme: HTHEME;
   LRect, Rect2: TRect;
   BRC: TBrushRecall;
-{$ENDIF VERSION2010}
 begin
-  {$IFDEF VERSION2010}
   if ThemesEnabled and (Win32MajorVersion >= 6) and (Canvas.Brush.Color = clHighLight) then
   begin
     BRC := TBrushRecall.Create(Canvas.Brush);
@@ -93,7 +82,6 @@ begin
     end;
   end
   else
-  {$ENDIF VERSION2010}
     Canvas.FillRect(ARect);
 end;
 

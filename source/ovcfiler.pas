@@ -71,16 +71,18 @@ type
   end;
 
 type
-  {.Z+}
+  
+
   PExPropInfo = ^ TExPropInfo;
   TExPropInfo = packed record
     PI      : TPropInfo;
     AObject : TObject;
   end;
-  {.Z-}
+
 
 type
-  {.Z+}
+  
+
   TOvcPropertyList = class(TObject)
   protected {private}
     FList  : TList;
@@ -103,10 +105,11 @@ type
     property Items[Index : Integer] : PExPropInfo
       read Get; default;
   end;
-  {.Z-}
+
 
 type
-  {.Z+}
+  
+
   TOvcDataFiler = class(TObject)
   protected {private}
     {property variables}
@@ -115,11 +118,7 @@ type
     FStorage : TOvcAbstractStore;
 
     {internal methods}
-{$IFDEF VERSION5}
     function CreatePropertyList(AForm : TWinControl; StoredList : TStrings) : TStrings;
-{$ELSE}
-    function CreatePropertyList(AForm : TCustomForm; StoredList : TStrings) : TStrings;
-{$ENDIF}
     procedure FreeInfoLists(Info : TStrings);
 
     {routines to get and set property values}
@@ -165,19 +164,11 @@ type
       virtual;
 
   public
-{$IFDEF VERSION5}
     procedure LoadObjectsProps(AForm : TWinControl; StoredList : TStrings);
-{$ELSE}
-    procedure LoadObjectsProps(AForm : TCustomForm; StoredList : TStrings);
-{$ENDIF}
     procedure LoadProperty(PropInfo : PExPropInfo);
     procedure LoadAllProperties(AObject : TObject);
 
-{$IFDEF VERSION5}
     procedure StoreObjectsProps(AForm : TWinControl; StoredList : TStrings);
-{$ELSE}
-    procedure StoreObjectsProps(AForm : TCustomForm; StoredList : TStrings);
-{$ENDIF}
     procedure StoreProperty(PropInfo : PExPropInfo);
     procedure StoreAllProperties(AObject : TObject);
 
@@ -189,19 +180,16 @@ type
     property Storage : TOvcAbstractStore
       read FStorage write FStorage;
   end;
-  {.Z-}
 
 
-{.Z+}
-{$IFDEF VERSION5}
+
+
+
 procedure UpdateStoredList(AForm : TWinControl; AStoredList : TStrings; FromForm : Boolean);
-{$ELSE}
-procedure UpdateStoredList(AForm : TCustomForm; AStoredList : TStrings; FromForm : Boolean);
-{$ENDIF}
 function CreateStoredItem(const CompName, PropName : string) : string;
 function ParseStoredItem(const Item : string; var CompName, PropName : string) : Boolean;
 function GetPropType(PropInfo : PExPropInfo) : PTypeInfo;
-{.Z-}
+
 
 
 implementation
@@ -245,11 +233,7 @@ begin
     Result := CreateStoredItem(CompName, APropName);
 end;
 
-{$IFDEF VERSION5}
 procedure UpdateStoredList(AForm : TWinControl; AStoredList : TStrings; FromForm : Boolean);
-{$ELSE}
-procedure UpdateStoredList(AForm : TCustomForm; AStoredList : TStrings; FromForm : Boolean);
-{$ENDIF}
 var
   I         : Integer;
   Component : TComponent;
@@ -475,12 +459,7 @@ begin
   Result := TOvcDataFiler.Create;
 end;
 
-{$IFDEF VERSION5}
 function TOvcDataFiler.CreatePropertyList(AForm : TWinControl; StoredList : TStrings) : TStrings;
-{$ELSE}
-function TOvcDataFiler.CreatePropertyList(AForm : TCustomForm; StoredList : TStrings) : TStrings;
-{$ENDIF}
-
 var
   I     : Integer;
   Obj   : TComponent;
@@ -621,11 +600,7 @@ end;
 
 function TOvcDataFiler.GetUStringProperty(PropInfo : PExPropInfo) : string;
 begin
-{$IFDEF UNICODE}
   Result := GetUnicodeStrProp(PropInfo^.AObject, PPropInfo(PropInfo));
-{$ELSE}
-  Result := GetStrProp(PropInfo^.AObject, PPropInfo(PropInfo));
-{$ENDIF}
 end;
 
 function TOvcDataFiler.GetStringsProperty(PropInfo : PExPropInfo) : string;
@@ -669,11 +644,7 @@ begin
   end;
 end;
 
-{$IFDEF VERSION5}
 procedure TOvcDataFiler.LoadObjectsProps(AForm : TWinControl; StoredList : TStrings);
-{$ELSE}
-procedure TOvcDataFiler.LoadObjectsProps(AForm : TCustomForm; StoredList : TStrings);
-{$ENDIF}
 var
   Info     : TStrings;
   I, Idx   : Integer;
@@ -720,9 +691,7 @@ begin
         tkVariant     : Def := GetVariantProperty(PropInfo);
         tkString      : Def := GetStringProperty(PropInfo);
         tkWString     : Def := GetWStringProperty(PropInfo);
-{$IFDEF UNICODE}
         tkUString     : Def := GetUStringProperty(PropInfo);
-{$ENDIF}        
         tkSet         : Def := GetSetProperty(PropInfo);
         tkClasS       : Def := '';
       else
@@ -731,7 +700,7 @@ begin
 
       if (Def <> '') or
          (PropInfo^.PI.PropType^.Kind in
-            [tkWChar, tkString, tkLString, {$IFDEF UNICODE}tkUString, {$ENDIF}tkWString]) then
+            [tkWChar, tkString, tkLString, tkUString, tkWString]) then
         S := Trim(ReadString(Section, GetItemName(string(PropInfo^.PI.Name)), Def))
       else
         S := '';
@@ -746,9 +715,7 @@ begin
         tkVariant     : SetVariantProperty(S, PropInfo);
         tkString      : SetStringProperty(S, PropInfo);
         tkWString     : SetWStringProperty(S, PropInfo);
-{$IFDEF UNICODE}
         tkUString     : SetUStringProperty(S, PropInfo);
-{$ENDIF}        
         tkSet         : SetSetProperty(S, PropInfo);
         tkClasS       : SetClassProperty({S, }PropInfo);
       end;
@@ -873,11 +840,7 @@ end;
 
 procedure TOvcDataFiler.SetUStringProperty(const S : string; PropInfo : PExPropInfo);
 begin
-{$IFDEF UNICODE}
   SetUnicodeStrProp(PropInfo^.AObject, PPropInfo(PropInfo), S);
-{$ELSE}
-  SetStrProp(PropInfo^.AObject, PPropInfo(PropInfo), S);
-{$ENDIF}  
 end;
 
 procedure TOvcDataFiler.SetStringsProperty({const S : string; }PropInfo : PExPropInfo);
@@ -928,12 +891,7 @@ begin
   end;
 end;
 
-{$IFDEF VERSION5}
 procedure TOvcDataFiler.StoreObjectsProps(AForm : TWinControl; StoredList : TStrings);
-{$ELSE}
-procedure TOvcDataFiler.StoreObjectsProps(AForm : TCustomForm; StoredList : TStrings);
-{$ENDIF}
-
 var
   Info     : TStrings;
   I, Idx   : Integer;
@@ -980,9 +938,7 @@ begin
       tkVariant      : S := GetVariantProperty(PropInfo);
       tkString       : S := GetStringProperty(PropInfo);
       tkWString      : S := GetUStringProperty(PropInfo);
-{$IFDEF UNICODE}
       tkUString      : S := GetUStringProperty(PropInfo);
-{$ENDIF}      
       tkSet          : S := GetSetProperty(PropInfo);
       tkClasS        : S := GetClassProperty(PropInfo);
     else
@@ -991,7 +947,7 @@ begin
 
     if (S <> '') or 
        (PropInfo^.PI.PropType^.Kind in 
-         [tkWChar, tkString, tkLString, {$IFDEF UNICODE}tkUString, {$ENDIF}tkWString]) then
+         [tkWChar, tkString, tkLString, tkUString, tkWString]) then
       WriteString(Section, GetItemName(string(PropInfo^.PI.Name)), Trim(S));
   end;
 end;

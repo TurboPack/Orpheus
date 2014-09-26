@@ -41,8 +41,7 @@ unit ovcdbae;
 interface
 
 uses
-  {$IFDEF VERSIONXE2} System.Types, {$ENDIF}
-  Windows, Buttons, Classes, Controls, DB, DbCtrls, Forms, Graphics,
+  Types, Windows, Buttons, Classes, Controls, DB, DbCtrls, Forms, Graphics,
   SysUtils, Messages, OvcBase, OvcColor, OvcCmd, OvcConst, OvcData, OvcDbNf,
   OvcDbPf, OvcDbSf, OvcMisc, OvcEf, OvcStr;
 
@@ -57,7 +56,8 @@ type
     of object;
 
 type
-  {.Z+}
+  
+
   TOvcDbSimpleCell = class(TOvcDbSimpleField)
   private
   protected
@@ -93,11 +93,12 @@ type
     constructor Create(AOwner : TComponent);
       override;
   end;
-  {.Z-}
+
 
   {base class for data-aware array editors}
   TOvcBaseDbArrayEditor = class(TOvcCustomControlEx)
-  {.Z+}
+  
+
   protected {private}
     FActiveRow           : LongInt;      {the row index of the active item}
     FAutoRowHeight       : Boolean;      {auto row height}
@@ -255,7 +256,7 @@ type
     procedure DoOnIndicatorClick(Row : LongInt);
       dynamic;
       {-perform indicator click notification}
-  {.Z-}
+
 
     property AutoRowHeight : Boolean
       read FAutoRowHeight
@@ -313,11 +314,12 @@ type
       read FPageScroll
       write FPageScroll;
 
-  {.Z+}
+  
+
     property PictureMask : string
       read FPictureMask
       write SetPictureMask;
-  {.Z-}
+
 
     property RangeHi : string
       read GetRangeHi
@@ -379,14 +381,15 @@ type
       write FOnUserValidation;
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
     destructor  Destroy;
       override;
     procedure SetFocus;
       override;
-  {.Z-}
+
 
     procedure Reset;
       {-discard current changes (if any) and obtain new data from TField}
@@ -397,7 +400,8 @@ type
 
     property Canvas;
 
-  {.Z+}
+  
+
     property ActiveRow : LongInt
       read FActiveRow
       write SetActiveRow
@@ -405,7 +409,7 @@ type
 
     property DataLink : TFieldDataLink
       read GetDataLink;
-  {.Z-}
+
 
     property Field : TField
       read GetField;
@@ -414,7 +418,8 @@ type
   end;
 
   TOvcDbSimpleArrayEditor = class(TOvcBaseDbArrayEditor)
-  {.Z+}
+  
+
   protected {private}
     {virtual methods}
     procedure aeCreateEditCell;
@@ -427,18 +432,16 @@ type
   public
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
   published
     property FieldType;
     property DataSource;
     property DataField;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property AutoRowHeight;
     property BorderStyle;
@@ -501,7 +504,8 @@ type
   end;
 
   TOvcDbPictureArrayEditor = class(TOvcBaseDbArrayEditor)
-  {.Z+}
+  
+
   protected {private}
     {virtual methods}
     procedure aeCreateEditCell;
@@ -514,7 +518,7 @@ type
   public
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
   published
     property FieldType;
@@ -522,11 +526,9 @@ type
     property DataField;
     property DateOrTime;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property AutoRowHeight;
     property BorderStyle;
@@ -589,7 +591,8 @@ type
   end;
 
   TOvcDbNumericArrayEditor = class(TOvcBaseDbArrayEditor)
-  {.Z+}
+  
+
   protected {private}
     {virtual methods}
     procedure aeCreateEditCell;
@@ -602,18 +605,16 @@ type
   public
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
   published
     property FieldType;
     property DataSource;
     property DataField;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property Align;
     property AutoRowHeight;
     property BorderStyle;

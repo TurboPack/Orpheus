@@ -88,13 +88,11 @@ type
   TO32Edit = class(TO32CustomEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property BiDiMode;
     property ParentBiDiMode;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AutoSelect;
     property AutoSize;
@@ -131,10 +129,8 @@ type
     property OnDblClick;
     property OnDragDrop;
     property OnDragOver;
-    {$IFDEF VERSION4}
     property OnEndDock;
     property OnStartDock;
-    {$ENDIF}
     property OnEndDrag;
     property OnEnter;
     property OnExit;
@@ -215,21 +211,13 @@ end;
 
 procedure TO32CustomEdit.LabelAttach(Sender : TObject; Value : Boolean);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
   S  :string;
 begin
   if csLoading in ComponentState then
     Exit;
 
-{$IFDEF VERSION5}
   PF := GetImmediateParentForm(Self);
-{$ELSE}
-  PF := TForm(GetParentForm(Self));
-{$ENDIF}
   if Value then begin
     if Assigned(PF) then begin
       FLabelInfo.ALabel.Free;
@@ -264,21 +252,13 @@ end;
 
 procedure TO32CustomEdit.Notification(AComponent : TComponent; Operation: TOperation);
 var
-{$IFDEF VERSION5}
   PF : TWinControl;
-{$ELSE}
-  PF : TForm;
-{$ENDIF}
 begin
   inherited Notification(AComponent, Operation);
 
   if Operation = opRemove then
     if Assigned(FLabelInfo) and (AComponent = FLabelInfo.ALabel) then begin
-      {$IFDEF VERSION5}
       PF := GetImmediateParentForm(Self);
-      {$ELSE}
-      PF := TForm(GetParentForm(Self));
-      {$ENDIF}
       if Assigned(PF) and not (csDestroying in PF.ComponentState) then begin
         FLabelInfo.FVisible := False;
         FLabelInfo.ALabel := nil;

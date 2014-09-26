@@ -42,8 +42,8 @@ unit ovctchdr;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, SysUtils, Graphics, Classes, OvcTCmmn, OvcTCell, OvcTCStr, OvcMisc;
+  UITypes, Windows, SysUtils, Graphics, Classes, OvcTCmmn, OvcTCell, OvcTCStr,
+  OvcMisc;
 
 type
   // a common ancestor for table header cells
@@ -63,12 +63,12 @@ type
 
   TOvcTCColHead = class(TOvcTCCustomColHead)
     protected {private}
-      {.Z+}
+
       FHeadings      : TStringList;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetHeadings(H : TStringList);
       procedure tcPaint(TableCanvas : TCanvas;
                   const CellRect    : TRect;
@@ -76,12 +76,12 @@ type
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
 
      public {protected}
-      {.Z+}
+
       procedure chColumnsChanged(ColNum1, ColNum2 : TColNum; Action : TOvcTblActions); override;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;
@@ -123,13 +123,13 @@ type
 
   TOvcTCRowHead = class(TOvcTCBaseString)
     protected {private}
-      {.Z+}
+
       FShowActiveRow : boolean;
       FShowNumbers   : boolean;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure SetShowActiveRow(SAR : boolean);
       procedure SetShowNumbers(SN : boolean);
       procedure tcPaint(TableCanvas : TCanvas;
@@ -138,7 +138,7 @@ type
                         ColNum      : TColNum;
                   const CellAttr    : TOvcCellAttributes;
                         Data        : pointer); override;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;

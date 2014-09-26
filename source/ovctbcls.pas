@@ -315,10 +315,6 @@ destructor TOvcTableColumns.Destroy;
 {--------}
 procedure TOvcTableColumns.Append(C : TOvcTableColumn);
   begin
-{$IFNDEF VERSIONXE2}
-    if (FList.Count = Classes.MaxListSize) then
-      TableErrorRes(SCTableMaxColumns);
-{$ENDIF}
     if (C.Table <> FTable) or (not (C is tcColumnClass)) then
       Exit;
     C.Number := FList.Count;
@@ -419,10 +415,6 @@ procedure TOvcTableColumns.Insert(const ColNum : TColNum;
   var
     i : integer;
   begin
-{$IFNDEF VERSIONXE2}
-    if (FList.Count = Classes.MaxListSize) then
-      TableErrorRes(SCTableMaxColumns);
-{$ENDIF}
     if (C.Table <> FTable) or (not (C is tcColumnClass)) then
       Exit;
     if (0 <= ColNum) and (ColNum < FList.Count) then
@@ -543,9 +535,7 @@ procedure TOvcTableColumns.tcStopLoading;
       ParentCtrl := Control.Parent;
       while (Assigned(ParentCtrl)) and
             (not (ParentCtrl is TCustomForm))
-            {$IFDEF VERSION5}
             and (not (ParentCtrl is TCustomFrame))
-            {$ENDIF}
             do
         ParentCtrl := ParentCtrl.Parent;
       Result := TForm(ParentCtrl);

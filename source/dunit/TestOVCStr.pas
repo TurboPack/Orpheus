@@ -132,7 +132,7 @@ type
     BT: BTable;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}3{$ELSE}2{$ENDIF}] of TData =
+  cSomeData: array[0..3] of TData =
    ((S: 'ABCABC';
      BT: (6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
           6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -151,7 +151,6 @@ const
           59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,
           59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,
           59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59)),
-{$IFDEF UNICODE}
     (S: 'Unicode characters: Россия является прекрасной стране';
      BT: (53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,
            6,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,34,53,53,53,53,53,
@@ -161,7 +160,6 @@ const
           53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,
           53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,
           53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53,53)),
-{$ENDIF}
     (S: '12345678901234567890123456789012345678901234567890123456789012345678901234567890'+
         '12345678901234567890123456789012345678901234567890123456789012345678901234567890'+
         '12345678901234567890123456789012345678901234567890123456789012345678901234567890'+
@@ -407,17 +405,10 @@ end;
 
 procedure TTestOVCStr.TestLoCaseChar;
 const
-  {$IFDEF UNICODE}
   cSomeChars: array[0..9] of Char =
     ('a', 'A', 'ä', 'Ä', 'é', 'É', ' ', '1', 'Đ', 'ę');
   cResults: array[0..9] of Char =
     ('a', 'a', 'ä', 'ä', 'é', 'é', ' ', '1', 'đ', 'ę');
-  {$ELSE}
-  cSomeChars: array[0..7] of Char =
-    ('a', 'A', 'ä', 'Ä', 'é', 'É', ' ', '1');
-  cResults: array[0..7] of Char =
-    ('a', 'a', 'ä', 'ä', 'é', 'é', ' ', '1');
-  {$ENDIF}
 var
   i: Integer;
 begin
@@ -494,10 +485,8 @@ const
      (S: 'abcdefg'; Pos:  3; c: 'X'; res: 'abcXdefg'),
      (S: 'abcdefg'; Pos:  6; c: 'X'; res: 'abcdefXg'),
      (S: 'abcdefg'; Pos: 10; c: 'X'; res: 'abcdefgX')
-{$IFDEF UNICODE}
      ,
      (S: 'ЙКЛМСТУ'; Pos:  1; c: 'Ȁ'; res: 'ЙȀКЛМСТУ')
-{$ENDIF}
      );
 var
   i, j: Integer;
@@ -525,16 +514,13 @@ type
     res: Integer;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}5{$ELSE}4{$ENDIF}] of TData =
+  cSomeData: array[0..5] of TData =
     ((S: '';        c: 'X'; res: -1),
      (S: 'abcdefg'; c: ' '; res: -1),
      (S: 'abcdefg'; c: 'a'; res:  0),
      (S: 'abcdefg'; c: 'd'; res:  3),
-     (S: 'abcdefg'; c: 'g'; res:  6)
-{$IFDEF UNICODE}
-     ,
+     (S: 'abcdefg'; c: 'g'; res:  6),
      (S: 'ЙКЛМСТУ'; c: 'Л'; res: 2)
-{$ENDIF}
      );
 var
   i: Integer;
@@ -563,16 +549,13 @@ type
     res: string;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}5{$ELSE}4{$ENDIF}] of TData =
+  cSomeData: array[0..5] of TData =
     ((S: '';        c: 'X'; Pos: 0; Count: 5; res: 'XXXXX'),
      (S: 'abcdefg'; c: ' '; Pos: 0; Count: 2; res: '  abcdefg'),
      (S: 'abcdefg'; c: 'a'; Pos: 3; Count: 5; res: 'abcaaaaadefg'),
      (S: 'abcdefg'; c: 'd'; Pos: 7; Count: 3; res: 'abcdefgddd'),
-     (S: 'abcdefg'; c: 'g'; Pos: 9; Count: 1; res: 'abcdefgg')
-{$IFDEF UNICODE}
-     ,
+     (S: 'abcdefg'; c: 'g'; Pos: 9; Count: 1; res: 'abcdefgg'),
      (S: 'ЙКЛМСТУ'; c: 'Л'; Pos: 1; Count: 4; res: 'ЙЛЛЛЛКЛМСТУ')
-{$ENDIF}
      );
 var
   i, j: Integer;
@@ -597,19 +580,16 @@ type
     res: string;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}8{$ELSE}6{$ENDIF}] of TData =
+  cSomeData: array[0..8] of TData =
     ((S: '';            Pos: 0; Count: 1; res: ''),
      (S: 'Delphi XE';   Pos: 0; Count: 3; res: 'Del'),
      (S: 'Delphi XE';   Pos: 4; Count: 5; res: 'hi XE'),
      (S: 'Delphi XE';   Pos: 6; Count: 1; res: ' '),
      (S: 'Delphi XE';   Pos: 0; Count:10; res: 'Delphi XE'),
      (S: 'Delphi XE';   Pos: 6; Count: 8; res: ' XE'),
-     (S: 'Delphi XE';   Pos:10; Count: 3; res: '')
-{$IFDEF UNICODE}
-     ,
+     (S: 'Delphi XE';   Pos:10; Count: 3; res: ''),
      (S: 'ЙКЛМСТУ';     Pos: 3; Count: 2; res: 'МС'),
      (S: 'ЙКЛМСТУ';     Pos: 1; Count: 5; res: 'КЛМСТ')
-{$ENDIF}
     );
 var
   i, j: Integer;
@@ -636,19 +616,16 @@ type
     res: string;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}8{$ELSE}6{$ENDIF}] of TData =
+  cSomeData: array[0..8] of TData =
     ((P: '';            Pos: 0; Count: 1; res: ''),
      (P: 'Delphi XE';   Pos: 0; Count: 3; res: 'phi XE'),
      (P: 'Delphi XE';   Pos: 4; Count: 5; res: 'Delp'),
      (P: 'Delphi XE';   Pos: 6; Count: 1; res: 'DelphiXE'),
      (P: 'Delphi XE';   Pos: 0; Count:10; res: ''),
      (P: 'Delphi XE';   Pos: 6; Count: 8; res: 'Delphi'),
-     (P: 'Delphi XE';   Pos:10; Count: 3; res: 'Delphi XE')
-{$IFDEF UNICODE}
-     ,
+     (P: 'Delphi XE';   Pos:10; Count: 3; res: 'Delphi XE'),
      (P: 'ЙКЛМСТУ';     Pos: 3; Count: 2; res: 'ЙКЛТУ'),
      (P: 'ЙКЛМСТУ';     Pos: 1; Count: 5; res: 'ЙУ')
-{$ENDIF}
     );
 var
   i, j: Integer;
@@ -677,7 +654,7 @@ type
     res: string;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}9{$ELSE}7{$ENDIF}] of TData =
+  cSomeData: array[0..9] of TData =
     ((Dest: '';            S: 'foo';    Pos: 0; res: 'foo'),
      (Dest: 'foofoo';      S: 'abc';    Pos: 3; res: 'fooabcfoo'),
      (Dest: 'fofoo';       S: 'WXYZ';   Pos: 0; res: 'WXYZfofoo'),
@@ -685,12 +662,9 @@ const
      (Dest: 'Delphi';      S: '';       Pos: 3; res: 'Delphi'),
      (Dest: 'abc';         S: 'def';    Pos: 3; res: 'abcdef'),
      (Dest: 'abc';         S: 'def';    Pos: 4; res: 'abcdef'),
-     (Dest: '--';          S: '++++++'; Pos: 1; res: '-++++++-')
-{$IFDEF UNICODE}
-     ,
+     (Dest: '--';          S: '++++++'; Pos: 1; res: '-++++++-'),
      (Dest: 'ЙКЛМСТУ';     S: 'ЛМ';    Pos: 2; res: 'ЙКЛМЛМСТУ'),
      (Dest: 'ЙКЛМСТУ';     S: ' 123';  Pos: 0; res: ' 123ЙКЛМСТУ')
-{$ENDIF}
     );
 var
   i, j: Integer;
@@ -718,18 +692,15 @@ type
     res: Boolean;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}7{$ELSE}5{$ENDIF}] of TData =
+  cSomeData: array[0..7] of TData =
     ((P: '';            S: 'foo';   Pos: 0; res: False),
      (P: 'foofoo';      S: 'foo';   Pos: 0; res: True),
      (P: 'fofoo';       S: 'foo';   Pos: 2; res: True),
      (P: 'fuofuo';      S: 'foo';   Pos: 0; res: False),
      (P: 'xxxfooxxx';   S: 'foo';   Pos: 3; res: True),
-     (P: 'foofoo';      S: '';      Pos: 0; res: False)
-{$IFDEF UNICODE}
-     ,
+     (P: 'foofoo';      S: '';      Pos: 0; res: False),
      (P: 'ЙКЛМСТУ';     S: 'ЛМ';    Pos: 2; res: True),
      (P: 'ЙКЛМСТУ';     S: 'CT';    Pos: 0; res: False)
-{$ENDIF}
     );
 var
   i: Integer;
@@ -910,17 +881,10 @@ end;
 
 procedure TTestOVCStr.TestUpCaseChar;
 const
-  {$IFDEF UNICODE}
   cSomeChars: array[0..9] of Char =
     ('a', 'A', 'ä', 'Ä', 'é', 'É', ' ', '1', 'Đ', 'ę');
   cResults: array[0..9] of Char =
     ('A', 'A', 'Ä', 'Ä', 'É', 'É', ' ', '1', 'Đ', 'Ę');
-  {$ELSE}
-  cSomeChars: array[0..7] of Char =
-    ('a', 'A', 'ä', 'Ä', 'é', 'É', ' ', '1');
-  cResults: array[0..7] of Char =
-    ('A', 'A', 'Ä', 'Ä', 'É', 'É', ' ', '1');
-  {$ENDIF}
 var
   i: Integer;
 begin

@@ -112,15 +112,16 @@ unit ovcdbhll;
 interface
 
 uses
-  Windows, BDE, Messages, SysUtils, Classes, OvcBase, Db;
+  Windows, Messages, SysUtils, Classes, OvcBase, Db;
 
 type
   TOvcDbEngineHelperBase = class(TComponent)
-  {.Z+}
+  
+
   protected {private}
   protected
   public
-  {.Z-}
+
     {===GENERAL SESSION-BASED METHODS===}
     procedure GetAliasNames(aList : TStrings); virtual;
       {-fill list with available alias names; assumes 'default'

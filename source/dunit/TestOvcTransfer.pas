@@ -241,7 +241,7 @@ begin
     OvcSimpleField2Value    := 42;
     OvcSimpleField3Value    := 42;
     OvcSimpleField4Value    := False;
-    OvcSimpleField5Value    := {$IFDEF UNICODE}'Ѻ'{$ELSE}'X'{$ENDIF};
+    OvcSimpleField5Value    := 'Ѻ';
     OvcPictureField1Value   := 'OvcPictureField1Value';
     OvcPictureField2Value   := OvcDate.DMYtoStDate(27,03,2011,0);
     OvcPictureField3Value   := EncodeDateTime(2011, 3, 27, 22, 27, 01, 0);
@@ -250,11 +250,7 @@ begin
     OvcNumericField2Value   := 44;
     OvcNumericField3Value   := 45;
     OvcRotatedLabel1Text    := 'OvcRotatedLabel1Text';
-    OvcEditor1Text          := {$IFDEF UNICODE}
-                               'Съешь ещё этих мягких'#13#10'французских булок, да выпей чаю';
-                               {$ELSE}
-                               'The quick brown fox'#13#10'jumps over the lazy dog.';
-                               {$ENDIF}
+    OvcEditor1Text          := 'Съешь ещё этих мягких'#13#10'французских булок, да выпей чаю';
 
   end;
 
@@ -327,7 +323,7 @@ begin
     OvcSimpleField2.AsInteger   := 12345;
     OvcSimpleField3.AsFloat     := 43.5;
     OvcSimpleField4.AsBoolean   := True;
-    OvcSimpleField5.AsString    := {$IFDEF UNICODE}'Ѻ'{$ELSE}'X'{$ENDIF};
+    OvcSimpleField5.AsString    := 'Ѻ';
     OvcPictureField1.AsString   := 'OvcPictureField1.AsString';
     OvcPictureField2.AsOvcDate  := OvcDate.DMYtoStDate(14, 4, 1968, 0);
     OvcPictureField3.AsDateTime := EncodeDateTime(2011, 3, 27, 22, 27, 01, 0);
@@ -406,7 +402,7 @@ begin
     OvcSimpleField2Value    := 42;
     OvcSimpleField3Value    := 42;
     OvcSimpleField4Value    := False;
-    OvcSimpleField5Value    := {$IFDEF UNICODE}'Ѻ'{$ELSE}'X'{$ENDIF};
+    OvcSimpleField5Value    := 'Ѻ';
     OvcPictureField1Value   := 'OvcPictureField1Value';
     OvcPictureField2Value   := OvcDate.DMYtoStDate(27,03,2011,0);
     OvcPictureField3Value   := EncodeDateTime(2011, 3, 27, 22, 27, 01, 0);
@@ -481,7 +477,7 @@ begin
     OvcSimpleField2.AsInteger   := 12345;
     OvcSimpleField3.AsFloat     := 43.5;
     OvcSimpleField4.AsBoolean   := True;
-    OvcSimpleField5.AsString    := {$IFDEF UNICODE}'Ѻ'{$ELSE}'X'{$ENDIF};
+    OvcSimpleField5.AsString    := 'Ѻ';
     OvcPictureField1.AsString   := 'OvcPictureField1.AsString';
     OvcPictureField2.AsOvcDate  := OvcDate.DMYtoStDate(14, 4, 1968, 0);
     OvcPictureField3.AsDateTime := EncodeDateTime(2011, 3, 27, 22, 27, 01, 0);
@@ -554,7 +550,7 @@ begin
     OvcSimpleField2Value    := 42;
     OvcSimpleField3Value    := 42;
     OvcSimpleField4Value    := False;
-    OvcSimpleField5Value    := {$IFDEF UNICODE}'Ѻ'{$ELSE}'X'{$ENDIF};
+    OvcSimpleField5Value    := 'Ѻ';
     OvcPictureField1Value   := 'OvcPictureField1Value';
     OvcPictureField2Value   := OvcDate.DMYtoStDate(27,03,2011,0);
     OvcPictureField3Value   := EncodeDateTime(2011, 3, 27, 22, 27, 01, 0);
@@ -629,7 +625,7 @@ begin
     OvcSimpleField2.AsInteger   := 12345;
     OvcSimpleField3.AsFloat     := 43.5;
     OvcSimpleField4.AsBoolean   := True;
-    OvcSimpleField5.AsString    := {$IFDEF UNICODE}'Ѻ'{$ELSE}'X'{$ENDIF};
+    OvcSimpleField5.AsString    := 'Ѻ';
     OvcPictureField1.AsString   := 'OvcPictureField1.AsString';
     OvcPictureField2.AsOvcDate  := OvcDate.DMYtoStDate(14, 4, 1968, 0);
     OvcPictureField3.AsDateTime := EncodeDateTime(2011, 3, 27, 22, 27, 01, 0);

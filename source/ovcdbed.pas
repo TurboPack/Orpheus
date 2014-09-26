@@ -49,7 +49,8 @@ uses
 
 type
   TOvcDbEditor = class(TOvcCustomEditor)
-  {.Z+}
+  
+
   protected
     {property variables}
     FAutoUpdate : Boolean;
@@ -103,13 +104,10 @@ type
       override;
     destructor Destroy;
       override;
-    {$IFDEF VERSION4}
     function ExecuteAction(Action: TBasicAction): Boolean;
       override;
     function UpdateAction(Action: TBasicAction): Boolean;
       override;
-    {$ENDIF}
-  {.Z-}
 
     procedure CutToClipboard;
       override;
@@ -144,11 +142,9 @@ type
       read GetDataSource
       write SetDataSource;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoIndent default False;
     property Borders;
     property BorderStyle default bsSingle;
@@ -179,9 +175,7 @@ type
     property WrapAtLeft default True;
     property WrapColumn default 80;
     property WrapToWindow default False;
-    {$IFDEF VERSION5}
-      property WheelDelta default 1;
-    {$ENDIF}
+    property WheelDelta default 1;
     property OnError;
     property OnShowStatus;
     property OnUserCommand;
@@ -596,7 +590,6 @@ begin
   inherited;
 end;
 
-{$IFDEF VERSION4}
 function TOvcDbEditor.ExecuteAction(Action : TBasicAction) : Boolean;
 begin
   Result := inherited ExecuteAction(Action) or (FDataLink <> nil) and
@@ -608,6 +601,5 @@ begin
   Result := inherited UpdateAction(Action) or (FDataLink <> nil) and
     FDataLink.UpdateAction(Action);
 end;
-{$ENDIF}
 
 end.

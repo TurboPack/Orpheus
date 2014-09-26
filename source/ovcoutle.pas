@@ -42,8 +42,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, OvcBase, OvcVLB, OvcOutln, ExtCtrls, OvcEditF, OvcEdPop, OvcEdSld,
-  OvcData,
-  {$IFDEF VERSION6} DesignIntf, DesignEditors; {$ELSE} DsgnIntf; {$ENDIF}
+  OvcData, DesignIntf, DesignEditors;
 
 type
   TOvcfrmOLItemsEditor = class(TForm)
@@ -78,19 +77,9 @@ type
   private
     FCurRoot: TOvcOutlineNode;
     procedure SetCurRoot(const Value: TOvcOutlineNode);
-    { Private declarations }
   public
-    { Public declarations }
     EditOutline : TOvcCustomOutline;
-    {$IFDEF VERSION4}
-      {$IFDEF VERSION6}
-        Dsgn : IDesigner;
-      {$ELSE}
-        Dsgn : IFormDesigner;
-      {$ENDIF}
-    {$ELSE}
-    Dsgn : TFormDesigner;
-    {$ENDIF}
+    Dsgn : IDesigner;
     property CurRoot : TOvcOutlineNode read FCurRoot write SetCurRoot;
   end;
 
@@ -233,15 +222,7 @@ begin
   EditOutline.Nodes.Assign(OvcOutline1.Nodes);
 end;
 
-{$IFDEF VERSION4}
-  {$IFDEF VERSION6}
-    procedure ShowOutlineItemsEditor(Des : IDesigner; Outline : TOvcCustomOutline);
-  {$ELSE}
-    procedure ShowOutlineItemsEditor(Des : IFormDesigner; Outline : TOvcCustomOutline);
-  {$ENDIF}
-{$ELSE}
-procedure ShowOutlineItemsEditor(Des : TFormDesigner; Outline : TOvcCustomOutline);
-{$ENDIF}
+procedure ShowOutlineItemsEditor(Des : IDesigner; Outline : TOvcCustomOutline);
 begin
   with TOvcfrmOLItemsEditor.Create(Application) do
     try

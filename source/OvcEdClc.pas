@@ -42,12 +42,12 @@ interface
 
 uses
   Windows, Buttons, Classes, Controls, Forms, Graphics, Menus, Messages,
-  StdCtrls, SysUtils, {$IFDEF VERSION4} MultiMon, {$ENDIF} OvcBase, OvcCalc,
-  OvcEdPop, OvcMisc;
+  StdCtrls, SysUtils, MultiMon, OvcBase, OvcCalc, OvcEdPop, OvcMisc;
 
 type
   TOvcCustomNumberEdit = class(TOvcEdPopup)
-  {.Z+}
+  
+
   protected {private}
     FAllowIncDec     : Boolean;
     FCalculator      : TOvcCalculator;
@@ -92,7 +92,7 @@ type
       override;
     procedure KeyPress(var Key : Char);
       override;
-    {.Z-}
+
 
     property AllowIncDec : Boolean
       read FAllowIncDec write FAllowIncDec;
@@ -110,10 +110,11 @@ type
       read GetReadOnly write SetReadOnly;
 
   public
-  {.Z+}
+  
+
     constructor Create(AOwner : TComponent);
       override;
-  {.Z-}
+
 
     procedure PopupClose(Sender : TObject);
       override;
@@ -136,11 +137,9 @@ type
   TOvcNumberEdit = class(TOvcCustomNumberEdit)
   published
     {properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property AllowIncDec;
     property AutoSelect;
@@ -239,7 +238,7 @@ var
 begin
   S := Text;
   for I := Length(S) downto 1 do
-    if not ovcCharInSet(S[I], ['0'..'9', '+', '-', 'e', 'E', FormatSettings.DecimalSeparator]) then
+    if not CharInSet(S[I], ['0'..'9', '+', '-', 'e', 'E', FormatSettings.DecimalSeparator]) then
       Delete(S, I, 1);
   Result := StrToFloat(S);
 end;
@@ -309,7 +308,7 @@ begin
   inherited KeyPress(Key);
 
   if not ((Key = #22) or (Key = #3) or (Key = #24)) then begin
-    if not ovcCharInSet(Key, [#27, '0'..'9', '.', FormatSettings.DecimalSeparator,
+    if not CharInSet(Key, [#27, '0'..'9', '.', FormatSettings.DecimalSeparator,
                     #8, '+', '-', '*', '/']) then begin
       Key := #0;
       MessageBeep(0);
@@ -325,7 +324,7 @@ begin
       Exit;
     end;
 
-    if FAllowIncDec and ovcCharInSet(Key, ['+', '-']) then begin
+    if FAllowIncDec and CharInSet(Key, ['+', '-']) then begin
       if Text = '' then
         Text := '0';
       D := StrToFloat(Text);
@@ -343,7 +342,7 @@ begin
       Key := #0; {clear key}
     end;
 
-    if ovcCharInSet(Key, ['+', '*', '/']) then begin
+    if CharInSet(Key, ['+', '*', '/']) then begin
       PopUpOpen;
       FCalculator.KeyPress(Key);
       Key := #0; {clear key}
@@ -465,10 +464,8 @@ procedure TOvcCustomNumberEdit.PopupOpen;
 var
   P       : TPoint;
   R       : TRect;
-  {$IFDEF VERSION4}
   F       : TCustomForm;
   MonInfo : TMonitorInfo;
-  {$ENDIF}
 begin
   if FCalculator.Visible then
     Exit;  {already popped up, exit}
@@ -487,7 +484,6 @@ begin
 
   {determine the proper position}
   SystemParametersInfo(SPI_GETWORKAREA, 0, @R, 0);
-  {$IFDEF VERSION4}
   F := GetParentForm(Self);
   if Assigned(F) then begin
     FillChar(MonInfo, SizeOf(MonInfo), #0);
@@ -495,7 +491,6 @@ begin
     GetMonitorInfo(F.Monitor.Handle, @MonInfo);
     R := MonInfo.rcWork;
   end;
-  {$ENDIF}
   if FPopupAnchor = paLeft then
     P := ClientToScreen(Point(-3, Height-4))
   else {paRight}

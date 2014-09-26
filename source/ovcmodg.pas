@@ -40,12 +40,11 @@ unit ovcmodg;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics, Messages,
-  StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
+  UITypes, Windows, Classes, Controls, Dialogs, ExtCtrls, Forms, Graphics,
+  Messages, StdCtrls, SysUtils, OvcConst, OvcData, OvcDlg;
 
 type
-  {.Z+}
+
   TOvcfrmMemoDlg = class(TForm)
     btnHelp: TButton;
     Panel1: TPanel;
@@ -57,11 +56,11 @@ type
   private
   public
   end;
-  {.Z-}
+
 
 type
   TOvcMemoDialog = class(TOvcBaseDialog)
-  {.Z+}
+
   protected {private}
     {property variables}
     FLines         : TStrings;
@@ -78,7 +77,7 @@ type
       override;
     destructor Destroy;
       override;
-  {.Z-}
+
 
     function Execute : Boolean;
       override;

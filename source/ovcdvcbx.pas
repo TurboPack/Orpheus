@@ -83,11 +83,9 @@ type
       read FDirComboBox
       write FDirComboBox;
 
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property About;
     property Color;
     property Ctl3D;
@@ -206,7 +204,7 @@ end;
 { - added}
 procedure TOvcDriveComboBox.SetFirstDrive(Value: Char);
 begin
-  if ovcCharInSet(UpCase(Value), ['A'..'Z']) then
+  if CharInSet(UpCase(Value), ['A'..'Z']) then
     FFirstDrive := UpCase(Value)
   else
     FFirstDrive := 'A';

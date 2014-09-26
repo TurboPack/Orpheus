@@ -36,9 +36,7 @@
 {.W-} {Windows Stack Frame}
 {$X+} {Extended Syntax}
 
-{$IFDEF VERSION6}
-  {$WARN SYMBOL_DEPRECATED OFF}
-{$ENDIF}
+{$WARN SYMBOL_DEPRECATED OFF}
 
 unit ovctccbx;
   {-Orpheus Table Cell - check combo box type}
@@ -46,9 +44,8 @@ unit ovctccbx;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, System.Types, {$ENDIF}
-  Windows, SysUtils, Messages, Graphics, Classes, Controls, Forms, StdCtrls,
-  OvcBase, OvcMisc, OvcTCmmn, OvcTCell, OvcTCStr;
+  UITypes, Types, Themes, Windows, SysUtils, Messages, Graphics, Classes, Controls,
+  Forms, StdCtrls, OvcBase, OvcMisc, OvcTCmmn, OvcTCell, OvcTCStr;
 
 type
   TOvcTCComboBoxState = (otlbsUp, otlbsDown);
@@ -56,16 +53,16 @@ type
 type
   TOvcTCComboBoxEditOld = class(TCustomComboBox)
     protected {private}
-      {.Z+}
+
       FCell     : TOvcBaseTableCell;
 
       EditField : HWnd;
       PrevEditWndProc : pointer;
       NewEditWndProc  : pointer;
-      {.Z-}
+
 
     protected
-      {.Z+}
+
       procedure EditWindowProc(var Msg : TMessage);
       function  FilterWMKEYDOWN(var Msg : TWMKey) : boolean;
 
@@ -76,7 +73,7 @@ type
       procedure WMKeyDown(var Msg : TWMKey); message WM_KEYDOWN;
       procedure WMKillFocus(var Msg : TWMKillFocus); message WM_KILLFOCUS;
       procedure WMSetFocus(var Msg : TWMSetFocus); message WM_SETFOCUS;
-      {.Z-}
+
 
     public
       constructor Create(AOwner : TComponent); override;
@@ -148,7 +145,6 @@ type
     procedure CMTextChanged(var Message: TMessage); message CM_TEXTCHANGED;
     procedure UpdateEditPosition;
     procedure EditChanged(Sender: TObject);
-    procedure SetAutoComplete(const Value: Boolean);
     procedure SetAutoDropDown(const Value: Boolean);
   protected
     procedure WMKeyDown(var Msg : TWMKey); message WM_KEYDOWN;
@@ -189,7 +185,7 @@ type
 
   TOvcTCCustomComboBox = class(TOvcTCBaseString)
   protected {private}
-    {.Z+}
+
     {property fields - even size}
     FDropDownCount        : Integer;
     FEdit                 : TOvcTCComboBoxEdit;
@@ -214,10 +210,10 @@ type
   private
     FTextHint: string;
     procedure SetTextHint(const Value: string);
-    {.Z-}
+
 
   protected
-    {.Z+}
+
     function GetCellEditor : TControl; override;
 
     procedure SetShowArrow(Value : Boolean);
@@ -236,7 +232,7 @@ type
                       ColNum      : TColNum;
                 const CellAttr    : TOvcCellAttributes;
                       Data        : pointer); override;
-    {.Z-}
+
 
     {properties}
     property AutoAdvanceChar : boolean
@@ -350,28 +346,17 @@ implementation
 
 uses
   Math,
-  StrUtils,
-{$IFDEF VERSION2010}
-  Themes;
-{$ENDIF}
+  StrUtils;
 
-{$IFDEF VERSION2010}
 function ThemesEnabled: Boolean; inline;
 begin
-{$IFDEF VERSIONXE2}
   Result := StyleServices.Enabled;
-{$ELSE}
-  Result := ThemeServices.ThemesEnabled;
-{$ENDIF}
 end;
 
-{$IFDEF VERSIONXE2}
 function ThemeServices: TCustomStyleServices; inline;
 begin
   Result := StyleServices;
 end;
-{$ENDIF}
-{$ENDIF}
 
 const
   ComboBoxHeight = 24;
@@ -634,10 +619,8 @@ procedure TOvcTCCustomComboBox.DrawButton(Canvas       : TCanvas;
     RightPixel   : Integer;
     SrcRect      : TRect;
     DestRect     : TRect;
-{$IFDEF VERSION2010}
   Details: TThemedElementDetails;
   BtnRect: TRect;
-{$ENDIF}
   begin
     {Calculate the effective cell width (the cell width less the size
      of the button)}
@@ -649,7 +632,6 @@ procedure TOvcTCCustomComboBox.DrawButton(Canvas       : TCanvas;
     TopPixel := CellRect.Top + 1;
     BotPixel := CellRect.Bottom - 1;
 
-    {$IFDEF VERSION2010}
     if ThemeServices.ThemesEnabled then
     begin
       Details := ThemeServices.GetElementDetails(tcDropDownButtonNormal);
@@ -658,7 +640,6 @@ procedure TOvcTCCustomComboBox.DrawButton(Canvas       : TCanvas;
       ThemeServices.DrawElement(canvas.handle, Details, BtnRect);
     end
     else
-    {$ENDIF}
     {Paint the button}
     with Canvas do
       begin
@@ -801,17 +782,9 @@ begin
     else if (Style = csDropDown) or (Style = csSimple) then
     begin
       if UseRunTimeItems then
-        {$IFDEF CBuilder}
-        S := StrPas(ItemRec^.RTSt)
-        {$ELSE}
         S := ItemRec^.RTSt
-        {$ENDIF}
       else
-        {$IFDEF CBuilder}
-        S := StrPas(ItemRec^.St);
-        {$ELSE}
         S := ItemRec^.St;
-        {$ENDIF}
     end;
 
     // if nothing is displayed, display TextHint instead
@@ -1129,13 +1102,11 @@ begin
   FListBox := TListBox.Create(FDropDown);
   FListBox.OnClick := ListBoxClick;
   FListBox.Align := alClient;
-  {$IFDEF VERSION2009}
   FListBox.AlignWithMargins := True; // Align with Margins = 1 so we get a black border
   FListBox.Margins.Left := 1;
   FListBox.Margins.Top:= 1;
   FListBox.Margins.Right := 1;
   FListBox.Margins.Bottom := 1;
-  {$ENDIF}
   FListBox.BorderStyle := bsNone;
   FListBox.Parent := FDropDown;
 //  FListBox.WantDblClicks := False;
@@ -1149,8 +1120,6 @@ begin
 end;
 
 procedure TOvcTCComboBoxEdit.CreateWnd;
-var
-  BorderStyle: NativeInt;
 begin
   inherited;
   if Style = csDropDown then
@@ -1213,10 +1182,8 @@ var
   RightPixel   : Integer;
   SrcRect      : TRect;
   DestRect     : TRect;
-{$IFDEF VERSION2010}
   Details: TThemedElementDetails;
   BtnRect: TRect;
-{$ENDIF}
 begin
   {Calculate the effective cell width (the cell width less the size
    of the button)}
@@ -1228,7 +1195,6 @@ begin
   TopPixel := CellRect.Top + 1;
   BotPixel := CellRect.Bottom - 1;
 
-  {$IFDEF VERSION2010}
   if ThemesEnabled then
   begin
     Details := ThemeServices.GetElementDetails(tcDropDownButtonNormal);
@@ -1237,7 +1203,6 @@ begin
     ThemeServices.DrawElement(canvas.handle, Details, BtnRect);
   end
   else
-  {$ENDIF}
   {Paint the button}
   with Canvas do
     begin
@@ -1293,7 +1258,6 @@ class procedure TOvcTCComboBoxEdit.DrawText(Canvas: TCanvas;
   AText: string);
 var
   S: string;
-  I: Integer;
   R: TRect;
 begin
   R := CellRect;
@@ -1448,11 +1412,6 @@ begin
   end;
 end;
 
-procedure TOvcTCComboBoxEdit.SetAutoComplete(const Value: Boolean);
-begin
-  FAutoComplete := Value;
-end;
-
 procedure TOvcTCComboBoxEdit.SetAutoDropDown(const Value: Boolean);
 begin
   FAutoDropDown := Value;
@@ -1570,12 +1529,9 @@ begin
 end;
 
 procedure TOvcTCComboBoxEdit.UpdateEditPosition;
-var
-  MaxHeight: Integer;
 begin
   if HandleAllocated and Assigned(FEditControl) then
   begin
-    MaxHeight := ClientHeight - 2;
     FEditControl.SetBounds(2, 1 + (ClientHeight div 2) - (FEditControl.Height div 2), ClientWidth - 3 - OvcComboBoxButtonWidth, FEditControl.Height);
   end;
 end;
@@ -1586,12 +1542,10 @@ var
 //  OldText: string;
   SaveText: string;
 //  LastByte: Integer;
-  LItemIndex: Integer;
   LMsg : TMSG;
 
   Key: Char;
 begin
-  LItemIndex := ItemIndex;
   inherited;
 
   if not AutoComplete then exit;
@@ -1613,7 +1567,6 @@ begin
         while ByteType(FFilter, Length(FFilter)) = mbTrailByte do
           Delete(FFilter, Length(FFilter), 1);
         Delete(FFilter, Length(FFilter), 1);
-        Key := #0;
 //        Change;
       end;
   else // case
@@ -1628,13 +1581,11 @@ begin
         if SelectItem(SaveText + Key) then
         begin
           PeekMessage(LMsg, Handle, 0, 0, PM_REMOVE);
-          Key := #0
         end;
       end;
     end
     else
-    if SelectItem(SaveText) then
-      Key := #0
+      SelectItem(SaveText);
   end; // case
 end;
 
@@ -1696,13 +1647,11 @@ var
   OldText: string;
   SaveText: string;
   LastByte: Integer;
-  LItemIndex: Integer;
   Msg : TMSG;
 
 begin
   ComboBox := Parent as TOvcTCComboBoxEdit;
 
-  LItemIndex := ComboBox.ItemIndex;
   inherited KeyPress(Key);
 
   if not ComboBox.AutoComplete then exit;

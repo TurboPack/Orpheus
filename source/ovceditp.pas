@@ -1868,7 +1868,6 @@ function TOvcUndoBuffer.NthRec(N : Integer) : PUndoRec; register;
   {-Get a Pointer to the Nth undo-record in the undo-buffer
     N=0 and N=1 both return a pointer to the first record.
     Warning: The buffer MUST contain (at least) N records }
-{$IFDEF PUREPASCAL}
 begin
   result := PUndoRec(self.Buffer);
   while N>1 do begin
@@ -1876,34 +1875,6 @@ begin
     Dec(N);
   end;
 end;
-{$ELSE}
-asm
-  push   esi                     {save}
-
-  mov    esi,Self                {esi = this object}
-  mov    esi,[esi].Buffer        {esi = Buffer}
-  mov    ecx,edx                 {ecx = N}
-  jecxz  @@2                     {done if CX is 0}
-  dec    ecx                     {ecx = N-1}
-  jecxz  @@2                     {done if CX is 0}
-
-  xor    eax,eax                 {clear high word}
-@@1:
-  mov    ax,[esi].TUndoRec.DSize {size of next record}
-{$IFDEF UNICODE}
-  shl    eax,1                   {DSize is size in chars}
-{$ENDIF}
-  add    esi,eax                 {point to next record}
-  add    esi,UndoRecSize         {undo record size}
-  loop   @@1                     {until done}
-
-@@2:
-  mov eax,esi                    {return position in buffer}
-
-  pop    esi                     {restore}
-end;
-{$ENDIF}
-
 
 procedure TOvcUndoBuffer.PeekRedoLink(var Link : Byte);
 var

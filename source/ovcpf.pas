@@ -57,7 +57,7 @@ type
 
 type
   TOvcCustomPictureField = class(TOvcPictureBase)
-  {.Z+}
+
   protected {private}
     {property instance variables}
     FInitDateTime     : Boolean;
@@ -113,7 +113,7 @@ type
     function efValidateField : Word;
       override;
       {-validate contents of field; result is error code or 0}
-  {.Z-}
+
 
     {public properties}
     property DataType : TPictureDataType
@@ -137,11 +137,9 @@ type
   published
     {inherited properties}
     property DataType;            {needs to load before most other properties}
-    {$IFDEF VERSION4}
     property Anchors;
     property Constraints;
     property DragKind;
-    {$ENDIF}
     property AutoSize;
     property BorderStyle;
     property CaretIns;
@@ -279,7 +277,7 @@ end;
 
 procedure TOvcCustomPictureField.CreateWnd;
 var
-  P : array[0..MaxEditLen+1] of {$IFDEF UNICODE}Word{$ELSE}Byte{$ENDIF}; //SZ
+  P : array[0..MaxEditLen+1] of Word; //SZ
   S: String;  //SZ added
 begin
   {save field data}
@@ -889,7 +887,7 @@ procedure TOvcCustomPictureField.efEdit(var Msg : TMessage; Cmd : Word);
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           Literal := sefLiteral in sefOptions;
           Exclude(sefOptions, sefLiteral);
           if not (sefAcceptChar in sefOptions) then
@@ -1289,7 +1287,7 @@ ExitPoint:
     case Cmd of
       ccChar :
         begin
-          Ch := Char({$IFNDEF UNICODE}Lo{$ENDIF}(Msg.wParam));
+          Ch := Char(Msg.wParam);
           Literal := sefLiteral in sefOptions;
           if sefAcceptChar in sefOptions then
             if CharIsOK then begin

@@ -47,20 +47,12 @@ unit ovcmisc;
 interface
 
 uses
-  {$IFDEF VERSIONXE3} System.UITypes, {$ENDIF}
-  Windows, Buttons, Classes, Controls, ExtCtrls, Forms, Graphics, Messages,
+  UITypes, Windows, Buttons, Classes, Controls, ExtCtrls, Forms, Graphics, Messages,
   SysUtils, Consts, OvcData;
 
-{ Hdc needs to be an Integer for BCB compatibility }
-{$IFDEF CBuilder}
-type
-  TOvcHdc  = Integer;
-  TOvcHWND = Cardinal;
-{$ELSE}
 type
   TOvcHdc  = HDC;
   TOvcHWND = HWND;
-{$ENDIF}
 
 function LoadBaseBitmap(lpBitmapName : PChar) : HBITMAP;
   {-load and return the handle to bitmap resource}
@@ -173,7 +165,6 @@ function CompStruct(const S1, S2; Size : Cardinal) : Integer; register;
 
    -Changes
     04/2011, AB: Added PUREPASCAL-version }
-{$IFDEF PUREPASCAL}
 var
   p1, p2: PByte;
 begin
@@ -193,33 +184,6 @@ begin
     end;
   end;
 end;
-{$ELSE}
-asm
-  push    esi
-  push    edi
-
-  mov     esi, eax     {pointer to S1}
-  mov     edi, edx     {pointer to S2}
-
-  xor     eax, eax     {eax holds temporary result (Equal)}
-
-  or      ecx, ecx     {size is already in ecx}
-  jz      @@CSDone     {make sure size isn't zero}
-
-  cld                  {go forward}
-  repe    cmpsb        {compare until no match or ecx = 0}
-
-  je      @@CSDone     {if equal, result is already in eax}
-  inc     eax          {prepare for greater}
-  ja      @@CSDone     {S1 greater? return +1}
-  mov     eax, -1      {else S1 less, return -1}
-
-@@CSDone:
-  pop     edi
-  pop     esi
-end;
-{$ENDIF}
-
 
 procedure FixRealPrim(P : PChar; DC : Char);
   {-Get a string representing a real ready for Val()}
@@ -442,64 +406,24 @@ end;
 
 
 function MinI(X, Y : Integer) : Integer; register;
-{$IFDEF PUREPASCAL}
 begin
   if X < Y then result := X else result := Y;
 end;
-{$ELSE}
-asm
-  cmp  eax, edx
-  jle  @@Exit
-  mov  eax, edx
-@@Exit:
-end;
-{$ENDIF}
-
 
 function MaxI(X, Y : Integer) : Integer; register;
-{$IFDEF PUREPASCAL}
 begin
   if X > Y then result := X else result := Y;
 end;
-{$ELSE}
-asm
-  cmp  eax, edx
-  jge  @@Exit
-  mov  eax, edx
-@@Exit:
-end;
-{$ENDIF}
-
 
 function MinL(X, Y : LongInt) : LongInt; register;
-{$IFDEF PUREPASCAL}
 begin
   if X < Y then result := X else result := Y;
 end;
-{$ELSE}
-asm
-  cmp  eax, edx
-  jle  @@Exit
-  mov  eax, edx
-@@Exit:
-end;
-{$ENDIF}
-
 
 function MaxL(X, Y : LongInt) : LongInt; register;
-{$IFDEF PUREPASCAL}
 begin
   if X > Y then result := X else result := Y;
 end;
-{$ELSE}
-asm
-  cmp  eax, edx
-  jge  @@Exit
-  mov  eax, edx
-@@Exit:
-end;
-{$ENDIF}
-
 
 function TrimLeft(const S : string) : string;
 var
@@ -540,11 +464,11 @@ begin
   I := 1;
   SLen := Length(S);
   while I <= SLen do begin
-    while (I <= SLen) and ovcCharInSet(S[I], WordDelims) do
+    while (I <= SLen) and CharInSet(S[I], WordDelims) do
       Inc(I);
     if I <= SLen then
       Inc(Result);
-    while (I <= SLen) and not ovcCharInSet(S[I], WordDelims) do
+    while (I <= SLen) and not CharInSet(S[I], WordDelims) do
       Inc(I);
   end;
 end;
@@ -558,7 +482,7 @@ begin
   I := WordPosition(N, S, WordDelims);
   if I <> 0 then
     { find the end of the current word }
-    while (I <= Length(S)) and not ovcCharInSet(S[I], WordDelims) do begin
+    while (I <= Length(S)) and not CharInSet(S[I], WordDelims) do begin
       { add the I'th character to result }
       Inc(Len);
       SetLength(Result, Len);
@@ -577,14 +501,14 @@ begin
   Result := 0;
   while (I <= Length(S)) and (Count <> N) do begin
     {skip over delimiters}
-    while (I <= Length(S)) and ovcCharInSet(S[I], WordDelims) do
+    while (I <= Length(S)) and CharInSet(S[I], WordDelims) do
       Inc(I);
     {if we're not beyond end of S, we're at the start of a word}
     if I <= Length(S) then
       Inc(Count);
     {if not finished, find the end of the current word}
     if Count <> N then
-      while (I <= Length(S)) and not ovcCharInSet(S[I], WordDelims) do
+      while (I <= Length(S)) and not CharInSet(S[I], WordDelims) do
         Inc(I)
     else
       Result := I;
@@ -1131,22 +1055,11 @@ function GetArrowWidth(Width, Height : Integer) : Integer; register;
     04/2011, AB: Moved this function from ovcfsc/ovcsc to ovcmisc to eliminate redundant
                  code and to make it accessible for unit-testing.
                  Added PUREPASCAL-version. }
-{$IFDEF PUREPASCAL}
 begin
   {The arrow-width should be 1/2 of the minimum of the given 'Width' and
    'Height'; to get a symmetric arrow, the result has to be odd. }
   if Width<Height then result := Width else result := Height;
   result := (result div 2) or 1;
 end;
-{$ELSE}
-asm
-  cmp  eax, edx
-  jle  @@1
-  mov  eax, edx
-@@1:
-  shr  eax, 1
-  or   eax, 1
-end;
-{$ENDIF}
 
 end.
