@@ -60,7 +60,7 @@
         <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
         <ProjectType>CppPackage</ProjectType>
         <OutputExt>bpl</OutputExt>
-        <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+        <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
         <DynamicRTL>true</DynamicRTL>
         <IncludePath>..\CBuilder\;..\..\source\;$(BDS)\include\Windows;$(BDS)\include\Windows\RTL\de;$(BDS)\include\Windows\RTL;$(BDS)\include\Windows\CRTL;$(BDS)\include\Windows\SDK;$(BDS)\include\Windows\vcl;$(BDS)\include\windows\vcl\design;$(IncludePath)</IncludePath>
         <BCC_wpar>false</BCC_wpar>
