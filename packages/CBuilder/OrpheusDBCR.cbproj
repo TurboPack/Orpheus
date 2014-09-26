@@ -116,6 +116,9 @@
         <PackageImport Include="dbrtl.bpi">
             <BuildOrder>8</BuildOrder>
         </PackageImport>
+        <PackageImport Include="OrpheusCR.bpi" Condition="'$(Platform)'=='Win32'">
+            <BuildOrder>29</BuildOrder>
+        </PackageImport>
         <CppCompile Include="OrpheusDBCR.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
@@ -316,6 +319,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\BPL\OrpheusDBCR.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>OrpheusDBCR.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32160mt.dll" Class="DependencyModule">
                     <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
@@ -323,6 +332,12 @@
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgcrtl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\BPL\OrpheusDBCR.tds" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>OrpheusDBCR.tds</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
