@@ -1,0 +1,237 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = ADDRBOOK.exe CUSTORD.exe EXABTN.exe EXAE.exe EXCAL.exe EXCALC.exe \
+  EXCALOD.exe excbglyf.exe EXCBX.exe EXCLOCK.exe EXTIME.exe EXCOMBO.exe \
+  EXDBAE.exe EXDBCB.exe EXDBEF.exe ExDbFlexEdit.exe EXDBRV.exe EXDBRV2.exe \
+  EXDBTB.exe EXDBTOD.exe EXDLG.exe EXDRV.exe EXDSPLIT.exe EXEDOD.exe EXEDPRN.exe \
+  EXEDSRC.exe EXEF.exe ExFlexButton1.exe ExFlexEdit.exe ExIGrid1.exe EXLKOUT.exe \
+  EXMETER.exe EXMRU.exe EXNBHINT.exe EXNBK.exe EXODT.exe EXOUTL2.exe EXOUTL3.exe \
+  EXOUTLN.exe EXPIZZA.exe Exrvdir.exe EXSLIDE.exe EXSTATE.exe EXTBHINT.exe \
+  EXTBL01.exe EXTBL02.exe EXTBL03.exe EXTBL04.exe EXTBL05.exe EXTBL06.exe \
+  EXTBL07.exe EXTBL08.exe EXTBL09.exe EXTBL10.exe EXTBL11.exe EXTBL12.exe \
+  EXTBL13.exe EXTBLOD.exe EXCLOK1.exe EXTIMR.exe EXTRAN.exe EXVALID.exe \
+  ExValidatorPool1.exe EXVLB.exe FILEVIEW.exe MDIEDIT.exe ORDENTRY.exe \
+  TEXTEDIT.exe TEXTVIEW.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+
+
+ADDRBOOK.exe: ADDRBOOK.DPR
+  $(DCC)
+
+CUSTORD.exe: CUSTORD.DPR
+  $(DCC)
+
+EXABTN.exe: EXABTN.DPR
+  $(DCC)
+
+EXAE.exe: EXAE.DPR
+  $(DCC)
+
+EXCAL.exe: EXCAL.DPR
+  $(DCC)
+
+EXCALC.exe: EXCALC.DPR
+  $(DCC)
+
+EXCALOD.exe: EXCALOD.DPR
+  $(DCC)
+
+excbglyf.exe: excbglyf.dpr
+  $(DCC)
+
+EXCBX.exe: EXCBX.DPR
+  $(DCC)
+
+EXCLOCK.exe: EXCLOCK.DPR
+  $(DCC)
+
+EXTIME.exe: EXTIME.DPR
+  $(DCC)
+
+EXCOMBO.exe: EXCOMBO.DPR
+  $(DCC)
+
+EXDBAE.exe: EXDBAE.DPR
+  $(DCC)
+
+EXDBCB.exe: EXDBCB.DPR
+  $(DCC)
+
+EXDBEF.exe: EXDBEF.DPR
+  $(DCC)
+
+ExDbFlexEdit.exe: ExDbFlexEdit.dpr
+  $(DCC)
+
+EXDBRV.exe: EXDBRV.DPR
+  $(DCC)
+
+EXDBRV2.exe: EXDBRV2.DPR
+  $(DCC)
+
+EXDBTB.exe: EXDBTB.DPR
+  $(DCC)
+
+EXDBTOD.exe: EXDBTOD.DPR
+  $(DCC)
+
+EXDLG.exe: EXDLG.DPR
+  $(DCC)
+
+EXDRV.exe: EXDRV.DPR
+  $(DCC)
+
+EXDSPLIT.exe: EXDSPLIT.DPR
+  $(DCC)
+
+EXEDOD.exe: EXEDOD.DPR
+  $(DCC)
+
+EXEDPRN.exe: EXEDPRN.DPR
+  $(DCC)
+
+EXEDSRC.exe: EXEDSRC.DPR
+  $(DCC)
+
+EXEF.exe: EXEF.DPR
+  $(DCC)
+
+ExFlexButton1.exe: ExFlexButton1.dpr
+  $(DCC)
+
+ExFlexEdit.exe: ExFlexEdit.dpr
+  $(DCC)
+
+ExIGrid1.exe: ExIGrid1.dpr
+  $(DCC)
+
+EXLKOUT.exe: EXLKOUT.DPR
+  $(DCC)
+
+EXMETER.exe: EXMETER.DPR
+  $(DCC)
+
+EXMRU.exe: EXMRU.DPR
+  $(DCC)
+
+EXNBHINT.exe: EXNBHINT.DPR
+  $(DCC)
+
+EXNBK.exe: EXNBK.DPR
+  $(DCC)
+
+EXODT.exe: EXODT.DPR
+  $(DCC)
+
+EXOUTL2.exe: EXOUTL2.DPR
+  $(DCC)
+
+EXOUTL3.exe: EXOUTL3.DPR
+  $(DCC)
+
+EXOUTLN.exe: EXOUTLN.DPR
+  $(DCC)
+
+EXPIZZA.exe: EXPIZZA.DPR
+  $(DCC)
+
+Exrvdir.exe: Exrvdir.dpr
+  $(DCC)
+
+EXSLIDE.exe: EXSLIDE.DPR
+  $(DCC)
+
+EXSTATE.exe: EXSTATE.DPR
+  $(DCC)
+
+EXTBHINT.exe: EXTBHINT.DPR
+  $(DCC)
+
+EXTBL01.exe: EXTBL01.DPR
+  $(DCC)
+
+EXTBL02.exe: EXTBL02.DPR
+  $(DCC)
+
+EXTBL03.exe: EXTBL03.DPR
+  $(DCC)
+
+EXTBL04.exe: EXTBL04.DPR
+  $(DCC)
+
+EXTBL05.exe: EXTBL05.DPR
+  $(DCC)
+
+EXTBL06.exe: EXTBL06.DPR
+  $(DCC)
+
+EXTBL07.exe: EXTBL07.DPR
+  $(DCC)
+
+EXTBL08.exe: EXTBL08.DPR
+  $(DCC)
+
+EXTBL09.exe: EXTBL09.DPR
+  $(DCC)
+
+EXTBL10.exe: EXTBL10.DPR
+  $(DCC)
+
+EXTBL11.exe: EXTBL11.DPR
+  $(DCC)
+
+EXTBL12.exe: EXTBL12.DPR
+  $(DCC)
+
+EXTBL13.exe: EXTBL13.DPR
+  $(DCC)
+
+EXTBLOD.exe: EXTBLOD.DPR
+  $(DCC)
+
+EXCLOK1.exe: EXCLOK1.DPR
+  $(DCC)
+
+EXTIMR.exe: EXTIMR.DPR
+  $(DCC)
+
+EXTRAN.exe: EXTRAN.DPR
+  $(DCC)
+
+EXVALID.exe: EXVALID.DPR
+  $(DCC)
+
+ExValidatorPool1.exe: ExValidatorPool1.dpr
+  $(DCC)
+
+EXVLB.exe: EXVLB.DPR
+  $(DCC)
+
+FILEVIEW.exe: FILEVIEW.DPR
+  $(DCC)
+
+MDIEDIT.exe: MDIEDIT.DPR
+  $(DCC)
+
+ORDENTRY.exe: ORDENTRY.DPR
+  $(DCC)
+
+TEXTEDIT.exe: TEXTEDIT.DPR
+  $(DCC)
+
+TEXTVIEW.exe: TEXTVIEW.DPR
+  $(DCC)
+
+

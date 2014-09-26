@@ -1,0 +1,48 @@
+This file summarizes changes made between Orpheus versions 4.05 and 
+4.06. It is of interest primarily to users who have upgraded from a 
+previous version.
+
+Orpheus 4.06 was released under the Mozilla Public License version 1.1 
+on January 7, 2003.
+
+***********************************************************************
+ENHANCEMENTS
+***********************************************************************
+ None.
+
+***********************************************************************
+FIXES
+***********************************************************************
+   62 - PageUp/PageDown marks data dirty. 
+   
+  421 - Incorrect memory limitation 
+  
+ 1755 - Invalidate doesn't get fed to controls embedded in the
+        LookoutBar's container.
+        
+ 3923 - Memory leak 
+ 
+ 3936 - SelectionCount property non-functional on db report view 
+ 
+ 3972 - FlexButton Popmenu in the wrong place 
+ 
+ 4014 - O32FlexButton draws the popglyph improperly 
+ 
+ 4036 - Flicker problem in the LookoutBar 
+ 
+ 4091 - "Value out of range" bug in the IGrid Component Editor 
+ 
+ 4097 - Cannot clear a OvcNumberEdit with a decimal point. 
+ 
+ 4105 - FlexButton WheelSelection won't work. 
+ 
+ 4106 - Debug code inadvertantly left in the OVC Collection Editor. 
+ 
+ 4115 - OvcSearchListBox doesn't respond to programmatic settings 
+ 
+ 4116 - Add the ability to change the menu's background color. 
+ 
+ 4117 - Bugfix 4105 Incomplete (FlexButton WheelSelection won't work.) 
+ 
+ 4171 - Notebook doesn't update PageIndex after programatically adding
+        a new page. 

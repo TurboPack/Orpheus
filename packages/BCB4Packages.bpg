@@ -1,0 +1,57 @@
+# * ***** BEGIN LICENSE BLOCK *****
+# * Version: MPL 1.1
+# *
+# * The contents of this file are subject to the Mozilla Public License
+# * version 1.1 (the "License"); you may not use this file except in
+# * compliance with the License. You may obtain a copy of the License at
+# * http://www.mozilla.org/MPL/
+# *
+# * Software distributed under the License is distributed on an "AS IS" basis,
+# * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# * for the specific language governing rights and limitations under the
+# * License.
+# *
+# * The Original Code is TurboPower Orpheus
+# *
+# * The Initial Developer of the Original Code is TurboPower Software
+# *
+# * Portions created by the TurboPower SOftware Co. are Copyright (C) 1995-2002
+# * TurboPower Software Company. All Rights Reserved.
+# *
+# * Contributor(s):
+# *
+# * ***** END LICENSE BLOCK *****
+
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = o406_r41.BPL o406_d41.BPL o406br41.BPL o406bd41.BPL
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+
+
+
+
+o406_r41.BPL: o406_r41.bpk
+  $(MAKE)
+
+o406_d41.BPL: o406_d41.bpk
+  $(MAKE)
+
+o406br41.BPL: o406br41.bpk
+  $(MAKE)
+
+o406bd41.BPL: o406bd41.bpk
+  $(MAKE)
+
+

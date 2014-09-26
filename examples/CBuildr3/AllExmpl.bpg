@@ -1,0 +1,110 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = Addrbook CustOrd ExABtn ExAe ExCombo ExDbAe ExDbCb ExDbEf ExDbTb \
+  ExDbTod ExDSplt ExEdOD ExEdPrn ExEdSrc ExEf ExMeter ExNbHnt ExNbk ExOdt ExPizza \
+  ExTblOd ExTimr ExTran ExValid ExVlb FileView MDIEdit OrdEntry TextEdit TextView
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+
+Addrbook: Addrbook.bpr
+  $(MAKE)
+
+CustOrd: CustOrd.bpr
+  $(MAKE)
+
+ExABtn: ExABtn.bpr
+  $(MAKE)
+
+ExAe: ExAe.bpr
+  $(MAKE)
+
+ExCombo: ExCombo.bpr
+  $(MAKE)
+
+ExDbAe: ExDbAe.bpr
+  $(MAKE)
+
+ExDbCb: ExDbCb.bpr
+  $(MAKE)
+
+ExDbEf: ExDbEf.bpr
+  $(MAKE)
+
+ExDbTb: ExDbTb.bpr
+  $(MAKE)
+
+ExDbTod: ExDbTod.bpr
+  $(MAKE)
+
+ExDSplt: ExDSplt.bpr
+  $(MAKE)
+
+ExEdOD: ExEdOD.bpr
+  $(MAKE)
+
+ExEdPrn: ExEdPrn.bpr
+  $(MAKE)
+
+ExEdSrc: ExEdSrc.bpr
+  $(MAKE)
+
+ExEf: ExEf.bpr
+  $(MAKE)
+
+ExMeter: ExMeter.bpr
+  $(MAKE)
+
+ExNbHnt: ExNbHnt.bpr
+  $(MAKE)
+
+ExNbk: ExNbk.bpr
+  $(MAKE)
+
+ExOdt: ExOdt.bpr
+  $(MAKE)
+
+ExPizza: ExPizza.bpr
+  $(MAKE)
+
+ExTblOd: ExTblOd.bpr
+  $(MAKE)
+
+ExTimr: ExTimr.bpr
+  $(MAKE)
+
+ExTran: ExTran.bpr
+  $(MAKE)
+
+ExValid: ExValid.bpr
+  $(MAKE)
+
+ExVlb: ExVlb.bpr
+  $(MAKE)
+
+FileView: FileView.bpr
+  $(MAKE)
+
+MDIEdit: MDIEdit.bpr
+  $(MAKE)
+
+OrdEntry: OrdEntry.bpr
+  $(MAKE)
+
+TextEdit: TextEdit.bpr
+  $(MAKE)
+
+TextView: TextView.bpr
+  $(MAKE)
+
+

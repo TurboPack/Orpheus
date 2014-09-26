@@ -1,0 +1,47 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = ExABtn ExAe ExDSplt ExEf ExMeter ExPizza ExTimr ExTran ExValid ExVlb
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+ExABtn: ExABtn.bpr
+  $(MAKE)
+
+ExAe: ExAe.bpr
+  $(MAKE)
+
+ExDSplt: ExDSplt.bpr
+  $(MAKE)
+
+ExEf: ExEf.bpr
+  $(MAKE)
+
+ExMeter: ExMeter.bpr
+  $(MAKE)
+
+ExPizza: ExPizza.bpr
+  $(MAKE)
+
+ExTimr: ExTimr.bpr
+  $(MAKE)
+
+ExTran: ExTran.bpr
+  $(MAKE)
+
+ExValid: ExValid.bpr
+  $(MAKE)
+
+ExVlb: ExVlb.bpr
+  $(MAKE)
+
+

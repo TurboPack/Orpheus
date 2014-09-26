@@ -1,0 +1,191 @@
+# * ***** BEGIN LICENSE BLOCK *****                                              *
+# * Version: MPL 1.1                                                             *
+# *                                                                              *
+# * The contents of this file are subject to the Mozilla Public License          *
+# * Version 1.1 (the "License"); you may not use this file except in             *
+# * compliance with the License. You may obtain a copy of the License at         *
+# * http://www.mozilla.org/MPL/                                                  *
+# *                                                                              *
+# * Software distributed under the License is distributed on an "AS IS" basis,   *
+# * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License     *
+# * for the specific language governing rights and limitations under the         *
+# * License.                                                                     *
+# *                                                                              *
+# * The Original Code is TurboPower Orpheus                                      *
+# *                                                                              *
+# * The Initial Developer of the Original Code is TurboPower Software            *
+# *                                                                              *
+# * Portions created by TurboPower Software Co. are Copyright (C) 1995-2002      *
+# * TurboPower Software Co. All Rights Reserved.                                 *
+# *                                                                              *
+# * Contributor(s):                                                              *
+# *                                                                              *
+# * ***** END LICENSE BLOCK *****                                                *
+
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="O406id61.bpl"/>
+    <OBJFILES value="O406id61.obj ovcdbhis.obj ovcregis.obj"/>
+    <RESFILES value="O406id61.res"/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value="rtl.lib vcl.lib"/>
+    <PACKAGES value="O406_r51.bpi O405BR51.bpi rtl.bpi vcl.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG"/>
+    <SYSDEFINES value="_RTLDLL;NO_STRICT;USEPACKAGES"/>
+    <MAINSOURCE value="O406id61.cpp"/>
+    <INCLUDEPATH value="$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl;D:\Components\Orpheus;D:\Components\Orpheus\hpp5;D:\Components\FF2"/>
+    <LIBPATH value="$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl;D:\Components\Orpheus;D:\Components\Orpheus\hpp5;D:\Components\FF2"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-I$(BCB)\include -I$(BCB)\include\vcl -I$(BCB)\Source\ToolsAPI
+      -I$(BCB)\source\vcl -ID:\Components\Orpheus -ID:\Components\Orpheus\hpp5
+      -ID:\Components\FF2 -src_suffix cpp -D_DEBUG -boa"/>
+    <CFLAG1 value="-Od -H=d:\borland\bcb6\CBUILD~1\lib\vcl60.csm -Hc -Vx -Ve -X- -r- -a8 -b-
+      -k -y -v -vi- -c -tWM"/>
+    <PFLAGS value="-$YD -$W -$O- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zd"/>
+    <LFLAGS value="-D&quot;TurboPower Orpheus 4.05 DBISAM Support - VCL61&quot; -aa -Tpp -Gpd -x -Gn
+      -Gl -Gi -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0pkg32.obj $(PACKAGES) Memmgr.Lib sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mti.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="O406id61.cpp" FORMNAME="" UNITNAME="O405id61" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="O406id61.res" FORMNAME="" UNITNAME="O405id61.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\BCB6\CBuilder6\Projects\Lib\O406_r51.bpi" FORMNAME="" UNITNAME="o405_r51" CONTAINERID="BPITool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\BCB6\CBuilder6\Projects\Lib\O406BR51.bpi" FORMNAME="" UNITNAME="O405BR51" CONTAINERID="BPITool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ovcdbhis.pas" FORMNAME="" UNITNAME="ovcdbhis" CONTAINERID="PascalCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="ovcregis.pas" FORMNAME="" UNITNAME="ovcregis" CONTAINERID="PascalCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\BCB6\CBuilder6\Projects\Lib\rtl.bpi" FORMNAME="" UNITNAME="rtl" CONTAINERID="BPITool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\BCB6\CBuilder6\Projects\Lib\vcl.bpi" FORMNAME="" UNITNAME="vcl" CONTAINERID="BPITool" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=0
+MajorVer=4
+MinorVer=0
+Release=6
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=TurboPower Software Company
+FileDescription=
+FileVersion=4.0.6.0
+InternalName=
+LegalCopyright=Copyright (C) 1995-2002 TurboPower Software Company
+LegalTrademarks=
+OriginalFilename=
+ProductName=Orpheus
+ProductVersion=4.06
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=14
+Item0=$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl;D:\Components\Orpheus;D:\Components\Orpheus\hpp5;D:\Components\FF2
+Item1=$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl;D:\Components\Orpheus\;D:\Components\Orpheus\hpp5\;D:\Components\FF2\
+Item2=$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl;..\..\..\..\Components\Orpheus;..\..\..\..\Components\Orpheus\hpp5;..\..\..\..\Components\FF2
+Item3=$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl;D:\Borland\Components\Orpheus;D:\Borland\Components\Orpheus\hpp5;D:\Borland\Components\FF2
+Item4=..\..\..\..\Components\Orpheus;$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl
+Item5=$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl
+Item6=..\FF;$(BCB)\include;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl
+Item7=..\..\..\..\..\components\FF;$(BCB)\include;..\..\..\..\..\components\Orpheus;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI;$(BCB)\source\vcl
+Item8=..\..\..\..\..\components\FF;$(BCB)\include;..\..\..\..\..\components\Orpheus;$(BCB)\include\vcl;$(BCB)\Source\ToolsAPI
+Item9=..\..\..\..\..\components\FF;$(BCB)\include;..\..\..\..\..\components\Orpheus;$(BCB)\include\vcl;..\..\..\..\..\D4\Lib
+Item10=..\..\..\..\..\components\FF;$(BCB)\include;..\..\..\..\..\components\Orpheus;$(BCB)\include\vcl;D:\Borland\D4\Lib
+Item11=..\..\..\..\..\components\FF;$(BCB)\include;..\..\..\..\..\components\Orpheus;$(BCB)\include\vcl
+Item12=D:\Borland\components\FF;$(BCB)\include;D:\Borland\components\Orpheus;$(BCB)\include\vcl
+Item13=..\..\..\..\..\components\FF;..\..\..\..\..\components\Orpheus;$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=12
+Item0=$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl;D:\Components\Orpheus;D:\Components\Orpheus\hpp5;D:\Components\FF2
+Item1=$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl;D:\Components\Orpheus\;D:\Components\Orpheus\hpp5\;D:\Components\FF2\
+Item2=$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl;..\..\..\..\Components\Orpheus;..\..\..\..\Components\Orpheus\hpp5;..\..\..\..\Components\FF2
+Item3=$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl;D:\Borland\Components\Orpheus\;D:\Borland\Components\Orpheus\hpp5;D:\Borland\Components\FF2
+Item4=..\..\..\..\Components\Orpheus;$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl
+Item5=$(BCB)\projects\lib;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl
+Item6=..\..\FF2;..\..\..\COMPON~1\FF2;$(BCB)\projects\lib;..\..\bcb5\cbuilder5\projects\lib;..\..\COMPON~1\FF2;..\FF;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl
+Item7=;;;;;;..\FF;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl
+Item8=..\..\..\..\..\components\FF;..\..\..\..\..\components\Orpheus;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI;$(BCB)\Source\Vcl
+Item9=..\..\..\..\..\components\FF;..\..\..\..\..\components\Orpheus;$(BCB)\lib\obj;$(BCB)\lib;$(BCB)\Source\ToolsAPI
+Item10=..\..\..\..\..\components\FF;..\..\..\..\..\components\Orpheus;$(BCB)\lib\obj;$(BCB)\lib
+Item11=D:\Borland\components\FF;D:\Borland\components\Orpheus;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=1
+Item0=_DEBUG
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+
+[Linker]
+LibPrefix=
+LibSuffix=
+LibVersion=
+  </IDEOPTIONS>
+</PROJECT>

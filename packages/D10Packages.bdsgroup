@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <PersonalityInfo>
+    <Option>
+      <Option Name="Personality">Default.Personality</Option>
+      <Option Name="ProjectType"></Option>
+      <Option Name="Version">1.0</Option>
+      <Option Name="GUID">{835E9EC0-C9C1-4FFC-92B6-8E52BF231FDD}</Option>
+    </Option>
+  </PersonalityInfo>
+  <Default.Personality>
+    
+    <Projects>
+      <Projects Name="O407_r100.bpl">O407_r100.bdsproj</Projects>
+      <Projects Name="O407_d100.bpl">O407_d100.bdsproj</Projects>
+      <Projects Name="O407bd100.bpl">O407bd100.bdsproj</Projects>
+      <Projects Name="O407br100.bpl">O407br100.bdsproj</Projects>
+      <Projects Name="Targets">O407_r100.bpl O407_d100.bpl O407bd100.bpl O407br100.bpl</Projects>
+    </Projects>
+    <Dependencies/>
+  </Default.Personality>
+</BorlandProject>

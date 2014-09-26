@@ -1,0 +1,106 @@
+This file summarizes changes made between Orpheus versions 4.03 and 
+4.04.  It is of interest primarily to users who have upgraded from a 
+previous version.
+
+Orpheus 4.04 was released on Monday June 3, 2002.
+
+***********************************************************************
+ENHANCEMENTS
+***********************************************************************
+
+- Added a FirstScannedDrive property to prevent the drive combo box 
+  from polling floppies when it populates itself.
+
+- There was no way to change the calendar's background color
+
+- Added OwnerDrawCheck event.
+
+- Added ReadOnly property.
+
+- Hint and Tag properties have been published.
+
+- Published the Color property in the OvcDbCalendar.
+
+- Report view now truncates group headers if they would otherwise 
+  overwrite a total column.
+
+- Loading logic for custom views optimized
+
+- View no longer scrolls when columns are resized
+
+- Key search now works for filtered views
+
+- Various performance enhancements
+
+***********************************************************************
+FIXES
+***********************************************************************
+
+- OnEnteringColumn and OnEnteringRow were being fired at the wrong 
+  times.
+
+- If the value of RangeHi or RangeLo being changed caused the value of 
+  the field to be out of range, the error wasn't being thrown, and the 
+  field's display wasn't being updated.
+
+- Timer failed to call user defined trigger events for anytihng but 
+  recurring timers.
+
+- ComboBox Height would not change with font height changes.
+
+- Delphi 6 throws an access violation when the TOvcDbIndexSelect is 
+  destroyed.
+
+- memory leak. FButtonGlyph wasn't being freed.
+
+- memory leak. FLabelInfo wasn't being freed.
+
+- memory leak. FValidation wasn't being freed.
+
+- memory leak. The objects assigned to the items list were not being 
+  freed.
+
+- FlexEdit wouldn't adjust its height when the font was changed.
+
+- ButtonGlyph caused access violation at designtime.
+
+- "No Parent Window" Error was thrown in the Edit field's destructors. 
+  Fixed.
+
+- CBuilder wasn't being properly defined in C++Builder 6. As a result, 
+  some Delphi only code was being compiled instead of some C++Builder 
+  specific code.
+
+- Leading spaces get trimmed off improperly if the width of the 
+  control is too narrow to allow the entire string to be displayed.
+
+- Report view does not allow deletion of custom fields and views.
+
+- Changing visib. of view column causes recalc.
+
+- Group sorting on calculated fields fixed
+
+- Incorrect page calc. for grouping headers
+
+- Sorting of sub-groups wasn't always correct
+
+- FlexEdit component ignored the value of the PasswordChar property.
+
+- The FlexButton's OnChange event was being fired as the button was 
+  being created, before the parent form's OnCreate event was fired.
+
+- The InspectorGrid flickered madly when the columns were resized.
+
+- Cell editors didn't follow the cell when the control is resized.
+
+- The OvcTable was firing the OnEnteringRow and OnEnteringCol as each 
+  cell was being painted.  This is incorrect as the column and row 
+  are not actually being entered, just painted.
+
+- Focus problems with the Ovc*Edit fields.
+
+- Scrollbar recursion problems in the OvcTable
+
+- FullName returned invalid results in some instances.
+
+- Fixed Access violation which occurs when path = ''.
