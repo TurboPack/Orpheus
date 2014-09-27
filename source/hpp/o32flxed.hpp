@@ -245,7 +245,7 @@ public:
 	__property System::Classes::TAlignment Alignment = {read=FAlignment, write=SetAlignment, default=0};
 	__property O32bordr::TO32Borders* Borders = {read=FBorders, write=FBorders};
 	__property System::Uitypes::TColor Color = {read=GetColor, write=SetColor, default=-16777211};
-	__property Ovcef::TOvcEfColors* EfColors = {read=FEFColors, write=FEFColors};
+	__property Ovcef::TOvcEfColors* EFColors = {read=FEFColors, write=FEFColors};
 	__property TO32EditLines* EditLines = {read=FEditLines, write=FEditLines};
 	__property TO32PopupAnchor PopupAnchor = {read=FPopupAnchor, write=FPopupAnchor, nodefault};
 	__property bool ShowButton = {read=FShowButton, write=SetShowButton, nodefault};
@@ -299,7 +299,7 @@ __published:
 	__property Cursor = {default=0};
 	__property DragCursor = {default=-12};
 	__property EditLines;
-	__property EfColors;
+	__property EFColors;
 	__property Enabled = {default=1};
 	__property Font;
 	__property HideSelection = {default=1};

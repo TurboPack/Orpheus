@@ -245,7 +245,7 @@ type
       read FBorders     write FBorders;
     property  Color: TColor
       read GetColor write SetColor default clWindow;
-    property  EfColors: TOvcEfColors
+    property  EFColors: TOvcEfColors
       read FEFColors    write FEFColors;
     property  EditLines: TO32EditLines
       read FEditLines   write FEditLines;
@@ -319,7 +319,7 @@ type
     property Cursor;
     property DragCursor;
     property EditLines;
-    property EfColors;
+    property EFColors;
     property Enabled;
     property Font;
     property HideSelection;
