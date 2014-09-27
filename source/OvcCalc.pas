@@ -117,6 +117,7 @@ type
 
     {property methods}
     function GetColor(const Index : Integer) : TColor;
+    function GetDisplayTextColor: TColor;
     procedure SetColor(const Index : Integer; const Value : TColor);
     procedure SetColorScheme(const Value : TOvcCalcColorScheme);
     procedure SetDisplayTextColor(const Value : TColor);
@@ -141,8 +142,7 @@ type
       read GetColor write SetColor;
     property Display : TColor index 1
       read GetColor write SetColor;
-    property DisplayTextColor : TColor
-      read FCalcColors[2] write SetDisplayTextColor nodefault;
+    property DisplayTextColor : TColor read GetDisplayTextColor write SetDisplayTextColor nodefault;
     property EditButtons : TColor index 3
       read GetColor write SetColor;
     property FunctionButtons : TColor index 4
@@ -576,6 +576,11 @@ end;
 function TOvcCalcColors.GetColor(const Index : Integer) : TColor;
 begin
   Result := FCalcColors[Index];
+end;
+
+function TOvcCalcColors.GetDisplayTextColor: TColor;
+begin
+  Result := FCalcColors[2];
 end;
 
 procedure TOvcCalcColors.SetColor(const Index : Integer; const Value : TColor);

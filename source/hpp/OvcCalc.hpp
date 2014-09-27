@@ -80,6 +80,7 @@ private:
 	bool SettingScheme;
 	void __fastcall DoOnChange(void);
 	System::Uitypes::TColor __fastcall GetColor(const int Index);
+	System::Uitypes::TColor __fastcall GetDisplayTextColor(void);
 	void __fastcall SetColor(const int Index, const System::Uitypes::TColor Value);
 	void __fastcall SetColorScheme(const TOvcCalcColorScheme Value);
 	void __fastcall SetDisplayTextColor(const System::Uitypes::TColor Value);
@@ -96,7 +97,7 @@ __published:
 	__property TOvcCalcColorScheme ColorScheme = {read=FColorScheme, write=SetColorScheme, nodefault};
 	__property System::Uitypes::TColor DisabledMemoryButtons = {read=GetColor, write=SetColor, index=0, nodefault};
 	__property System::Uitypes::TColor Display = {read=GetColor, write=SetColor, index=1, nodefault};
-	__property System::Uitypes::TColor DisplayTextColor = {read=FCalcColors[2], write=SetDisplayTextColor, nodefault};
+	__property System::Uitypes::TColor DisplayTextColor = {read=GetDisplayTextColor, write=SetDisplayTextColor, nodefault};
 	__property System::Uitypes::TColor EditButtons = {read=GetColor, write=SetColor, index=3, nodefault};
 	__property System::Uitypes::TColor FunctionButtons = {read=GetColor, write=SetColor, index=4, nodefault};
 	__property System::Uitypes::TColor MemoryButtons = {read=GetColor, write=SetColor, index=5, nodefault};
