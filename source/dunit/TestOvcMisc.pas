@@ -21,10 +21,11 @@ uses
 
 type
   TTestOvcMisc = class(TTestCase)
+  public
+    procedure TestGetDisplayString;
   published
     procedure TestCompStruct;
     procedure TestFixRealPrim;
-    procedure TestGetDisplayString;
     procedure TestPartialCompare;
     procedure TestGetArrowWidth;
   end;

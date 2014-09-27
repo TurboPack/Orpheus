@@ -479,7 +479,7 @@ type
     res: string;
   end;
 const
-  cSomeData: array[0..{$IFDEF UNICODE}5{$ELSE}4{$ENDIF}] of TData =
+  cSomeData: array[0..5] of TData =
     ((S: '';        Pos:  1; c: 'X'; res: 'X'),
      (S: 'abcdefg'; Pos:  0; c: ' '; res: ' abcdefg'),
      (S: 'abcdefg'; Pos:  3; c: 'X'; res: 'abcXdefg'),

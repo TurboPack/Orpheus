@@ -85,6 +85,8 @@ type
   protected
     procedure SetUp; override;
     procedure TearDown; override;
+  public
+    procedure TestOvcTCCheckBox_Click;
   published
     procedure TestOvcTCString;
     procedure TestOvcTCPictureField_pftString;
@@ -100,7 +102,6 @@ type
     procedure TestOvcTCSimpleField_SS;
     procedure TestOvcTCMemo_SS;
     procedure TestO32TCFlexEdit_SS;
-    procedure TestOvcTCCheckBox_Click;
     procedure TestOvcTCFlexEditCellEditorBug;
     procedure TestOvcTCString_PChar;
     procedure TestOvcTCPictureField_PChar;
