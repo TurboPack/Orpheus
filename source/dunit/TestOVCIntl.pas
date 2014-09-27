@@ -34,10 +34,11 @@ uses
 
 type
   TTestOVCIntl = class(TTestCase)
-  published
+  public
     procedure TestDateStringToDate;
     procedure TestDateToDateString;
     procedure TestInternationalTime;
+  published
     procedure TestMonthStringToMonth;
     procedure TestisMergeIntoPicture;
     procedure TestDateTimeToDatePChar;
