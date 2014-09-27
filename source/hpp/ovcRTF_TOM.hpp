@@ -25,11 +25,24 @@
 namespace Ovcrtf_tom
 {
 //-- type declarations -------------------------------------------------------
-typedef CHARFORMATW *PCharFormat;
+struct DECLSPEC_DRECORD MYCHARFORMATW
+{
+public:
+	unsigned cbSize;
+	int dwMask;
+	int dwEffects;
+	int yHeight;
+	int yOffset;
+	unsigned crTextColor;
+	System::Byte bCharSet;
+	System::Byte bPitchAndFamily;
+	System::StaticArray<System::WideChar, 32> szFaceName;
+};
 
-typedef CHARFORMATA *PCharFormatA;
 
-typedef CHARFORMATW *PCharFormatW;
+typedef MYCHARFORMATW TMyCharFormatW;
+
+typedef MYCHARFORMATW *PCharFormatW;
 
 typedef PARAFORMAT *PParaFormat;
 
@@ -120,7 +133,7 @@ public:
 	virtual HRESULT __stdcall TxGetPasswordChar(/* out */ System::WideChar &pch) = 0 ;
 	virtual HRESULT __stdcall TxGetAcceleratorPos(/* out */ int &pcp) = 0 ;
 	virtual HRESULT __stdcall TxGetExtent(/* out */ System::Types::TSize &lpExtent) = 0 ;
-	virtual HRESULT __stdcall OnTxCharFormatChange(const CHARFORMATW &pcf) = 0 ;
+	virtual HRESULT __stdcall OnTxCharFormatChange(const MYCHARFORMATW &pcf) = 0 ;
 	virtual HRESULT __stdcall OnTxParaFormatChange(const PARAFORMAT &ppf) = 0 ;
 	virtual HRESULT __stdcall TxGetPropertyBits(unsigned dwMask, /* out */ unsigned &pdwBits) = 0 ;
 	virtual HRESULT __stdcall TxNotify(unsigned iNotify, void * pv) = 0 ;
@@ -168,7 +181,7 @@ public:
 	virtual HRESULT __stdcall TxGetPasswordChar(/* out */ System::WideChar &pch);
 	virtual HRESULT __stdcall TxGetAcceleratorPos(/* out */ int &pcp);
 	virtual HRESULT __stdcall TxGetExtent(/* out */ System::Types::TSize &lpExtent);
-	virtual HRESULT __stdcall OnTxCharFormatChange(const CHARFORMATW &pcf);
+	virtual HRESULT __stdcall OnTxCharFormatChange(const MYCHARFORMATW &pcf);
 	virtual HRESULT __stdcall OnTxParaFormatChange(const PARAFORMAT &ppf);
 	virtual HRESULT __stdcall TxGetPropertyBits(unsigned dwMask, /* out */ unsigned &pdwBits) = 0 ;
 	virtual HRESULT __stdcall TxNotify(unsigned iNotify, void * pv);

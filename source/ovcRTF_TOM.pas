@@ -42,9 +42,19 @@ const
 
 type
   // These pointer types are missing from Borland's declarations.
-  PCharFormat = ^TCharFormat;
-  PCharFormatA = ^TCharFormatA;
-  PCharFormatW = ^TCharFormatW;
+  MYCHARFORMATW = record
+    cbSize: UINT;
+    dwMask: Longint;
+    dwEffects: Longint;
+    yHeight: Longint;
+    yOffset: Longint;
+    crTextColor: TColorRef;
+    bCharSet: Byte;
+    bPitchAndFamily: Byte;
+    szFaceName: array[0..LF_FACESIZE - 1] of WideChar;
+  end;
+  TMyCharFormatW = MYCHARFORMATW;
+  PCharFormatW = ^MYCHARFORMATW;
 
   PParaFormat = ^TParaFormat;
 
@@ -148,7 +158,7 @@ type
     function TxGetPasswordChar(out pch: {Wide}Char): HResult; stdcall;
     function TxGetAcceleratorPos(out pcp: LongInt): HResult; stdcall;
     function TxGetExtent(out lpExtent: TSizeL): HResult; stdcall;
-    function OnTxCharFormatChange(const pcf: TCharFormatW): HResult; stdcall;
+    function OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult; stdcall;
     function OnTxParaFormatChange(const ppf: TParaFormat): HResult; stdcall;
     function TxGetPropertyBits(dwMask: DWord; out pdwBits: DWord): HResult; stdcall;
     function TxNotify(iNotify: DWord; pv: Pointer): HResult; stdcall;
@@ -205,7 +215,7 @@ type
     function TxGetPasswordChar(out pch: {Wide}Char): HResult; virtual; stdcall;
     function TxGetAcceleratorPos(out pcp: LongInt): HResult; virtual; stdcall;
     function TxGetExtent(out lpExtent: TSizeL): HResult; virtual; stdcall;
-    function OnTxCharFormatChange(const pcf: TCharFormatW): HResult; virtual; stdcall;
+    function OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult; virtual; stdcall;
     function OnTxParaFormatChange(const ppf: TParaFormat): HResult; virtual; stdcall;
     function TxGetPropertyBits(dwMask: DWord; out pdwBits: DWord): HResult; virtual; stdcall; abstract;
     function TxNotify(iNotify: DWord; pv: Pointer): HResult; virtual; stdcall;
@@ -1147,7 +1157,7 @@ end;
 // Many of the methods return E_Fail, but that's actually OK. The OS does
 // not expect the text-services object to be fully functional.
 
-function TTextHostImpl.OnTxCharFormatChange(const pcf: TCharFormatW): HResult;
+function TTextHostImpl.OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult;
 begin
   Result := E_Fail;
 end;

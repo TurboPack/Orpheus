@@ -67,7 +67,7 @@ type
     function TxGetCharFormat(out ppCF: PCharFormatW): HResult; override;
     function TxGetParaFormat(out ppPF: PParaFormat): HResult; override;
     function TxGetBackStyle(out pstyle: TTxtBackStyle): HResult; override;
-    function OnTxCharFormatChange(const pcf: TCharFormatW): HResult; override;
+    function OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult; override;
     function OnTxParaFormatChange(const ppf: TParaFormat): HResult; override;
     function TxGetPropertyBits(dwMask: DWord; out pdwBits: DWord): HResult; override;
     function TxNotify(iNotify: DWord; pv: Pointer): HResult; override;
@@ -168,7 +168,7 @@ begin
   inherited;
 end;
 
-function TDrawRTFTextHost.OnTxCharFormatChange(const pcf: TCharFormatW): HResult;
+function TDrawRTFTextHost.OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult;
 var
   NewCharFormat: PCharFormatW;
 begin
