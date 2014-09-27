@@ -18,9 +18,10 @@ type
   protected
     procedure SetUp; override;
     procedure TearDown; override;
+  public
+    procedure TestOvcDirectoryComboBox_Size;
   published
     procedure TestOvcComboBox_WheelDown;
-    procedure TestOvcDirectoryComboBox_Size;
   end;
 
 implementation
