@@ -41,6 +41,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_UNSUPPORTED_CONSTRUCT>false</DCC_UNSUPPORTED_CONSTRUCT>
         <DCC_HppOutput>..\..\source\hpp</DCC_HppOutput>
         <SanitizedProjectName>OrpheusDBCR</SanitizedProjectName>
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
@@ -198,6 +199,18 @@
         </DelphiCompile>
         <DelphiCompile Include="..\..\source\ovcdbtim.pas">
             <BuildOrder>28</BuildOrder>
+        </DelphiCompile>
+        <DelphiCompile Include="..\..\source\ovcRTF_IText.pas">
+            <BuildOrder>30</BuildOrder>
+        </DelphiCompile>
+        <DelphiCompile Include="..\..\source\ovcRTF_Paint.pas">
+            <BuildOrder>31</BuildOrder>
+        </DelphiCompile>
+        <DelphiCompile Include="..\..\source\ovcRTF_RichOle.pas">
+            <BuildOrder>32</BuildOrder>
+        </DelphiCompile>
+        <DelphiCompile Include="..\..\source\ovcRTF_TOM.pas">
+            <BuildOrder>33</BuildOrder>
         </DelphiCompile>
         <FormResources Include="..\..\source\ovcdbmdg.dfm"/>
         <BuildConfiguration Include="Release">
