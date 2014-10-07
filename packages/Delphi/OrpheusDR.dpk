@@ -206,7 +206,6 @@ contains
   o32WideCharSet in '..\..\source\o32WideCharSet.pas',
   ovcBidi in '..\..\source\ovcBidi.pas',
   ovcThemes in '..\..\source\ovcThemes.pas',
-  ovcThemes in '..\..\source\ovcThemes.pas',
   ovctcedtHTMLText in '..\..\source\ovctcedtHTMLText.pas',
   ovctcedtTextFormatBar in '..\..\source\ovctcedtTextFormatBar.pas' {ovcTextFormatBar},
   ovcRTF_TOM in '..\..\source\ovcRTF_TOM.pas',
