@@ -287,19 +287,12 @@ type
 // Forward-Deklaration von in der Typbibliothek definierten Typen
 // *********************************************************************//
   ITextDocument = interface;
-  ITextDocumentDisp = dispinterface;
   ITextRange = interface;
-  ITextRangeDisp = dispinterface;
   ITextSelection = interface;
-  ITextSelectionDisp = dispinterface;
   ITextFont = interface;
-  ITextFontDisp = dispinterface;
   ITextPara = interface;
-  ITextParaDisp = dispinterface;
   ITextStoryRanges = interface;
-  ITextStoryRangesDisp = dispinterface;
   ITextDocument2 = interface;
-  ITextDocument2Disp = dispinterface;
   ITextMsgFilter = interface;
 
 // *********************************************************************//
@@ -355,32 +348,6 @@ type
     property StoryRanges: ITextStoryRanges read Get_StoryRanges;
     property Saved: Integer read Get_Saved write Set_Saved;
     property DefaultTabStop: Single read Get_DefaultTabStop write Set_DefaultTabStop;
-  end;
-
-// *********************************************************************//
-// DispIntf:  ITextDocumentDisp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {8CC497C0-A1DF-11CE-8098-00AA0047BE5D}
-// *********************************************************************//
-  ITextDocumentDisp = dispinterface
-    ['{8CC497C0-A1DF-11CE-8098-00AA0047BE5D}']
-    property Name: WideString readonly dispid 0;
-    property Selection: ITextSelection readonly dispid 1;
-    property StoryCount: Integer readonly dispid 2;
-    property StoryRanges: ITextStoryRanges readonly dispid 3;
-    property Saved: Integer dispid 4;
-    property DefaultTabStop: Single dispid 5;
-    procedure New; dispid 6;
-    procedure Open(var pVar: OleVariant; Flags: Integer; CodePage: Integer); dispid 7;
-    procedure Save(var pVar: OleVariant; Flags: Integer; CodePage: Integer); dispid 8;
-    function Freeze: Integer; dispid 9;
-    function Unfreeze: Integer; dispid 10;
-    procedure BeginEditCollection; dispid 11;
-    procedure EndEditCollection; dispid 12;
-    function Undo(Count: Integer): Integer; dispid 13;
-    function Redo(Count: Integer): Integer; dispid 14;
-    function Range(cp1: Integer; cp2: Integer): ITextRange; dispid 15;
-    function RangeFromPoint(x: Integer; y: Integer): ITextRange; dispid 16;
   end;
 
 // *********************************************************************//
@@ -454,59 +421,6 @@ type
   end;
 
 // *********************************************************************//
-// DispIntf:  ITextRangeDisp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {8CC497C2-A1DF-11CE-8098-00AA0047BE5D}
-// *********************************************************************//
-  ITextRangeDisp = dispinterface
-    ['{8CC497C2-A1DF-11CE-8098-00AA0047BE5D}']
-    property Text: WideString dispid 0;
-    property Char: Integer dispid 513;
-    property Duplicate: ITextRange readonly dispid 514;
-    property FormattedText: ITextRange dispid 515;
-    property Start: Integer dispid 516;
-    property End_: Integer dispid 517;
-    property Font: ITextFont dispid 518;
-    property Para: ITextPara dispid 519;
-    property StoryLength: Integer readonly dispid 520;
-    property StoryType: Integer readonly dispid 521;
-    procedure Collapse(bStart: Integer); dispid 528;
-    function Expand(Unit_: Integer): Integer; dispid 529;
-    function GetIndex(Unit_: Integer): Integer; dispid 530;
-    procedure SetIndex(Unit_: Integer; Index: Integer; Extend: Integer); dispid 531;
-    procedure SetRange(cpActive: Integer; cpOther: Integer); dispid 532;
-    function InRange(const pRange: ITextRange): Integer; dispid 533;
-    function InStory(const pRange: ITextRange): Integer; dispid 534;
-    function IsEqual(const pRange: ITextRange): Integer; dispid 535;
-    procedure Select; dispid 536;
-    function StartOf(Unit_: Integer; Extend: Integer): Integer; dispid 537;
-    function EndOf(Unit_: Integer; Extend: Integer): Integer; dispid 544;
-    function Move(Unit_: Integer; Count: Integer): Integer; dispid 545;
-    function MoveStart(Unit_: Integer; Count: Integer): Integer; dispid 546;
-    function MoveEnd(Unit_: Integer; Count: Integer): Integer; dispid 547;
-    function MoveWhile(var Cset: OleVariant; Count: Integer): Integer; dispid 548;
-    function MoveStartWhile(var Cset: OleVariant; Count: Integer): Integer; dispid 549;
-    function MoveEndWhile(var Cset: OleVariant; Count: Integer): Integer; dispid 550;
-    function MoveUntil(var Cset: OleVariant; Count: Integer): Integer; dispid 551;
-    function MoveStartUntil(var Cset: OleVariant; Count: Integer): Integer; dispid 552;
-    function MoveEndUntil(var Cset: OleVariant; Count: Integer): Integer; dispid 553;
-    function FindText(const bstr: WideString; cch: Integer; Flags: Integer): Integer; dispid 560;
-    function FindTextStart(const bstr: WideString; cch: Integer; Flags: Integer): Integer; dispid 561;
-    function FindTextEnd(const bstr: WideString; cch: Integer; Flags: Integer): Integer; dispid 562;
-    function Delete(Unit_: Integer; Count: Integer): Integer; dispid 563;
-    procedure Cut(out pVar: OleVariant); dispid 564;
-    procedure Copy(out pVar: OleVariant); dispid 565;
-    procedure Paste(var pVar: OleVariant; Format: Integer); dispid 566;
-    function CanPaste(var pVar: OleVariant; Format: Integer): Integer; dispid 567;
-    function CanEdit: Integer; dispid 568;
-    procedure ChangeCase(Type_: Integer); dispid 569;
-    procedure GetPoint(Type_: Integer; out px: Integer; out py: Integer); dispid 576;
-    procedure SetPoint(x: Integer; y: Integer; Type_: Integer; Extend: Integer); dispid 577;
-    procedure ScrollIntoView(Value: Integer); dispid 578;
-    function GetEmbeddedObject: IUnknown; dispid 579;
-  end;
-
-// *********************************************************************//
 // Interface: ITextSelection
 // Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
 // GUID:      {8CC497C1-A1DF-11CE-8098-00AA0047BE5D}
@@ -525,68 +439,6 @@ type
     procedure TypeText(const bstr: WideString); safecall;
     property Flags: Integer read Get_Flags write Set_Flags;
     property type_: Integer read Get_type_;
-  end;
-
-// *********************************************************************//
-// DispIntf:  ITextSelectionDisp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {8CC497C1-A1DF-11CE-8098-00AA0047BE5D}
-// *********************************************************************//
-  ITextSelectionDisp = dispinterface
-    ['{8CC497C1-A1DF-11CE-8098-00AA0047BE5D}']
-    property Flags: Integer dispid 257;
-    property type_: Integer readonly dispid 258;
-    function MoveLeft(Unit_: Integer; Count: Integer; Extend: Integer): Integer; dispid 259;
-    function MoveRight(Unit_: Integer; Count: Integer; Extend: Integer): Integer; dispid 260;
-    function MoveUp(Unit_: Integer; Count: Integer; Extend: Integer): Integer; dispid 261;
-    function MoveDown(Unit_: Integer; Count: Integer; Extend: Integer): Integer; dispid 262;
-    function HomeKey(Unit_: Integer; Extend: Integer): Integer; dispid 263;
-    function EndKey(Unit_: Integer; Extend: Integer): Integer; dispid 264;
-    procedure TypeText(const bstr: WideString); dispid 265;
-    property Text: WideString dispid 0;
-    property Char: Integer dispid 513;
-    property Duplicate: ITextRange readonly dispid 514;
-    property FormattedText: ITextRange dispid 515;
-    property Start: Integer dispid 516;
-    property End_: Integer dispid 517;
-    property Font: ITextFont dispid 518;
-    property Para: ITextPara dispid 519;
-    property StoryLength: Integer readonly dispid 520;
-    property StoryType: Integer readonly dispid 521;
-    procedure Collapse(bStart: Integer); dispid 528;
-    function Expand(Unit_: Integer): Integer; dispid 529;
-    function GetIndex(Unit_: Integer): Integer; dispid 530;
-    procedure SetIndex(Unit_: Integer; Index: Integer; Extend: Integer); dispid 531;
-    procedure SetRange(cpActive: Integer; cpOther: Integer); dispid 532;
-    function InRange(const pRange: ITextRange): Integer; dispid 533;
-    function InStory(const pRange: ITextRange): Integer; dispid 534;
-    function IsEqual(const pRange: ITextRange): Integer; dispid 535;
-    procedure Select; dispid 536;
-    function StartOf(Unit_: Integer; Extend: Integer): Integer; dispid 537;
-    function EndOf(Unit_: Integer; Extend: Integer): Integer; dispid 544;
-    function Move(Unit_: Integer; Count: Integer): Integer; dispid 545;
-    function MoveStart(Unit_: Integer; Count: Integer): Integer; dispid 546;
-    function MoveEnd(Unit_: Integer; Count: Integer): Integer; dispid 547;
-    function MoveWhile(var Cset: OleVariant; Count: Integer): Integer; dispid 548;
-    function MoveStartWhile(var Cset: OleVariant; Count: Integer): Integer; dispid 549;
-    function MoveEndWhile(var Cset: OleVariant; Count: Integer): Integer; dispid 550;
-    function MoveUntil(var Cset: OleVariant; Count: Integer): Integer; dispid 551;
-    function MoveStartUntil(var Cset: OleVariant; Count: Integer): Integer; dispid 552;
-    function MoveEndUntil(var Cset: OleVariant; Count: Integer): Integer; dispid 553;
-    function FindText(const bstr: WideString; cch: Integer; Flags: Integer): Integer; dispid 560;
-    function FindTextStart(const bstr: WideString; cch: Integer; Flags: Integer): Integer; dispid 561;
-    function FindTextEnd(const bstr: WideString; cch: Integer; Flags: Integer): Integer; dispid 562;
-    function Delete(Unit_: Integer; Count: Integer): Integer; dispid 563;
-    procedure Cut(out pVar: OleVariant); dispid 564;
-    procedure Copy(out pVar: OleVariant); dispid 565;
-    procedure Paste(var pVar: OleVariant; Format: Integer); dispid 566;
-    function CanPaste(var pVar: OleVariant; Format: Integer): Integer; dispid 567;
-    function CanEdit: Integer; dispid 568;
-    procedure ChangeCase(Type_: Integer); dispid 569;
-    procedure GetPoint(Type_: Integer; out px: Integer; out py: Integer); dispid 576;
-    procedure SetPoint(x: Integer; y: Integer; Type_: Integer; Extend: Integer); dispid 577;
-    procedure ScrollIntoView(Value: Integer); dispid 578;
-    function GetEmbeddedObject: IUnknown; dispid 579;
   end;
 
 // *********************************************************************//
@@ -680,44 +532,6 @@ type
   end;
 
 // *********************************************************************//
-// DispIntf:  ITextFontDisp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {8CC497C3-A1DF-11CE-8098-00AA0047BE5D}
-// *********************************************************************//
-  ITextFontDisp = dispinterface
-    ['{8CC497C3-A1DF-11CE-8098-00AA0047BE5D}']
-    property Duplicate: ITextFont dispid 0;
-    function CanChange: Integer; dispid 769;
-    function IsEqual(const pFont: ITextFont): Integer; dispid 770;
-    procedure Reset(Value: Integer); dispid 771;
-    property Style: Integer dispid 772;
-    property AllCaps: Integer dispid 773;
-    property Animation: Integer dispid 774;
-    property BackColor: Integer dispid 775;
-    property Bold: Integer dispid 776;
-    property Emboss: Integer dispid 777;
-    property ForeColor: Integer dispid 784;
-    property Hidden: Integer dispid 785;
-    property Engrave: Integer dispid 786;
-    property Italic: Integer dispid 787;
-    property Kerning: Single dispid 788;
-    property LanguageID: Integer dispid 789;
-    property Name: WideString dispid 790;
-    property Outline: Integer dispid 791;
-    property Position: Single dispid 792;
-    property Protected_: Integer dispid 793;
-    property Shadow: Integer dispid 800;
-    property Size: Single dispid 801;
-    property SmallCaps: Integer dispid 802;
-    property Spacing: Single dispid 803;
-    property StrikeThrough: Integer dispid 804;
-    property Subscript: Integer dispid 805;
-    property Superscript: Integer dispid 806;
-    property Underline: Integer dispid 807;
-    property Weight: Integer dispid 808;
-  end;
-
-// *********************************************************************//
 // Interface: ITextPara
 // Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
 // GUID:      {8CC497C4-A1DF-11CE-8098-00AA0047BE5D}
@@ -798,47 +612,6 @@ type
   end;
 
 // *********************************************************************//
-// DispIntf:  ITextParaDisp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {8CC497C4-A1DF-11CE-8098-00AA0047BE5D}
-// *********************************************************************//
-  ITextParaDisp = dispinterface
-    ['{8CC497C4-A1DF-11CE-8098-00AA0047BE5D}']
-    property Duplicate: ITextPara dispid 0;
-    function CanChange: Integer; dispid 1025;
-    function IsEqual(const pPara: ITextPara): Integer; dispid 1026;
-    procedure Reset(Value: Integer); dispid 1027;
-    property Style: Integer dispid 1028;
-    property Alignment: Integer dispid 1029;
-    property Hyphenation: Integer dispid 1030;
-    property FirstLineIndent: Single readonly dispid 1031;
-    property KeepTogether: Integer dispid 1032;
-    property KeepWithNext: Integer dispid 1033;
-    property LeftIndent: Single readonly dispid 1040;
-    property LineSpacing: Single readonly dispid 1041;
-    property LineSpacingRule: Integer readonly dispid 1042;
-    property ListAlignment: Integer dispid 1043;
-    property ListLevelIndex: Integer dispid 1044;
-    property ListStart: Integer dispid 1045;
-    property ListTab: Single dispid 1046;
-    property ListType: Integer dispid 1047;
-    property NoLineNumber: Integer dispid 1048;
-    property PageBreakBefore: Integer dispid 1049;
-    property RightIndent: Single dispid 1056;
-    procedure SetIndents(StartIndent: Single; LeftIndent: Single; RightIndent: Single); dispid 1057;
-    procedure SetLineSpacing(LineSpacingRule: Integer; LineSpacing: Single); dispid 1058;
-    property SpaceAfter: Single dispid 1059;
-    property SpaceBefore: Single dispid 1060;
-    property WidowControl: Integer dispid 1061;
-    property TabCount: Integer readonly dispid 1062;
-    procedure AddTab(tbPos: Single; tbAlign: Integer; tbLeader: Integer); dispid 1063;
-    procedure ClearAllTabs; dispid 1064;
-    procedure DeleteTab(tbPos: Single); dispid 1065;
-    procedure GetTab(iTab: Integer; out ptbPos: Single; out ptbAlign: Integer;
-                     out ptbLeader: Integer); dispid 1072;
-  end;
-
-// *********************************************************************//
 // Interface: ITextStoryRanges
 // Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
 // GUID:      {8CC497C5-A1DF-11CE-8098-00AA0047BE5D}
@@ -849,18 +622,6 @@ type
     function Item(Index: Integer): ITextRange; safecall;
     function Get_Count: Integer; safecall;
     property Count: Integer read Get_Count;
-  end;
-
-// *********************************************************************//
-// DispIntf:  ITextStoryRangesDisp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {8CC497C5-A1DF-11CE-8098-00AA0047BE5D}
-// *********************************************************************//
-  ITextStoryRangesDisp = dispinterface
-    ['{8CC497C5-A1DF-11CE-8098-00AA0047BE5D}']
-    function _NewEnum: IUnknown; dispid -4;
-    function Item(Index: Integer): ITextRange; dispid 0;
-    property Count: Integer readonly dispid 2;
   end;
 
 // *********************************************************************//
@@ -900,57 +661,6 @@ type
     property CaretType: Integer read Get_CaretType write Set_CaretType;
     property NotificationMode: Integer read Get_NotificationMode write Set_NotificationMode;
     property SelectionEx: ITextSelection read Get_SelectionEx;
-  end;
-
-// *********************************************************************//
-// DispIntf:  ITextDocument2Disp
-// Flags:     (4544) Dual NonExtensible OleAutomation Dispatchable
-// GUID:      {01C25500-4268-11D1-883A-3C8B00C10000}
-// *********************************************************************//
-  ITextDocument2Disp = dispinterface
-    ['{01C25500-4268-11D1-883A-3C8B00C10000}']
-    procedure AttachMsgFilter(const pFilter: IUnknown); dispid 21;
-    procedure SetEffectColor(Index: Integer; cr: DWORD); dispid 22;
-    procedure GetEffectColor(Index: Integer; out pcr: DWORD); dispid 23;
-    property CaretType: Integer dispid 24;
-    function GetImmContext: Integer; dispid 25;
-    procedure ReleaseImmContext(Context: Integer); dispid 26;
-    procedure GetPreferredFont(cp: Integer; CodePage: Integer; Option: Integer;
-                               curCodepage: Integer; curFontSize: Integer; out pbstr: WideString;
-                               out pPitchAndFamily: Integer; out pNewFontSize: Integer); dispid 27;
-    property NotificationMode: Integer dispid 28;
-    procedure GetClientRect(Type_: Integer; out pLeft: Integer; out pTop: Integer;
-                            out pRight: Integer; out pBottom: Integer); dispid 29;
-    property SelectionEx: ITextSelection readonly dispid 30;
-    procedure GetWindow(out phWnd: Integer); dispid 31;
-    procedure GetFEFlags(out pFlags: Integer); dispid 32;
-    procedure UpdateWindow; dispid 33;
-    procedure CheckTextLimit(cch: Integer; var pcch: Integer); dispid 34;
-    procedure IMEInProgress(Mode: Integer); dispid 35;
-    procedure SysBeep; dispid 36;
-    procedure Update(Mode: Integer); dispid 37;
-    procedure Notify(Notify: Integer); dispid 38;
-    function GetDocumentFont: ITextFont; dispid 39;
-    function GetDocumentPara: ITextPara; dispid 40;
-    function GetCallManager: IUnknown; dispid 41;
-    procedure ReleaseCallManager(const pVoid: IUnknown); dispid 42;
-    property Name: WideString readonly dispid 0;
-    property Selection: ITextSelection readonly dispid 1;
-    property StoryCount: Integer readonly dispid 2;
-    property StoryRanges: ITextStoryRanges readonly dispid 3;
-    property Saved: Integer dispid 4;
-    property DefaultTabStop: Single dispid 5;
-    procedure New; dispid 6;
-    procedure Open(var pVar: OleVariant; Flags: Integer; CodePage: Integer); dispid 7;
-    procedure Save(var pVar: OleVariant; Flags: Integer; CodePage: Integer); dispid 8;
-    function Freeze: Integer; dispid 9;
-    function Unfreeze: Integer; dispid 10;
-    procedure BeginEditCollection; dispid 11;
-    procedure EndEditCollection; dispid 12;
-    function Undo(Count: Integer): Integer; dispid 13;
-    function Redo(Count: Integer): Integer; dispid 14;
-    function Range(cp1: Integer; cp2: Integer): ITextRange; dispid 15;
-    function RangeFromPoint(x: Integer; y: Integer): ITextRange; dispid 16;
   end;
 
 // *********************************************************************//

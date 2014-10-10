@@ -121,13 +121,6 @@ public:
 	__property float DefaultTabStop = {read=_scw_Get_DefaultTabStop, write=Set_DefaultTabStop};
 };
 
-__dispinterface ITextDocumentDisp;
-typedef System::DelphiInterface<ITextDocumentDisp> _di_ITextDocumentDisp;
-__dispinterface  INTERFACE_UUID("{8CC497C0-A1DF-11CE-8098-00AA0047BE5D}") ITextDocumentDisp  : public IDispatch 
-{
-	
-};
-
 __interface ITextFont;
 typedef System::DelphiInterface<ITextFont> _di_ITextFont;
 __interface ITextPara;
@@ -229,13 +222,6 @@ public:
 	__property int StoryType = {read=_scw_Get_StoryType};
 };
 
-__dispinterface ITextRangeDisp;
-typedef System::DelphiInterface<ITextRangeDisp> _di_ITextRangeDisp;
-__dispinterface  INTERFACE_UUID("{8CC497C2-A1DF-11CE-8098-00AA0047BE5D}") ITextRangeDisp  : public IDispatch 
-{
-	
-};
-
 __interface  INTERFACE_UUID("{8CC497C1-A1DF-11CE-8098-00AA0047BE5D}") ITextSelection  : public ITextRange 
 {
 	
@@ -258,13 +244,6 @@ public:
 	/* safecall wrapper */ inline int _scw_Get_type_() { int __r; HRESULT __hr = Get_type_(__r); System::CheckSafecallResult(__hr); return __r; }
 	#pragma option pop
 	__property int type_ = {read=_scw_Get_type_};
-};
-
-__dispinterface ITextSelectionDisp;
-typedef System::DelphiInterface<ITextSelectionDisp> _di_ITextSelectionDisp;
-__dispinterface  INTERFACE_UUID("{8CC497C1-A1DF-11CE-8098-00AA0047BE5D}") ITextSelectionDisp  : public IDispatch 
-{
-	
 };
 
 __interface  INTERFACE_UUID("{8CC497C3-A1DF-11CE-8098-00AA0047BE5D}") ITextFont  : public IDispatch 
@@ -432,13 +411,6 @@ public:
 	__property int Weight = {read=_scw_Get_Weight, write=Set_Weight};
 };
 
-__dispinterface ITextFontDisp;
-typedef System::DelphiInterface<ITextFontDisp> _di_ITextFontDisp;
-__dispinterface  INTERFACE_UUID("{8CC497C3-A1DF-11CE-8098-00AA0047BE5D}") ITextFontDisp  : public IDispatch 
-{
-	
-};
-
 __interface  INTERFACE_UUID("{8CC497C4-A1DF-11CE-8098-00AA0047BE5D}") ITextPara  : public IDispatch 
 {
 	
@@ -581,13 +553,6 @@ public:
 	__property int TabCount = {read=_scw_Get_TabCount};
 };
 
-__dispinterface ITextParaDisp;
-typedef System::DelphiInterface<ITextParaDisp> _di_ITextParaDisp;
-__dispinterface  INTERFACE_UUID("{8CC497C4-A1DF-11CE-8098-00AA0047BE5D}") ITextParaDisp  : public IDispatch 
-{
-	
-};
-
 __interface  INTERFACE_UUID("{8CC497C5-A1DF-11CE-8098-00AA0047BE5D}") ITextStoryRanges  : public IDispatch 
 {
 	
@@ -599,13 +564,6 @@ public:
 	/* safecall wrapper */ inline int _scw_Get_Count() { int __r; HRESULT __hr = Get_Count(__r); System::CheckSafecallResult(__hr); return __r; }
 	#pragma option pop
 	__property int Count = {read=_scw_Get_Count};
-};
-
-__dispinterface ITextStoryRangesDisp;
-typedef System::DelphiInterface<ITextStoryRangesDisp> _di_ITextStoryRangesDisp;
-__dispinterface  INTERFACE_UUID("{8CC497C5-A1DF-11CE-8098-00AA0047BE5D}") ITextStoryRangesDisp  : public IDispatch 
-{
-	
 };
 
 __interface ITextDocument2;
@@ -650,13 +608,6 @@ public:
 	/* safecall wrapper */ inline _di_ITextSelection _scw_Get_SelectionEx() { _di_ITextSelection __r; HRESULT __hr = Get_SelectionEx(__r); System::CheckSafecallResult(__hr); return __r; }
 	#pragma option pop
 	__property _di_ITextSelection SelectionEx = {read=_scw_Get_SelectionEx};
-};
-
-__dispinterface ITextDocument2Disp;
-typedef System::DelphiInterface<ITextDocument2Disp> _di_ITextDocument2Disp;
-__dispinterface  INTERFACE_UUID("{01C25500-4268-11D1-883A-3C8B00C10000}") ITextDocument2Disp  : public IDispatch 
-{
-	
 };
 
 __interface ITextMsgFilter;
