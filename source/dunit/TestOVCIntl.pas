@@ -144,8 +144,8 @@ begin
       s := FormatSettings.LongMonthNames[i];
       m := OvcIntlSup.MonthStringToMonth(s,Length(s));
       CheckEquals(i,m,Format('Test failed for s="%s"',[s]));
-      s := Copy(FormatSettings.LongMonthNames[i],1,3);
-      m := OvcIntlSup.MonthStringToMonth(s,3);
+      s := Copy(FormatSettings.LongMonthNames[i],1,4);
+      m := OvcIntlSup.MonthStringToMonth(s,4);
       CheckEquals(i,m,Format('Test failed for s="%s"',[s]));
       s := FormatSettings.ShortMonthNames[i];
       m := OvcIntlSup.MonthStringToMonth(s,Length(s));
