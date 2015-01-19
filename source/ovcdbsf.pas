@@ -258,7 +258,7 @@ end;
 
 procedure TOvcDbSimpleField.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbSimpleField.Create(AOwner : TComponent);
@@ -528,7 +528,7 @@ procedure TOvcDbSimpleField.sfdbGetFieldValue;
 var
   S : string[MaxEditLen];
   I : SmallInt absolute S;
-  L : LongInt absolute S;
+  L : Integer absolute S;
   W : Word absolute S;
   B : Boolean absolute S;
   E : Extended absolute S;
@@ -620,7 +620,7 @@ procedure TOvcDbSimpleField.sfdbSetFieldValue;
 var
   S  : string[MaxEditLen];
   I  : SmallInt absolute S;
-  L  : LongInt absolute S;
+  L  : Integer absolute S;
   W  : Word absolute S;
   B  : Boolean absolute S;
   E  : Extended absolute S;

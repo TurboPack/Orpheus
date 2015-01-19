@@ -48,7 +48,7 @@ uses
 
 type
   TTriggerEvent =
-    procedure(Sender : TObject; Handle : Integer; Interval : Cardinal; ElapsedTime : LongInt)
+    procedure(Sender : TObject; Handle : Integer; Interval : Cardinal; ElapsedTime : Integer)
     of object;
 
 type
@@ -56,10 +56,10 @@ type
   PEventRec       = ^TEventRec;
   TEventRec       = packed record
     erHandle      : Integer;        {handle of this event record}
-    erInitTime    : LongInt;        {time when trigger was created}
-    erElapsed     : LongInt;        {total elapsed time (ms)}
+    erInitTime    : Integer;        {time when trigger was created}
+    erElapsed     : Integer;        {total elapsed time (ms)}
     erInterval    : Cardinal;       {trigger interval}
-    erLastTrigger : LongInt;        {time last trigger was fired}
+    erLastTrigger : Integer;        {time last trigger was fired}
     erOnTrigger   : TTriggerEvent;  {method to call when fired}
     erEnabled     : Boolean;        {true if trigger is active}
     erRecurring   : Boolean;        {false for one time trigger}
@@ -81,8 +81,8 @@ type
 
     {property methods}
     function GetAbout : string;
-    function GetElapsedTriggerTime(Handle : Integer) : LongInt;
-    function GetElapsedTriggerTimeSec(Handle : Integer) : LongInt;
+    function GetElapsedTriggerTime(Handle : Integer) : Integer;
+    function GetElapsedTriggerTimeSec(Handle : Integer) : Integer;
     function GetOnTrigger(Handle : Integer) : TTriggerEvent;
     function GetTriggerCount : Integer;
     function GetTriggerEnabled(Handle : Integer) : Boolean;
@@ -137,9 +137,9 @@ type
     property Count : Integer
       read GetTriggerCount;
 
-    property ElapsedTime[Handle : Integer] : LongInt
+    property ElapsedTime[Handle : Integer] : Integer
       read GetElapsedTriggerTime;
-    property ElapsedTimeSec[Handle : Integer] : LongInt
+    property ElapsedTimeSec[Handle : Integer] : Integer
       read GetElapsedTriggerTimeSec;
     property Enabled[Handle : Integer] : Boolean
       read GetTriggerEnabled write SetTriggerEnabled;
@@ -299,9 +299,9 @@ procedure TOvcTimerPool.DoTriggerNotification;
   {-conditionally sends notification for all events}
 var
   ER : PEventRec;
-  TC : LongInt;
+  TC : Integer;
   I  : Integer;
-  ET : longint;
+  ET : Integer;
 begin
   TC := GetTickCount;
 
@@ -312,11 +312,11 @@ begin
     if ER^.erEnabled then begin
       {is it time to fire this trigger}
       if (TC < ER^.erLastTrigger) then
-        ET := (High(LongInt) - ER^.erLastTrigger) + (TC - Low(LongInt))
+        ET := (High(Integer) - ER^.erLastTrigger) + (TC - Low(Integer))
       else
         ET := TC - ER^.erLastTrigger;
 
-      if (ET >= LongInt(ER^.erInterval)-tpDefHalfMinInterval) then begin
+      if (ET >= Integer(ER^.erInterval)-tpDefHalfMinInterval) then begin
         {update event record with this trigger time}
         ER^.erLastTrigger := TC;
 
@@ -353,25 +353,25 @@ begin
   end;
 end;
 
-function TOvcTimerPool.GetElapsedTriggerTime(Handle : Integer) : LongInt;
+function TOvcTimerPool.GetElapsedTriggerTime(Handle : Integer) : Integer;
   {-return the number of miliseconds since the timer trigger was created}
 var
   I  : Integer;
-  ET : longint;
+  ET : Integer;
   ER : PEventRec;
-  TC : LongInt;
+  TC : Integer;
 begin
   I := tpEventIndex(Handle);
   if (I > -1) then begin
     ER := PEventRec(tpList[I]);
-    if ER^.erElapsed = High(LongInt) then
-      Result := High(LongInt)
+    if ER^.erElapsed = High(Integer) then
+      Result := High(Integer)
     else begin
       TC := GetTickCount;
       if (TC < ER^.erInitTime) then begin
-        ET := (High(LongInt) - ER^.erInitTime) + (TC - Low(LongInt));
+        ET := (High(Integer) - ER^.erInitTime) + (TC - Low(Integer));
         if (ET < ER^.erElapsed) then
-          ER^.erElapsed := High(LongInt)
+          ER^.erElapsed := High(Integer)
         else
           ER^.erElapsed := ET;
       end else
@@ -382,7 +382,7 @@ begin
     raise EInvalidTriggerHandle.Create;
 end;
 
-function TOvcTimerPool.GetElapsedTriggerTimeSec(Handle : Integer) : LongInt;
+function TOvcTimerPool.GetElapsedTriggerTimeSec(Handle : Integer) : Integer;
   {-return the number of seconds since the timer trigger was created}
 begin
   Result := GetElapsedTriggerTime(Handle) div 1000;
@@ -475,7 +475,7 @@ var
 begin
   I := tpEventIndex(Handle);
   if (I > -1) then
-    PEventRec(tpList[I])^.erInitTime := LongInt(GetTickCount)
+    PEventRec(tpList[I])^.erInitTime := Integer(GetTickCount)
   else
     raise EInvalidTriggerHandle.Create;
 end;
@@ -536,10 +536,10 @@ procedure TOvcTimerPool.tpCalcNewInterval;
   {-calculates the needed interval for the window's timer}
 var
   I    : Integer;
-  N, V : LongInt;
-  TR   : LongInt;
+  N, V : Integer;
+  TR   : Integer;
   ER   : PEventRec;
-  TC   : LongInt;
+  TC   : Integer;
   Done : Boolean;
 begin
   {find shortest trigger interval}
@@ -557,8 +557,8 @@ begin
         TR := TR + MaxLongInt
       else
         TR := TC - ER^.erLastTrigger;
-      if LongInt(tpInterval) > (LongInt(ER^.erInterval) - TR) then
-        tpInterval := (LongInt(ER^.erInterval) - TR);
+      if Integer(tpInterval) > (Integer(ER^.erInterval) - TR) then
+        tpInterval := (Integer(ER^.erInterval) - TR);
     end;
   end;
 
@@ -570,7 +570,7 @@ begin
     tpInterval := 0
   else begin
     {find interval that evenly divides into all trigger intervals}
-    V := tpInterval; {use LongInt so it is possible for it to become (-)}
+    V := tpInterval; {use Integer so it is possible for it to become (-)}
     repeat
       Done := True;
       for I := 0 to tpList.Count-1 do begin

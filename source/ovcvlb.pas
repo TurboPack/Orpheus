@@ -81,23 +81,23 @@ const
 
 type
   TCharToItemEvent =
-    procedure(Sender : TObject; Ch : Char; var Index : LongInt)
+    procedure(Sender : TObject; Ch : Char; var Index : Integer)
     of object;
     {-event to notify caller of a key press and return new item index}
   TDrawItemEvent =
-    procedure(Sender : TObject; Index : LongInt; Rect : TRect; const S : string)
+    procedure(Sender : TObject; Index : Integer; Rect : TRect; const S : string)
     of object;
     {-event to allow user to draw the cell items}
   TGetItemEvent =
-    procedure(Sender : TObject; Index : LongInt; var ItemString : string)
+    procedure(Sender : TObject; Index : Integer; var ItemString : string)
     of object;
     {-event to get string to display}
   TGetItemColorEvent =
-    procedure(Sender : TObject; Index : LongInt; var FG, BG : TColor)
+    procedure(Sender : TObject; Index : Integer; var FG, BG : TColor)
     of object;
     {-event to get color of the item cell}
   TGetItemStatusEvent =
-    procedure(Sender : TObject; Index : LongInt; var Protect : Boolean)
+    procedure(Sender : TObject; Index : Integer; var Protect : Boolean)
     of object;
     {-event to get the protected status item cell}
   THeaderClickEvent =
@@ -105,15 +105,15 @@ type
     of object;
     {-event to notify of a mouse click in the header area}
   TIsSelectedEvent =
-    procedure(Sender : TObject; Index : LongInt; var Selected : Boolean)
+    procedure(Sender : TObject; Index : Integer; var Selected : Boolean)
     of object;
     {-event to get the current selection status from the user}
   TSelectEvent =
-    procedure(Sender : TObject; Index : LongInt; Selected : Boolean)
+    procedure(Sender : TObject; Index : Integer; Selected : Boolean)
     of object;
     {-event to notify of a selection change}
   TTopIndexChanged =
-    procedure(Sender : TObject; NewTopIndex : LongInt)
+    procedure(Sender : TObject; NewTopIndex : Integer)
     of object;
     {-event to notify when the top index changes}
 
@@ -126,7 +126,7 @@ type
 
   protected {private}
     {property variables}
-    FItemIndex         : LongInt;     {selected item}
+    FItemIndex         : Integer;     {selected item}
     FAutoRowHeight     : Boolean;     {true to handle row height calc}
     FBorderStyle       : TBorderStyle;{border style to use}
     FColumns           : Integer;        {number of char columns}
@@ -135,7 +135,7 @@ type
     FHeaderColor       : TOvcColors;  {header line colors}
     FIntegralHeight    : Boolean;     {adjust height based on font}
     FMultiSelect       : Boolean;     {allow multiple selections}
-    FNumItems          : LongInt;     {total number of items}
+    FNumItems          : Integer;     {total number of items}
     FOwnerDraw         : Boolean;     {true if user will draw rows}
     FProtectColor      : TOvcColors;  {protected item colors}
     FRowHeight         : Integer;     {height of one row}
@@ -143,7 +143,7 @@ type
     FSelectColor       : TOvcColors;  {selected item color}
     FShowHeader        : Boolean;     {true to use the header}
     FSmoothScroll      : Boolean;     {use smooth scrolling (duh) }
-    FTopIndex          : LongInt;     {item at top of window}
+    FTopIndex          : Integer;     {item at top of window}
     FUseTabStops       : Boolean;     {true to use tab stops}
     FWheelDelta        : Integer;
 
@@ -160,14 +160,14 @@ type
     FOnUserCommand     : TUserCommandEvent;
 
     {internal/working variables}
-    lAnchor            : LongInt;   {anchor point for extended selections}
-    lDivisor           : LongInt;   {divisor for scroll bars}
+    lAnchor            : Integer;   {anchor point for extended selections}
+    lDivisor           : Integer;   {divisor for scroll bars}
     lDlgUnits          : Integer;   {used for tab spacing}
-    lFocusedIndex      : LongInt;   {index of the focused item}
+    lFocusedIndex      : Integer;   {index of the focused item}
     lHaveHS            : Boolean;   {if True, we have a horizontal scroll bar}
     lHaveVS            : Boolean;   {if True, we have a vertical scroll bar}
-    lHDelta            : LongInt;   {horizontal scroll delta}
-    lHighIndex         : LongInt;   {highest allowable index}
+    lHDelta            : Integer;   {horizontal scroll delta}
+    lHighIndex         : Integer;   {highest allowable index}
     lNumTabStops       : 0..vlbMaxTabStops; {number of tab stops in tabstop array}
     lRows              : Integer;   {number of rows in window}
     lTabs              : TTabStopArray;
@@ -188,9 +188,9 @@ type
       {-set use of integral font height adjustment}
     procedure SetMultiSelect(Value : Boolean); virtual;
       {-set ability to select multiple items}
-    procedure InternalSetNumItems(Value : LongInt; Paint, UpdateIndices : Boolean);
+    procedure InternalSetNumItems(Value : Integer; Paint, UpdateIndices : Boolean);
       {-set the number of items in the list box}
-    procedure SetNumItems(Value : LongInt);
+    procedure SetNumItems(Value : Integer);
       {-set the number of items in the list box}
     procedure SetRowHeight(Value : Integer);
       {-set height of cell row}
@@ -206,49 +206,49 @@ type
       {-calculate sizes based on font selection}
     procedure vlbClearAllItems;
       {-clear the highlight from all items}
-    procedure vlbClearSelRange(First, Last : LongInt);
+    procedure vlbClearSelRange(First, Last : Integer);
       {-clear the selection for the given range of indexes}
     procedure vlbColorChanged(AColor: TObject);
       {-a color has changed, refresh display}
-    procedure vlbDragSelection(First, Last : LongInt);
+    procedure vlbDragSelection(First, Last : Integer);
       {-drag the selection}
-    procedure vlbDrawFocusRect(Index : LongInt);
+    procedure vlbDrawFocusRect(Index : Integer);
       {-draw the focus rectangle}
     procedure vlbDrawHeader;
       {-draw the header and text area}
-    procedure vlbExtendSelection(Index : LongInt);
+    procedure vlbExtendSelection(Index : Integer);
       {-process Shift-LMouseBtn}
     procedure vlbHScrollPrim(Delta : Integer);
       {-scroll horizontally}
     procedure vlbInitScrollInfo;
       {-setup scroll bar range and initial position}
-    procedure vlbMakeItemVisible(Index : LongInt);
+    procedure vlbMakeItemVisible(Index : Integer);
       {-make sure the item is visible}
-    procedure vlbNewActiveItem(Index : LongInt);
+    procedure vlbNewActiveItem(Index : Integer);
       {-set the currently selected item}
-    function  vlbScaleDown(N : LongInt) : Integer;
+    function  vlbScaleDown(N : Integer) : Integer;
       {-scale down index for scroll bar use}
-    function  vlbScaleUp(N : LongInt) : LongInt;
+    function  vlbScaleUp(N : Integer) : Integer;
       {-scale up scroll index to our index}
-    procedure vlbSelectRangePrim(First, Last : LongInt; Select : Boolean);
+    procedure vlbSelectRangePrim(First, Last : Integer; Select : Boolean);
       {-change the selection for the given range of indexes}
     procedure vlbSetAllItemsPrim(Select : Boolean);
       {-primitive routine thats acts on all items}
-    procedure vlbSetFocusedIndex(Index : LongInt);
+    procedure vlbSetFocusedIndex(Index : Integer);
       {-set focus to this item. invalidate previous}
     procedure vlbSetHScrollPos;
       {-set the horizontal scroll position}
     procedure vlbSetHScrollRange;
       {-set the horizontal scroll range}
-    procedure vlbSetSelRange(First, Last : LongInt);
+    procedure vlbSetSelRange(First, Last : Integer);
       {-set the selection on for the given range of indexes}
     procedure vlbSetVScrollPos;
       {-set the vertical scroll position}
     procedure vlbSetVScrollRange;
       {-set the vertical scroll range}
-    procedure vlbToggleSelection(Index : LongInt);
+    procedure vlbToggleSelection(Index : Integer);
       {-process Ctrl-LMouseBtn}
-    procedure vlbValidateItem(Index : LongInt);
+    procedure vlbValidateItem(Index : Integer);
       {-validate the area for this item}
     procedure vlbVScrollPrim(Delta : Integer);
       {-scroll vertically}
@@ -328,33 +328,33 @@ type
       override;
 
     {event wrappers}
-    function DoOnCharToItem(Ch : Char) : LongInt;
+    function DoOnCharToItem(Ch : Char) : Integer;
       dynamic;
       {-call the OnCharToItem event, if assigned}
     procedure DoOnClickHeader(Point : TPoint);
       dynamic;
       {-call the OnClickHeader event, if assigned}
-    procedure DoOnDrawItem(Index : LongInt; Rect : TRect; const S : string);
+    procedure DoOnDrawItem(Index : Integer; Rect : TRect; const S : string);
       virtual;
       {-call the OnDrawItem event, if assigned}
-    function DoOnGetItem(Index : LongInt) : string;
+    function DoOnGetItem(Index : Integer) : string;
       virtual;
       {-call the OnGetItem event, if assigned}
-    procedure DoOnGetItemColor(Index : LongInt; var FG, BG : TColor);
+    procedure DoOnGetItemColor(Index : Integer; var FG, BG : TColor);
       virtual;
       {-call the OnGetItemColor event, if assigned}
-    function DoOnGetItemStatus(Index : LongInt) : Boolean;
+    function DoOnGetItemStatus(Index : Integer) : Boolean;
       virtual;
       {-call the OnGetItemStatus event, if assigned}
-    function DoOnIsSelected(Index : LongInt) : Boolean;
+    function DoOnIsSelected(Index : Integer) : Boolean;
       virtual;
       {-call the OnIsSelected event, if assigned}
     procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
       override;
-    procedure DoOnSelect(Index : LongInt; Selected : Boolean);
+    procedure DoOnSelect(Index : Integer; Selected : Boolean);
       dynamic;
       {-call the OnSelect event, if assigned}
-    procedure DoOnTopIndexChanged(NewTopIndex : LongInt);
+    procedure DoOnTopIndexChanged(NewTopIndex : Integer);
       dynamic;
       {-call the OnTopIndexChanged event, if assigned}
     procedure DoOnUserCommand(Command : Word);
@@ -362,13 +362,13 @@ type
       {-perform notification of a user command}
 
     {virtual property methods}
-    procedure SetItemIndex(Index : LongInt);
+    procedure SetItemIndex(Index : Integer);
       virtual;
       {-change the currently selected item}
-    procedure SetTopIndex(Index : LongInt);
+    procedure SetTopIndex(Index : Integer);
       virtual;
       {-set the index of the first visible entry in the list}
-    procedure ForceTopIndex(Index : LongInt; ThumbTracking : Boolean);
+    procedure ForceTopIndex(Index : Integer; ThumbTracking : Boolean);
       virtual;
       {-re-set the index of the first visible entry in the list - even if it doesn't change}
 
@@ -376,7 +376,7 @@ type
       virtual;
       {-generates a click event when called. Called from SetItemIndex. Introduced so that
         descendants can turn off the behavior.}
-    function IsValidIndex(Index : LongInt) : Boolean;
+    function IsValidIndex(Index : Integer) : Boolean;
 
 
 
@@ -395,7 +395,7 @@ type
       read FIntegralHeight write SetIntegralHeight default vlDefIntegralHeight;
     property MultiSelect : Boolean
       read FMultiSelect write SetMultiSelect default vlDefMultiSelect;
-    property NumItems : LongInt
+    property NumItems : Integer
       read FNumItems write SetNumItems default vlDefNumItems;
     property OwnerDraw : Boolean
       read FOwnerDraw write FOwnerDraw default vlDefOwnerDraw;
@@ -452,17 +452,17 @@ type
       {- center the specified line (if any) vertically on screen}
     procedure DeselectAll;
       {-deselect all items}
-    procedure DrawItem(Index : LongInt);
+    procedure DrawItem(Index : Integer);
       {-invalidate and update the area for this item}
     procedure EndUpdate; virtual;
       {-user is done updating the list items--force repaint}
-    procedure InsertItemsAt(Items : LongInt; Index : LongInt);
+    procedure InsertItemsAt(Items : Integer; Index : Integer);
       {-increase NumItems with Items amount while scrolling window down from Index}
-    procedure DeleteItemsAt(Items : LongInt; Index : LongInt);
+    procedure DeleteItemsAt(Items : Integer; Index : Integer);
       {-decrease NumItems with Items amount while scrolling window up from Index}
-    procedure InvalidateItem(Index : LongInt);
+    procedure InvalidateItem(Index : Integer);
       {-invalidate the area for this item}
-    function ItemAtPos(Pos : TPoint; Existing : Boolean) : LongInt;
+    function ItemAtPos(Pos : TPoint; Existing : Boolean) : Integer;
       {-return the index of the cell that contains the point Pos}
     procedure Scroll(HDelta, VDelta : Integer);
       {-scroll the list by the give delta amount}
@@ -476,12 +476,12 @@ type
     {public properties}
     property Canvas;
 
-    property ItemIndex : LongInt
+    property ItemIndex : Integer
       read FItemIndex write SetItemIndex;
     property FillColor : TColor read FFillColor write FFillColor;
     property SmoothScroll : Boolean
       read FSmoothScroll write FSmoothScroll default True;
-    property TopIndex : LongInt
+    property TopIndex : Integer
       read FTopIndex write SetTopIndex;
   end;
 
@@ -722,7 +722,7 @@ begin
   vlbInitScrollInfo;
 end;
 
-function TOvcCustomVirtualListBox.DoOnCharToItem(Ch : Char) : LongInt;
+function TOvcCustomVirtualListBox.DoOnCharToItem(Ch : Char) : Integer;
 begin
   Result := FItemIndex;
   if Assigned(FOnCharToItem) then
@@ -735,14 +735,14 @@ begin
     FOnClickHeader(Self, Point);
 end;
 
-procedure TOvcCustomVirtualListBox.DoOnDrawItem(Index : LongInt; Rect : TRect;
+procedure TOvcCustomVirtualListBox.DoOnDrawItem(Index : Integer; Rect : TRect;
   const S : string);
 begin
   if Assigned(FOnDrawItem) then
     FOnDrawItem(Self, Index, Rect, S);
 end;
 
-function TOvcCustomVirtualListBox.DoOnGetItem(Index : LongInt) : string;
+function TOvcCustomVirtualListBox.DoOnGetItem(Index : Integer) : string;
   {-returns the string representing Nth item}
 var
   S : string;
@@ -757,20 +757,20 @@ begin
     Result := Format(GetOrphStr(SCGotItemWarning), [Index]);
 end;
 
-procedure TOvcCustomVirtualListBox.DoOnGetItemColor(Index : LongInt; var FG, BG : TColor);
+procedure TOvcCustomVirtualListBox.DoOnGetItemColor(Index : Integer; var FG, BG : TColor);
 begin
   if Assigned(FOnGetItemColor) then
     FOnGetItemColor(Self, Index, FG, BG);
 end;
 
-function TOvcCustomVirtualListBox.DoOnGetItemStatus(Index : LongInt) : Boolean;
+function TOvcCustomVirtualListBox.DoOnGetItemStatus(Index : Integer) : Boolean;
 begin
   Result := False;
   if Assigned(FOnGetItemStatus) then
     FOnGetItemStatus(Self, Index, Result);
 end;
 
-function TOvcCustomVirtualListBox.DoOnIsSelected(Index : LongInt) : Boolean;
+function TOvcCustomVirtualListBox.DoOnIsSelected(Index : Integer) : Boolean;
   {-returns the selected status for the "Index" item}
 begin
   if csDesigning in ComponentState then
@@ -801,7 +801,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.DoOnSelect(Index : LongInt; Selected : Boolean);
+procedure TOvcCustomVirtualListBox.DoOnSelect(Index : Integer; Selected : Boolean);
   {-notify of selection change}
 begin
   if csDesigning in ComponentState then
@@ -817,7 +817,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.DoOnTopIndexChanged(NewTopIndex : LongInt);
+procedure TOvcCustomVirtualListBox.DoOnTopIndexChanged(NewTopIndex : Integer);
   {-call the OnTopIndexChanged event, if assigned}
 begin
   if Assigned(FOnTopIndexChanged) then
@@ -837,7 +837,7 @@ begin
   vlbSetAllItemsPrim(False {deselect});
 end;
 
-procedure TOvcCustomVirtualListBox.DrawItem(Index : LongInt);
+procedure TOvcCustomVirtualListBox.DrawItem(Index : Integer);
   {-invalidate and update the area for this item}
 begin
   InvalidateItem(Index);
@@ -916,7 +916,7 @@ begin
   until Distance = 0;
 end;
 
-procedure TOvcCustomVirtualListBox.InsertItemsAt(Items : LongInt; Index : LongInt);
+procedure TOvcCustomVirtualListBox.InsertItemsAt(Items : Integer; Index : Integer);
   {-increase NumItems with Items amount while scrolling window down from Index}
 var
   CR : TRect;
@@ -950,7 +950,7 @@ begin
   ItemIndex := OldItemIndex;
 end;
 
-procedure TOvcCustomVirtualListBox.DeleteItemsAt(Items : LongInt; Index : LongInt);
+procedure TOvcCustomVirtualListBox.DeleteItemsAt(Items : Integer; Index : Integer);
   {-decrease NumItems with Items amount while scrolling window up from Index}
 var
   CR : TRect;
@@ -989,7 +989,7 @@ begin
     ForceTopIndex(TopIndex, False);
 end;
 
-procedure TOvcCustomVirtualListBox.InvalidateItem(Index : LongInt);
+procedure TOvcCustomVirtualListBox.InvalidateItem(Index : Integer);
   {-invalidate the area for this item}
 var
   CR : TRect;
@@ -1002,7 +1002,7 @@ begin
 end;
 
 function TOvcCustomVirtualListBox.ItemAtPos(Pos : TPoint;
-         Existing : Boolean) : LongInt;
+         Existing : Boolean) : Integer;
   {-return the index of the cell that contains the point Pos}
 begin
   if (Pos.Y < Ord(FShowHeader)*FRowHeight) then begin
@@ -1146,7 +1146,7 @@ var
   Clip : TRect;
   Last : Integer;
 
-  procedure DrawItem(N : LongInt; Row : Integer);
+  procedure DrawItem(N : Integer; Row : Integer);
     {-Draw item N at Row}
   var
     S       : PChar;
@@ -1184,7 +1184,7 @@ var
       {get the string}
       if N <= lHighIndex then begin
         ST := DoOnGetItem(N);
-        if lHDelta >= LongInt(Length(ST)) then
+        if lHDelta >= Integer(Length(ST)) then
           S := nil
         else
           S := @PChar(ST)[lHDelta];
@@ -1370,7 +1370,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.SetItemIndex(Index : LongInt);
+procedure TOvcCustomVirtualListBox.SetItemIndex(Index : Integer);
   {-change the currently selected item}
 begin
   {verify valid index}
@@ -1419,7 +1419,7 @@ begin
   Click;
 end;
 
-function TOvcCustomVirtualListBox.IsValidIndex(Index : LongInt) : Boolean;
+function TOvcCustomVirtualListBox.IsValidIndex(Index : Integer) : Boolean;
 begin
   Result := (Index >= 0) and (Index <= lHighIndex);
 end;
@@ -1432,10 +1432,10 @@ begin
       FMultiSelect := Value;
 end;
 
-procedure TOvcCustomVirtualListBox.InternalSetNumItems(Value : LongInt; Paint, UpdateIndices : Boolean);
+procedure TOvcCustomVirtualListBox.InternalSetNumItems(Value : Integer; Paint, UpdateIndices : Boolean);
   {-set the number of items in the list box}
 var
-  OldNumItems : LongInt;
+  OldNumItems : Integer;
 begin
   if Value <> FNumItems then begin
     if (Value < 0) then
@@ -1467,7 +1467,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.SetNumItems(Value : LongInt);
+procedure TOvcCustomVirtualListBox.SetNumItems(Value : Integer);
   {-set the number of items in the list box}
 begin
   InternalSetNumItems(Value, True, True);
@@ -1521,11 +1521,11 @@ begin
     lTabs[I] := Tabs[I] * lDlgUnits;
 end;
 
-procedure TOvcCustomVirtualListBox.ForceTopIndex(Index : LongInt; ThumbTracking : Boolean);
+procedure TOvcCustomVirtualListBox.ForceTopIndex(Index : Integer; ThumbTracking : Boolean);
   {-set the index of the first visible entry in the list}
 var
-  DY       : LongInt;
-  SaveD    : LongInt;
+  DY       : Integer;
+  SaveD    : Integer;
   ClipBox,
   TmpArea,
   ClipArea : TRect;
@@ -1590,7 +1590,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.SetTopIndex(Index : LongInt);
+procedure TOvcCustomVirtualListBox.SetTopIndex(Index : Integer);
   {-set the index of the first visible entry in the list}
 begin
   if csDesigning in ComponentState then
@@ -1638,7 +1638,7 @@ begin
   vlbSetAllItemsPrim(False);
 end;
 
-procedure TOvcCustomVirtualListBox.vlbClearSelRange(First, Last : LongInt);
+procedure TOvcCustomVirtualListBox.vlbClearSelRange(First, Last : Integer);
   {-clear the selection for the given range of indexes}
 begin
   vlbSelectRangePrim(First, Last, False);
@@ -1650,7 +1650,7 @@ begin
   Refresh;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbDrawFocusRect(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbDrawFocusRect(Index : Integer);
   {-draw the focus rectangle}
 var
   CR : TRect;
@@ -1667,10 +1667,10 @@ begin
   lFocusedIndex := Index;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbDragSelection(First, Last : LongInt);
+procedure TOvcCustomVirtualListBox.vlbDragSelection(First, Last : Integer);
   {-drag the selection}
 var
-  I       : LongInt;
+  I       : Integer;
   OutSide : Boolean;
 begin
 
@@ -1708,7 +1708,7 @@ var
 begin
   {get the printable area of the header text}
   Buf := FHeader;
-  if lHDelta >= LongInt(Length(Buf)) then
+  if lHDelta >= Integer(Length(Buf)) then
     S := ' ' {space to erase last character from header}
   else
     S := PChar(@Buf[lHDelta+1]);
@@ -1752,7 +1752,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbExtendSelection(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbExtendSelection(Index : Integer);
   {-process Shift-LMouseBtn}
 begin
   {verify valid index}
@@ -1775,7 +1775,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.vlbHScrollPrim(Delta : Integer);
 var
-  SaveD : LongInt;
+  SaveD : Integer;
 begin
   SaveD := lHDelta;
   if Delta < 0 then
@@ -1784,7 +1784,7 @@ begin
     else
       Inc(lHDelta, Delta)
   else
-    if LongInt(lHDelta)+Delta > LongInt(FColumns) then
+    if Integer(lHDelta)+Delta > Integer(FColumns) then
       lHDelta := FColumns
     else
       Inc(lHDelta, Delta);
@@ -1811,19 +1811,19 @@ begin
   vlbSetHScrollPos;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbMakeItemVisible(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbMakeItemVisible(Index : Integer);
   {-make sure the item is visible}
 begin
   if Index < FTopIndex then
     TopIndex := Index
-  else if Index+LongInt($80000000) > (FTopIndex+Pred(lRows))+LongInt($80000000) then begin
+  else if Index+Integer($80000000) > (FTopIndex+Pred(lRows))+Integer($80000000) then begin
     TopIndex := Index-Pred(lRows);
     if FTopIndex < 0 then
       TopIndex := 0;
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbNewActiveItem(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbNewActiveItem(Index : Integer);
   {-set the currently selected item}
 begin
   {verify valid index}
@@ -1839,20 +1839,20 @@ begin
   InvalidateItem(Index);
 end;
 
-function TOvcCustomVirtualListBox.vlbScaleDown(N : LongInt) : Integer;
+function TOvcCustomVirtualListBox.vlbScaleDown(N : Integer) : Integer;
 begin
   Result := N div lDivisor;
 end;
 
-function TOvcCustomVirtualListBox.vlbScaleUp(N : LongInt) : LongInt;
+function TOvcCustomVirtualListBox.vlbScaleUp(N : Integer) : Integer;
 begin
   Result := N * lDivisor;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbSelectRangePrim(First, Last : LongInt; Select : Boolean);
+procedure TOvcCustomVirtualListBox.vlbSelectRangePrim(First, Last : Integer; Select : Boolean);
   {-change the selection for the given range of indexes}
 var
-  I : LongInt;
+  I : Integer;
 begin
   if First <= Last then begin
     for I := First to Last do begin
@@ -1870,8 +1870,8 @@ end;
 procedure TOvcCustomVirtualListBox.vlbSetAllItemsPrim(Select : Boolean);
   {-primitive routine thats acts on all items}
 var
-  I         : LongInt;
-  LastIndex : LongInt;
+  I         : Integer;
+  LastIndex : Integer;
 begin
   {determine highest index to test}
   LastIndex := FTopIndex+Pred(lRows);
@@ -1887,7 +1887,7 @@ begin
   DoOnSelect(-1, Select);
 end;
 
-procedure TOvcCustomVirtualListBox.vlbSetFocusedIndex(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbSetFocusedIndex(Index : Integer);
   {-set focus index to this item. invalidate previous}
 begin
   if Index <> lFocusedIndex then begin
@@ -1955,7 +1955,7 @@ begin
   *)
 end;
 
-procedure TOvcCustomVirtualListBox.vlbSetSelRange(First, Last : LongInt);
+procedure TOvcCustomVirtualListBox.vlbSetSelRange(First, Last : Integer);
   {-set the selection on for the given range of indexes}
 begin
   vlbSelectRangePrim(First, Last, True);
@@ -1981,7 +1981,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.vlbSetVScrollRange;
 var
-  ItemRange : LongInt;
+  ItemRange : Integer;
 begin
   ItemRange := FNumItems;
   lDivisor := 1;
@@ -2003,7 +2003,7 @@ begin
   vlbSetVScrollPos;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbToggleSelection(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbToggleSelection(Index : Integer);
   {-process Ctrl-LMouseBtn}
 var
   WasSelected : Boolean;
@@ -2021,7 +2021,7 @@ begin
   lAnchor := Index;
 end;
 
-procedure TOvcCustomVirtualListBox.vlbValidateItem(Index : LongInt);
+procedure TOvcCustomVirtualListBox.vlbValidateItem(Index : Integer);
   {-validate the area for this item}
 var
   CR : TRect;
@@ -2035,7 +2035,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.vlbVScrollPrim(Delta : Integer);
 var
-  I : LongInt;
+  I : Integer;
 begin
   I := FTopIndex+Delta;
   if I < 0 then
@@ -2055,7 +2055,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.WMChar(var Msg : TWMChar);
 var
-  L : LongInt;
+  L : Integer;
 begin
   inherited;
 
@@ -2095,7 +2095,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.WMKeyDown(var Msg : TWMKeyDown);
 var
-  I   : LongInt;
+  I   : Integer;
   Cmd : Word;
 begin
   inherited;
@@ -2250,13 +2250,13 @@ end;
 
 procedure TOvcCustomVirtualListBox.WMLButtonDown(var Msg : TWMLButtonDown);
 var
-  I            : LongInt;
-  LastI        : LongInt;
+  I            : Integer;
+  LastI        : Integer;
   LButton      : Byte;
   CtrlKeyDown  : Boolean;
   ShiftKeyDown : Boolean;
 
-  function PointToIndex : LongInt;
+  function PointToIndex : Integer;
   var
     Pt           : TPoint;
   begin
@@ -2418,7 +2418,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.WMVScroll(var Msg : TWMVScroll);
 var
-  I : LongInt;
+  I : Integer;
 begin
   case Msg.ScrollCode of
     SB_LINEUP   : vlbVScrollPrim(-1);

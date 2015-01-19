@@ -272,7 +272,7 @@ end;
 
 procedure TOvcDbPictureField.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbPictureField.Create(AOwner : TComponent);
@@ -484,7 +484,7 @@ procedure TOvcDbPictureField.pfdbGetFieldValue;
 var
   S  : string[MaxEditLen];
   I  : SmallInt absolute S;
-  L  : LongInt absolute S;
+  L  : Integer absolute S;
   W  : Word absolute S;
   B  : Boolean absolute S;
   E  : Extended absolute S;
@@ -606,7 +606,7 @@ procedure TOvcDbPictureField.pfdbSetFieldValue;
 var
   S  : string[MaxEditLen];
   I  : SmallInt absolute S;
-  L  : LongInt absolute S;
+  L  : Integer absolute S;
   W  : Word absolute S;
   B  : Boolean absolute S;
   E  : Extended absolute S;
@@ -618,7 +618,7 @@ var
   EM : Boolean;
   F  : array[0..255] of Char; {used to compare old and new value}
   Pt : TPoint;
-  TL : longint;
+  TL : Integer;
   iCount: Integer;
   sOldValue: string;
   sNewValue: string;
@@ -722,15 +722,15 @@ begin
         inherited DoOnChange;
     end
     else if (Field.DataType = ftDate) then begin
-      Move(F, TL, SizeOf(Longint));
+      Move(F, TL, SizeOf(Integer));
       if (DT <> StDateToDateTime(TStDate(TL))) then
         inherited DoOnChange;
     end else if (Field.DataType = ftTime) then begin
-      Move(F, TL, SizeOf(Longint));
+      Move(F, TL, SizeOf(Integer));
       if (DT <> StTimeToDateTime(TStDate(TL))) then
         inherited DoOnChange;
     end else if (Field.DataType = ftDateTime) then begin
-      Move(F, TL, SizeOf(Longint));
+      Move(F, TL, SizeOf(Integer));
       if (DT <> StDateToDateTime(TStDate(TL))) then
         inherited DoOnChange;
     end else begin

@@ -174,7 +174,7 @@ end;
 
 procedure TOvcDbSlider.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbSlider.Create(AOwner : TComponent);

@@ -76,9 +76,9 @@ type
     {property variables}
     FAcceleration    : Integer;         {value used to determine acceleration}
     FAutoRepeat      : Boolean;         {repeat if button held}
-    FDelayTime       : LongInt;
+    FDelayTime       : Integer;
     FDelta           : Double;          {amount to change by}
-    FRepeatCount     : LongInt;
+    FRepeatCount     : Integer;
     FFocusedControl  : TWinControl;     {the control to give the focus to}
     FShowArrows      : Boolean;
     FStyle           : TOvcSpinnerStyle;
@@ -88,7 +88,7 @@ type
     FOnClick         : TSpinClickEvent;
 
     {private instance variables}
-    scNextMsgTime    : LongInt;
+    scNextMsgTime    : Integer;
 
     {regions for the five spin button sections}
     scUpRgn          : hRgn;
@@ -178,7 +178,7 @@ type
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
 
-    property RepeatCount : LongInt
+    property RepeatCount : Integer
       read FRepeatCount;
 
   published
@@ -190,7 +190,7 @@ type
       read FAutoRepeat write SetAutoRepeat;
     property Delta : Double
       read FDelta write FDelta;
-    property DelayTime : LongInt
+    property DelayTime : Integer
       read FDelayTime write FDelayTime
       default 500;
     property FocusedControl : TWinControl
@@ -284,7 +284,7 @@ begin
               ((FFocusedControl is TOvcBaseEntryField) or
               (FFocusedControl is TCustomEdit))) then begin
     if scMouseOverBtn then begin
-      if LongInt(GetTickCount) > scNextMsgTime then begin
+      if Integer(GetTickCount) > scNextMsgTime then begin
 
         {auto link with Orpheus entry fields}
         if Assigned(FFocusedControl) and (FFocusedControl is TOvcBaseEntryField) then begin
@@ -326,7 +326,7 @@ begin
           FOnClick(Self, State, Delta, FWrapMode);
 
         {setup for next time}
-        scNextMsgTime := LongInt(GetTickCount) + DelayTime - Acceleration*10*FRepeatCount;
+        scNextMsgTime := Integer(GetTickCount) + DelayTime - Acceleration*10*FRepeatCount;
         Inc(FRepeatCount);
       end;
     end;

@@ -44,7 +44,7 @@ end;
 procedure TTestOvcFileViewer.TestActualColumn;
 type
   TData = record
-    Line: LongInt;
+    Line: Integer;
     EffCol: Integer;
     res: Integer;
   end;
@@ -79,7 +79,7 @@ end;
 procedure TTestOvcFileViewer.TestCopyToClipboard;
 type
   TData = record
-    Line1, Line2: LongInt;
+    Line1, Line2: Integer;
     Col1, Col2: Integer;
     HexMode: Boolean;
     res: string;
@@ -117,7 +117,7 @@ end;
 procedure TTestOvcFileViewer.TestEffectiveColumn;
 type
   TData = record
-    Line: LongInt;
+    Line: Integer;
     ActCol: Integer;
     res: Integer;
   end;

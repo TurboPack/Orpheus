@@ -322,7 +322,7 @@ begin
     FGlyphWidth := (rcItem.Right-rcItem.Left + 1 + BoxMargin*2);
 
     {add checkbox state information}
-    if LongInt(itemID) > -1 then begin
+    if Integer(itemID) > -1 then begin
       case States[itemId] of
         cbUnchecked : S := S - [odChecked, odGrayed];
         cbChecked   : S := S + [odChecked] - [odGrayed];
@@ -581,7 +581,7 @@ function TOvcCheckList.GetGlyphIndex(Index : Integer) : Integer;
 begin
   Result := -1;
   if (Index > -1) and (Index < FGlyphIndex.Count) then
-    Result := LongInt(FGlyphIndex[Index]);
+    Result := Integer(FGlyphIndex[Index]);
 end;
 
 function TOvcCheckList.GetStateCount(AState : TCheckBoxState) : Integer;
@@ -605,7 +605,7 @@ procedure TOvcCheckList.InvalidateItem(Index : Integer);
 var
   R : TRect;
 begin
-  SendMessage(Handle, LB_GETITEMRECT, Index, LongInt(@R));
+  SendMessage(Handle, LB_GETITEMRECT, Index, NativeInt(@R));
   InvalidateRect(Handle, @R, True);
 end;
 
@@ -802,7 +802,7 @@ begin
   I := ItemAtPos(P, True);
   FillChar(R, SizeOf(R), 0);
   if I > -1 then
-    SendMessage(Handle, LB_GETITEMRECT, I, LongInt(@R));
+    SendMessage(Handle, LB_GETITEMRECT, I, NativeInt(@R));
 
   {eat click if clicking on the check box}
   if (Msg.XPos > R.Left + ItemHeight - BoxMargin div 2) then begin

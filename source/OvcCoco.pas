@@ -131,13 +131,13 @@ type
   TAfterGenListEvent = procedure(Sender : TObject;
     var PrintErrorCount : boolean) of object;
   TCommentEvent = procedure(Sender : TObject; CommentList : TCommentList) of object;
-  TCustomErrorEvent = function(Sender : TObject; const ErrorCode : longint;
+  TCustomErrorEvent = function(Sender : TObject; const ErrorCode : Integer;
     const Data : string) : string of object;
   TErrorEvent = procedure(Sender : TObject; Error : TCocoError) of object;
   TErrorProc = procedure(ErrorCode : integer; Symbol : TSymbolPosition;
     const Data : string; ErrorType : integer) of object;
   TFailureEvent = procedure(Sender : TObject; NumErrors : integer) of object;
-  TGetCH = function(pos : longint) : char of object;
+  TGetCH = function(pos : Integer) : char of object;
   TStatusUpdateProc = procedure(Sender : TObject; Status : string;
     LineNum : integer) of object;
 
@@ -163,7 +163,7 @@ type
   protected
     FStartState : TStartTable; {start state for every character}
 
-    function CapChAt(pos : longint) : char;
+    function CapChAt(pos : Integer) : char;
     procedure Get(var sym : integer); virtual; abstract;
     procedure NextCh; virtual; abstract;
 
@@ -190,7 +190,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function CharAt(pos : longint) : char;
+    function CharAt(pos : Integer) : char;
     function GetName(Symbol : TSymbolPosition) : string; // Retrieves name of symbol of length len at position pos in source file
     function GetString(Symbol : TSymbolPosition) : string; // Retrieves exact string of max length len from position pos in source file
     procedure _Reset;
@@ -332,12 +332,12 @@ begin
   inherited;
 end; {Destroy}
 
-function TCocoRScanner.CapChAt(pos : longint) : char;
+function TCocoRScanner.CapChAt(pos : Integer) : char;
 begin
   Result := UpCase(CharAt(pos));
 end; {CapCharAt}
 
-function TCocoRScanner.CharAt(pos : longint) : char;
+function TCocoRScanner.CharAt(pos : Integer) : char;
 var
   ch : char;
 begin
@@ -356,7 +356,7 @@ end; {CharAt}
 function TCocoRScanner.GetNStr(Symbol : TSymbolPosition; ChProc : TGetCh) : string;
 var
   i : integer;
-  p : longint;
+  p : Integer;
 begin
   if Symbol.Len > 255 then
     Symbol.Len := 255;
@@ -397,7 +397,7 @@ end; {GetString}
 
 procedure TCocoRScanner._Reset;
 var
-  len : longint;
+  len : Integer;
 begin
   { Make sure that the stream has the _EF character at the end. }
   CurrInputCh := _EF;
@@ -461,7 +461,7 @@ var
   i : integer;
   eof : boolean;
   lnr, errC : integer;
-  srcPos : longint;
+  srcPos : Integer;
   line : string;
   PrintErrorCount : boolean;
 begin
@@ -510,7 +510,7 @@ begin
   end;
 end; {GenerateListing}
 
-procedure TCocoRGrammar.GetLine(var pos: longint; var line: string; var eof: boolean);
+procedure TCocoRGrammar.GetLine(var pos: Integer; var line: string; var eof: boolean);
   { Read a source line. Return empty line if eof }
 var
   ch : char;

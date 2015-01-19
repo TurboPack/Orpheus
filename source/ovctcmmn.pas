@@ -151,7 +151,7 @@ type
 
 {---Row/Column number (index) types}
 type
-  TRowNum = longint;  {actually 0..2 billion}
+  TRowNum = Integer;  {actually 0..2 billion}
   TColNum = integer;  {actually 0..16K}
 
 {---record types for cells---}
@@ -276,9 +276,9 @@ type
   POvcTableNumberArray = ^TOvcTableNumberArray;
 {structure passed to GetDisplayedRow(Col)Numbers}
   TOvcTableNumberArray = packed record
-    NumElements : longint;      {..number of elements in Number array}
-    Count       : longint;      {..return count of used elements in Number array}
-    Number      : array [0..29] of longint; {..Number array}
+    NumElements : Integer;      {..number of elements in Number array}
+    Count       : Integer;      {..return count of used elements in Number array}
+    Number      : array [0..29] of Integer; {..Number array}
   end;
 
 {---Row style type}
@@ -408,7 +408,7 @@ const
 
 type {internal use only}
   TOvcTblDisplayItem = packed record
-    Number : longint;
+    Number : Integer;
     Offset : Integer;
   end;
   POvcTblDisplayArray = ^TOvcTblDisplayArray;

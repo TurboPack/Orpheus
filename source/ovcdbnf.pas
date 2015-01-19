@@ -259,7 +259,7 @@ end;
 
 procedure TOvcDbNumericField.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbNumericField.Create(AOwner : TComponent);
@@ -450,7 +450,7 @@ procedure TOvcDbNumericField.nfdbGetFieldValue;
 var
   E  : Extended;
   I  : SmallInt absolute E;
-  L  : LongInt absolute E;
+  L  : Integer absolute E;
   W  : Word absolute E;
 
   function FieldIsZero : Boolean;
@@ -517,7 +517,7 @@ procedure TOvcDbNumericField.nfdbSetFieldValue;
 var
   E  : Extended;
   I  : SmallInt absolute E;
-  L  : LongInt absolute E;
+  L  : Integer absolute E;
   W  : Word absolute E;
   P  : Integer;
   SS : Integer;

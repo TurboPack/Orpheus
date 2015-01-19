@@ -100,12 +100,12 @@ type
     FTruncated : Boolean;
     ExpandEventCalled : Boolean;
     Seq: Integer;
-    function GetCount: LongInt;
+    function GetCount: Integer;
     function GetHasChildren: Boolean;
     function GetHasParent: Boolean;
-    function GetNode(Index: LongInt): TOvcOutlineNode;
+    function GetNode(Index: Integer): TOvcOutlineNode;
     function GetLevel: Integer;
-    function GetLineCount: LongInt;
+    function GetLineCount: Integer;
     function GetVisible : Boolean;
     procedure MakeChildrenVisible;
     procedure SetChecked(Value : Boolean);
@@ -120,7 +120,7 @@ type
     property Truncated : Boolean read FTruncated write FTruncated;
     property ButtonRect : TRect read FButtonRect write FButtonRect;
     property RadioRect : TRect read FRadioRect write FRadioRect;
-    property LineCount : LongInt read GetLineCount;
+    property LineCount : Integer read GetLineCount;
     function GetChildren: TOvcOutlineNodes;
     procedure PushChildIndex;
     procedure PopChildIndex;
@@ -132,7 +132,7 @@ type
     constructor Create(AOutline: TOvcCustomOutline; AOwner: TOvcOutlineNodes;
       AParent : TOvcOutlineNode; const Data : Pointer);
     destructor Destroy; override;
-    function Index : LongInt;
+    function Index : Integer;
     function IsFirstSibling: Boolean;
     function IsLastSibling: Boolean;
     function IsSibling(Value : TOvcOutlineNode): Boolean;
@@ -141,7 +141,7 @@ type
     property AddIndex : Integer read FAddIndex;
     property Checked : Boolean read FChecked write SetChecked;
     procedure Collapse(Recurse: Boolean);
-    property Count: LongInt read GetCount;
+    property Count: Integer read GetCount;
     property Data: Pointer read FData write SetData;
     procedure DeleteChildren;
     procedure Expand(Recurse: Boolean);
@@ -151,7 +151,7 @@ type
     property ImageIndex : Integer read FImageIndex write SetImageIndex
                    default -1;
     procedure Invalidate;
-    property Node[Index: LongInt]: TOvcOutlineNode read GetNode; default;
+    property Node[Index: Integer]: TOvcOutlineNode read GetNode; default;
     property Level: Integer read GetLevel;
     property Mode : TOvcOlNodeMode read FMode write FMode
       default omPreload;
@@ -196,10 +196,10 @@ type
     FOwner: TOvcCustomOutline;
     FParent : TOvcOutlineNode;
     procedure DefineProperties(Filer: TFiler); override;
-    function GetCount: LongInt;
-    function GetNode(Index: LongInt): TOvcOutlineNode;
-    function GetLineCount: LongInt;
-    property LineCount : LongInt read GetLineCount;
+    function GetCount: Integer;
+    function GetNode(Index: Integer): TOvcOutlineNode;
+    function GetLineCount: Integer;
+    property LineCount : Integer read GetLineCount;
     function FirstChild: TOvcOutlineNode;
     function LastChild: TOvcOutlineNode;
     procedure PushChildIndex;
@@ -230,10 +230,10 @@ type
                    Ptr: Pointer; InitImageIndex : Integer; InitMode : TOvcOlNodeMode):
                    TOvcOutlineNode;
     procedure Clear;
-    property Count: LongInt read GetCount;
+    property Count: Integer read GetCount;
     constructor Create(AOwner: TOvcCustomOutline; AParent : TOvcOutlineNode);
     destructor Destroy; override;
-    property Node[Index: LongInt]: TOvcOutlineNode read GetNode;
+    property Node[Index: Integer]: TOvcOutlineNode read GetNode;
                    default;
     property Owner: TOvcCustomOutline read FOwner;
   end;
@@ -298,26 +298,26 @@ type
     procedure DoDynamicLoad(Node : TOvcOutlineNode); virtual;
     procedure DoExpandCollapse(Node : TOvcOutlineNode; Expanding : Boolean); dynamic;
     procedure DoNodeDestroy(Node : TOvcOutlineNode); virtual;
-    function DoOnIsSelected(Index : LongInt) : Boolean; override;
-    procedure DoOnSelect(Index : LongInt; Selected : Boolean); override;
+    function DoOnIsSelected(Index : Integer) : Boolean; override;
+    procedure DoOnSelect(Index : Integer; Selected : Boolean); override;
     procedure DoNodeClick(Node: TOvcOutlineNode);
-    function GetIsGroup(Index: LongInt): Boolean;
-    function GetAbsNodes : LongInt;
-    function GetAbsNode(Index : LongInt): TOvcOutlineNode;
-    function GetNode(Index: LongInt): TOvcOutlineNode;
+    function GetIsGroup(Index: Integer): Boolean;
+    function GetAbsNodes : Integer;
+    function GetAbsNode(Index : Integer): TOvcOutlineNode;
+    function GetNode(Index: Integer): TOvcOutlineNode;
     {procedure HideHint;}
     {procedure HoverTimerEvent(Sender : TObject; Handle : Integer;
-                         Interval : Cardinal; ElapsedTime : LongInt);}
-    property IsGroup[Index : LongInt] : Boolean read GetIsGroup;
+                         Interval : Cardinal; ElapsedTime : Integer);}
+    property IsGroup[Index : Integer] : Boolean read GetIsGroup;
     procedure SetNodes(const Value: TOvcOutlineNodes);
     procedure KeyPress(var Key: Char); override;
-    function Lines : LongInt;
+    function Lines : Integer;
     {procedure Loaded; override;}
-    function IndexFromNode(CurNode : TOvcOutlineNode) : LongInt;
+    function IndexFromNode(CurNode : TOvcOutlineNode) : Integer;
     procedure Notification(AComponent: TComponent; Operation: TOperation);
                    override;
     procedure Paint; override;
-    function PointToIndex(Y: Integer): LongInt;
+    function PointToIndex(Y: Integer): Integer;
     procedure SetActiveNode(const Value: TOvcOutlineNode);
     procedure SetHideSelection(const Value : Boolean);
     procedure SetImages(const Value: TImageList);
@@ -342,8 +342,8 @@ type
 
   public
 
-    property AbsNodes : LongInt read GetAbsNodes;
-    property AbsNode[Index : LongInt] : TOvcOutlineNode read GetAbsNode;
+    property AbsNodes : Integer read GetAbsNodes;
+    property AbsNode[Index : Integer] : TOvcOutlineNode read GetAbsNode;
     property ActiveNode : TOvcOutlineNode read FActiveNode write SetActiveNode;
     procedure BeginUpdate; override;
     property CacheSize: Integer read FCacheSize write SetCacheSize default 4096;
@@ -359,7 +359,7 @@ type
     destructor Destroy; override;
     property Images : TImageList read FImages write SetImages;
     property Nodes: TOvcOutlineNodes read FNodes write SetNodes;
-    property Node[Index: LongInt]: TOvcOutlineNode read GetNode;
+    property Node[Index: Integer]: TOvcOutlineNode read GetNode;
     procedure LoadFromFile(const FileName : string);
     procedure LoadFromStream(Stream : TStream);
     procedure LoadFromText(const FileName : string; Encoding: TEncoding = nil);
@@ -669,7 +669,7 @@ begin
   end;
 end;
 
-function TOvcOutlineNode.GetCount: LongInt;
+function TOvcOutlineNode.GetCount: Integer;
 begin
   if HasChildren then
     Result := FFChildren.Count
@@ -689,7 +689,7 @@ begin
   Result := FParent <> nil;
 end;
 
-function TOvcOutlineNode.GetNode(Index: LongInt): TOvcOutlineNode;
+function TOvcOutlineNode.GetNode(Index: Integer): TOvcOutlineNode;
 begin
   PushChildIndex;
   Result := FirstChild;
@@ -714,7 +714,7 @@ begin
   end;
 end;
 
-function TOvcOutlineNode.GetLineCount: LongInt;
+function TOvcOutlineNode.GetLineCount: Integer;
 begin
   Result := 1;
   if Expanded and HasChildren then
@@ -862,7 +862,7 @@ begin
   end;
 end;
 
-function TOvcOutlineNode.Index: LongInt;
+function TOvcOutlineNode.Index: Integer;
 begin
   Result := Outline.IndexFromNode(Self);
 end;
@@ -1132,7 +1132,7 @@ begin
   FOwner.PushChildIndex;
 end;
 
-function TOvcOutlineNodes.GetCount: LongInt;
+function TOvcOutlineNodes.GetCount: Integer;
 begin
   Result := 0;
   PushChildIndex;
@@ -1143,7 +1143,7 @@ begin
   PopChildIndex;
 end;
 
-function TOvcOutlineNodes.GetLineCount: LongInt;
+function TOvcOutlineNodes.GetLineCount: Integer;
 var
   Node: TOvcOutlineNode;
 begin
@@ -1158,7 +1158,7 @@ begin
 end;
 
 function TOvcOutlineNodes.GetNode(
-  Index: LongInt): TOvcOutlineNode;
+  Index: Integer): TOvcOutlineNode;
 begin
   PushChildIndex;
   Result := FirstChild;
@@ -1189,7 +1189,7 @@ begin
   FActiveNode := NewNode;
 end;
 
-function TOvcCustomOutline.DoOnIsSelected(Index: LongInt): Boolean;
+function TOvcCustomOutline.DoOnIsSelected(Index: Integer): Boolean;
 begin
   if csDesigning in ComponentState then
     Result := False
@@ -1204,7 +1204,7 @@ begin
   IsSimulated := False;
 end;
 
-function TOvcCustomOutline.PointToIndex(Y : Integer) : LongInt;
+function TOvcCustomOutline.PointToIndex(Y : Integer) : Integer;
 begin
   Result := -1;
   if (Y >= 0) and (Y < ClientHeight) then begin
@@ -1218,7 +1218,7 @@ end;
 
 procedure TOvcCustomOutline.Click;
 var
-  Index : LongInt;
+  Index : Integer;
   Pt    : TPoint;
 begin
   if not IsSimulated then
@@ -1383,7 +1383,7 @@ begin
   {HintWindow := HintWindowClass.Create(Self);}
   {HintWindow.Color := Application.HintColor; }
   FCacheSize := 4096;
-  NodeCache := TOvcLiteCache.Create(sizeof(LongInt), 4096);
+  NodeCache := TOvcLiteCache.Create(sizeof(Integer), 4096);
   FAbsNodes := TOvcOutlineNodeList.Create(Keys, CompareNodesGlobal);
   FAbsNodes.CurrentKey := CurrentKey;
   FNodeIndex := TOvcOutlineNodeList.Create(Keys, CompareNodesLocal);
@@ -1418,7 +1418,7 @@ begin
   inherited DblClick;
 end;
 
-procedure TOvcCustomOutline.DoOnSelect(Index: LongInt; Selected: Boolean);
+procedure TOvcCustomOutline.DoOnSelect(Index: Integer; Selected: Boolean);
 var
   NewActive : TOvcOutlineNode;
 begin
@@ -1511,9 +1511,9 @@ begin
   end;
 end;
 
-function TOvcCustomOutline.GetNode(Index: LongInt): TOvcOutlineNode;
+function TOvcCustomOutline.GetNode(Index: Integer): TOvcOutlineNode;
 var
-  c : LongInt;
+  c : Integer;
 
   procedure LocateNode(Nodes : TOvcOutlineNodes);
   var
@@ -1547,12 +1547,12 @@ begin
   end;
 end;
 
-function TOvcCustomOutline.GetAbsNodes : LongInt;
+function TOvcCustomOutline.GetAbsNodes : Integer;
 begin
   Result := FAbsNodes.Count;
 end;
 
-function TOvcCustomOutline.GetAbsNode(Index : LongInt): TOvcOutlineNode;
+function TOvcCustomOutline.GetAbsNode(Index : Integer): TOvcOutlineNode;
 begin
   Result := FAbsNodes.Node[Index];
 end;
@@ -1568,9 +1568,9 @@ begin
 end;
 *)
 
-function TOvcCustomOutline.IndexFromNode(CurNode : TOvcOutlineNode) : LongInt;
+function TOvcCustomOutline.IndexFromNode(CurNode : TOvcOutlineNode) : Integer;
 var
-  c : LongInt;
+  c : Integer;
 
   procedure LocateNode(Nodes : TOvcOutlineNodes);
   var
@@ -1600,7 +1600,7 @@ end;
 
 procedure TOvcCustomOutline.KeyPress(var Key: Char);
 var
-  SaveIdx : LongInt;
+  SaveIdx : Integer;
 begin
   case Key of
   ' ','+','-',#13 :
@@ -1711,7 +1711,7 @@ function TOvcCustomOutline.CalcMaxWidth: Integer;
 var
   I    : Integer;
 
-  function CalcItemWidth(N : LongInt; Row : Integer): Integer;
+  function CalcItemWidth(N : Integer; Row : Integer): Integer;
     {-Draw item N at Row}
   var
     CurNode : TOvcOutlineNode;
@@ -1764,7 +1764,7 @@ var
   Clip : TRect;
   Last : Integer;
 
-  procedure InternalDrawItem(N : LongInt; Row : Integer);
+  procedure InternalDrawItem(N : Integer; Row : Integer);
     {-Draw item N at Row}
   var
     FGColor : TColor;
@@ -2155,7 +2155,7 @@ begin
   end;
 end;
 
-function TOvcCustomOutline.GetIsGroup(Index: LongInt): Boolean;
+function TOvcCustomOutline.GetIsGroup(Index: Integer): Boolean;
 begin
   if IsValidIndex(Index) then
     with Node[Index] do
@@ -2166,7 +2166,7 @@ end;
 
 (* !!.02 no longer used
 procedure TOvcCustomOutline.HoverTimerEvent(Sender : TObject; Handle : Integer;
-                         Interval : Cardinal; ElapsedTime : LongInt);
+                         Interval : Cardinal; ElapsedTime : Integer);
 {display/hide hint with truncated text}
 var
   S : string;
@@ -2202,7 +2202,7 @@ begin
 end;
 *)
 
-function TOvcCustomOutline.Lines: LongInt;
+function TOvcCustomOutline.Lines: Integer;
 begin
   Result := Nodes.LineCount;
 end;
@@ -2250,7 +2250,7 @@ procedure TOvcCustomOutline.LoadFromStream(Stream: TStream);
 
   procedure ReadNode(Stream : TStream; Parent : TOvcOutlineNode);
   var
-    I : LongInt;
+    I : Integer;
     NewNode : TOvcOutlineNode;
     S: RawByteString;
   begin
@@ -2280,8 +2280,8 @@ procedure TOvcCustomOutline.LoadFromStream(Stream: TStream);
 
   procedure LoadLevel(Stream : TStream; Parent : TOvcOutlineNode);
   var
-    NodeCount : LongInt;
-    i : LongInt;
+    NodeCount : Integer;
+    i : Integer;
   begin
     Stream.Read(NodeCount, sizeof(NodeCount));
     for i := 0 to pred(NodeCount) do
@@ -2354,7 +2354,7 @@ procedure TOvcCustomOutline.SaveToStream(Stream: TStream);
 
   procedure WriteNode(S : TStream; Level : Integer; ParentNode : TOvcOutlineNode);
   var
-    I : LongInt;
+    I : Integer;
     Node: TOvcOutlineNode;
     Txt: UTF8String;
   begin
@@ -2400,7 +2400,7 @@ procedure TOvcCustomOutline.SaveToStream(Stream: TStream);
   end;
 
 var
-  i : LongInt;
+  i : Integer;
   Node: TOvcOutlineNode;
 begin
   i := Nodes.Count;
@@ -2494,7 +2494,7 @@ end;
 
 procedure TOvcCustomOutline.WMLButtonDown(var Msg : TWMLButtonDown);
 var
-  Index : LongInt;
+  Index : Integer;
   Pt    : TPoint;
   InitActive : TOvcOutlineNode;
 begin
@@ -2681,7 +2681,7 @@ begin
   if Value <> FCacheSize then begin
     FCacheSize := Value;
     NodeCache.Free;
-    NodeCache := TOvcLiteCache.Create(sizeof(LongInt), Value);
+    NodeCache := TOvcLiteCache.Create(sizeof(Integer), Value);
   end;
 end;
 

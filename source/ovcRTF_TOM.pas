@@ -44,10 +44,10 @@ type
   // These pointer types are missing from Borland's declarations.
   MYCHARFORMATW = record
     cbSize: UINT;
-    dwMask: Longint;
-    dwEffects: Longint;
-    yHeight: Longint;
-    yOffset: Longint;
+    dwMask: Integer;
+    dwEffects: Integer;
+    yHeight: Integer;
+    yOffset: Integer;
     crTextColor: TColorRef;
     bCharSet: Byte;
     bPitchAndFamily: Byte;
@@ -105,20 +105,20 @@ type
   ITextServices = interface
     [SID_ITextServices]
     function TxSendMessage(msg: UInt; wParam: wParam; lParam: lParam; out plresult: lResult): HResult; stdcall;
-    function TxDraw(dwDrawAspect: DWord; lindex: LongInt; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
-    function TxGetHScroll(out plMin, plMax, plPos, plPage: LongInt; out pfEnabled: Bool): HResult; stdcall;
-    function TxGetVScroll(out plMin, plMax, plPos, plPage: LongInt; out pfEnabled: Bool): HResult; stdcall;
-    function OnTxSetCursor(dwDrawAspect: DWord; lindex: LongInt; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
-    function TxQueryHitPoint(dwDrawAspect: DWord; lindex: LongInt; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
+    function TxDraw(dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
+    function TxGetHScroll(out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
+    function TxGetVScroll(out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
+    function OnTxSetCursor(dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
+    function TxQueryHitPoint(dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
     function OnTxInPlaceActivate(const prcClient: TRect): HResult; stdcall;
     function OnTxInPlaceDeactivate: HResult; stdcall;
     function OnTxUIActivate: HResult; stdcall;
     function OnTxUIDeactivate: HResult; stdcall;
     function TxGetText(out pbstrText: TBStr): HResult; stdcall;
     function TxSetText(pszText: PWideChar): HResult; stdcall;
-    function TxGetCurTargetX(out px: LongInt): HResult; stdcall;
-    function TxGetBaselinePos(out pBaselinePos: LongInt): HResult; stdcall;
-    function TxGetNaturalSize(dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: LongInt): HResult; stdcall;
+    function TxGetCurTargetX(out px: Integer): HResult; stdcall;
+    function TxGetBaselinePos(out pBaselinePos: Integer): HResult; stdcall;
+    function TxGetNaturalSize(dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: Integer): HResult; stdcall;
     function TxGetDropTarget(out ppDropTarget: IDropTarget): HResult; stdcall;
     function OnTxPropertyBitsChange(dwMask, dwBits: DWord): HResult; stdcall;
     function TxGetCachedSize(out pdwWidth, pdwHeight: DWord): HResult; stdcall;
@@ -130,7 +130,7 @@ type
     function TxReleaseDC(hdc: HDC): Integer; stdcall;
     function TxShowScrollBar(fnBar: Integer; fShow: Bool): Bool; stdcall;
     function TxEnableScrollBar(fuSBFlags, fuArrowFlags: Integer): Bool; stdcall;
-    function TxSetScrollRange(fnBar: Integer; nMinPos: LongInt; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
+    function TxSetScrollRange(fnBar: Integer; nMinPos: Integer; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
     function TxSetScrollPos(fnBar, nPos: Integer; fRedraw: Bool): Bool; stdcall;
     procedure TxInvalidateRect(const prc: TRect; fMode: Bool); stdcall;
     procedure TxViewChange(fUpdate: Bool); stdcall;
@@ -145,8 +145,8 @@ type
     procedure TxSetCursor(hcur: hCursor; fText: Bool); stdcall;
     function TxScreenToClient(var lppt: TPoint): Bool; stdcall;
     function TxClientToScreen(var lppt: TPoint): Bool; stdcall;
-    function TxActivate(out lpOldState: LongInt): HResult; stdcall;
-    function TxDeactivate(lNewState: LongInt): HResult; stdcall;
+    function TxActivate(out lpOldState: Integer): HResult; stdcall;
+    function TxDeactivate(lNewState: Integer): HResult; stdcall;
     function TxGetClientRect(out prc: TRect): HResult; stdcall;
     function TxGetViewInset(out prc: TRect): HResult; stdcall;
     function TxGetCharFormat(out ppCF: PCharFormatW): HResult; stdcall;
@@ -156,7 +156,7 @@ type
     function TxGetMaxLength(out pLength: DWord): HResult; stdcall;
     function TxGetScrollBars(out pdwScrollBar: DWord): HResult; stdcall;
     function TxGetPasswordChar(out pch: {Wide}Char): HResult; stdcall;
-    function TxGetAcceleratorPos(out pcp: LongInt): HResult; stdcall;
+    function TxGetAcceleratorPos(out pcp: Integer): HResult; stdcall;
     function TxGetExtent(out lpExtent: TSizeL): HResult; stdcall;
     function OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult; stdcall;
     function OnTxParaFormatChange(const ppf: TParaFormat): HResult; stdcall;
@@ -164,7 +164,7 @@ type
     function TxNotify(iNotify: DWord; pv: Pointer): HResult; stdcall;
     function TxImmGetContext: hIMC; stdcall;
     procedure TxImmReleaseContext(himc: hIMC); stdcall;
-    function TxGetSelectionBarWidth(out lSelBarWidth: LongInt): HResult; stdcall;
+    function TxGetSelectionBarWidth(out lSelBarWidth: Integer): HResult; stdcall;
   end;
 
   // TTextHostImpl is a helper class for implementors of the ITextHost
@@ -187,7 +187,7 @@ type
     function TxReleaseDC(hdc: HDC): Integer; virtual; stdcall;
     function TxShowScrollBar(fnBar: Integer; fShow: Bool): Bool; virtual; stdcall;
     function TxEnableScrollBar(fuSBFlags, fuArrowFlags: Integer): Bool; virtual; stdcall;
-    function TxSetScrollRange(fnBar: Integer; nMinPos: LongInt; nMaxPos: Integer; fRedraw: Bool): Bool; virtual; stdcall;
+    function TxSetScrollRange(fnBar: Integer; nMinPos: Integer; nMaxPos: Integer; fRedraw: Bool): Bool; virtual; stdcall;
     function TxSetScrollPos(fnBar, nPos: Integer; fRedraw: Bool): Bool; virtual; stdcall;
     procedure TxInvalidateRect(const prc: TRect; fMode: Bool); virtual; stdcall;
     procedure TxViewChange(fUpdate: Bool); virtual; stdcall;
@@ -202,8 +202,8 @@ type
     procedure TxSetCursor(hcur: hCursor; fText: Bool); virtual; stdcall;
     function TxScreenToClient(var lppt: TPoint): Bool; virtual; stdcall;
     function TxClientToScreen(var lppt: TPoint): Bool; virtual; stdcall;
-    function TxActivate(out lpOldState: LongInt): HResult; virtual; stdcall;
-    function TxDeactivate(lNewState: LongInt): HResult; virtual; stdcall;
+    function TxActivate(out lpOldState: Integer): HResult; virtual; stdcall;
+    function TxDeactivate(lNewState: Integer): HResult; virtual; stdcall;
     function TxGetClientRect(out prc: TRect): HResult; virtual; stdcall;
     function TxGetViewInset(out prc: TRect): HResult; virtual; stdcall;
     function TxGetCharFormat(out ppCF: PCharFormatW): HResult; virtual; stdcall;
@@ -213,7 +213,7 @@ type
     function TxGetMaxLength(out pLength: DWord): HResult; virtual; stdcall;
     function TxGetScrollBars(out pdwScrollBar: DWord): HResult; virtual; stdcall;
     function TxGetPasswordChar(out pch: {Wide}Char): HResult; virtual; stdcall;
-    function TxGetAcceleratorPos(out pcp: LongInt): HResult; virtual; stdcall;
+    function TxGetAcceleratorPos(out pcp: Integer): HResult; virtual; stdcall;
     function TxGetExtent(out lpExtent: TSizeL): HResult; virtual; stdcall;
     function OnTxCharFormatChange(const pcf: TMyCharFormatW): HResult; virtual; stdcall;
     function OnTxParaFormatChange(const ppf: TParaFormat): HResult; virtual; stdcall;
@@ -221,7 +221,7 @@ type
     function TxNotify(iNotify: DWord; pv: Pointer): HResult; virtual; stdcall;
     function TxImmGetContext: hIMC; virtual; stdcall;
     procedure TxImmReleaseContext(himc: hIMC); virtual; stdcall;
-    function TxGetSelectionBarWidth(out lSelBarWidth: LongInt): HResult; virtual; stdcall;
+    function TxGetSelectionBarWidth(out lSelBarWidth: Integer): HResult; virtual; stdcall;
   end;
 
 // CreateTextHost wraps a TTextHostImpl instance and returns an ITextHost
@@ -380,7 +380,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxSendMessage
 end;
 
-procedure TextServices_TxDraw; // (dwDrawAspect: DWord; lindex: LongInt; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
+procedure TextServices_TxDraw; // (dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -390,7 +390,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxDraw
 end;
 
-procedure TextServices_TxGetHScroll; // (out plMin, plMax, plPos, plPage: LongInt; out pfEnabled: Bool): HResult; stdcall;
+procedure TextServices_TxGetHScroll; // (out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -400,7 +400,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxGetHScroll
 end;
 
-procedure TextServices_TxGetVScroll; // (out plMin, plMax, plPos, plPage: LongInt; out pfEnabled: Bool): HResult; stdcall;
+procedure TextServices_TxGetVScroll; // (out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -410,7 +410,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxGetVScroll
 end;
 
-procedure TextServices_OnTxSetCursor; // (dwDrawAspect: DWord; lindex: LongInt; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
+procedure TextServices_OnTxSetCursor; // (dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -420,7 +420,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.OnTxSetCursor
 end;
 
-procedure TextServices_TxQueryHitPoint; // (dwDrawAspect: DWord; lindex: LongInt; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
+procedure TextServices_TxQueryHitPoint; // (dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -490,7 +490,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxSetText
 end;
 
-procedure TextServices_TxGetCurTargetX; // (out px: LongInt): HResult; stdcall;
+procedure TextServices_TxGetCurTargetX; // (out px: Integer): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -500,7 +500,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxGetCurTargetX
 end;
 
-procedure TextServices_TxGetBaselinePos; // (out pBaselinePos: LongInt): HResult; stdcall;
+procedure TextServices_TxGetBaselinePos; // (out pBaselinePos: Integer): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -510,7 +510,7 @@ asm
   jmp dword ptr [eax].TITextServicesMT.TxGetBaselinePos
 end;
 
-procedure TextServices_TxGetNaturalSize; // (dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: LongInt): HResult; stdcall;
+procedure TextServices_TxGetNaturalSize; // (dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: Integer): HResult; stdcall;
 asm
   pop edx // return address
   pop eax
@@ -732,7 +732,7 @@ asm
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxEnableScrollBar]
 end;
 
-procedure TextHost_TxSetScrollRange; // (fnBar: Integer; nMinPos: LongInt; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
+procedure TextHost_TxSetScrollRange; // (fnBar: Integer; nMinPos: Integer; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
 asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
@@ -882,7 +882,7 @@ asm
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxClientToScreen]
 end;
 
-procedure TextHost_TxActivate; // (out lpOldState: LongInt): HResult; stdcall;
+procedure TextHost_TxActivate; // (out lpOldState: Integer): HResult; stdcall;
 asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
@@ -892,7 +892,7 @@ asm
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxActivate]
 end;
 
-procedure TextHost_TxDeactivate; // (lNewState: LongInt): HResult; stdcall;
+procedure TextHost_TxDeactivate; // (lNewState: Integer): HResult; stdcall;
 asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
@@ -992,7 +992,7 @@ asm
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetPasswordChar]
 end;
 
-procedure TextHost_TxGetAcceleratorPos; // (out pcp: LongInt): HResult; stdcall;
+procedure TextHost_TxGetAcceleratorPos; // (out pcp: Integer): HResult; stdcall;
 asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
@@ -1072,7 +1072,7 @@ asm
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxImmReleaseContext]
 end;
 
-procedure TextHost_TxGetSelectionBarWidth; // (out lSelBarWidth: LongInt): HResult; stdcall;
+procedure TextHost_TxGetSelectionBarWidth; // (out lSelBarWidth: Integer): HResult; stdcall;
 asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl

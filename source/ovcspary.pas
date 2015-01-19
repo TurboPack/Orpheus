@@ -48,7 +48,7 @@ const
   MaxSparseArrayItems = 320000;  {maximum items in a sparse array}
 
 type
-  TSparseArrayFunc = function (Index : longint; Item : pointer;
+  TSparseArrayFunc = function (Index : Integer; Item : pointer;
                                ExtraData : pointer) : boolean;
     {-Sparse array's iterator type. Should return true to continue iterating,
       false otherwise.}
@@ -56,7 +56,7 @@ type
   {The sparse array class}
   TOvcSparseArray = class
     protected {private}
-      FCount : longint;       {Fake count of the items}
+      FCount : Integer;       {Fake count of the items}
       FArray : pointer;       {Sparse array}
 
       ChunkCount : word;      {Number of chunks}
@@ -65,44 +65,44 @@ type
       procedure RecalcCount;
 
     protected
-      function GetActiveCount : longint;
-      function GetItem(Index : longint) : pointer;
-      procedure PutItem(Index : longint; Item : pointer);
+      function GetActiveCount : Integer;
+      function GetItem(Index : Integer) : pointer;
+      procedure PutItem(Index : Integer; Item : pointer);
 
     public
       constructor Create;
       destructor Destroy; override;
 
-      function  Add(Item : pointer) : longint;
+      function  Add(Item : pointer) : Integer;
         {-Add Item to end of array}
       procedure Clear;
         {-Clear array}
-      procedure Delete(Index : longint);
+      procedure Delete(Index : Integer);
         {-Delete item at Index, all items below move up one}
-      procedure Exchange(Index1, Index2 : longint);
+      procedure Exchange(Index1, Index2 : Integer);
         {-Swap the items at Index1 and Index2}
       function  First : pointer;
         {-Return First item}
       function  ForAll(Action : TSparseArrayFunc;
                        Backwards : boolean;
-                       ExtraData : pointer) : longint;
+                       ExtraData : pointer) : Integer;
         {-Iterate through all active items, maybe backwards}
-      function  IndexOf(Item : pointer) : longint;
+      function  IndexOf(Item : pointer) : Integer;
         {-Get the index of Item}
-      procedure Insert(Index : longint; Item : pointer);
+      procedure Insert(Index : Integer; Item : pointer);
         {-Insert Item at Index, it and all items below move down one}
       function  Last : pointer;
         {-Return Last item}
       procedure Squeeze;
         {-Pack the sparse array}
 
-      property Count : longint
+      property Count : Integer
         {-Logical count of the number of items (=IndexOf(Last)+1)}
          read FCount;
-      property ActiveCount : longint
+      property ActiveCount : Integer
         {-Count of non-nil items}
          read GetActiveCount;
-      property Items[Index : longint] : pointer
+      property Items[Index : Integer] : pointer
         {-Items array}
          read GetItem write PutItem;
          default;
@@ -179,10 +179,10 @@ procedure RaiseException(ClassType : integer);
 function GrowChunkArray(A : PChunkArray; var CurSize : word) : PChunkArray;
   {-Grow the chunk array, return the new size and the new pointer}
   var
-    NewSize : longint;
+    NewSize : Integer;
     NewSizeAdj : word;
   begin
-    NewSize := longint(CurSize) +
+    NewSize := Integer(CurSize) +
                (DefChunkArrayElements * sizeof(TChunkArrayElement));
     NewSizeAdj := MaxChunkArrayElements * sizeof(TChunkArrayElement);
     if (NewSize < NewSizeAdj) then
@@ -305,18 +305,18 @@ procedure DeleteChunk(A : PChunkArray; ArrayInx : word; var NumChunks : word);
   end;
 
 {===TOvcSparseArray ForAll routines=====================================}
-function CountActiveElements(Index : longint;
+function CountActiveElements(Index : Integer;
                              Item : pointer;
                              ExtraData : pointer) : boolean; far;
   var
-    ED : ^longint absolute ExtraData;
+    ED : ^Integer absolute ExtraData;
   begin
     Result := True;
     inc(ED^);
   end;
 {=====}
 
-function Find1stOrLastElement(Index : longint;
+function Find1stOrLastElement(Index : Integer;
                               Item : pointer;
                               ExtraData : pointer) : boolean; far;
   var
@@ -327,7 +327,7 @@ function Find1stOrLastElement(Index : longint;
   end;
 {=====}
 
-function FindSpecificElement(Index : longint;
+function FindSpecificElement(Index : Integer;
                              Item : pointer;
                              ExtraData : pointer) : boolean; far;
   begin
@@ -374,13 +374,13 @@ procedure TOvcSparseArray.Squeeze;
 
 
 {===TOvcSparseArray property access=====================================}
-function TOvcSparseArray.GetActiveCount : longint;
+function TOvcSparseArray.GetActiveCount : Integer;
   begin
     Result := 0;
     ForAll(CountActiveElements, true, @Result);
   end;
 {--------}
-function TOvcSparseArray.GetItem(Index : longint) : pointer;
+function TOvcSparseArray.GetItem(Index : Integer) : pointer;
   var
     ChunkIndex : word;
     ChunkNum   : integer;
@@ -400,7 +400,7 @@ function TOvcSparseArray.GetItem(Index : longint) : pointer;
       end;
   end;
 {--------}
-procedure TOvcSparseArray.PutItem(Index : longint; Item : pointer);
+procedure TOvcSparseArray.PutItem(Index : Integer; Item : pointer);
   var
     ChunkIndex : word;
     ChunkNum   : integer;
@@ -427,7 +427,7 @@ procedure TOvcSparseArray.PutItem(Index : longint; Item : pointer);
 
 
 {===TOvcSparseArray item maintenance====================================}
-function TOvcSparseArray.Add(Item : pointer) : longint;
+function TOvcSparseArray.Add(Item : pointer) : Integer;
   begin
     if (FCount = MaxSparseArrayItems) then
       RaiseException(1);
@@ -452,7 +452,7 @@ procedure TOvcSparseArray.Clear;
     FCount := 0;
   end;
 {--------}
-procedure TOvcSparseArray.Delete(Index : longint);
+procedure TOvcSparseArray.Delete(Index : Integer);
   const
     LastPos = pred(ChunkElements);
   var
@@ -516,7 +516,7 @@ procedure TOvcSparseArray.Delete(Index : longint);
     RecalcCount;
   end;
 {--------}
-procedure TOvcSparseArray.Exchange(Index1, Index2 : longint);
+procedure TOvcSparseArray.Exchange(Index1, Index2 : Integer);
   var
     Item1, Item2 : pointer;
   begin
@@ -546,11 +546,11 @@ function TOvcSparseArray.First : pointer;
 {--------}
 function TOvcSparseArray.ForAll(Action : TSparseArrayFunc;
                                 Backwards : boolean;
-                                ExtraData : pointer) : longint;
+                                ExtraData : pointer) : Integer;
   var
     MajorInx : word;
     MinorInx : word;
-    MajorStub : longint;
+    MajorStub : Integer;
   label
     ExitLoopsReverse, ExitLoopsForwards;
   begin
@@ -561,7 +561,7 @@ function TOvcSparseArray.ForAll(Action : TSparseArrayFunc;
         for MajorInx := pred(ChunkCount) downto 0 do
           with PChunkArray(FArray)^[MajorInx] do
             begin
-              MajorStub := longint(ChunkIndex) shl ShiftValue;
+              MajorStub := Integer(ChunkIndex) shl ShiftValue;
               for MinorInx := pred(ChunkElements) downto 0 do
                 if (Chunk^[MinorInx] <> nil) then
                   begin
@@ -580,7 +580,7 @@ function TOvcSparseArray.ForAll(Action : TSparseArrayFunc;
         for MajorInx := 0 to pred(ChunkCount) do
           with PChunkArray(FArray)^[MajorInx] do
             begin
-              MajorStub := longint(ChunkIndex) shl ShiftValue;
+              MajorStub := Integer(ChunkIndex) shl ShiftValue;
               for MinorInx := 0 to pred(ChunkElements) do
                 if (Chunk^[MinorInx] <> nil) then
                   begin
@@ -596,12 +596,12 @@ function TOvcSparseArray.ForAll(Action : TSparseArrayFunc;
       end;
   end;
 {--------}
-function TOvcSparseArray.IndexOf(Item : pointer) : longint;
+function TOvcSparseArray.IndexOf(Item : pointer) : Integer;
   begin
     Result := ForAll(FindSpecificElement, true, Item);
   end;
 {--------}
-procedure TOvcSparseArray.Insert(Index : longint; Item : pointer);
+procedure TOvcSparseArray.Insert(Index : Integer; Item : pointer);
   const
     LastPos = pred(ChunkElements);
   var

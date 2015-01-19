@@ -139,10 +139,10 @@ type
 
     {property methods}
     function GetAsBoolean : Boolean;
-    function GetAsCents : LongInt;
+    function GetAsCents : Integer;
     function GetAsExtended : Extended;
     function GetAsFloat : Double;
-    function GetAsInteger : Longint;
+    function GetAsInteger : Integer;
     function GetAsDateTime : TDateTime;
     function GetAsStDate : TStDate;
     function GetAsStTime : TStTime;
@@ -164,11 +164,11 @@ type
     function GetSelStart : Integer;
     function GetSelText : string;
     procedure SetAsBoolean(Value : Boolean);
-    procedure SetAsCents(Value : LongInt);
+    procedure SetAsCents(Value : Integer);
     procedure SetAsDateTime(Value : TDateTime);
     procedure SetAsExtended(Value : Extended);
     procedure SetAsFloat(Value : Double);
-    procedure SetAsInteger(Value : Longint);
+    procedure SetAsInteger(Value : Integer);
     procedure SetAsStDate(Value : TStDate);
     procedure SetAsStTime(Value : TStTime);
     procedure SetAsVariant(Value : Variant);
@@ -354,8 +354,8 @@ type
       {-beep if pefBeepOnError option is active}
     procedure efCopyPrim;
       {-Primitive clipboard copy method}
-    function efBinStr2Long(St : PChar; var L : LongInt) : Boolean;
-      {-convert a binary string to a longint}
+    function efBinStr2Long(St : PChar; var L : NativeInt) : Boolean;
+      {-convert a binary string to a Integer}
     function efCalcDataSize(St : PChar; MaxLen : Word) : Word;
       {-calculate data size of a string field with literal stripping option on}
     procedure efEdit(var Msg : TMessage; Cmd : Word);
@@ -389,8 +389,8 @@ type
     function  efIsReadOnly : Boolean;
       virtual;
       {-return True if field is read-only}
-    procedure efLong2Str(P : PChar; L : LongInt);
-      {-convert a longint to a string}
+    procedure efLong2Str(P : PChar; L : Integer);
+      {-convert a Integer to a string}
     procedure efMapControlChars(Dest, Src : PChar);
       {-copy from Src to Dest, mapping control characters to alph in process}
     procedure efMoveFocusToNextField;
@@ -401,8 +401,8 @@ type
       {-give previous field the focus}
     function  efNthMaskChar(N : Word) : Char;
       {-return the N'th character in the picture mask. N is 0-based}
-    function efOctStr2Long(St : PChar; var L : LongInt) : Boolean;
-      {-convert an octal string to a longint}
+    function efOctStr2Long(St : PChar; var L : NativeInt) : Boolean;
+      {-convert an octal string to a Integer}
 
 { - Hdc changed to TOvcHdc for BCB Compatibility }
     procedure efPaintPrim(DC : TOvcHDC{Hdc}; ARect : TRect; Offset : Integer);
@@ -428,8 +428,8 @@ type
       {-set the default range for the given field type}
     procedure efSetInitialValue;
       {-set the initial value of the field}
-    function efStr2Long(P : PChar; var L : LongInt) : Boolean;
-      {-convert a string to a longint}
+    function efStr2Long(P : PChar; var L : NativeInt) : Boolean;
+      {-convert a string to a Integer}
     function efTransfer(DataPtr : Pointer; TransferFlag : Word) : Word;
       virtual;
       {-transfer data to/from the entry fields}
@@ -522,7 +522,7 @@ type
     property ParentColor default False;
     property AsBoolean : Boolean
       read GetAsBoolean write SetAsBoolean;
-    property AsCents : LongInt
+    property AsCents : Integer
       read GetAsCents write SetAsCents;
     property AsDateTime : TDateTime
       read GetAsDateTime write SetAsDateTime;
@@ -530,7 +530,7 @@ type
       read GetAsExtended write SetAsExtended;
     property AsFloat : Double
       read GetAsFloat write SetAsFloat;
-    property AsInteger : Longint
+    property AsInteger : Integer
       read GetAsInteger write SetAsInteger;
     property AsOvcDate : TOvcDate
       read GetAsStDate write SetAsStDate;
@@ -936,7 +936,7 @@ procedure TOvcBaseEntryField.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
 
-  Params.Style := LongInt(Params.Style) or BorderStyles[FBorderStyle];
+  Params.Style := Integer(Params.Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1172,12 +1172,12 @@ begin
     FAutoSize := True;
 end;
 
-function TOvcBaseEntryField.efBinStr2Long(St : PChar; var L : LongInt) : Boolean;
-  {-convert a binary string to a longint}
+function TOvcBaseEntryField.efBinStr2Long(St : PChar; var L : NativeInt) : Boolean;
+  {-convert a binary string to a Integer}
 var
   BitNum  : Word;
   Len     : Word;
-  LT      : LongInt;
+  LT      : Integer;
 begin
   Result := False;
   Len := StrLen(St);
@@ -1190,7 +1190,7 @@ begin
       '1' : if BitNum > 31 then
               Exit
             else
-              Inc(LT, LongInt(1) shl BitNum);
+              Inc(LT, Integer(1) shl BitNum);
       else  Exit;
     end;
     Inc(BitNum);
@@ -1244,8 +1244,8 @@ begin
     Exclude(sefOptions, sefValidating);
   end;
 
-  if efHPos > LongInt(StrLen(efEditSt)) then
-    efHPos := LongInt(StrLen(efEditSt));
+  if efHPos > Integer(StrLen(efEditSt)) then
+    efHPos := Integer(StrLen(efEditSt));
 
   if FLastError = 0 then
     Exclude(sefOptions, sefInvalid)
@@ -1473,12 +1473,12 @@ begin
   CtCnt := 0;
   I := 0;
   {count "normal" characters}
-  while (I < LongInt(StrLen(P))) and (P[I] >= Space) do begin
+  while (I < Integer(StrLen(P))) and (P[I] >= Space) do begin
     Inc(ChCnt);
     Inc(I);
   end;
   {count "control" characters}
-  while (I < LongInt(StrLen(P))) and (P[I] < Space) do begin
+  while (I < Integer(StrLen(P))) and (P[I] < Space) do begin
     Inc(CtCnt);
     Inc(I);
   end;
@@ -1708,7 +1708,7 @@ begin
     fsubChar     : efDataSize := SizeOf(Char);
     fsubBoolean  : efDataSize := SizeOf(Boolean);
     fsubYesNo    : efDataSize := SizeOf(Boolean);
-    fsubLongInt  : efDataSize := SizeOf(LongInt);
+    fsubLongInt  : efDataSize := SizeOf(Integer);
     fsubWord     : efDataSize := SizeOf(Word);
     fsubInteger  : efDataSize := SizeOf(SmallInt);
     fsubByte     : efDataSize := SizeOf(Byte);
@@ -1769,8 +1769,8 @@ begin
       Result := True;
 end;
 
-procedure TOvcBaseEntryField.efLong2Str(P : PChar; L : LongInt);
-  {-convert a longint to a string}
+procedure TOvcBaseEntryField.efLong2Str(P : PChar; L : Integer);
+  {-convert a Integer to a string}
 var
   W  : Word;
   S  : array[0..32] of Char;
@@ -1815,7 +1815,7 @@ end;
 procedure TOvcBaseEntryField.efMoveFocus(C : TWinControl);
   {-ask the controller to move the focus to the specified control}
 begin
-  PostMessage(Controller.Handle, om_SetFocus, 0, LongInt(C));
+  PostMessage(Controller.Handle, om_SetFocus, 0, NativeInt(C));
 end;
 
 procedure TOvcBaseEntryField.efMoveFocusToNextField;
@@ -1851,8 +1851,8 @@ begin
     Result := efPicture[N];
 end;
 
-function TOvcBaseEntryField.efOctStr2Long(St : PChar; var L : LongInt) : Boolean;
-  {-convert an octal string to a longint}
+function TOvcBaseEntryField.efOctStr2Long(St : PChar; var L : NativeInt) : Boolean;
+  {-convert an octal string to a Integer}
 var
   I  : Word;
 begin
@@ -1878,15 +1878,15 @@ var
   HStart    : Integer;
   HEnd      : Integer;
   OldBKMode : Integer;
-  RTC, HTC  : LongInt;
-  RBC, HBC  : LongInt;
-  CtlClr    : LongInt;
+  RTC, HTC  : Integer;
+  RBC, HBC  : Integer;
+  CtlClr    : Integer;
   SA, SD    : PChar;
   T         : TEditString;
   LMargin   : Integer;
 //  I         : Integer;
 
-  procedure Display(Count : Word; TC, BC : LongInt);
+  procedure Display(Count : Word; TC, BC : Integer);
   begin
     if (Count <> 0) and (X < ARect.Right) then begin
       SetTextColor(DC, TC);
@@ -1912,7 +1912,7 @@ var
     end;
   end;
 
-  procedure DisplayPrim(Count : Word; TC, HC : LongInt);
+  procedure DisplayPrim(Count : Word; TC, HC : Integer);
   var
     SubCnt : Word;
     Buf    : TEditString;
@@ -2309,7 +2309,7 @@ begin
     R := Rect(0, 0, RightBdr + 1, ClientHeight);
   end;
 
-  SendMessage(Handle, EM_SETRECTNP, 0, LongInt(@R));   //SZ: According to the Windows SDK, this is only processed by multi line edits. Why do we need it here? It was introduced with the IME changes
+  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));   //SZ: According to the Windows SDK, this is only processed by multi line edits. Why do we need it here? It was introduced with the IME changes
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
   if SysLocale.FarEast {and (IMEMode <> imDisable)} then
     SetImeCompositionWindow(Font, efCaret.Position.X,efCaret.Position.Y);
@@ -2544,7 +2544,7 @@ begin
 
   if Value < 0 then
       efHPos := 0
-  else if Value > LongInt(StrLen(efEditSt)) then
+  else if Value > Integer(StrLen(efEditSt)) then
     efHPos := StrLen(efEditSt)+1
   else
     efHPos := Value;
@@ -2566,8 +2566,8 @@ begin
       end;
     fsubLongInt :
       begin
-        efRangeLo.rtLong := Low(LongInt); {80000000}
-        efRangeHi.rtLong := High(LongInt); {7FFFFFFF}
+        efRangeLo.rtLong := Low(Integer); {80000000}
+        efRangeHi.rtLong := High(Integer); {7FFFFFFF}
       end;
     fsubWord :
       begin
@@ -2700,7 +2700,7 @@ begin
   end;
 end;
 
-function TOvcBaseEntryField.efStr2Long(P : PChar; var L : LongInt) : Boolean;
+function TOvcBaseEntryField.efStr2Long(P : PChar; var L : NativeInt) : Boolean;
   {-convert a string to a long integer}
 var
   S : TEditString;
@@ -2726,7 +2726,7 @@ begin
 
     {check for special value the Val() doesn't handle correctly}
     if StrComp(S, '-2147483648') = 0 then
-      L := LongInt($80000000)
+      L := Integer($80000000)
     else
       Result := StrToLongPChar(S, L);
   end;
@@ -2935,8 +2935,8 @@ begin
     raise EInvalidDataType.Create;
 end;
 
-function TOvcBaseEntryField.GetAsCents : LongInt;
-  {-returns the field value as a LongInt Value representing pennies}
+function TOvcBaseEntryField.GetAsCents : Integer;
+  {-returns the field value as a Integer Value representing pennies}
 const
   C = 100.0;
 var
@@ -3024,7 +3024,7 @@ var
   Db  : Double;
   Sg  : Single absolute Db;
   Re  : Real absolute Db;
-  Li  : Longint;
+  Li  : Integer;
   Wo  : Word absolute Li;
   It  : SmallInt absolute Li;
   By  : Byte absolute Li;
@@ -3105,7 +3105,7 @@ var
   Re  : Real absolute Db;
   Ex  : Extended;
   Co  : Comp absolute Ex;
-  Li  : LongInt;
+  Li  : Integer;
   Wo  : Word absolute Li;
   It  : SmallInt absolute Li;
   By  : Byte absolute Li;
@@ -3178,10 +3178,10 @@ begin
   end;
 end;
 
-function TOvcBaseEntryField.GetAsInteger : Longint;
-  {-returns the field value as a LongInt Value}
+function TOvcBaseEntryField.GetAsInteger : Integer;
+  {-returns the field value as a Integer Value}
 var
-  Li  : Longint;
+  Li  : Integer;
   Wo  : Word absolute Li;
   It  : SmallInt absolute Li;
   By  : Byte absolute Li;
@@ -3438,7 +3438,7 @@ begin
       fsubChar     : efTransfer(@Char(Data),     otf_GetData);
       fsubBoolean  : efTransfer(@Boolean(Data),  otf_GetData);
       fsubYesNo    : efTransfer(@Boolean(Data),  otf_GetData);
-      fsubLongInt  : efTransfer(@LongInt(Data),  otf_GetData);
+      fsubLongInt  : efTransfer(@NativeInt(Data),otf_GetData);
       fsubWord     : efTransfer(@Word(Data),     otf_GetData);
       fsubInteger  : efTransfer(@SmallInt(Data), otf_GetData);
       fsubByte     : efTransfer(@Byte(Data),     otf_GetData);
@@ -3692,7 +3692,7 @@ procedure TOvcBaseEntryField.SelectAll;
   {-selects the entire contents of the edit field}
 begin
   if HandleAllocated then
-    Perform(EM_SETSEL, 1, LongInt($FFFF0000));
+    Perform(EM_SETSEL, 1, Integer($FFFF0000));
 end;
 
 procedure TOvcBaseEntryField.SetAsBoolean(Value : Boolean);
@@ -3704,8 +3704,8 @@ begin
     raise EInvalidDataType.Create;
 end;
 
-procedure TOvcBaseEntryField.SetAsCents(Value : LongInt);
-  {-sets the field value given a LongInt Value representing pennies}
+procedure TOvcBaseEntryField.SetAsCents(Value : Integer);
+  {-sets the field value given a Integer Value representing pennies}
 const
   C = 100.0;
 var
@@ -3840,8 +3840,8 @@ begin
   end;
 end;
 
-procedure TOvcBaseEntryField.SetAsInteger(Value : Longint);
-  {-sets the field value to a LongInt Value}
+procedure TOvcBaseEntryField.SetAsInteger(Value : Integer);
+  {-sets the field value to a Integer Value}
 var
   Wo  : Word;
   It  : SmallInt absolute Wo;
@@ -4286,7 +4286,7 @@ var
   Buf : array[0..MaxEditLen] of Char;
 begin
   StrPLCopy(Buf, Value, Length(Buf) - 1);
-  Msg.lParam := LongInt(@Buf);
+  Msg.lParam := NativeInt(@Buf);
   efPerformEdit(Msg, ccPaste);
 end;
 
@@ -4333,7 +4333,7 @@ begin
       fsubChar     : efTransfer(@AnsiChar(Data), otf_SetData);
       fsubBoolean  : efTransfer(@Boolean(Data),  otf_SetData);
       fsubYesNo    : efTransfer(@Boolean(Data),  otf_SetData);
-      fsubLongInt  : efTransfer(@LongInt(Data),  otf_SetData);
+      fsubLongInt  : efTransfer(@NativeInt(Data),otf_SetData);
       fsubWord     : efTransfer(@Word(Data),     otf_SetData);
       fsubInteger  : efTransfer(@SmallInt(Data), otf_SetData);
       fsubByte     : efTransfer(@Byte(Data),     otf_SetData);
@@ -4657,7 +4657,7 @@ var
 begin
   H := Clipboard.GetAsHandle(CF_UNICODETEXT);
   if H <> 0 then begin
-    TMessage(Msg).lParam := LongInt(GlobalLock(H));
+    TMessage(Msg).lParam := Integer(GlobalLock(H));
     efPerformEdit(TMessage(Msg), ccPaste);
     GlobalUnlock(H);
   end;
@@ -4717,7 +4717,7 @@ begin
 
       MI := TMenuItem.Create(M);
       MI.Caption := GetOrphStr(SCSelectAllMI);
-      MI.Enabled := LongInt(StrLen(efEditSt)) > SelectionLength;
+      MI.Enabled := Integer(StrLen(efEditSt)) > SelectionLength;
       MI.OnClick := DoSelectAllClick;
       M.Items.Add(MI);
 

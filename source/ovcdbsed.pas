@@ -240,7 +240,7 @@ end;
 
 procedure TOvcCustomDbSliderEdit.CMGetDataLink(var Message : TMessage);
 begin
-  Message.Result := LongInt(FDataLink);
+  Message.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcCustomDbSliderEdit.Create(AOwner : TComponent);

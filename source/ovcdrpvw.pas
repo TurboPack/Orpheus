@@ -1177,7 +1177,7 @@ end;
 
 procedure TOvcDataRvItem.ReadFromStream(Stream: TStream);
 var
-  FS : LongInt;
+  FS : Integer;
   i : Integer;
   j, k1, k2 : Integer;
 begin
@@ -1216,7 +1216,7 @@ end;
 
 procedure TOvcDataRvItem.WriteToStream(Stream: TStream);
 var
-  FS : LongInt;
+  FS : Integer;
   i : Integer;
 begin
   for i := 0 to pred(FOwner.Fields.Count) do begin
@@ -1292,7 +1292,7 @@ end;
 
 procedure TOvcDataRvItems.LoadFromStream(Stream: TStream);
 var
-  p, i, RecordCount : LongInt;
+  p, i, RecordCount : Integer;
   SigTest : array[0..3] of AnsiChar;
 begin
   if assigned(FOwner) and (csLoading in FOwner.ComponentState) then begin
@@ -1321,7 +1321,7 @@ end;
 
 procedure TOvcDataRvItems.SaveToStream(Stream: TStream);
 var
-  p, i, RecordCount : LongInt;
+  p, i, RecordCount : Integer;
 begin
   Stream.Write(StreamSig, sizeof(StreamSig));
   RecordCount := FItems.Count;

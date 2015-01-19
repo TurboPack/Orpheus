@@ -120,9 +120,9 @@ function MinI(X, Y : Integer) : Integer;
   {-return the minimum of two integers}
 function MaxI(X, Y : Integer) : Integer;
   {-return the maximum of two integers}
-function MinL(X, Y : LongInt) : LongInt;
+function MinL(X, Y : Integer) : Integer;
   {-return the minimum of two LongInts}
-function MaxL(X, Y : LongInt) : LongInt;
+function MaxL(X, Y : Integer) : Integer;
   {-return the maximum of two LongInts}
 
 function GenerateComponentName(PF : TWinControl; const Root : string) : string;
@@ -214,7 +214,7 @@ begin
 
     if Found then begin
       {check for 'nnnn.'}
-      if LongInt(DotPos) = Len-1 then begin
+      if Integer(DotPos) = Len-1 then begin
         P[Len] := '0';
         Inc(Len);
         P[Len] := #0;
@@ -415,12 +415,12 @@ begin
   if X > Y then result := X else result := Y;
 end;
 
-function MinL(X, Y : LongInt) : LongInt; register;
+function MinL(X, Y : Integer) : Integer; register;
 begin
   if X < Y then result := X else result := Y;
 end;
 
-function MaxL(X, Y : LongInt) : LongInt; register;
+function MaxL(X, Y : Integer) : Integer; register;
 begin
   if X > Y then result := X else result := Y;
 end;
@@ -603,7 +603,7 @@ type
 
 { - HWnd changed to TOvcHWnd for BCB Compatibility }
 function CheckTaskWindow(Window: TOvcHWnd{HWnd};
-  Data: Longint): WordBool; stdcall;
+  Data: NativeInt): WordBool; stdcall;
 begin
   Result := True;
   if PCheckTaskInfo(Data)^.FocusWnd = Window then begin
@@ -618,7 +618,7 @@ var
 begin
   Info.FocusWnd := GetActiveWindow;
   Info.Found := False;
-  EnumThreadWindows(GetCurrentThreadID, @CheckTaskWindow, Longint(@Info));
+  EnumThreadWindows(GetCurrentThreadID, @CheckTaskWindow, NativeInt(@Info));
   Result := Info.Found;
 end;
 

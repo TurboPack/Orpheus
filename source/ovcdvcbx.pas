@@ -222,7 +222,7 @@ begin
   ClearItems;
   SavedErrorMode := SetErrorMode(SEM_FAILCRITICALERRORS);
   try
-    SendMessage(Handle, CB_DIR, DDL_Drives + DDL_Exclusive, LongInt(PChar('*.*')));
+    SendMessage(Handle, CB_DIR, DDL_Drives + DDL_Exclusive, NativeInt(PChar('*.*')));
     if Items.Count > 0 then
       for I := 0 to Pred(Items.Count) do begin
         DriveChar := UpCase(Items[I][3]);

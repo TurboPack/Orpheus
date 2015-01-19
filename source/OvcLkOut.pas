@@ -296,7 +296,7 @@ type
     function lobShowScrollUp : Boolean;
     function lobShowScrollDown : Boolean;
     procedure lobTimerEvent(Sender : TObject; Handle : Integer;
-                            Interval : Cardinal; ElapsedTime : LongInt);
+                            Interval : Cardinal; ElapsedTime : Integer);
 
     {VCL message methods}
     procedure CMCtl3DChanged(var Msg : TMessage);
@@ -733,7 +733,7 @@ end;
 
 procedure TOvcLookOutBar.CMDesignHitTest(var Msg : TCMDesignHitTest);
 begin
-  Msg.Result := LongInt(lobOverButton);
+  Msg.Result := Integer(lobOverButton);
 end;
 
 procedure TOvcLookOutBar.CMFontChanged(var Message: TMessage);
@@ -858,7 +858,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or BorderStyles[FBorderStyle];
+    Style := Integer(Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1350,7 +1350,7 @@ begin
 end;
 
 procedure TOvcLookOutBar.lobTimerEvent(Sender : TObject; Handle : Integer;
-          Interval : Cardinal; ElapsedTime : LongInt);
+          Interval : Cardinal; ElapsedTime : Integer);
 var
   Pt : TPoint;
   Form : TCustomForm;

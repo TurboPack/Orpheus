@@ -306,7 +306,7 @@ var
   CommentColumn : integer;
   CommentLine : integer;
   startLine : integer;
-  oldLineStart : longint;
+  oldLineStart : Integer;
   CommentStr : string;
 begin
   level := 1;
@@ -446,7 +446,7 @@ function TOvcRvExpScanner.Equal(s : string) : boolean;
     04/2011, AB: Unicode compatibility }
 var
   i : integer;
-  q : longint;
+  q : Integer;
 begin
   Result := false;
   if NextSymbol.Len <> Length(s) then

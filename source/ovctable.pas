@@ -875,7 +875,7 @@ procedure TOvcCustomTable.CreateParams(var Params: TCreateParams);
     inherited CreateParams(Params);
 
     with Params do
-      Style := LongInt(Style) or OvcData.ScrollBarStyles[FScrollBars]
+      Style := Integer(Style) or OvcData.ScrollBarStyles[FScrollBars]
                      or OvcData.BorderStyles[FBorderStyle];
 
     if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -1810,7 +1810,7 @@ procedure TOvcCustomTable.tbSetScrollPos(SB : TOvcScrollBar);
   var
     ColNum  : TColNum;
     ColCnt  : TColNum;
-    Divisor : LongInt;
+    Divisor : Integer;
   begin
     if (SB = otsbVertical) then
       begin
@@ -1852,7 +1852,7 @@ procedure TOvcCustomTable.tbSetScrollPos(SB : TOvcScrollBar);
 
 procedure TOvcCustomTable.tbSetScrollRange(SB : TOvcScrollBar);
   var
-    Divisor : LongInt;
+    Divisor : Integer;
   begin
     if (SB = otsbVertical) then
       begin
@@ -5529,7 +5529,7 @@ procedure TOvcCustomTable.CMDesignHitTest(var Msg : TCMDesignHitTest);
         if OnGridLine then
           Msg.Result := 1
         else
-          Msg.Result := longint(tbIsInMoveArea(Msg.Pos.X, Msg.Pos.Y, IsColMove));
+          Msg.Result := NativeInt(tbIsInMoveArea(Msg.Pos.X, Msg.Pos.Y, IsColMove));
       end;
   end;
 {--------}
@@ -5543,37 +5543,37 @@ procedure TOvcCustomTable.CMFontChanged(var Msg : TMessage);
 {--------}
 procedure TOvcCustomTable.ctimQueryOptions(var Msg : TMessage);
   begin
-    Msg.Result := longint(word(FOptions));
+    Msg.Result := NativeInt(word(FOptions));
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryColor(var Msg : TMessage);
   begin
-    Msg.Result := longint(Color);
+    Msg.Result := NativeInt(Color);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryFont(var Msg : TMessage);
   begin
-    Msg.Result := longint(Font);
+    Msg.Result := NativeInt(Font);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryLockedCols(var Msg : TMessage);
   begin
-    Msg.Result := longint(LockedCols);
+    Msg.Result := NativeInt(LockedCols);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryLockedRows(var Msg : TMessage);
   begin
-    Msg.Result := longint(LockedRows);
+    Msg.Result := NativeInt(LockedRows);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryActiveCol(var Msg : TMessage);
   begin
-    Msg.Result := longint(ActiveCol);
+    Msg.Result := NativeInt(ActiveCol);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryActiveRow(var Msg : TMessage);
   begin
-    Msg.Result := longint(ActiveRow);
+    Msg.Result := Integer(ActiveRow);
   end;
 {--------}
 procedure TOvcCustomTable.ctimRemoveCell(var Msg : TMessage);
@@ -5601,7 +5601,7 @@ procedure TOvcCustomTable.ctimStartEditMouse(var Msg : TWMMouse);
           Windows.SetFocus(tbActCell.EditHandle);
           PostMessage(tbActCell.EditHandle,
                       WM_LBUTTONDOWN,
-                      Msg.Keys, longint(Msg.Pos))
+                      Msg.Keys, Integer(Msg.Pos))
         end;
     Msg.Result := 1;
   end;
@@ -5840,8 +5840,8 @@ procedure TOvcCustomTable.WMLButtonDblClk(var Msg : TWMMouse);
             if FActiveRow <> Row then
               ActiveRow := Row;
 //Ende
-            PostMessage(Handle, ctim_StartEdit, Msg.Keys, longint(Msg.Pos));
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, longint(Msg.Pos));
+            PostMessage(Handle, ctim_StartEdit, Msg.Keys, Integer(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
           end;
       end;
   end;
@@ -5971,7 +5971,7 @@ procedure TOvcCustomTable.WMLButtonDown(var Msg : TWMMouse);
                           begin
                             PostMessage(Handle, ctim_StartEdit, 0, 0);
                             PostMessage(Handle, ctim_StartEditMouse,
-                                        Msg.Keys, longint(Msg.Pos));
+                                        Msg.Keys, Integer(Msg.Pos));
                             AllowDrag := false;
                           end;
                       end;
@@ -6067,7 +6067,7 @@ procedure TOvcCustomTable.WMLButtonDown(var Msg : TWMMouse);
                   if (not (otoAlwaysEditing in Options)) and (ActiveRow = Row) and (ActiveCol = Col) and (not WasUnfocused) then
                   begin
                     PostMessage(Handle, ctim_StartEdit, 0, 0);
-                    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, longint(Msg.Pos));
+                    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
                   end;
 
                   tbSetActiveCellPrim(Row, Col);
@@ -6447,7 +6447,7 @@ procedure TOvcCustomTable.WMVScroll(var Msg : TWMScroll);
 
   procedure ProcessThumb;
     var
-      Divisor : LongInt;
+      Divisor : Integer;
     begin
       if (Msg.Pos <> TopRow) then
         begin

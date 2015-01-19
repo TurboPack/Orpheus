@@ -76,7 +76,7 @@ type
     function GetAutoSearch : Boolean;
     function GetAutoSelect : Boolean;
     function GetCaseSensitive : Boolean;
-    function GetColumns : LongInt;
+    function GetColumns : Integer;
     function GetHideSelection : Boolean;
     function GetItemHeight : Integer;
     function GetItems : TStrings;
@@ -90,7 +90,7 @@ type
     procedure SetAutoSelect(Value : Boolean);
     procedure SetBorderStyle(Value : TBorderStyle);
     procedure SetCaseSensitive(Value : Boolean);
-    procedure SetColumns(Value : LongInt);
+    procedure SetColumns(Value : Integer);
     procedure SetHideSelection(Value : Boolean);
     procedure SetItemHeight(Value : Integer);
     procedure SetItems(Value : TStrings);
@@ -162,7 +162,7 @@ type
       write SetCaseSensitive
       default False;
 
-    property Columns : LongInt
+    property Columns : Integer
       read GetColumns
       write SetColumns;
 
@@ -395,7 +395,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or BorderStyles[FBorderStyle];
+    Style := Integer(Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -439,7 +439,7 @@ begin
   Result := FEdit.CaseSensitive;
 end;
 
-function TOvcSearchList.GetColumns : LongInt;
+function TOvcSearchList.GetColumns : Integer;
 begin
   Result := FListBox.Columns;
 end;
@@ -564,7 +564,7 @@ begin
   FEdit.CaseSensitive := Value;
 end;
 
-procedure TOvcSearchList.SetColumns(Value : LongInt);
+procedure TOvcSearchList.SetColumns(Value : Integer);
 begin
   FListBox.Columns := Value;
 end;

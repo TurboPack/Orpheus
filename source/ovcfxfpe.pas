@@ -101,7 +101,7 @@ begin
         FontDialog.Options + [fdForceFontExist, fdFixedPitchOnly];
     if FontDialog.Execute then begin
       FF.Font.Assign(FontDialog.Font);
-      SetOrdValue(Longint(FF));
+      SetOrdValue(NativeInt(FF));
     end;
   finally
     FontDialog.Free;

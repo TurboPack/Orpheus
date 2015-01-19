@@ -403,7 +403,7 @@ var
 
   function MapColor(Value : TColor) : TColor;
   var
-    RGB : LongInt;
+    RGB : Integer;
   begin
     if (Value = clBlack) or (Value = clWhite) or
        (Value = (FTransparentColor and not $02000000)) then
@@ -636,8 +636,8 @@ end;
 
 procedure TOvcCustomSpeedButton.SimulatedClick;
 var
-  FirstTickCount : LongInt;
-  Now            : LongInt;
+  FirstTickCount : Integer;
+  Now            : Integer;
 begin
   if sbState <> obsDown then begin
     sbState := obsDown;

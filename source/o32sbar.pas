@@ -767,7 +767,7 @@ end;
 
 procedure TO32CustomStatusBar.UpdateSimpleText;
 const
-  RTLReading: array[Boolean] of Longint = (0, SBT_RTLREADING);
+  RTLReading: array[Boolean] of Integer = (0, SBT_RTLREADING);
 begin
   DoRightToLeftAlignment(FSimpleText, taLeftJustify, UseRightToLeftAlignment);
   if HandleAllocated then

@@ -1018,7 +1018,7 @@ var
 
   procedure IncDecValueLongInt;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if efStr2Long(efEditSt, L) then begin
       if (Delta < 0) and (L <= efRangeLo.rtLong) then
@@ -1288,15 +1288,15 @@ var
   procedure TransferLongInt;
   begin
     if TransferFlag = otf_GetData then begin
-      if not efStr2Long(efEditSt, LongInt(DataPtr^)) then
-        LongInt(DataPtr^) := 0;
+      if not efStr2Long(efEditSt, NativeInt(DataPtr^)) then
+        Integer(DataPtr^) := 0;
     end else
-      efLong2Str(efEditSt, LongInt(DataPtr^));
+      efLong2Str(efEditSt, Integer(DataPtr^));
   end;
 
   procedure TransferWord;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if TransferFlag = otf_GetData then begin
       if efStr2Long(efEditSt, L) then
@@ -1309,7 +1309,7 @@ var
 
   procedure TransferInteger;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if TransferFlag = otf_GetData then begin
       if efStr2Long(efEditSt, L) then
@@ -1322,7 +1322,7 @@ var
 
   procedure TransferByte;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if TransferFlag = otf_GetData then begin
       if efStr2Long(efEditSt, L) then
@@ -1335,7 +1335,7 @@ var
 
   procedure TransferShortInt;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if TransferFlag = otf_GetData then begin
       if efStr2Long(efEditSt, L) then
@@ -1697,7 +1697,7 @@ var
 
   procedure ValidateLongInt;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if not efStr2Long(efEditSt, L) then
       Result := oeInvalidNumber
@@ -1714,7 +1714,7 @@ var
 
   procedure ValidateWord;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     if not efStr2Long(efEditSt, L) then
       Result := oeInvalidNumber
@@ -1731,7 +1731,7 @@ var
 
   procedure ValidateInteger;
   var
-    L : LongInt;
+    L : NativeInt;
     I : Integer;
   begin
     if not efStr2Long(efEditSt, L) then
@@ -1750,7 +1750,7 @@ var
 
   procedure ValidateByte;
   var
-    L : LongInt;
+    L : NativeInt;
     B : Byte;
   begin
     if not efStr2Long(efEditSt, L) then
@@ -1769,7 +1769,7 @@ var
 
   procedure ValidateShortInt;
   var
-    L  : LongInt;
+    L  : NativeInt;
     Si : ShortInt;
   begin
     if not efStr2Long(efEditSt, L) then

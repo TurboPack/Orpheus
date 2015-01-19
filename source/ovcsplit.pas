@@ -335,7 +335,7 @@ procedure TOvcSplitter.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
 
-  Params.Style := LongInt(Params.Style) or BorderStyles[FBorderStyle];
+  Params.Style := Integer(Params.Style) or BorderStyles[FBorderStyle];
 end;
 
 procedure TOvcSplitter.CreateWnd;

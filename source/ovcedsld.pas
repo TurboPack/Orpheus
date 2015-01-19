@@ -62,7 +62,7 @@ type
 
     {property methods}
     function GetAsFloat : Double;
-    function GetAsInteger : LongInt;
+    function GetAsInteger : Integer;
     function GetAsString : string;
     function GetPopupDrawMarks : Boolean;
     function GetPopupHeight : Integer;
@@ -72,7 +72,7 @@ type
     function GetPopupWidth : Integer;
     function GetReadOnly : Boolean;
     procedure SetAsFloat(const Value : Double);
-    procedure SetAsInteger(Value : LongInt);
+    procedure SetAsInteger(Value : Integer);
     procedure SetAsString(const Value : string);
     procedure SetPopupDrawMarks(Value : Boolean);
     procedure SetPopupHeight(Value : Integer);
@@ -148,7 +148,7 @@ type
     procedure PopupOpen;
       override;
 
-    property AsInteger : LongInt
+    property AsInteger : Integer
       read GetAsInteger write SetAsInteger;
     property AsFloat : Double
       read GetAsFloat write SetAsFloat;
@@ -322,7 +322,7 @@ begin
   end;
 end;
 
-function TOvcCustomSliderEdit.GetAsInteger : LongInt;
+function TOvcCustomSliderEdit.GetAsInteger : Integer;
 begin
   Result := Round(GetAsFloat);
 end;
@@ -610,7 +610,7 @@ begin
   Text := FloatToStr(Value);
 end;
 
-procedure TOvcCustomSliderEdit.SetAsInteger(Value : LongInt);
+procedure TOvcCustomSliderEdit.SetAsInteger(Value : Integer);
 begin
   Text := IntToStr(Value);
 end;

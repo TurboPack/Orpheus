@@ -134,9 +134,9 @@ type
 
     {internal methods}
     procedure HotTimerEvent(Sender : TObject; Handle : Integer;
-                         Interval : Cardinal; ElapsedTime : LongInt);
+                         Interval : Cardinal; ElapsedTime : Integer);
     procedure TimerEvent(Sender : TObject; Handle : Integer;
-                         Interval : Cardinal; ElapsedTime : LongInt);
+                         Interval : Cardinal; ElapsedTime : Integer);
 
     {property methods}
     procedure SetAbout(const Value : string);
@@ -695,7 +695,7 @@ begin
     ItemIndex := SendMessage(Handle,
                              CB_FINDSTRINGEXACT,
                              FMRUList.Items.Count - 1,
-                             LongInt(SrchText));
+                             Integer(SrchText));
   finally
     StrDispose(SrchText); // FreeMem(SrchText, L);
   end;
@@ -984,7 +984,7 @@ begin
 end;
 
 procedure TOvcBaseComboBox.HotTimerEvent(Sender : TObject;
-          Handle : Integer; Interval : Cardinal; ElapsedTime : LongInt);
+          Handle : Integer; Interval : Cardinal; ElapsedTime : Integer);
 var
   P : TPoint;
   WindowHandle : THandle;
@@ -1015,7 +1015,7 @@ begin
           {this will search for the first matching item}
           Index := SendMessage(Handle, CB_FINDSTRING,
                                FMRUList.Items.Count - 1,
-                                 LongInt(SrchText));
+                                 NativeInt(SrchText));
         finally
           StrDispose(SrchText); //FreeMem(SrchText, length(Text) + 1);
         end;
@@ -1392,7 +1392,7 @@ begin
       ItemIndex := SendMessage(Handle,
                                CB_FINDSTRINGEXACT,
                                0,
-                               LongInt(SrchText));
+                               NativeInt(SrchText));
     finally
       StrDispose(SrchText); // FreeMem(SrchText, L);
     end;
@@ -1508,7 +1508,7 @@ begin
 end;
 
 procedure TOvcBaseComboBox.TimerEvent(Sender : TObject;
-          Handle : Integer; Interval : Cardinal; ElapsedTime : LongInt);
+          Handle : Integer; Interval : Cardinal; ElapsedTime : Integer);
 var
   Key : Word;
   S   : Word;

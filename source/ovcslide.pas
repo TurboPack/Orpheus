@@ -282,12 +282,12 @@ end;
 
 procedure TOvcCustomSlider.CreateParams(var Params : TCreateParams);
 const
-  BorderStyles : array[TBorderStyle] of LongInt = (0, WS_BORDER);
+  BorderStyles : array[TBorderStyle] of Integer = (0, WS_BORDER);
 begin
   inherited CreateParams(Params);
 
   with Params do begin
-    Style := LongInt(Style) or BorderStyles[FBorderStyle];
+    Style := Integer(Style) or BorderStyles[FBorderStyle];
     if slPopup then begin
       Style := WS_POPUP or WS_BORDER;
       WindowClass.Style := WindowClass.Style or CS_SAVEBITS;

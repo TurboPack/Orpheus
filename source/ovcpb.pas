@@ -723,7 +723,7 @@ begin
     J := 0;
     StrPLCopy(Buf, IntlSupport.CurrencyRtStr, Length(Buf) - 1);
     K := StrLen(Buf);
-    while (LongInt(I+1) <= DestLen) and (efNthMaskChar(I) = pmCurrencyRt) do begin
+    while (Integer(I+1) <= DestLen) and (efNthMaskChar(I) = pmCurrencyRt) do begin
       if J < K then begin
         Dest[I] := Buf[J];
         Inc(J);
@@ -777,20 +777,20 @@ begin
     else
       I := DotPosP+1;
     J := K+1;
-    while (J+1 <= SrcLen) and (LongInt(I+1) <= DestLen) and not pbIsLiteral(I) do begin
+    while (J+1 <= SrcLen) and (Integer(I+1) <= DestLen) and not pbIsLiteral(I) do begin
       Dest[I] := CopyOfSrc[J];
       Inc(I);
       Inc(J);
     end;
 
     {pad to end with 0's}
-    while (LongInt(I+1) <= DestLen) and not pbIsLiteral(I) do begin
+    while (Integer(I+1) <= DestLen) and not pbIsLiteral(I) do begin
       Dest[I] := '0';
       Inc(I);
     end;
 
     {handle trailing substitution characters}
-    while (LongInt(I+1) <= DestLen) and pbIsLiteral(I) do begin
+    while (Integer(I+1) <= DestLen) and pbIsLiteral(I) do begin
       PicChar := efNthMaskChar(I);
       case PicChar of
         Subst1..Subst8 : Dest[I] := UserData.SubstChars[AnsiChar(PicChar)];
@@ -919,7 +919,7 @@ begin
   {copy all non-literals from Src into Dest. Note: it's OK if Dest *is* Src}
   SLen := 0;
   for I := 0 to MaxLength-1 do
-    if (Found and (I = LongInt(DotPos))) or not pbIsLiteral(I) then begin
+    if (Found and (I = Integer(DotPos))) or not pbIsLiteral(I) then begin
       Inc(SLen);
       Dest[SLen-1] := Src[I];
     end;

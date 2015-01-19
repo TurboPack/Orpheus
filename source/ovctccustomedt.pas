@@ -159,7 +159,7 @@ procedure TOVCTCCustomEdt.WMKeyDown(var Msg: TWMKey);
     end;
 
   var
-    GetSel: longint;
+    GetSel: Integer;
   begin
     GetSel := SendMessage(Handle, EM_GETSEL, 0, 0);
     S := LH(GetSel).L;

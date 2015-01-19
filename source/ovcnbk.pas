@@ -187,7 +187,7 @@ type
     FShadowColor       : TColor;        {color for tab shadow}
     FShadowedText      : Boolean;       {true to draw shadowed tab text}
     FTabAutoHeight     : Boolean;       {true to enable height auto adjust}
-    FTabHeight         : LongInt;       {the height of each tab}
+    FTabHeight         : Integer;       {the height of each tab}
     FTabOrientation    : TOvcTabOrientation;
     FTabTextOrientation: TTabTextOrientation;
     FTabRowCount       : Integer;       {number of tab rows. 0=autocalc}
@@ -213,7 +213,7 @@ type
     tabTabChanging : Boolean;    {flag to indicate the tab is changing}
     tabTabCursor   : HCursor;    {design-time tab slecting cursor handle}
     tabTabSelecting: Boolean;    {true while moving through tabs}
-    tabTotalRows   : LongInt;    {total count of tab rows}
+    tabTotalRows   : Integer;    {total count of tab rows}
 
     FHotTab: Integer; // Tab that should be painted with "hot" visual style
 
@@ -232,7 +232,7 @@ type
     procedure SetShadowedText(Value : Boolean);
     procedure SetTabAutoHeight(Value : Boolean);
     procedure SetTabColor(Value : TColor);
-    procedure SetTabHeight(Value : LongInt);
+    procedure SetTabHeight(Value : Integer);
     procedure SetTabOrientation(Value : TOvcTabOrientation);
     procedure SetTabTextOrientation(Value: TTabTextOrientation);
     procedure SetTabRowCount(Value : Integer);
@@ -410,7 +410,7 @@ type
     property TabAutoHeight : Boolean
       read FTabAutoHeight write SetTabAutoHeight
       default True;
-    property TabHeight : LongInt
+    property TabHeight : Integer
       read FTabHeight write SetTabHeight
       stored IsTabHeightStored
       default 20;
@@ -742,7 +742,7 @@ end;
 
 procedure TOvcNotebook.CMDesignHitTest(var Msg : TCMDesignHitTest);
 begin
-  Msg.Result := LongInt(tabOverTab);
+  Msg.Result := NativeInt(tabOverTab);
 end;
 
 procedure TOvcNotebook.CMDialogChar(var Msg : TCMDialogChar);
@@ -1587,7 +1587,7 @@ begin
   end;
 end;
 
-procedure TOvcNotebook.SetTabHeight(Value : LongInt);
+procedure TOvcNotebook.SetTabHeight(Value : Integer);
 begin
   if (Value <> FTabHeight) and (Value >= 0) then begin
     FTabHeight := Value;
@@ -3567,7 +3567,7 @@ end;
 
 procedure TOvcNotebook.WMKeyDown(var Msg : TWMKeyDown);
 var
-  I   : LongInt;
+  I   : Integer;
   Cmd : Word;
   Pt  : TPoint;
   TP  : TOvcTabPage;

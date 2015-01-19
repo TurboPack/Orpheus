@@ -262,7 +262,7 @@ uses
 
 var
   OvcComboBoxBitmap      : TBitmap;
-  ComboBoxResourceCount : longint = 0;
+  ComboBoxResourceCount : Integer = 0;
 
 const
   ComboBoxHeight = 24;

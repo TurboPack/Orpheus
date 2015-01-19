@@ -321,7 +321,7 @@ procedure TO32TCFlexEditEditor.WMKeyDown(var Msg : TWMKey);
   type
     LH = packed record L, H : word; end;
   var
-    GetSel : longint;
+    GetSel : Integer;
   begin
     GetSel := SendMessage(Handle, EM_GETSEL, 0, 0);
     S := LH(GetSel).L;

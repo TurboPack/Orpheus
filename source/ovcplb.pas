@@ -63,7 +63,7 @@ type
     FBoolean        : Boolean;
     FDate           : TDateTime;
     FExtended       : Extended;
-    FLongInt        : LongInt;
+    FLongInt        : Integer;
     FStDate         : TStDate;
     FStTime         : TStTime;
     FTime           : TDateTime;
@@ -82,8 +82,8 @@ type
       {-set the field value to a Delphi date value}
     procedure SetAsFloat(const Value : Extended);
       {-set the field value to a Double value}
-    procedure SetAsInteger(const Value : Longint);
-      {-set the field value to a LongInt value}
+    procedure SetAsInteger(const Value : Integer);
+      {-set the field value to a Integer value}
     procedure SetAsStDate(const Value : TStDate);
       {-set the field value to an Orpheus date value}
     procedure SetAsStTime(const Value : TStTime);
@@ -167,7 +167,7 @@ type
     property AsFloat : Extended
       write SetAsFloat;
 
-    property AsInteger : Longint
+    property AsInteger : Integer
       write SetAsInteger;
 
     property AsString : string
@@ -813,8 +813,8 @@ begin
   Caption := GetDisplayString;
 end;
 
-procedure TOvcCustomPictureLabel.SetAsInteger(const Value : Longint);
-  {-set the field value to a LongInt value}
+procedure TOvcCustomPictureLabel.SetAsInteger(const Value : Integer);
+  {-set the field value to a Integer value}
 begin
   FLongInt := Value;
   FDataType := plInteger;

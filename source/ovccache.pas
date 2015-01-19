@@ -80,12 +80,12 @@ unit OvcCache;
    TOvcCache provide the following events, methods, and properties:
    ===================================================================
 
-   property CacheHits : LongInt
+   property CacheHits : Integer
 
      CacheHits determines the number of times a requested item was in
      the cache and did not require loading (by calling OnGetItem).
 
-   property CacheMisses : LongInt
+   property CacheMisses : Integer
 
      CacheMisses determines the number of times a requested item was
      not in the cache and required loading (by calling OnGetItem).
@@ -95,39 +95,39 @@ unit OvcCache;
      Removes all items currently in the cache and clears the locked
      cache item flag (see LockCacheItem).
 
-   property Count : LongInt
+   property Count : Integer
 
      Count is a read-only property that returns the number of items
      currently managed by the cache.
 
-   property Items[Index : LongInt] : Pointer (read-only)
+   property Items[Index : Integer] : Pointer (read-only)
 
      This index property is used to obtain a pointer to the data
      managed by the cache object. The returned pointer usually
      references a data record that has been allocated on the heap but,
      it can also be a pointer to a class instance.
 
-   procedure LockCacheItem(Index : LongInt);
+   procedure LockCacheItem(Index : Integer);
 
      Locks the specified cache item so that it will not be purged
      when the cache performs its search for an item to remove when
      it needs to make room for a new item. Calling LockCacheItem
      clears any previously locked item.
 
-   property LockedItem : LongInt
+   property LockedItem : Integer
 
      LockedItem is a read-only property that returns the index of the
      currently locked cache item. If no cache item is locked,
      LockedItem returns -1.
 
-   property MemoryUsage : LongInt (read-only)
+   property MemoryUsage : Integer (read-only)
 
      MemoryUsage is a read-only property that returns the amount of
      memory currently in use by the cache object and all of the cache
      elements.
 
    property OnDoneItem : TOnDoneItemEvent
-   TOnDoneItemEvent = procedure(Index : LongInt; P : Pointer;
+   TOnDoneItemEvent = procedure(Index : Integer; P : Pointer;
                                 Size : Word) of object;
 
      If a method is assigned to this event, it is called when the
@@ -139,7 +139,7 @@ unit OvcCache;
      of memory for (P).
 
    property OnGetItem : TOnGetItemEvent
-   TOnGetItemEvent = procedure(Index : LongInt; var P : Pointer;
+   TOnGetItemEvent = procedure(Index : Integer; var P : Pointer;
                                var Size : Word) of object;
 
      The method assigned to this event is called when the cache
@@ -167,7 +167,7 @@ unit OvcCache;
      this, the cache will attempt to dispose of Size bytes of memory
      for P and will not properly destroy the object.
 
-   procedure PreLoad(Index, Number : LongInt);
+   procedure PreLoad(Index, Number : Integer);
 
      PreLoad loads the specified Number of items starting with the
      index specified by Index. Clear is called to remove any
@@ -183,7 +183,7 @@ unit OvcCache;
 
      Unlocks a cache item previously locked using LockCacheItem.
 
-   procedure Update(Index : LongInt);
+   procedure Update(Index : Integer);
 
      Freshens the data for the specified Index cache item.
 
@@ -202,7 +202,7 @@ unit OvcCache;
      dmLeastUsed performs a search through all cache items, looking
      for the item that has been retrieved the least number of times.
 
-   property MaxCacheItems : LongInt
+   property MaxCacheItems : Integer
 
      MaxCacheItems determines the maximum number of items maintained
      by the cache. The "right" value for this property is best
@@ -228,49 +228,49 @@ type
   {record for one cache item}
   PCacheRecord = ^TCacheRecord;
   TCacheRecord = packed record
-    Index  : LongInt; {index number}
+    Index  : Integer; {index number}
     Data   : Pointer; {pointer to data}
-    Hits   : LongInt; {number of times used}
+    Hits   : Integer; {number of times used}
     Size   : Word;    {size of data}
   end;
 
 type
   TOnGetItemEvent =
-    procedure(Index : LongInt; var P : Pointer; var Size : Word)
+    procedure(Index : Integer; var P : Pointer; var Size : Word)
     of object;
   TOnDoneItemEvent =
-    procedure(Index : LongInt; P : Pointer; Size : Word)
+    procedure(Index : Integer; P : Pointer; Size : Word)
     of object;
 
   TOvcCache = class(TComponent)
 
   protected {private}
     {instance variables}
-    FCacheHits     : LongInt;   {number of times requested item was in cache}
-    FCacheMisses   : LongInt;   {number of times requested item was not in cache}
+    FCacheHits     : Integer;   {number of times requested item was in cache}
+    FCacheMisses   : Integer;   {number of times requested item was not in cache}
     FDiscardMethod : TDiscardMethod; {method used to free cache items}
     FList          : TList;     {list of cached items}
-    FMaxCacheItems : LongInt;   {maximum items allowed in cache}
-    FLockedItem    : LongInt;   {item to be kept in the cache}
+    FMaxCacheItems : Integer;   {maximum items allowed in cache}
+    FLockedItem    : Integer;   {item to be kept in the cache}
 
     {event instance variables}
     FOnGetItem     : TOnGetItemEvent;  {must be assigned}
     FOnDoneItem    : TOnDoneItemEvent; {optional}
 
     {event wrapper methods}
-    procedure DoOnGetItem(Index : LongInt; var P : Pointer; var Size : Word);
+    procedure DoOnGetItem(Index : Integer; var P : Pointer; var Size : Word);
       {-call FOnGetItem if assigned, otherwise return nil}
-    procedure DoOnDoneItem(Index : LongInt; var P : Pointer; Size : Word);
+    procedure DoOnDoneItem(Index : Integer; var P : Pointer; Size : Word);
       {-call FOnDoneItem if assigned, otherwise deallocate cache item}
 
     {property methods}
-    function GetCount : LongInt;
+    function GetCount : Integer;
       {-return the number of items in the cache}
-    function GetItem(Index : LongInt) : Pointer;
+    function GetItem(Index : Integer) : Pointer;
       {-return pointer to data for Index}
-    function GetMemoryUsage : LongInt;
+    function GetMemoryUsage : Integer;
       {-return the amount of memory used for items in the cache}
-    procedure SetMaxCacheItems(Value : LongInt);
+    procedure SetMaxCacheItems(Value : Integer);
       {-set the maximum number of items to cache}
 
     {internal methods}
@@ -286,36 +286,36 @@ type
     {public methods}
     procedure Clear;
       {-remove all items from cache}
-    procedure LockCacheItem(Index : LongInt);
+    procedure LockCacheItem(Index : Integer);
       {-lock the Index item so it remains in the cache}
-    procedure PreLoad(Index, Number : LongInt);
+    procedure PreLoad(Index, Number : Integer);
       {-load Number items starting at Index}
     procedure Refresh;
       {-reload all items currently in cache}
     procedure UnlockCacheItem;
       {-unlock the previously locked item}
-    procedure Update(Index : LongInt);
+    procedure Update(Index : Integer);
       {-reload data for the Index item}
 
     {public properties}
-    property CacheHits : LongInt
+    property CacheHits : Integer
       read FCacheHits write FCacheHits;
-    property CacheMisses : LongInt
+    property CacheMisses : Integer
       read FCacheMisses write FCacheMisses;
-    property Count : LongInt
+    property Count : Integer
       read GetCount;
-    property Items[Index : LongInt] : Pointer
+    property Items[Index : Integer] : Pointer
       read GetItem;
-    property LockedItem : LongInt
+    property LockedItem : Integer
       read FLockedItem;
-    property MemoryUsage : LongInt
+    property MemoryUsage : Integer
       read GetMemoryUsage;
 
   published
     {published properties}
     property DiscardMethod : TDiscardMethod
       read FDiscardMethod write FDiscardMethod;
-    property MaxCacheItems : LongInt
+    property MaxCacheItems : Integer
       read FMaxCacheItems write SetMaxCacheItems;
 
     {published events}
@@ -337,7 +337,7 @@ implementation
 procedure TOvcCache.Clear;
   {-remove all items from cache}
 var
-  I : LongInt;
+  I : Integer;
   P : PCacheRecord;
 begin
   UnlockCacheItem; {clear locked item}
@@ -368,7 +368,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcCache.DoOnGetItem(Index : LongInt; var P : Pointer; var Size : Word);
+procedure TOvcCache.DoOnGetItem(Index : Integer; var P : Pointer; var Size : Word);
   {-call FOnGetItem if assigned, otherwise return nil}
 begin
   P := nil;
@@ -377,7 +377,7 @@ begin
     FOnGetItem(Index, P, Size);
 end;
 
-procedure TOvcCache.DoOnDoneItem(Index : LongInt; var P : Pointer; Size : Word);
+procedure TOvcCache.DoOnDoneItem(Index : Integer; var P : Pointer; Size : Word);
   {-call FOnDoneItem if assigned, otherwise deallocate cache item}
 begin
   if Assigned(FOnDoneItem) then
@@ -388,25 +388,25 @@ begin
   end;
 end;
 
-function TOvcCache.GetCount : LongInt;
+function TOvcCache.GetCount : Integer;
   {-return the number of items in the cache}
 begin
   Result := FList.Count;
 end;
 
-function TOvcCache.GetItem(Index : LongInt) : Pointer;
+function TOvcCache.GetItem(Index : Integer) : Pointer;
   {-return pointer to data for the Index cache item}
 var
-  I   : LongInt;
+  I   : Integer;
   P   : PCacheRecord;
   DP  : Pointer;
   SZ  : Word;
-  Idx : LongInt;
+  Idx : Integer;
 
-  function FindMostDistant : LongInt;
+  function FindMostDistant : Integer;
   var
-    I        : LongInt;
-    Distance : LongInt;
+    I        : Integer;
+    Distance : Integer;
     P        : PCacheRecord;
   begin
     Distance := 0;
@@ -421,10 +421,10 @@ var
     end;
   end;
 
-  function FindLeastUsed : LongInt;
+  function FindLeastUsed : Integer;
   var
-    I    : LongInt;
-    Hits : LongInt;
+    I    : Integer;
+    Hits : Integer;
     P    : PCacheRecord;
   begin
     Hits := MaxLongInt;
@@ -504,26 +504,26 @@ begin
   end;
 end;
 
-function TOvcCache.GetMemoryUsage : LongInt;
+function TOvcCache.GetMemoryUsage : Integer;
   {-return the amount of memory used for items in the cache}
 var
-  I : LongInt;
+  I : Integer;
 begin
   Result := SizeOf(TCacheRecord) * (FList.Count-1);
   for I := 0 to FList.Count-1 do
     Result := Result + PCacheRecord(FList.Items[I])^.Size;
 end;
 
-procedure TOvcCache.LockCacheItem(Index : LongInt);
+procedure TOvcCache.LockCacheItem(Index : Integer);
   {-lock the Index item so it remaines in the cache}
 begin
   FLockedItem := Index;
 end;
 
-procedure TOvcCache.PreLoad(Index, Number : LongInt);
+procedure TOvcCache.PreLoad(Index, Number : Integer);
   {-load Number items starting at Index}
 var
-  I : LongInt;
+  I : Integer;
   P : PCacheRecord;
 begin
   {remove any existing cache items}
@@ -547,7 +547,7 @@ end;
 procedure TOvcCache.Refresh;
   {-reload all items currently in cache}
 var
-  I : LongInt;
+  I : Integer;
   P : PCacheRecord;
 begin
   UnlockCacheItem; {clear locked item}
@@ -564,13 +564,13 @@ end;
 procedure TOvcCache.ResetHits;
   {-reset hit count for all cached items}
 var
-  I : LongInt;
+  I : Integer;
 begin
   for I := 0 to FList.Count-1 do
     PCacheRecord(FList.Items[I])^.Hits := 0;
 end;
 
-procedure TOvcCache.SetMaxCacheItems(Value : LongInt);
+procedure TOvcCache.SetMaxCacheItems(Value : Integer);
   {-set the maximum number of items to cache}
 begin
   FMaxCacheItems := Value;
@@ -584,10 +584,10 @@ begin
   FLockedItem := -1;
 end;
 
-procedure TOvcCache.Update(Index : LongInt);
+procedure TOvcCache.Update(Index : Integer);
   {-reload data for Index}
 var
-  I : LongInt;
+  I : Integer;
   P : PCacheRecord;
 begin
   for I := 0 to FList.Count-1 do begin

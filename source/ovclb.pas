@@ -574,9 +574,9 @@ begin
 
   {set tab stop positions}
   if FTabStops.Count > 0 then
-    Perform(LB_SETTABSTOPS, FTabStops.Count, LongInt(@tlTabsDU))
+    Perform(LB_SETTABSTOPS, FTabStops.Count, NativeInt(@tlTabsDU))
   else
-    Perform(LB_SETTABSTOPS, 0, LongInt(nil));
+    Perform(LB_SETTABSTOPS, 0, NativeInt(nil));
 
   tlResetHorizontalExtent;
 end;

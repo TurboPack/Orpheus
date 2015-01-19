@@ -116,7 +116,7 @@ type
       {-redo the last undone operation}
       override;
     function Replace(const S, R : string;
-                     Options : TSearchOptionSet) : LongInt;
+                     Options : TSearchOptionSet) : Integer;
       {-search for a string and replace it with another string}
       override;
     procedure PasteFromClipboard;
@@ -243,7 +243,7 @@ end;
 
 procedure TOvcDbEditor.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbEditor.Create(AOwner : TComponent);
@@ -303,10 +303,10 @@ end;
 procedure TOvcDbEditor.eddbGetEditorValue;
 var
   B     : TStream;
-  I     : LongInt;
+  I     : Integer;
   Len   : Word;
   Para  : PChar;
-  Count : LongInt;
+  Count : Integer;
   CrLf  : array[0..2] of Char;
 begin
   HandleNeeded;
@@ -340,10 +340,10 @@ var
   B         : TStream;
   HaveSel   : Boolean;
   C, C1, C2 : Integer;
-  L, L1, L2 : LongInt;
-  TL        : LongInt;
+  L, L1, L2 : Integer;
+  TL        : Integer;
   Buf       : PChar;
-  BytesRead : LongInt;
+  BytesRead : Integer;
   Paras     : PChar;
   SaveUndo  : Integer;
 begin
@@ -497,7 +497,7 @@ begin
 end;
 
 function TOvcDbEditor.Replace(const S, R : string;
-                              Options : TSearchOptionSet) : LongInt;
+                              Options : TSearchOptionSet) : Integer;
 begin
   if not FDataLink.Editing then
     DatabaseError(SNotEditing);

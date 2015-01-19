@@ -54,7 +54,7 @@ uses
 type
   {text position record for viewer}
   TOvcTextPos = packed record
-    Line : LongInt; {always a 32-bit quantity}
+    Line : Integer; {always a 32-bit quantity}
     Col  : integer; {size depends on the compiler}
   end;
 
@@ -87,9 +87,9 @@ type
     {property fields - set at runtime}
     FCaretEffCol      : integer;
     FCaretPos         : TOvcTextPos;
-    FLineCount        : LongInt;
+    FLineCount        : Integer;
     FMarkers          : array[0..vwMaxMarkers-1] of TOvcTextPos;
-    FTopLine          : LongInt;
+    FTopLine          : Integer;
 
     {event variables}
     FOnShowStatus     : TShowStatusEvent;
@@ -105,7 +105,7 @@ type
     vwColWid          : integer;         {width of one column}
     vwDefaultChar     : Char;            {replacement Char for current font}
     vwDitheredBG      : Boolean;         {True if a background color is dithered}
-    vwDivisor         : LongInt;         {divisor for scroll bars}
+    vwDivisor         : Integer;         {divisor for scroll bars}
     vwFile            : Integer;         {handle of file being browsed}
     vwFirstChar       : Char;            {first Char in current font}
     vwHighlight       : TOvcViewerRange; {highlight range}
@@ -116,33 +116,33 @@ type
     vwLineSelCursor   : hCursor;         {line selection cursor}
     vwLineSelCursorOn : Boolean;         {is line selection cursor in use?}
     vwRowHt           : integer;         {height of one row}
-    vwRows            : LongInt;         {number of rows in window}
+    vwRows            : Integer;         {number of rows in window}
     vwSaveCursor      : HCursor;         {saved cursor for lengthy waits}
     vwVScroll         : Boolean;         {True if we have a vertical scroll bar}
-    vwVSHigh          : LongInt;         {vertical scroll limit}
-    vwVSMax           : LongInt;         {max value for vertical scroll bar}
+    vwVSHigh          : Integer;         {vertical scroll limit}
+    vwVSMax           : Integer;         {max value for vertical scroll bar}
     vwWaiting         : Boolean;         {True if wait cursor is shown}
 
     {property access methods}
     function GetCaretActualPos : TOvcTextPos;
     function GetCaretEffectivePos : TOvcTextPos;
     function GetCaretType : TOvcCaret;
-    function GetLineLength(LineNum : LongInt) : integer;
-    function GetStringLine(LineNum : LongInt) : string;
-    function GetTopLine : LongInt;
+    function GetLineLength(LineNum : Integer) : integer;
+    function GetStringLine(LineNum : Integer) : string;
+    function GetTopLine : Integer;
     procedure SetBorderStyle(BS : TBorderStyle);
     procedure SetCaretType(CT : TOvcCaret);
     procedure SetCaretActualPos(LC : TOvcTextPos);
     procedure SetCaretEffectivePos(LC : TOvcTextPos);
     procedure SetExpandTabs(E : Boolean);
     procedure SetFixedFont(FF : TOvcFixedFont);
-    procedure SetLineCount(N : LongInt);
+    procedure SetLineCount(N : Integer);
     procedure SetMarginColor(C : TColor);
     procedure SetScrollBars(SB : TScrollStyle);
     procedure SetShowBookmarks(SB : Boolean);
     procedure SetShowCaret(Value : Boolean);
     procedure SetTabSize(N : Byte);
-    procedure SetTopLine(LineNum : LongInt);
+    procedure SetTopLine(LineNum : Integer);
 
     {VCL control messages}
     procedure CMColorChanged(var Msg: TMessage);
@@ -195,16 +195,16 @@ type
     {virtual methods}
     procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
       override;
-    procedure DoOnShowStatus(LineNum : LongInt; ColNum : integer);
+    procedure DoOnShowStatus(LineNum : Integer; ColNum : integer);
       dynamic;
       {-call the OnShowStatus method, if assigned}
-    procedure DoOnTopLineChanged(Line : LongInt);
+    procedure DoOnTopLineChanged(Line : Integer);
       dynamic;
       {-perform notification of a top line changed}
     procedure DoOnUserCommand(Command : Word);
       dynamic;
       {-perform notification of a user command}
-    function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
+    function GetLinePtr(LineNum : Integer; var Len : integer) : PChar;
       virtual; abstract;
       {-return a pointer to the specified line}
 
@@ -214,25 +214,25 @@ type
     procedure vwCalcColorFields;
     procedure vwCalcFontFields;
     function vwCaretIsVisible : Boolean;
-    procedure vwChangeLineCount(N : LongInt);
+    procedure vwChangeLineCount(N : Integer);
     procedure vwFixedFontChanged(Sender : TObject);
-    function vwGetLineEffLen(N : LongInt) : integer;
+    function vwGetLineEffLen(N : Integer) : integer;
     procedure vwGetMousePos(var MousePos : TOvcTextPos; XPixel, YPixel : integer);
     procedure vwHighlightColorsChanged(Sender : TObject);
     procedure vwInitInternalFields;
-    procedure vwInvalidateLine(LineNum : LongInt);
-    procedure vwMoveCaret(HDelta : integer; VDelta : LongInt;
+    procedure vwInvalidateLine(LineNum : Integer);
+    procedure vwMoveCaret(HDelta : integer; VDelta : Integer;
                         MoveByPage, AmSelecting : Boolean);
-    procedure vwMoveCaretPrim(HDelta : integer; VDelta : LongInt;
+    procedure vwMoveCaretPrim(HDelta : integer; VDelta : Integer;
                             MoveByPage, AmSelecting, AbsMove : Boolean);
-    procedure vwMoveCaretTo(Line : LongInt; Col : integer; AmSelecting : Boolean);
+    procedure vwMoveCaretTo(Line : Integer; Col : integer; AmSelecting : Boolean);
     procedure vwPositionCaret;
     procedure vwReadBookmarkGlyphs;
     procedure vwRefreshLines(const Start, Stop : TOvcTextPos);
     procedure vwResetHighlight(Refresh : Boolean);
-    procedure vwScrollPrim(HDelta : integer; VDelta : LongInt);
+    procedure vwScrollPrim(HDelta : integer; VDelta : Integer);
     procedure vwScrollPrimHorz(Delta : integer);
-    procedure vwScrollPrimVert(Delta : LongInt);
+    procedure vwScrollPrimVert(Delta : Integer);
     procedure vwSetHScrollPos;
     procedure vwSetHScrollRange;
     procedure vwSetVScrollPos;
@@ -308,28 +308,28 @@ type
       override;
 
 
-    function CheckLine(LineNum : LongInt) : LongInt;
+    function CheckLine(LineNum : Integer) : Integer;
       virtual;
 
-    function ActualColumn(Line : LongInt; EffectiveCol : integer) : integer;
+    function ActualColumn(Line : Integer; EffectiveCol : integer) : integer;
       {-return the actual column given the line and effective column}
     procedure ClearMarker(N : Byte);
       {-remove the specified text marker}
     procedure CopyToClipboard;
       {-copy highlighted text to the clipboard}
-    function EffectiveColumn(Line : LongInt; ActualCol : integer) : integer;
+    function EffectiveColumn(Line : Integer; ActualCol : integer) : integer;
       {-return the effective column given the line and actual column}
-    function GetCaretPosition(var Col : integer) : LongInt;
+    function GetCaretPosition(var Col : integer) : Integer;
       {-return the current position of the caret}
-    function GetLine(LineNum : LongInt; Dest : PChar; DestLen : integer) : PChar;
+    function GetLine(LineNum : Integer; Dest : PChar; DestLen : integer) : PChar;
       {-get the specified line}
-    function GetMarkerPosition(N : Byte; var Col : integer) : LongInt;
+    function GetMarkerPosition(N : Byte; var Col : integer) : Integer;
       {-return the current position of the specified marker}
-    function GetPrintableLine(LineNum : LongInt; Dest : PChar;
+    function GetPrintableLine(LineNum : Integer; Dest : PChar;
                               DestLen : integer) : integer;
       {-get a line in a format suitable for printing}
-    function GetSelection(var Line1 : LongInt; var Col1 : integer;
-                          var Line2 : LongInt; var Col2 : integer) : Boolean;
+    function GetSelection(var Line1 : Integer; var Col1 : integer;
+                          var Line2 : Integer; var Col2 : integer) : Boolean;
       {-return True if any text is currently selected}
     procedure GotoMarker(N : Byte);
       {-move the caret to the specified text marker}
@@ -338,14 +338,14 @@ type
       virtual;
     procedure SelectAll(CaretAtEnd : Boolean);
       {-select all text in the editor}
-    procedure SetCaretPosition(Line : LongInt; Col : integer);
+    procedure SetCaretPosition(Line : Integer; Col : integer);
       {-move the caret to a specified line and column}
     procedure SetMarker(N : Byte);
       {-set a text marker at the current caret position}
-    procedure SetMarkerAt(N : Byte; Line : LongInt; Col : integer);
+    procedure SetMarkerAt(N : Byte; Line : Integer; Col : integer);
       {-set a text marker at the specified position}
-    procedure SetSelection(Line1 : LongInt; Col1 : integer;
-                           Line2 : LongInt; Col2 : integer;
+    procedure SetSelection(Line1 : Integer; Col1 : integer;
+                           Line2 : Integer; Col2 : integer;
                            CaretAtEnd : Boolean);
       {-select a region of text}
 
@@ -360,17 +360,17 @@ type
 
     property Color;
 
-    property LineCount : LongInt
+    property LineCount : Integer
       read FLineCount
       write SetLineCount;
 
-    property LineLength[LineNum : LongInt] : integer
+    property LineLength[LineNum : Integer] : integer
       read GetLineLength;
 
-    property Lines[LineNum : LongInt] : string
+    property Lines[LineNum : Integer] : string
       read GetStringLine;
 
-    property TopLine : LongInt
+    property TopLine : Integer
       read GetTopLine
       write SetTopLine
       stored False;
@@ -395,8 +395,8 @@ type
   protected
     slHead     : TStringNode;     {Start of list}
     slTail     : TStringNode;     {End of list}
-    slCount    : LongInt;         {Size of list}
-    slLastN    : LongInt;         {Index of last node found}
+    slCount    : Integer;         {Size of list}
+    slLastN    : Integer;         {Index of last node found}
     slLastNode : TStringNode;     {Last node found}
   public
     constructor Create;
@@ -404,11 +404,11 @@ type
     destructor Destroy;
       override;
       {-Destroy the list}
-    function Count : LongInt;
+    function Count : Integer;
       {-Return the size of the list}
     procedure Append(P : TStringNode);
       {-Add a node to the end of the list}
-    function Nth(N : LongInt) : TStringNode;
+    function Nth(N : Integer) : TStringNode;
       {-Return a pointer to the Nth node in the list}
   end;
 
@@ -418,7 +418,7 @@ type
   protected {private}
     {properties}
     FFileName : PString;
-    FFileSize : LongInt;
+    FFileSize : Integer;
 
     {Other fields}
     fvLines : TVwrStringList;
@@ -430,7 +430,7 @@ type
     procedure SetIsOpen(OpenIt : Boolean);
 
   protected
-    function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
+    function GetLinePtr(LineNum : Integer; var Len : integer) : PChar;
       override;
 
 
@@ -451,11 +451,11 @@ type
       override;
 
 
-    function CheckLine(LineNum : LongInt) : LongInt;
+    function CheckLine(LineNum : Integer) : Integer;
       override;
 
     {public properties}
-    property FileSize : LongInt
+    property FileSize : Integer
        read FFileSize;
   end;
 
@@ -530,8 +530,8 @@ const
   LargestQuasiTime = $7FFFFFFF;
 
 type
-  TQuasiTime = longint;        {Quasi-time type for LRU calcs}
-  TBlockNum  = longint;        {Block number type}
+  TQuasiTime = Integer;        {Quasi-time type for LRU calcs}
+  TBlockNum  = Integer;        {Block number type}
 
   PfvBufferArray = ^TfvBufferArray;
   TfvBufferArray = array [0..pred(PageBufSize)] of AnsiChar;
@@ -555,25 +555,25 @@ type
     {properties}
     FBufferPageCount : integer;     {Number of pages in fvPages}
     FFileName        : PString;     {Name of file}
-    FFileSize        : LongInt;     {File size of file if open, else 0}
+    FFileSize        : Integer;     {File size of file if open, else 0}
     FFilterChars     : Boolean;     {True if filtering 'bad' chars}
     FInHexMode       : Boolean;     {True if displaying in Hex}
     FIsOpen          : Boolean;     {True if file is open}
 
     {other fields}
-    fvCurLine        : LongInt;     {Current line in file           (not used in hex mode)}
-    fvCurOffset      : LongInt;     {Offset of start of fvCurLine   (not used in hex mode)}
-    fvKnownLine      : LongInt;     {Some known line number         (not used in hex mode)}
-    fvKnownOffset    : LongInt;     {Offset of start of fvKnownLine (not used in hex mode)}
-    fvLastLine       : LongInt;     {Final line number in file}
-    fvLastLine2      : LongInt;     {Final line number in 'other' mode (text/hex)}
-    fvLastLineOffset : LongInt;     {Offset of start of fvLastLine  (not used in hex mode)}
+    fvCurLine        : Integer;     {Current line in file           (not used in hex mode)}
+    fvCurOffset      : Integer;     {Offset of start of fvCurLine   (not used in hex mode)}
+    fvKnownLine      : Integer;     {Some known line number         (not used in hex mode)}
+    fvKnownOffset    : Integer;     {Offset of start of fvKnownLine (not used in hex mode)}
+    fvLastLine       : Integer;     {Final line number in file}
+    fvLastLine2      : Integer;     {Final line number in 'other' mode (text/hex)}
+    fvLastLineOffset : Integer;     {Offset of start of fvLastLine  (not used in hex mode)}
     fvLnBuf          : PChar;       {Line buffer}
-    fvLineInBuf      : LongInt;     {Line currently in fvLnBuf}
+    fvLineInBuf      : Integer;     {Line currently in fvLnBuf}
     fvLnBufLen       : integer;     {Length of line currently in fvLnBuf}
-    fvMaxPage        : LongInt;     {Max page number in fvPages}
-    fvNewLine        : LongInt;     {Newest line in file            (not used in hex mode)}
-    fvNewOffset      : LongInt;     {Offset of start of fvNewLine   (not used in hex mode)}
+    fvMaxPage        : Integer;     {Max page number in fvPages}
+    fvNewLine        : Integer;     {Newest line in file            (not used in hex mode)}
+    fvNewOffset      : Integer;     {Offset of start of fvNewLine   (not used in hex mode)}
     fvPageArraySize  : integer;     {Size of the page array}
     fvPages          : PfvPageArray;{Array of page buffers, 0..fvMaxPage}
     fvTicks          : TQuasiTime;  {Quasi-time, for page buffer replacement}
@@ -581,7 +581,7 @@ type
     fvWorkBlk        : TBlockNum;   {Working block number}
     fvWorkEnd        : PAnsiChar;   {Pointer to first character "after" the last valid
                                      character of the working page}
-    fvWorkOffset     : LongInt;     {Working file position}
+    fvWorkOffset     : Integer;     {Working file position}
     fvWorkPtr        : PAnsiChar;   {Pointer to working character}
 
     {property access methods}
@@ -594,19 +594,19 @@ type
 
     {general methods}
     procedure fvDeallocateBuffers;
-    function fvGetLineAsText(LineNum : LongInt; var Len : integer) : PChar;
-    function fvGetLineInHex(LineNum : LongInt; var Len : integer) : PChar;
+    function fvGetLineAsText(LineNum : Integer; var Len : integer) : PChar;
+    function fvGetLineInHex(LineNum : Integer; var Len : integer) : PChar;
     function fvGetWorkingChar : Boolean;
     procedure fvGetWorkingPage;
-    procedure fvGotoHexLine(Line : LongInt);
-    procedure fvGotoTextLine(Line : LongInt);
+    procedure fvGotoHexLine(Line : Integer);
+    procedure fvGotoTextLine(Line : Integer);
     procedure fvInitFileFields;
     procedure fvInitObjectFields;
     procedure fvNewWorkingSet;
 
   protected
     {virtual methods}
-    function GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
+    function GetLinePtr(LineNum : Integer; var Len : integer) : PChar;
       override;
 
 
@@ -640,14 +640,14 @@ type
 
 
     {other methods}
-    function CheckLine(LineNum : LongInt) : LongInt;
+    function CheckLine(LineNum : Integer) : Integer;
       override;
     function Search(const S : string; Options : TSearchOptionSet) : Boolean;
       {-search for a string returning True if found}
       override;
 
     {public properties}
-    property FileSize : LongInt
+    property FileSize : Integer
       read FFileSize;
   end;
 
@@ -924,7 +924,7 @@ begin
   end;
 end;
 
-function TOvcBaseViewer.ActualColumn(Line : LongInt; EffectiveCol : integer) : integer;
+function TOvcBaseViewer.ActualColumn(Line : Integer; EffectiveCol : integer) : integer;
   {-return the actual column given the line and effective column}
 var
   P : PChar;
@@ -937,7 +937,7 @@ begin
     Result := EffectiveCol;
 end;
 
-function TOvcBaseViewer.CheckLine(LineNum : LongInt) : LongInt;
+function TOvcBaseViewer.CheckLine(LineNum : Integer) : Integer;
 begin
   Result := LineNum;
 end;
@@ -987,10 +987,10 @@ procedure TOvcBaseViewer.CopyToClipboard;
 const
   CRLF : array[1..2] of Char = #13#10;
 var
-  Size      : LongInt;
+  Size      : Integer;
   MemHandle : THandle;
   S, Buf    : PChar;
-  LineNum   : LongInt;
+  LineNum   : Integer;
   Col       : integer;
   ActLen    : integer;
 begin
@@ -1112,7 +1112,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or ScrollBarStyles[FScrollBars]
+    Style := Integer(Style) or ScrollBarStyles[FScrollBars]
                    or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -1170,13 +1170,13 @@ begin
     vwScrollPrimVert(-1);
 end;
 
-procedure TOvcBaseViewer.DoOnShowStatus(LineNum : LongInt; ColNum : integer);
+procedure TOvcBaseViewer.DoOnShowStatus(LineNum : Integer; ColNum : integer);
 begin
   if Assigned(FOnShowStatus) then
     FOnShowStatus(Self, LineNum, ColNum);
 end;
 
-procedure TOvcBaseViewer.DoOnTopLineChanged(Line : LongInt);
+procedure TOvcBaseViewer.DoOnTopLineChanged(Line : Integer);
   {-perform notification of a top line changed}
 begin
   if Assigned(FOnTopLineChanged) then
@@ -1190,7 +1190,7 @@ begin
     FOnUserCommand(Self, Command);
 end;
 
-function TOvcBaseViewer.EffectiveColumn(Line : LongInt; ActualCol : integer) : integer;
+function TOvcBaseViewer.EffectiveColumn(Line : Integer; ActualCol : integer) : integer;
   {-return the effective column given the line and actual column}
 var
   P : PChar;
@@ -1203,7 +1203,7 @@ begin
     Result := ActualCol;
 end;
 
-function TOvcBaseViewer.GetCaretPosition(var Col : integer) : LongInt;
+function TOvcBaseViewer.GetCaretPosition(var Col : integer) : Integer;
   {-return the current position of the caret}
 begin
   Col := FCaretPos.Col;
@@ -1226,19 +1226,19 @@ begin
   Result.Col := FCaretEffCol;
 end;
 
-function TOvcBaseViewer.GetLine(LineNum : LongInt; Dest : PChar; DestLen : integer) : PChar;
+function TOvcBaseViewer.GetLine(LineNum : Integer; Dest : PChar; DestLen : integer) : PChar;
   {-get the specified line}
 begin
   Result := Dest;
   GetPrintableLine(LineNum, Dest, DestLen);
 end;
 
-function TOvcBaseViewer.GetLineLength(LineNum : LongInt) : integer;
+function TOvcBaseViewer.GetLineLength(LineNum : Integer) : integer;
 begin
   GetLinePtr(LineNum, Result);
 end;
 
-function TOvcBaseViewer.GetMarkerPosition(N : Byte; var Col : Integer) : LongInt;
+function TOvcBaseViewer.GetMarkerPosition(N : Byte; var Col : Integer) : Integer;
   {-return the current position of the specified marker}
 begin
   if (N < vwMaxMarkers) then begin
@@ -1250,7 +1250,7 @@ begin
   end;
 end;
 
-function TOvcBaseViewer.GetPrintableLine(LineNum : LongInt; Dest : PChar; DestLen : integer) : integer;
+function TOvcBaseViewer.GetPrintableLine(LineNum : Integer; Dest : PChar; DestLen : integer) : integer;
   {-get a line in a format suitable for printing}
 var
   S, T : PChar;
@@ -1279,7 +1279,7 @@ begin
   end;
 end;
 
-function TOvcBaseViewer.GetStringLine(LineNum : LongInt) : string;
+function TOvcBaseViewer.GetStringLine(LineNum : Integer) : string;
 var
   Buf : array[0..255] of Char;
 begin
@@ -1287,8 +1287,8 @@ begin
   Result := StrPas(Buf);
 end;
 
-function TOvcBaseViewer.GetSelection(var Line1 : LongInt; var Col1 : integer;
-         var Line2 : LongInt; var Col2 : integer) : Boolean;
+function TOvcBaseViewer.GetSelection(var Line1 : Integer; var Col1 : integer;
+         var Line2 : Integer; var Col2 : integer) : Boolean;
   {-return True if any text is currently selected}
 begin
   Line1 := vwHighlight.Start.Line;
@@ -1298,7 +1298,7 @@ begin
   Result := not RangeIsEmpty(vwHighlight);
 end;
 
-function TOvcBaseViewer.GetTopLine : LongInt;
+function TOvcBaseViewer.GetTopLine : Integer;
 begin
   Result := FTopLine;
 end;
@@ -1327,7 +1327,7 @@ var
   Row         : integer;
   IncludePartRow : Boolean;
 
-  procedure DrawMarginRow(LineNum : LongInt; Row : integer);
+  procedure DrawMarginRow(LineNum : Integer; Row : integer);
   var
     RowStartPixel   : integer;
     HasMarkerNumber : integer;
@@ -1380,7 +1380,7 @@ var
   end;
 
   procedure DrawComplexRow(S : PChar; Len : integer;
-                           Row : integer; N : LongInt);
+                           Row : integer; N : Integer);
       {-Draw a row that has highlighting}
   var
     Len1, Len2, Len3 : integer;
@@ -1479,7 +1479,7 @@ var
       DrawAt(Row, S, MinI(Len3, StrLen(S)));
   end;
 
-  procedure DrawRow(LineNum : LongInt; Row : integer);
+  procedure DrawRow(LineNum : Integer; Row : integer);
       {-Draw line N on the specified Row of the window}
   var
     S, T   : PChar;
@@ -1621,7 +1621,7 @@ var
                           var SearchPos : TOvcTextPos;
                           var ActLen : integer) : Boolean;
   var
-    NewLine : LongInt;
+    NewLine : Integer;
   begin
     Result := True;
     with SearchPos do begin
@@ -1775,7 +1775,7 @@ begin
       TopLine := 0;
 end;
 
-procedure TOvcBaseViewer.SetCaretPosition(Line : LongInt; Col : integer);
+procedure TOvcBaseViewer.SetCaretPosition(Line : Integer; Col : integer);
   {-move the caret to a specified line and column}
 begin
   vwMoveCaretTo(Line, Col, False);
@@ -1831,7 +1831,7 @@ begin
   FFixedFont.Assign(FF);
 end;
 
-procedure TOvcBaseViewer.SetLineCount(N : LongInt);
+procedure TOvcBaseViewer.SetLineCount(N : Integer);
 var
  I : integer;
  NewPos : TOvcTextPos;
@@ -1865,7 +1865,7 @@ begin
   SetMarkerAt(N, FCaretPos.Line, FCaretPos.Col);
 end;
 
-procedure TOvcBaseViewer.SetMarkerAt(N : Byte; Line : LongInt; Col : integer);
+procedure TOvcBaseViewer.SetMarkerAt(N : Byte; Line : Integer; Col : integer);
   {-set a text marker at the specified position}
 begin
   if (N < vwMaxMarkers) then begin
@@ -1893,8 +1893,8 @@ begin
   end;
 end;
 
-procedure TOvcBaseViewer.SetSelection(Line1 : LongInt; Col1 : integer;
-          Line2 : LongInt; Col2 : integer; CaretAtEnd : Boolean);
+procedure TOvcBaseViewer.SetSelection(Line1 : Integer; Col1 : integer;
+          Line2 : Integer; Col2 : integer; CaretAtEnd : Boolean);
   {-select a region of text}
 var
   NewPos : TOvcTextPos;
@@ -1955,7 +1955,7 @@ begin
   end;
 end;
 
-procedure TOvcBaseViewer.SetTopLine(LineNum : LongInt);
+procedure TOvcBaseViewer.SetTopLine(LineNum : Integer);
 begin
   if (LineNum >= 0) and (LineNum <> FTopLine) then
     vwScrollPrim(0, LineNum-FTopLine);
@@ -2013,7 +2013,7 @@ begin
      (vwHDelta <= FCaretEffCol) and (FCaretEffCol < vwHDelta+vwCols);
 end;
 
-procedure TOvcBaseViewer.vwChangeLineCount(N : LongInt);
+procedure TOvcBaseViewer.vwChangeLineCount(N : Integer);
 begin
   if (N <> FLineCount) then begin
     FLineCount := N;
@@ -2027,7 +2027,7 @@ begin
   Perform(CM_FONTCHANGED, 0, 0);
 end;
 
-function TOvcBaseViewer.vwGetLineEffLen(N : LongInt) : integer;
+function TOvcBaseViewer.vwGetLineEffLen(N : Integer) : integer;
 var
   S : PChar;
 begin
@@ -2095,7 +2095,7 @@ begin
          exists - see CreateWnd.}
 end;
 
-procedure TOvcBaseViewer.vwInvalidateLine(LineNum : LongInt);
+procedure TOvcBaseViewer.vwInvalidateLine(LineNum : Integer);
 var
   StartPixel : integer;
   InvRect    : TRect;
@@ -2107,12 +2107,12 @@ begin
   end;
 end;
 
-procedure TOvcBaseViewer.vwMoveCaretPrim(HDelta : integer; VDelta : LongInt;
+procedure TOvcBaseViewer.vwMoveCaretPrim(HDelta : integer; VDelta : Integer;
                                    MoveByPage, AmSelecting, AbsMove : Boolean);
 var
   SaveCurPos : TOvcTextPos;
   SaveHorzOfs: integer;
-  NewTop     : LongInt;
+  NewTop     : Integer;
   NewHorzOfs : integer;
   CurRow     : integer;
   S          : PChar;
@@ -2196,13 +2196,13 @@ begin
   vwPositionCaret;
 end;
 
-procedure TOvcBaseViewer.vwMoveCaret(HDelta : integer; VDelta : LongInt;
+procedure TOvcBaseViewer.vwMoveCaret(HDelta : integer; VDelta : Integer;
                                MoveByPage, AmSelecting : Boolean);
 begin
   vwMoveCaretPrim(HDelta, VDelta, MoveByPage, AmSelecting, False);
 end;
 
-procedure TOvcBaseViewer.vwMoveCaretTo(Line : LongInt; Col : integer; AmSelecting : Boolean);
+procedure TOvcBaseViewer.vwMoveCaretTo(Line : Integer; Col : integer; AmSelecting : Boolean);
 begin
   vwMoveCaretPrim(Col-FCaretPos.Col, Line-FCaretPos.Line, False, AmSelecting, True);
 end;
@@ -2243,7 +2243,7 @@ end;
 
 procedure TOvcBaseViewer.vwRefreshLines(const Start, Stop : TOvcTextPos);
 var
-  L : LongInt;
+  L : Integer;
 begin
   if (Start.Line <= Stop.Line) then
     for L := Start.Line to Stop.Line do
@@ -2265,7 +2265,7 @@ begin
     vwRefreshLines(SaveHlt.Start, SaveHlt.Stop);
 end;
 
-procedure TOvcBaseViewer.vwScrollPrim(HDelta : integer; VDelta : LongInt);
+procedure TOvcBaseViewer.vwScrollPrim(HDelta : integer; VDelta : Integer);
 var
   SaveTop     : integer;
   SaveHorzOfs : integer;
@@ -2331,7 +2331,7 @@ begin
   vwScrollPrim(Delta, 0);
 end;
 
-procedure TOvcBaseViewer.vwScrollPrimVert(Delta : LongInt);
+procedure TOvcBaseViewer.vwScrollPrimVert(Delta : Integer);
 begin
   vwScrollPrim(0, Delta);
 end;
@@ -2757,7 +2757,7 @@ begin
     P := ScreenToClient(P);
     SP.X := P.X;
     SP.Y := P.Y;
-    PostMessage(Handle, WM_MOUSEMOVE, 0, LongInt(SP));
+    PostMessage(Handle, WM_MOUSEMOVE, 0, Integer(SP));
     Application.ProcessMessages;
   until GetAsyncKeyState(LeftBtn) >= 0;
 end;
@@ -2863,7 +2863,7 @@ end;
 
 procedure TOvcBaseViewer.WMVScroll(var Msg : TWMScroll);
 var
-  NewTop, Total, Max, L : LongInt;
+  NewTop, Total, Max, L : Integer;
 begin
   case Msg.ScrollCode of
     SB_LINEDOWN : vwScrollPrimVert(+1);
@@ -2884,7 +2884,7 @@ begin
           Max := vwVSMax;
           CheckLine(FLineCount);
           if Total <> FLineCount then begin
-            L := (LongInt(Msg.Pos)*vwVSMax) div Max;
+            L := (Integer(Msg.Pos)*vwVSMax) div Max;
             NewTop := L * vwDivisor;
           end else
             NewTop := CheckLine(Msg.Pos * vwDivisor);
@@ -2923,7 +2923,7 @@ begin
     Result := GetLastError
   else begin
     Result := 0;
-    F.Handle := LongInt(INVALID_HANDLE_VALUE);
+    F.Handle := NativeInt(INVALID_HANDLE_VALUE);
     F.Mode := fmClosed;
   end;
 end;
@@ -2952,7 +2952,7 @@ function VwrTFDD_Open(var F : TTextRec) : Integer; far;
 begin
   F.Handle := CreateFile(F.Name, GENERIC_READ, FILE_SHARE_READ,
                  nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-  if F.Handle = LongInt(INVALID_HANDLE_VALUE) then begin
+  if F.Handle = NativeInt(INVALID_HANDLE_VALUE) then begin
     F.Mode := fmClosed;
     Result := GetLastError;
   end else begin
@@ -2967,7 +2967,7 @@ end;
 procedure AssignVwrTFDD(var F : Text; FileName : string);
 begin
   with TTextRec(F) do begin
-    Handle   := LongInt(INVALID_HANDLE_VALUE);
+    Handle   := NativeInt(INVALID_HANDLE_VALUE);
     Mode     := fmClosed;
     BufSize  := SizeOf(Buffer);
     BufPtr   := @Buffer;
@@ -3030,7 +3030,7 @@ begin
   end;
 end;
 
-function TVwrStringList.Count : LongInt;
+function TVwrStringList.Count : Integer;
 begin
   Result := slCount;
 end;
@@ -3046,12 +3046,12 @@ begin
   end;
 end;
 
-function TVwrStringList.Nth(N : LongInt) : TStringNode;
+function TVwrStringList.Nth(N : Integer) : TStringNode;
 var
-  I         : LongInt;
+  I         : Integer;
   DistBegin,
   DistLast,
-  DistEnd   : LongInt;
+  DistEnd   : Integer;
 begin
   if (N < 0) or (N >= slCount) then
     Result := nil
@@ -3131,7 +3131,7 @@ begin
   Result := Assigned(fvLines);
 end;
 
-function TOvcCustomTextFileViewer.CheckLine(LineNum : LongInt) : LongInt;
+function TOvcCustomTextFileViewer.CheckLine(LineNum : Integer) : Integer;
 begin
   Result := LineNum;
   if LineNum < 0 then
@@ -3140,7 +3140,7 @@ begin
     Result := Pred(FLineCount);
 end;
 
-function TOvcCustomTextFileViewer.GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
+function TOvcCustomTextFileViewer.GetLinePtr(LineNum : Integer; var Len : integer) : PChar;
 begin
   if (not Assigned(fvLines)) or (LineNum < 0) or (LineNum >= fvLines.Count) then begin
     Result := NullString;
@@ -3281,7 +3281,7 @@ begin
   fvInitFileFields;
 end;
 
-function TOvcCustomFileViewer.CheckLine(LineNum : LongInt) : LongInt;
+function TOvcCustomFileViewer.CheckLine(LineNum : Integer) : Integer;
 begin
   {assume that the line is valid}
   Result := LineNum;
@@ -3348,7 +3348,7 @@ begin
 end;
 
 
-function TOvcCustomFileViewer.fvGetLineAsText(LineNum : LongInt; var Len : integer) : PChar;
+function TOvcCustomFileViewer.fvGetLineAsText(LineNum : Integer; var Len : integer) : PChar;
 var
   CharsLeft : integer;
   ch: AnsiChar;
@@ -3400,7 +3400,7 @@ begin
   end;
 end;
 
-function TOvcCustomFileViewer.fvGetLineInHex(LineNum : LongInt; var Len : integer) : PChar;
+function TOvcCustomFileViewer.fvGetLineInHex(LineNum : Integer; var Len : integer) : PChar;
 const
   HexWidth = 75;    {width of: "LLLLLLLL  HH HH ... HH  xx...xx"}
   InitColHex = 10;  {index in string of first hex pair}
@@ -3482,7 +3482,7 @@ end;
 
 procedure TOvcCustomFileViewer.fvGetWorkingPage;
 var
-  FilePosn    : longint;
+  FilePosn    : Integer;
   i           : integer;
   SmallestLRU : TQuasiTime;
   PageIdx     : integer;
@@ -3511,7 +3511,7 @@ begin
    the least recently used page buffer}
   if not FoundIt then begin
     with fvPages^[PageIdx] do begin
-      FilePosn := FileSeek(vwFile, LongInt(fvWorkBlk) shl LogBufSize, 0);
+      FilePosn := FileSeek(vwFile, Integer(fvWorkBlk) shl LogBufSize, 0);
       if (FilePosn < 0) then begin
         FilePosn := GetLastError;
         RaiseIOException(FilePosn);
@@ -3541,20 +3541,20 @@ begin
     fvWorkPtr := pointer(Buffer);
     fvWorkBeg := fvWorkPtr;
     fvWorkEnd := fvWorkBeg + ByteCount;
-    inc(fvWorkPtr, fvWorkOffset - (LongInt(fvWorkBlk) shl LogBufSize));
+    inc(fvWorkPtr, fvWorkOffset - (Integer(fvWorkBlk) shl LogBufSize));
   end;
 end;
 
-procedure TOvcCustomFileViewer.fvGotoHexLine(Line : LongInt);
+procedure TOvcCustomFileViewer.fvGotoHexLine(Line : Integer);
 var
-  NewOfs : LongInt;
+  NewOfs : Integer;
 begin
   NewOfs := MinL((Line * 16), ((FileSize-1) and $7FFFFFF0));
 
   {check whether we are still on the same page as before}
   if (NewOfs shr LogBufSize) = fvWorkBlk then begin
     fvWorkOffset := NewOfs;
-    fvWorkPtr    := fvWorkBeg + (fvWorkOffset - (LongInt(fvWorkBlk) shl LogBufSize));
+    fvWorkPtr    := fvWorkBeg + (fvWorkOffset - (Integer(fvWorkBlk) shl LogBufSize));
   end else begin {we've moved pages}
     fvWorkOffset := NewOfs;
     fvWorkPtr := nil;
@@ -3563,14 +3563,14 @@ begin
   end;
 end;
 
-procedure TOvcCustomFileViewer.fvGotoTextLine(Line : LongInt);
+procedure TOvcCustomFileViewer.fvGotoTextLine(Line : Integer);
 var
-  OldNewLine    : LongInt;
-  OldNewLineOfs : LongInt;
-  LineDelta     : LongInt;
-  LocalNL       : LongInt;
+  OldNewLine    : Integer;
+  OldNewLineOfs : Integer;
+  LineDelta     : Integer;
+  LocalNL       : Integer;
   LastLineLen   : integer;
-  Delta1, Delta2, Delta3, Delta4, Delta5 : LongInt;
+  Delta1, Delta2, Delta3, Delta4, Delta5 : Integer;
   ptr: PAnsiChar;
   bof, eof, cont: Boolean;
 begin
@@ -3849,7 +3849,7 @@ begin
     Result := '';
 end;
 
-function TOvcCustomFileViewer.GetLinePtr(LineNum : LongInt; var Len : integer) : PChar;
+function TOvcCustomFileViewer.GetLinePtr(LineNum : Integer; var Len : integer) : PChar;
 begin
   {For default return a null string}
   Result := NullString;
@@ -3881,8 +3881,8 @@ function TOvcCustomFileViewer.Search(const S : string; Options : TSearchOptionSe
 var
   PatternLen   : integer;
   PatternPos   : integer;
-  SearchOffset : LongInt;
-  LastOffset   : LongInt;
+  SearchOffset : Integer;
+  LastOffset   : Integer;
   MatchString  : PChar;
   MatchCase    : Boolean;
   Found        : Boolean;
@@ -4180,7 +4180,7 @@ end;
 
 procedure TOvcCustomFileViewer.SetInHexMode(HM : Boolean);
 var
-  TempLine : LongInt;
+  TempLine : Integer;
 begin
   if (HM <> FInHexMode) then begin
     FInHexMode := HM;

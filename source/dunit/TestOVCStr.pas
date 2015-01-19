@@ -84,7 +84,7 @@ end;
 
 procedure TTestOVCStr.TestBinaryLPChar;
 const
-  cSomeLongInts : array[0..3] of LongInt =
+  cSomeLongInts : array[0..3] of Integer =
     (0, -1431655766, 1431655765, -1);
   cResults : array[0..3] of string =
     ('00000000000000000000000000000000', '10101010101010101010101010101010',
@@ -342,7 +342,7 @@ end;
 
 procedure TTestOVCStr.TestHexLPChar;
 const
-  cSomeLongInts : array[0..3] of LongInt =
+  cSomeLongInts : array[0..3] of Integer =
     (0, -1431655766, 1431655765, -1);
   cResults : array[0..3] of string =
     ('00000000', 'AAAAAAAA', '55555555', 'FFFFFFFF');
@@ -419,7 +419,7 @@ end;
 
 procedure TTestOVCStr.TestOctalLPChar;
 const
-  cSomeLongInts : array[0..3] of LongInt =
+  cSomeLongInts : array[0..3] of Integer =
     (0, -1431655766, 1431655765, -1);
   cResults : array[0..3] of string =
     ('000000000000', '025252525252', '012525252525', '037777777777');
@@ -723,7 +723,7 @@ type
   TData = record
     S: string;
     res: Boolean;
-    i: LongInt;
+    i: Integer;
   end;
 const
   cSomeData: array[0..6] of TData =
@@ -736,7 +736,7 @@ const
      (S: 'ABC100';      res: False; i:0));
 var
   i: Integer;
-  j: LongInt;
+  j: NativeInt;
   res: Boolean;
 begin
   for i := 0 to High(cSomeData) do begin

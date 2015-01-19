@@ -59,14 +59,14 @@ type
     Head       : TParaNode;    {start of list}
     Tail       : TParaNode;    {end of list}
     LastNode   : TParaNode;    {last node found}
-    LastP      : LongInt;      {last paragraph found}
-    LastN      : LongInt;      {last line found}
+    LastP      : Integer;      {last paragraph found}
+    LastN      : Integer;      {last line found}
     LastO      : Integer;      {lastO is line offset into LastNode for LastN}
-    ParaCount  : LongInt;      {total number of paragraphs}
-    CharCount  : LongInt;      {total number of characters}
-    LineCount  : LongInt;      {total number of lines}
-    MaxParas   : LongInt;      {max number of paragraphs}
-    MaxBytes   : LongInt;      {max number of bytes}
+    ParaCount  : Integer;      {total number of paragraphs}
+    CharCount  : Integer;      {total number of characters}
+    LineCount  : Integer;      {total number of lines}
+    MaxParas   : Integer;      {max number of paragraphs}
+    MaxBytes   : Integer;      {max number of bytes}
     MaxParaLen : Integer;      {max paragraph length}
     WordWrap   : Boolean;      {if True, word wrap is on}
     WrapColumn : Integer;      {column for word wrap}
@@ -76,8 +76,8 @@ type
     Markers    : TMarkerArray; {position markers}
     UndoBuffer : TOvcUndoBuffer;  {buffer of insertions/deletions}
     InUndo     : Boolean;      {are we in the Undo routine?}
-    FLine      : LongInt;      {first changed line}
-    LLine      : LongInt;      {last changed line}
+    FLine      : Integer;      {first changed line}
+    LLine      : Integer;      {last changed line}
 
     constructor Init(AOwner : TOvcEditBase; UndoSize : Word; Wrap : Boolean);
       virtual;
@@ -87,16 +87,16 @@ type
       {-destroy the paragraph list}
 
     {undo facility}
-    procedure MakeUndoRec(UT : UndoType; P : LongInt; Pos : Integer;
+    procedure MakeUndoRec(UT : UndoType; P : Integer; Pos : Integer;
                           S : PChar; Len : Word);
       {-create an undo record}
-    procedure MakeReplaceUndoRec(P : LongInt; Pos : Integer;
+    procedure MakeReplaceUndoRec(P : Integer; Pos : Integer;
                                  S : PChar; Len : Word;
                                  R : PChar; RLen : Word);
       {-create an undo record for a replace operation}
-    procedure Undo(Editor : TOvcEditBase; var P : LongInt; var Pos : Integer);
+    procedure Undo(Editor : TOvcEditBase; var P : Integer; var Pos : Integer);
       {-undo last insertion/deletion/replacement}
-    procedure Redo(Editor : TOvcEditBase; var P : LongInt; var Pos : Integer);
+    procedure Redo(Editor : TOvcEditBase; var P : Integer; var Pos : Integer);
       {-redo last undone operation}
     procedure SetUndoSize(Size : Word);
       {-set size of undo buffer}
@@ -112,16 +112,16 @@ type
       {-place element PPN into list before existing element LPN}
 
     {finding lines/paragraphs}
-    procedure SetLastNode(PPN : TParaNode; P, N : LongInt; O : Integer);
+    procedure SetLastNode(PPN : TParaNode; P, N : Integer; O : Integer);
       {-set LastNode to PPN, LastP to P, LastN to N, LastO to O}
-    function  NthPara(P : LongInt) : TParaNode;
+    function  NthPara(P : Integer) : TParaNode;
       {-return pointer to Nth paragraph}
-    function  NthLine(N : LongInt; var S : PChar; var Len : Word) : TParaNode;
+    function  NthLine(N : Integer; var S : PChar; var Len : Word) : TParaNode;
       {-return pointer to Nth line and its length}
-    function  FindParaByLine(N : LongInt; var LinePos : Integer) : LongInt;
+    function  FindParaByLine(N : Integer; var LinePos : Integer) : Integer;
       {-return the index of the paragraph containing line N}
-    function  FindLineByPara(P : LongInt; Pos : Integer;
-                             var Col : Integer) : LongInt;
+    function  FindLineByPara(P : Integer; Pos : Integer;
+                             var Col : Integer) : Integer;
       {-return the Line,Col corresponding to paragraph P, position Pos}
 
     {settings}
@@ -135,21 +135,21 @@ type
       {-set the column for word wrap}
     procedure SetTabSize(Value : Byte);
       {-set the tab size}
-    procedure SetByteLimit(Value : LongInt);
+    procedure SetByteLimit(Value : Integer);
       {-set limit on total bytes}
-    procedure SetParaLimit(Value : LongInt);
+    procedure SetParaLimit(Value : Integer);
       {-set limit on total paragraphs}
     procedure SetWordWrap(Value : Boolean);
       {-turn word wrap on or off}
 
     {effective columns to actual columns, etc.}
-    function  ParaLength(Value : LongInt) : Integer;
+    function  ParaLength(Value : Integer) : Integer;
       {-return length of paragraph P}
-    function  LineLength(Value : LongInt) : Integer;
+    function  LineLength(Value : Integer) : Integer;
       {-return length of line N}
     function  EffStrLen(S : PChar; Len : Word) : Word;
       {-compute effective length of S}
-    function  EffLen(N : LongInt) : Word;
+    function  EffLen(N : Integer) : Word;
       {-compute effective length of line N}
     function  EffCol(S : PChar; Len, Col : Word) : Word;
       {-compute effective column}
@@ -157,58 +157,58 @@ type
       {-given an effective column #, return an actual column #}
 
     {inserting and deleting text}
-    function  OkToInsert(P : LongInt; Paras, Bytes : Word) : Word;
+    function  OkToInsert(P : Integer; Paras, Bytes : Word) : Word;
       {-is it OK to insert Bytes characters into paragraph P?}
     function  AppendParaEof(S : PChar; SLen : Word; Trim : Boolean) : Word;
       {-create a new paragraph from S and append to end of file}
-    procedure InsertParaNode(Editor : TOvcEditBase; P : LongInt; NPN : TParaNode);
+    procedure InsertParaNode(Editor : TOvcEditBase; P : Integer; NPN : TParaNode);
       {-insert a new paragraph before paragraph P}
-    function  InsertParaPrim(Editor : TOvcEditBase; P : LongInt;
+    function  InsertParaPrim(Editor : TOvcEditBase; P : Integer;
                              S : PChar; Len : Word) : Word;
       {-create a new paragraph with text from S^ and insert before paragraph P}
-    procedure PlaceParaNode(Editor : TOvcEditBase; P : LongInt; NPN : TParaNode);
+    procedure PlaceParaNode(Editor : TOvcEditBase; P : Integer; NPN : TParaNode);
       {-place a new paragraph after paragraph P}
-    function PlaceParaPrim(Editor : TOvcEditBase; P : LongInt;
+    function PlaceParaPrim(Editor : TOvcEditBase; P : Integer;
                            S : PChar; Len : Word) : Word;
       {-create a new paragraph with text from S^ and place it after paragraph P}
-    function  InsertTextPrim(Editor : TOvcEditBase; P : LongInt; Pos : Integer;
+    function  InsertTextPrim(Editor : TOvcEditBase; P : Integer; Pos : Integer;
                              S : PChar; SLen : Word) : Word;
       {-insert SLen characters from S^ in paragraph P at Pos}
-    function  InsertBlock(Editor : TOvcEditBase; var P : LongInt;
+    function  InsertBlock(Editor : TOvcEditBase; var P : Integer;
                           var Pos : Integer; S : PChar) : Word;
       {-insert a block of text}
-    procedure DeletePara(Editor : TOvcEditBase; P : LongInt);
+    procedure DeletePara(Editor : TOvcEditBase; P : Integer);
       {-delete paragraph P}
-    procedure DeleteText(Editor : TOvcEditBase; P : LongInt; Pos, Count : Integer);
+    procedure DeleteText(Editor : TOvcEditBase; P : Integer; Pos, Count : Integer);
       {-delete Count characters from paragraph P at Pos}
-    procedure DeleteBlock(Editor : TOvcEditBase; Para1 : LongInt; Pos1 : Integer;
-                          Para2 : LongInt; Pos2 : Integer);
+    procedure DeleteBlock(Editor : TOvcEditBase; Para1 : Integer; Pos1 : Integer;
+                          Para2 : Integer; Pos2 : Integer);
       {-delete the block from Para1,Pos1 to Para2,Pos2}
-    function  JoinWithNext(Editor : TOvcEditBase; P : LongInt; Pos : Integer) : Word;
+    function  JoinWithNext(Editor : TOvcEditBase; P : Integer; Pos : Integer) : Word;
       {-join paragraph P with the following paragraph at Pos}
-    function  BreakPara(Editor : TOvcEditBase; P : LongInt; Pos, TabSz : Integer;
+    function  BreakPara(Editor : TOvcEditBase; P : Integer; Pos, TabSz : Integer;
                         var Indent : Integer; Trim : Boolean) : Word;
       {-break paragraph P at Pos and indent the new paragraph}
-    function  ReplaceText(Editor : TOvcEditBase; P : LongInt;
+    function  ReplaceText(Editor : TOvcEditBase; P : Integer;
                           Pos, Count : Integer;
                           St : PChar; StLen : Integer) : Word;
       {-replace the next Count characters at P,Pos with text of St^}
 
     {text markers}
-    procedure SetMarker(N : Byte; Para : LongInt; Pos : Integer);
-    procedure SetMarkerAt(N : Byte; Line : LongInt; Col : Integer);
-    procedure FixMarkerInsertedPara(var M : TMarker; N : LongInt; Pos, Indent : Integer);
-    procedure FixMarkersInsertedPara(Editor : TOvcEditBase; N : LongInt; Pos, Indent : Integer);
-    procedure FixMarkerInsertedText(var M : TMarker; N : LongInt; Pos, Count : Integer);
-    procedure FixMarkersInsertedText(Editor : TOvcEditBase; N : LongInt; Pos, Count : Integer);
-    procedure FixMarkDeletedPara(var M : TMarker; N : LongInt);
-    procedure FixMarkerDeletedPara(var M : TMarker; N : LongInt);
-    procedure FixMarkersDeletedPara(Editor : TOvcEditBase; N : LongInt);
-    procedure FixMarkDeletedText(var M : TMarker; N : LongInt; Pos, Count : Integer);
-    procedure FixMarkerDeletedText(var M : TMarker; N : LongInt; Pos, Count : Integer);
-    procedure FixMarkersDeletedText(Editor : TOvcEditBase; N : LongInt; Pos, Count : Integer);
-    procedure FixMarkerJoinedParas(var M : TMarker; N : LongInt; Pos : Integer);
-    procedure FixMarkersJoinedParas(Editor : TOvcEditBase; N : LongInt; Pos : Integer);
+    procedure SetMarker(N : Byte; Para : Integer; Pos : Integer);
+    procedure SetMarkerAt(N : Byte; Line : Integer; Col : Integer);
+    procedure FixMarkerInsertedPara(var M : TMarker; N : Integer; Pos, Indent : Integer);
+    procedure FixMarkersInsertedPara(Editor : TOvcEditBase; N : Integer; Pos, Indent : Integer);
+    procedure FixMarkerInsertedText(var M : TMarker; N : Integer; Pos, Count : Integer);
+    procedure FixMarkersInsertedText(Editor : TOvcEditBase; N : Integer; Pos, Count : Integer);
+    procedure FixMarkDeletedPara(var M : TMarker; N : Integer);
+    procedure FixMarkerDeletedPara(var M : TMarker; N : Integer);
+    procedure FixMarkersDeletedPara(Editor : TOvcEditBase; N : Integer);
+    procedure FixMarkDeletedText(var M : TMarker; N : Integer; Pos, Count : Integer);
+    procedure FixMarkerDeletedText(var M : TMarker; N : Integer; Pos, Count : Integer);
+    procedure FixMarkersDeletedText(Editor : TOvcEditBase; N : Integer; Pos, Count : Integer);
+    procedure FixMarkerJoinedParas(var M : TMarker; N : Integer; Pos : Integer);
+    procedure FixMarkersJoinedParas(Editor : TOvcEditBase; N : Integer; Pos : Integer);
   end;
 
   TOvcUndoBuffer = class(TObject)
@@ -231,22 +231,22 @@ type
       override;
 
     procedure Flush;
-    function  CheckSize(Bytes : LongInt) : Boolean;
-    function  SameOperation(UT : UndoType; var Before : Boolean; P : LongInt;
+    function  CheckSize(Bytes : Integer) : Boolean;
+    function  SameOperation(UT : UndoType; var Before : Boolean; P : Integer;
                             Pos : Integer; DLen : Word) : Boolean;
     procedure Append(D : PChar; DLen : Word);
     procedure Prepend(D : PChar; DLen : Word);
     procedure AppendReplace(D : PChar; DLen : Word; R : PChar; RLen : Word);
-    procedure Push(UT : UndoType; MF : Boolean; P : LongInt; Pos : Integer;
+    procedure Push(UT : UndoType; MF : Boolean; P : Integer; Pos : Integer;
                    D : PChar; DLen : Word);
-    procedure PushReplace(MF : Boolean; P : LongInt; Pos : Integer;
+    procedure PushReplace(MF : Boolean; P : Integer; Pos : Integer;
                           D : PChar; DLen : Word;
                           R : PChar; RLen : Word);
     procedure GetUndo(var UT : UndoType; var Link : Byte; var MF : Boolean;
-                      var P : LongInt; var Pos : Integer;
+                      var P : Integer; var Pos : Integer;
                       var D : PChar; var DLen : Word);
     procedure GetRedo(var UT : UndoType; var Link : Byte; var MF : Boolean;
-                      var P : LongInt; var Pos : Integer;
+                      var P : Integer; var Pos : Integer;
                       var D : PChar; var DLen : Word);
     procedure PeekUndoLink(var Link : Byte);
     procedure PeekRedoLink(var Link : Byte);
@@ -326,7 +326,7 @@ begin
   end;
 end;
 
-function TOvcParaList.BreakPara(Editor : TOvcEditBase; P : LongInt;
+function TOvcParaList.BreakPara(Editor : TOvcEditBase; P : Integer;
                              Pos, TabSz : Integer; var Indent : Integer;
                              Trim : Boolean) : Word;
   {-break paragraph P at Pos and indent the new paragraph}
@@ -408,11 +408,11 @@ begin
 end;
 
 procedure TOvcParaList.DeleteBlock(Editor : TOvcEditBase;
-                                Para1 : LongInt; Pos1 : Integer;
-                                Para2 : LongInt; Pos2 : Integer);
+                                Para1 : Integer; Pos1 : Integer;
+                                Para2 : Integer; Pos2 : Integer);
   {-delete the block from Para1,Pos1 to Para2,Pos2}
 var
-  P           : LongInt;
+  P           : Integer;
   I           : Integer;
   SaveLinking : Boolean;
 begin
@@ -454,7 +454,7 @@ begin
   UndoBuffer.EndComplexOp(SaveLinking);
 end;
 
-procedure TOvcParaList.DeletePara(Editor : TOvcEditBase; P : LongInt);
+procedure TOvcParaList.DeletePara(Editor : TOvcEditBase; P : Integer);
   {-delete paragraph P}
 var
   PPN : TParaNode;
@@ -496,12 +496,12 @@ begin
   Modified := True;
 end;
 
-procedure TOvcParaList.DeleteText(Editor : TOvcEditBase; P : LongInt;
+procedure TOvcParaList.DeleteText(Editor : TOvcEditBase; P : Integer;
                                Pos, Count : Integer);
   {-delete Count characters from paragraph P at Pos}
 var
   PPN    : TParaNode;
-  LC     : LongInt;
+  LC     : Integer;
   FL, LL : Integer;
 begin
   PPN := NthPara(P);
@@ -555,7 +555,7 @@ begin
     Result := EffStrLen(S, Col-1)+1;
 end;
 
-function TOvcParaList.EffLen(N : LongInt) : Word;
+function TOvcParaList.EffLen(N : Integer) : Word;
   {-compute effective length of line N}
 var
   S   : PChar;
@@ -574,8 +574,8 @@ begin
     Result := Len;
 end;
 
-function TOvcParaList.FindLineByPara(P : LongInt; Pos : Integer;
-                                  var Col : Integer) : LongInt;
+function TOvcParaList.FindLineByPara(P : Integer; Pos : Integer;
+                                  var Col : Integer) : Integer;
   {-return the Line,Col corresponding to paragraph P, position Pos}
 var
   PPN : TParaNode;
@@ -588,7 +588,7 @@ begin
   Result := LastN+PPN.PosToLine(Pos, Col)-1
 end;
 
-function TOvcParaList.FindParaByLine(N : LongInt; var LinePos : Integer) : LongInt;
+function TOvcParaList.FindParaByLine(N : Integer; var LinePos : Integer) : Integer;
   {-return the index of the paragraph containing line N}
 var
   PPN  : TParaNode;
@@ -606,7 +606,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.FixMarkDeletedPara(var M : TMarker; N : LongInt);
+procedure TOvcParaList.FixMarkDeletedPara(var M : TMarker; N : Integer);
 begin
   if M.Para = N then
     M.Pos := 1
@@ -616,7 +616,7 @@ begin
     M.Para := ParaCount;
 end;
 
-procedure TOvcParaList.FixMarkDeletedText(var M : TMarker; N : LongInt;
+procedure TOvcParaList.FixMarkDeletedText(var M : TMarker; N : Integer;
                                        Pos, Count : Integer);
 begin
   if M.Para = N then
@@ -627,7 +627,7 @@ begin
         Dec(M.Pos, Count);
 end;
 
-procedure TOvcParaList.FixMarkerDeletedPara(var M : TMarker; N : LongInt);
+procedure TOvcParaList.FixMarkerDeletedPara(var M : TMarker; N : Integer);
 begin
   if M.Para = N then
     FillChar(M, SizeOf(TMarker), 0)
@@ -635,7 +635,7 @@ begin
     Dec(M.Para);
 end;
 
-procedure TOvcParaList.FixMarkerDeletedText(var M : TMarker; N : LongInt;
+procedure TOvcParaList.FixMarkerDeletedText(var M : TMarker; N : Integer;
                                          Pos, Count : Integer);
 begin
   if M.Para = N then
@@ -646,7 +646,7 @@ begin
         Dec(M.Pos, Count);
 end;
 
-procedure TOvcParaList.FixMarkerInsertedPara(var M : TMarker; N : LongInt;
+procedure TOvcParaList.FixMarkerInsertedPara(var M : TMarker; N : Integer;
                                           Pos, Indent : Integer);
 begin
   if M.Para > N then
@@ -658,14 +658,14 @@ begin
     end;
 end;
 
-procedure TOvcParaList.FixMarkerInsertedText(var M : TMarker; N : LongInt;
+procedure TOvcParaList.FixMarkerInsertedText(var M : TMarker; N : Integer;
                                           Pos, Count : Integer);
 begin
   if (M.Para = N) and (M.Pos >= Pos) then
     Inc(M.Pos, Count);
 end;
 
-procedure TOvcParaList.FixMarkerJoinedParas(var M : TMarker; N : LongInt; Pos : Integer);
+procedure TOvcParaList.FixMarkerJoinedParas(var M : TMarker; N : Integer; Pos : Integer);
 begin
   if M.Para > N then
     if M.Para = N+1 then begin
@@ -675,7 +675,7 @@ begin
       Dec(M.Para);
 end;
 
-procedure TOvcParaList.FixMarkersDeletedPara(Editor : TOvcEditBase; N : LongInt);
+procedure TOvcParaList.FixMarkersDeletedPara(Editor : TOvcEditBase; N : Integer);
 var
   I : Integer;
 begin
@@ -686,7 +686,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.FixMarkersDeletedText(Editor : TOvcEditBase; N : LongInt;
+procedure TOvcParaList.FixMarkersDeletedText(Editor : TOvcEditBase; N : Integer;
                                           Pos, Count : Integer);
 var
   I : Integer;
@@ -698,7 +698,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.FixMarkersInsertedPara(Editor : TOvcEditBase; N : LongInt;
+procedure TOvcParaList.FixMarkersInsertedPara(Editor : TOvcEditBase; N : Integer;
                                            Pos, Indent : Integer);
 var
   I : Integer;
@@ -710,7 +710,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.FixMarkersInsertedText(Editor : TOvcEditBase; N : LongInt;
+procedure TOvcParaList.FixMarkersInsertedText(Editor : TOvcEditBase; N : Integer;
                                            Pos, Count : Integer);
 var
   I : Integer;
@@ -722,7 +722,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.FixMarkersJoinedParas(Editor : TOvcEditBase; N : LongInt;
+procedure TOvcParaList.FixMarkersJoinedParas(Editor : TOvcEditBase; N : Integer;
                                           Pos : Integer);
 var
   I : Integer;
@@ -790,14 +790,14 @@ begin
   Inc(ParaCount);
 end;
 
-function TOvcParaList.InsertBlock(Editor : TOvcEditBase; var P : LongInt;
+function TOvcParaList.InsertBlock(Editor : TOvcEditBase; var P : Integer;
                                var Pos : Integer; S : PChar) : Word;
   {-insert a block of text}
 var
   L, Len, Max : Word;
   I, OPos : Integer;
   SaveLinking : Boolean;
-  OP : LongInt;
+  OP : Integer;
   Buffer, Tmp: PChar;
 begin
   GetMem(Buffer, (StrLen(S) + 2) * SizeOf(Char));
@@ -867,7 +867,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.InsertParaNode(Editor : TOvcEditBase; P : LongInt;
+procedure TOvcParaList.InsertParaNode(Editor : TOvcEditBase; P : Integer;
                                    NPN : TParaNode);
   {-insert a new paragraph before paragraph N}
 var
@@ -886,7 +886,7 @@ begin
   Modified := True;
 end;
 
-function TOvcParaList.InsertParaPrim(Editor : TOvcEditBase; P : LongInt;
+function TOvcParaList.InsertParaPrim(Editor : TOvcEditBase; P : Integer;
                                   S : PChar; Len : Word) : Word;
   {-create a new paragraph with text from S^ and insert before paragraph P}
 var
@@ -910,7 +910,7 @@ begin
     Result := Res;
 end;
 
-function TOvcParaList.InsertTextPrim(Editor : TOvcEditBase; P : LongInt; Pos : Integer;
+function TOvcParaList.InsertTextPrim(Editor : TOvcEditBase; P : Integer; Pos : Integer;
                                   S : PChar; SLen : Word) : Word;
   {-insert SLen characters from S^ in paragraph P at Pos}
 var
@@ -920,7 +920,7 @@ var
   NLen  : Word;
   Delta : Word;
   NS    : PChar;
-  LC    : LongInt;
+  LC    : Integer;
   FL    : Integer;
   LL    : Integer;
 begin
@@ -954,7 +954,7 @@ begin
   Result := I;
 end;
 
-function TOvcParaList.JoinWithNext(Editor : TOvcEditBase; P : LongInt; Pos : Integer) : Word;
+function TOvcParaList.JoinWithNext(Editor : TOvcEditBase; P : Integer; Pos : Integer) : Word;
   {-join paragraph P with the following paragraph at Pos}
 var
   PPN         : TParaNode;
@@ -1001,7 +1001,7 @@ begin
   UndoBuffer.EndComplexOp(SaveLinking);
 end;
 
-function TOvcParaList.LineLength(Value : LongInt) : Integer;
+function TOvcParaList.LineLength(Value : Integer) : Integer;
   {-return length of line N}
 var
   S : PChar;
@@ -1011,7 +1011,7 @@ begin
   Result := W;
 end;
 
-procedure TOvcParaList.MakeReplaceUndoRec(P : LongInt; Pos : Integer;
+procedure TOvcParaList.MakeReplaceUndoRec(P : Integer; Pos : Integer;
                                        S : PChar; Len : Word;
                                        R : PChar; RLen : Word);
   {-create an undo record for a replace operation}
@@ -1020,7 +1020,7 @@ begin
     UndoBuffer.PushReplace(Modified, P, Pos, S, Len, R, RLen);
 end;
 
-procedure TOvcParaList.MakeUndoRec(UT : UndoType; P : LongInt; Pos : Integer;
+procedure TOvcParaList.MakeUndoRec(UT : UndoType; P : Integer; Pos : Integer;
                                 S : PChar; Len : Word);
   {-create an undo record}
 begin
@@ -1028,17 +1028,17 @@ begin
     UndoBuffer.Push(UT, Modified, P, Pos, S, Len);
 end;
 
-function TOvcParaList.NthLine(N : LongInt; var S : PChar;
+function TOvcParaList.NthLine(N : Integer; var S : PChar;
                            var Len : Word) : TParaNode;
   {-return pointer to Nth line and its length}
 var
-  I   : LongInt;
-  P   : LongInt;
+  I   : Integer;
+  P   : Integer;
   O   : Integer;
   PPN : TParaNode;
-  DF  : LongInt;
-  DL  : LongInt;
-  DE  : LongInt;
+  DF  : Integer;
+  DL  : Integer;
+  DE  : Integer;
 begin
   if not WordWrap then begin
     PPN := NthPara(N);
@@ -1137,15 +1137,15 @@ begin
   end;
 end;
 
-function TOvcParaList.NthPara(P : LongInt) : TParaNode;
+function TOvcParaList.NthPara(P : Integer) : TParaNode;
   {-return pointer to Pth paragraph}
 var
-  I   : LongInt;
-  N   : LongInt;
+  I   : Integer;
+  N   : Integer;
   PPN : TParaNode;
-  DF  : LongInt;
-  DL  : LongInt;
-  DE  : LongInt;
+  DF  : Integer;
+  DL  : Integer;
+  DE  : Integer;
 begin
   if (P < 1) or (P > ParaCount) then begin
     Result := nil;
@@ -1217,11 +1217,11 @@ begin
   end;
 end;
 
-function TOvcParaList.OkToInsert(P : LongInt; Paras, Bytes : Word) : Word;
+function TOvcParaList.OkToInsert(P : Integer; Paras, Bytes : Word) : Word;
   {-is it OK to insert Bytes characters into paragraph P?}
 var
   PPN : TParaNode;
-  M   : LongInt;
+  M   : Integer;
 begin
   Result := 0;
 
@@ -1249,12 +1249,12 @@ begin
   if (P <> 0) and (Paras = 0) then begin
     PPN := NthPara(P);
     if PPN <> nil then
-      if LongInt(Bytes)+PPN.SLen > MaxParaLen then
+      if Integer(Bytes)+PPN.SLen > MaxParaLen then
         Result := oeParaTooLong;
   end;
 end;
 
-function TOvcParaList.ParaLength(Value : LongInt) : Integer;
+function TOvcParaList.ParaLength(Value : Integer) : Integer;
   {-return length of paragraph}
 var
   PPN : TParaNode;
@@ -1304,7 +1304,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.PlaceParaNode(Editor : TOvcEditBase; P : LongInt;
+procedure TOvcParaList.PlaceParaNode(Editor : TOvcEditBase; P : Integer;
                                   NPN : TParaNode);
   {-place a new paragraph after paragraph P}
 var
@@ -1323,7 +1323,7 @@ begin
   Modified := True;
 end;
 
-function TOvcParaList.PlaceParaPrim(Editor : TOvcEditBase; P : LongInt;
+function TOvcParaList.PlaceParaPrim(Editor : TOvcEditBase; P : Integer;
                                  S : PChar; Len : Word) : Word;
   {-create a new paragraph with text from S^ and place it after paragraph P}
 var
@@ -1347,7 +1347,7 @@ procedure TOvcParaList.Recalculate;
   {-recalculate number of lines}
 var
   PPN : TParaNode;
-  LC  : LongInt;
+  LC  : Integer;
   WC  : Integer;
 begin
   {switch cursors if this is going to take a while}
@@ -1372,7 +1372,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.Redo(Editor : TOvcEditBase; var P : LongInt; var Pos : Integer);
+procedure TOvcParaList.Redo(Editor : TOvcEditBase; var P : Integer; var Pos : Integer);
   {-redo last undone operation}
 var
   UT       : UndoType;
@@ -1422,14 +1422,14 @@ begin
   InUndo := False;
 end;
 
-function TOvcParaList.ReplaceText(Editor : TOvcEditBase; P : LongInt;
+function TOvcParaList.ReplaceText(Editor : TOvcEditBase; P : Integer;
                                Pos, Count : Integer;
                                St : PChar; StLen : Integer) : Word;
   {-replace the next Count characters at P,Pos with text of St^}
 var
   S     : PChar;
   PPN   : TParaNode;
-  LC    : LongInt;
+  LC    : Integer;
   FL    : Integer;
   LL    : Integer;
   Delta : Integer;
@@ -1483,13 +1483,13 @@ begin
   until PE = SE;
 end;
 
-procedure TOvcParaList.SetByteLimit(Value : LongInt);
+procedure TOvcParaList.SetByteLimit(Value : Integer);
   {-set limit on total bytes}
 begin
   MaxBytes := Value;
 end;
 
-procedure TOvcParaList.SetLastNode(PPN : TParaNode; P, N : LongInt; O : Integer);
+procedure TOvcParaList.SetLastNode(PPN : TParaNode; P, N : Integer; O : Integer);
   {-set LastNode to PPN, LastP to P}
 begin
   LastNode := PPN;
@@ -1498,7 +1498,7 @@ begin
   LastO := O;
 end;
 
-procedure TOvcParaList.SetMarker(N : Byte; Para : LongInt; Pos : Integer);
+procedure TOvcParaList.SetMarker(N : Byte; Para : Integer; Pos : Integer);
 begin
   if N < edMaxMarkers then begin
     Markers[N].Para := Para;
@@ -1506,9 +1506,9 @@ begin
   end;
 end;
 
-procedure TOvcParaList.SetMarkerAt(N : Byte; Line : LongInt; Col : Integer);
+procedure TOvcParaList.SetMarkerAt(N : Byte; Line : Integer; Col : Integer);
 var
-  Para    : LongInt;
+  Para    : Integer;
   LinePos : Integer;
 begin
   if N < edMaxMarkers then begin
@@ -1517,7 +1517,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.SetParaLimit(Value : LongInt);
+procedure TOvcParaList.SetParaLimit(Value : Integer);
   {-set limit on total paragraphs}
 begin
   MaxParas := Value;
@@ -1574,7 +1574,7 @@ begin
   end;
 end;
 
-procedure TOvcParaList.Undo(Editor : TOvcEditBase; var P : LongInt; var Pos : Integer);
+procedure TOvcParaList.Undo(Editor : TOvcEditBase; var P : Integer; var Pos : Integer);
   {-undo last insertion/deletion/replacement}
 var
   UT       : UndoType;
@@ -1687,7 +1687,7 @@ begin
   end;
 end;
 
-function TOvcUndoBuffer.CheckSize(Bytes : LongInt) : Boolean;
+function TOvcUndoBuffer.CheckSize(Bytes : Integer) : Boolean;
 var
   MinAvail, I, SizeInBytes, LN : Word;
   PUR : PUndoRec;
@@ -1787,7 +1787,7 @@ begin
 end;
 
 procedure TOvcUndoBuffer.GetRedo(var UT : UndoType; var Link : Byte; var MF : Boolean;
-                              var P : LongInt; var Pos : Integer;
+                              var P : Integer; var Pos : Integer;
                               var D : PChar; var DLen : Word);
 var
   PUR : PUndoRec;
@@ -1813,7 +1813,7 @@ begin
 end;
 
 procedure TOvcUndoBuffer.GetUndo(var UT : UndoType; var Link : Byte; var MF : Boolean;
-                              var P : LongInt; var Pos : Integer;
+                              var P : Integer; var Pos : Integer;
                               var D : PChar; var DLen : Word);
 begin
   with Last^ do begin
@@ -1925,12 +1925,12 @@ begin
 end;
 
 procedure TOvcUndoBuffer.Push(UT : UndoType; MF : Boolean;
-                           P : LongInt; Pos : Integer;
+                           P : Integer; Pos : Integer;
                            D : PChar; DLen : Word);
 var
   PUR    : PUndoRec;
   PSize  : Word;
-  SizeInBytes : LongInt;
+  SizeInBytes : Integer;
   Before : Boolean;
 begin
   if not Linking then
@@ -1945,7 +1945,7 @@ begin
       Inc(CurLink);
 
   {make sure there's room}
-  SizeInBytes := LongInt(DLen)*SizeOf(Char) + UndoRecSize;
+  SizeInBytes := Integer(DLen)*SizeOf(Char) + UndoRecSize;
   if not CheckSize(SizeInBytes) then
     Exit;
 
@@ -1963,13 +1963,13 @@ begin
   Dec(BufAvail, SizeInBytes);
 end;
 
-procedure TOvcUndoBuffer.PushReplace(MF : Boolean; P : LongInt; Pos : Integer;
+procedure TOvcUndoBuffer.PushReplace(MF : Boolean; P : Integer; Pos : Integer;
                                   D : PChar; DLen : Word;
                                   R : PChar; RLen : Word);
 var
   PUR         : PUndoRec;
   PSize       : Word;
-  SizeInBytes : LongInt;
+  SizeInBytes : Integer;
   Before      : Boolean;
 begin
   if not Linking then
@@ -1981,7 +1981,7 @@ begin
       Inc(CurLink);
 
   {make sure there's room}
-  SizeInBytes := (LongInt(DLen)+RLen+2) * SizeOf(Char) + UndoRecSize;
+  SizeInBytes := (Integer(DLen)+RLen+2) * SizeOf(Char) + UndoRecSize;
   if not CheckSize(SizeInBytes) then
     Exit;
 
@@ -2000,7 +2000,7 @@ begin
 end;
 
 function TOvcUndoBuffer.SameOperation(UT : UndoType; var Before : Boolean;
-                                   P : LongInt; Pos : Integer;
+                                   P : Integer; Pos : Integer;
                                    DLen : Word) : Boolean;
 var
   D : PChar;
@@ -2022,7 +2022,7 @@ begin
           Result := True;
         end;
     utReplace :
-      Result := (Last^.PNum = P) and (Pos = Last^.PPos+LongInt(StrLen(D)));
+      Result := (Last^.PNum = P) and (Pos = Last^.PPos+Integer(StrLen(D)));
   end;
 end;
 

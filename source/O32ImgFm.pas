@@ -393,7 +393,7 @@ begin
     if (P <> NewWndProc) then begin
       PrevWndProc := P;
       {redirect message handling to our NewWndProc}
-      SetWindowLong(ParentForm.Handle, GWL_WNDPROC, LongInt(NewWndProc));
+      SetWindowLong(ParentForm.Handle, GWL_WNDPROC, NativeInt(NewWndProc));
     end;
   end;
 end;
@@ -402,7 +402,7 @@ end;
 procedure TO32CustomImageForm.RenderForm;
 var
   TransparentRgn: HRgn;
-  X, Y, XTransparent: LongInt;
+  X, Y, XTransparent: Integer;
   Success: Boolean;
 begin
   { assume a good outcome }

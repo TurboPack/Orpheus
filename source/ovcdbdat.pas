@@ -266,7 +266,7 @@ end;
 
 procedure TOvcCustomDbDateEdit.CMGetDataLink(var Message : TMessage);
 begin
-  Message.Result := LongInt(FDataLink);
+  Message.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcCustomDbDateEdit.Create(AOwner : TComponent);

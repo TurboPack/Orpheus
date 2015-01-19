@@ -210,7 +210,7 @@ end;
 
 procedure TOvcDbColorComboBox.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbColorComboBox.Create(AOwner : TComponent);

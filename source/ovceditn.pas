@@ -64,7 +64,7 @@ type
   {buffer and mapped into a TUndoNode as required}
   PUndoRec = ^TUndoRec;
   TUndoRec = packed record
-    PNum     : LongInt;    {paragraph number}
+    PNum     : Integer;    {paragraph number}
     PPos     : Integer;    {position in paragraph}
     DSize    : Word;       {data size in characters (unicode: not bytes)}
     PrevSize : Word;       {size of previous record}
@@ -86,7 +86,7 @@ type
                    Link  : Byte;
                    MF    : Boolean;          {modified flag}
                    PSize : Word;
-                   P     : LongInt;
+                   P     : Integer;
                    Pos   : Integer;
                    D     : PChar;        {data}
                    DLen  : Word);            {data length}
@@ -95,7 +95,7 @@ type
                           Link  : Byte;
                           MF    : Boolean;   {modified flag}
                           PSize : Word;
-                          P     : LongInt;
+                          P     : Integer;
                           Pos   : Integer;
                           D     : PChar; {data}
                           DLen  : Word;      {data length}
@@ -208,7 +208,7 @@ begin
 end;
 
 procedure TUndoNode.Init(PUR : PUndoRec; UT : UndoType; Link : Byte;
-                         MF : Boolean; PSize : Word; P : LongInt;
+                         MF : Boolean; PSize : Word; P : Integer;
                          Pos : Integer; D : PChar; DLen : Word);
 begin
   with PUR^ do begin
@@ -226,7 +226,7 @@ begin
 end;
 
 procedure TUndoNode.InitReplace(PUR : PUndoRec; Link : Byte; MF : Boolean;
-                                PSize : Word; P : LongInt; Pos : Integer;
+                                PSize : Word; P : Integer; Pos : Integer;
                                 D : PChar; DLen : Word; R : PChar; RLen : Word);
 var
   DP : PChar;

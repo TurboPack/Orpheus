@@ -57,7 +57,7 @@ type
   {$IFDEF CPPBUILDER}{$EXTERNALSYM _REOBJECT}{$ENDIF}
   _REOBJECT = packed record
     cbStruct: DWORD;            // [00] Size of structure
-    cp: LongInt;                // [04] Character position of object
+    cp: Integer;                // [04] Character position of object
     clsid: TCLSID;              // [08] Class ID of object
     oleobj: IOleObject;         // [18] OLE object interface
     stg: IStorage;              // [1C] Associated storage interface
@@ -159,20 +159,20 @@ type
     ['{00020D00-0000-0000-C000-000000000046}']
     // *** IRichEditOle methods ***
     function GetClientSite(out clientSite: IOleClientSite): HRESULT; stdcall;
-    function GetObjectCount: LongInt; stdcall;
-    function GetLinkCount: LongInt; stdcall;
-    function GetObject(iob: LongInt; out ReObject: TReObject;
+    function GetObjectCount: Integer; stdcall;
+    function GetLinkCount: Integer; stdcall;
+    function GetObject(iob: Integer; out ReObject: TReObject;
       dwFlags: DWORD): HRESULT; stdcall;
     function InsertObject(var ReObject: TReObject): HRESULT; stdcall;
-    function ConvertObject(iob: LongInt; const clsidNew: TCLSID;
+    function ConvertObject(iob: Integer; const clsidNew: TCLSID;
       lpStrUserTypeNew: LPCSTR): HRESULT; stdcall;
     function ActivateAs(const clsid, clsidAs: TCLSID): HRESULT; stdcall;
     function SetHostNames(lpstrContainerApp: LPCSTR;
       lpstrContainerObj: LPCSTR): HRESULT; stdcall;
-    function SetLinkAvailable(iob: LongInt; fAvailable: BOOL): HRESULT; stdcall;
-    function SetDvaspect(iob: LongInt; dvaspect: DWORD): HRESULT; stdcall;
-    function HandsOffStorage(iob: LongInt): HRESULT; stdcall;
-    function SaveCompleted(iob: LongInt; const stg: IStorage): HRESULT; stdcall;
+    function SetLinkAvailable(iob: Integer; fAvailable: BOOL): HRESULT; stdcall;
+    function SetDvaspect(iob: Integer; dvaspect: DWORD): HRESULT; stdcall;
+    function HandsOffStorage(iob: Integer): HRESULT; stdcall;
+    function SaveCompleted(iob: Integer; const stg: IStorage): HRESULT; stdcall;
     function InPlaceDeactivate: HRESULT; stdcall;
     function ContextSensitiveHelp(fEnterMode: BOOL): HRESULT; stdcall;
     function GetClipboardData(const chrg: TCharRange; reco: DWORD;
@@ -198,7 +198,7 @@ type
       lpFrameInfo: POleInPlaceFrameInfo): HRESULT; stdcall;
     function ShowContainerUI(fShow: BOOL): HRESULT; stdcall;
     function QueryInsertObject(const clsid: TCLSID; const stg: IStorage;
-      cp: LongInt): HRESULT; stdcall;
+      cp: Integer): HRESULT; stdcall;
     function DeleteObject(const oleobj: IOleObject): HRESULT; stdcall;
     function QueryAcceptData(const dataobj: IDataObject;
       var cfFormat: TClipFormat; reco: DWORD; fReally: BOOL;
@@ -231,12 +231,12 @@ implementation
 function RichEdit_SetOleCallback(Wnd: HWND;
   const Intf: IRichEditOleCallback): Boolean;
 begin
-  Result := SendMessage(Wnd, EM_SETOLECALLBACK, 0, LongInt(Intf)) <> 0;
+  Result := SendMessage(Wnd, EM_SETOLECALLBACK, 0, NativeInt(Intf)) <> 0;
 end;
 
 function RichEdit_GetOleInterface(Wnd: HWND; out Intf: IRichEditOle): Boolean;
 begin
-  Result := SendMessage(Wnd, EM_GETOLEINTERFACE, 0, LongInt(@Intf)) <> 0;
+  Result := SendMessage(Wnd, EM_GETOLEINTERFACE, 0, NativeInt(@Intf)) <> 0;
 end;
 
 {$ENDIF}

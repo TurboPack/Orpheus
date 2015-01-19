@@ -47,15 +47,15 @@ uses
 type
   {event to get a pointer to the cell's value}
   TGetItemEvent =
-    procedure(Sender : TObject; Index : LongInt; var Value : Pointer)
+    procedure(Sender : TObject; Index : Integer; var Value : Pointer)
     of object;
   {event to get color of the item cell}
   TGetItemColorEvent =
-    procedure(Sender : TObject; Index : LongInt; var FG, BG : TColor)
+    procedure(Sender : TObject; Index : Integer; var FG, BG : TColor)
     of object;
   {event to notify of a scroll action}
   TSelectEvent =
-    procedure(Sender : TObject; NewIndex : LongInt)
+    procedure(Sender : TObject; NewIndex : Integer)
     of object;
 
 type
@@ -64,12 +64,12 @@ type
 
   protected {private}
     {property variables}
-    FActiveIndex       : LongInt;       {the focused cell}
+    FActiveIndex       : Integer;       {the focused cell}
     FBorderStyle       : TBorderStyle;  {border around the control}
     FDisabledColors    : TOvcColors;    {colors for disabled fields}
     FHighlightColors   : TOvcColors;    {highlight colors}
     FLineColor         : TColor;        {color of row divider lines}
-    FNumItems          : LongInt;       {total elements in array}
+    FNumItems          : Integer;       {total elements in array}
     FOptions           : TOvcEntryFieldOptions;
     FPadChar           : Char;      {character used to pad end of string}
     FRowHeight         : Integer;       {pixel height of one row}
@@ -87,14 +87,14 @@ type
 
     {internal/working variables}
     aeCell             : TOvcBaseEntryField;{abstract edit cell object}
-    aeDivisor          : LongInt;       {divisor for scroll bar}
-    aeHighIndex        : LongInt;       {highest index value}
+    aeDivisor          : Integer;       {divisor for scroll bar}
+    aeHighIndex        : Integer;       {highest index value}
     aeItemPtr          : Pointer;       {pointer to data element}
     aeNumRows          : Integer;       {visible rows in window}
     aeRangeLo          : TRangeType;    {low field range limit}
     aeRangeHi          : TRangeType;    {high field range limit}
     aeRangeLoaded      : Boolean;       {flag to tell when loaded}
-    aeTopIndex         : LongInt;       {index of the top item}
+    aeTopIndex         : Integer;       {index of the top item}
     aeVSHigh           : Integer;       {vertical scroll limit}
 
     {variables to transfer to the edit cell field}
@@ -106,7 +106,7 @@ type
     function GetRangeLo : string;
     procedure SetBorderStyle(const Value : TBorderStyle);
     procedure SetLineColor(Value : TColor);
-    procedure SetNumItems(Value : LongInt);
+    procedure SetNumItems(Value : Integer);
     procedure SetOptions(Value : TOvcEntryFieldOptions);
     procedure SetPadChar(Value : Char);
     procedure SetRangeHi(const Value : string);
@@ -120,7 +120,7 @@ type
       {-resizes the component so no partial items appear}
     procedure aeColorChanged(AColor : TObject);
       {-highlight color change-repaint}
-    function aeMakeItemVisible(Index : LongInt) : Boolean;
+    function aeMakeItemVisible(Index : Integer) : Boolean;
       {-displays the Index item, scrolling as required}
     procedure aePreFocusProcess;
       {-get ready to receive focus}
@@ -128,15 +128,15 @@ type
       {-called to read the high range from the stream}
     procedure aeReadRangeLo(Stream : TStream);
       {-called to read the low range from the stream}
-    function aeScaleDown(N : LongInt) : SmallInt;
+    function aeScaleDown(N : Integer) : SmallInt;
       {-returns a scaled down scroll bar value}
-    function aeScaleUp(N : SmallInt) : LongInt;
+    function aeScaleUp(N : SmallInt) : Integer;
       {-returns a scaled up scroll bar value}
     procedure aeSetVScrollPos;
       {-sets the vertical scroll bar position}
     procedure aeSetVScrollRange;
       {-sets the horizontal scroll bar position}
-    procedure aeUpdateDisplay(Scrolled : Boolean; OldItem, NewItem : LongInt);
+    procedure aeUpdateDisplay(Scrolled : Boolean; OldItem, NewItem : Integer);
       {-invalidate or scroll necessary region}
     procedure aeWriteRangeHi(Stream : TStream);
       {-called to store the high range on the stream}
@@ -193,21 +193,21 @@ type
       {-cause edit cell to display sample data}
 
     {event wraper methods}
-    procedure DoGetCellValue(Index : LongInt);
+    procedure DoGetCellValue(Index : Integer);
       virtual; abstract;
       {-get the value for the "Index" cell}
-    procedure DoGetItemColor(Index : LongInt; var FG, BG : TColor);
+    procedure DoGetItemColor(Index : Integer; var FG, BG : TColor);
       virtual;
       {-get the color values for the "Index" cell}
-    function DoPutCellValue : LongInt;
+    function DoPutCellValue : Integer;
       dynamic; abstract;
       {-store the current value of the edit cell. Result is error code}
-    procedure DoOnSelect(NewIndex : LongInt);
+    procedure DoOnSelect(NewIndex : Integer);
       dynamic;
       {-perform scroll action notification}
 
     {abstract property method}
-    procedure SetActiveIndex(Value : LongInt);
+    procedure SetActiveIndex(Value : Integer);
       virtual; abstract;
       {-set the active array item}
 
@@ -219,10 +219,10 @@ type
     procedure SetFocus;
       override;
 
-    function WriteCellValue : LongInt;
+    function WriteCellValue : Integer;
       {-write the current cell value. return 0 or error code}
 
-    property ItemIndex : LongInt
+    property ItemIndex : Integer
       read FActiveIndex write SetActiveIndex stored False;
 
   published
@@ -240,7 +240,7 @@ type
     {placed here so RowHeight is set prior to NumItems}
     property RowHeight : Integer
       read FRowHeight write SetRowHeight;
-    property NumItems : LongInt
+    property NumItems : Integer
       read FNumItems write SetNumItems;
     property PadChar : Char
       read FPadChar write SetPadChar;
@@ -342,15 +342,15 @@ type
       {-obtain sample data for the edit cell to display}
 
     {event wrapper methods}
-    procedure DoGetCellValue(Index : LongInt);
+    procedure DoGetCellValue(Index : Integer);
       override;
       {-get the value for the cell with "Index"}
-    function DoPutCellValue : LongInt;
+    function DoPutCellValue : Integer;
       override;
       {-store the current value of the edit cell. Result is error code}
 
     {virtual property method}
-    procedure SetActiveIndex(Value : LongInt);
+    procedure SetActiveIndex(Value : Integer);
       override;
       {-set the active array item}
 
@@ -425,15 +425,15 @@ type
       {-obtain sample data for the edit cell to display}
 
     {event wrapper methods}
-    procedure DoGetCellValue(Index : LongInt);
+    procedure DoGetCellValue(Index : Integer);
       override;
       {-get the value for the cell with "Index"}
-    function DoPutCellValue : LongInt;
+    function DoPutCellValue : Integer;
       override;
       {-store the current value of the edit cell. Result is error code}
 
     {virtual property method}
-    procedure SetActiveIndex(Value : LongInt);
+    procedure SetActiveIndex(Value : Integer);
       override;
       {-set the active array item}
 
@@ -503,15 +503,15 @@ type
       {-obtain sample data for the edit cell to display}
 
     {event wrapper methods}
-    procedure DoGetCellValue(Index : LongInt);
+    procedure DoGetCellValue(Index : Integer);
       override;
       {-get the value for the cell with "Index"}
-    function DoPutCellValue : LongInt;
+    function DoPutCellValue : Integer;
       override;
       {-store the current value of the edit cell. Result is error code}
 
     {virtual property method}
-    procedure SetActiveIndex(Value : LongInt);
+    procedure SetActiveIndex(Value : Integer);
       override;
       {-set the active array item}
 
@@ -579,7 +579,7 @@ begin
   Repaint;
 end;
 
-function TOvcBaseArrayEditor.aeMakeItemVisible(Index : LongInt) : Boolean;
+function TOvcBaseArrayEditor.aeMakeItemVisible(Index : Integer) : Boolean;
 begin
   Result := False;
 
@@ -634,13 +634,13 @@ begin
   aeRangeLoaded := True;
 end;
 
-function TOvcBaseArrayEditor.aeScaleDown(N : LongInt) : SmallInt;
+function TOvcBaseArrayEditor.aeScaleDown(N : Integer) : SmallInt;
   {-returns a scaled down scroll bar value}
 begin
   Result := N div aeDivisor;
 end;
 
-function TOvcBaseArrayEditor.aeScaleUp(N : SmallInt) : LongInt;
+function TOvcBaseArrayEditor.aeScaleUp(N : SmallInt) : Integer;
   {-returns a scaled up scroll bar value}
 begin
   if N = aeVSHigh then
@@ -678,11 +678,11 @@ begin
 end;
 
 procedure TOvcBaseArrayEditor.aeUpdateDisplay(Scrolled : Boolean;
-          OldItem, NewItem : LongInt);
+          OldItem, NewItem : Integer);
   {-invalidate or scroll necessary region}
 var
   ClipArea : TRect;
-  D, Y     : LongInt;
+  D, Y     : Integer;
 begin
   if Scrolled then begin
     D := OldItem - NewItem;
@@ -827,12 +827,12 @@ end;
 
 procedure TOvcBaseArrayEditor.CreateParams(var Params: TCreateParams);
 const
-  ScrollBar : array[Boolean] of LongInt = (0, WS_VSCROLL);
+  ScrollBar : array[Boolean] of Integer = (0, WS_VSCROLL);
 begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or
+    Style := Integer(Style) or
       ScrollBar[FUseScrollBar] or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -896,13 +896,13 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcBaseArrayEditor.DoGetItemColor(Index : LongInt; var FG, BG : TColor);
+procedure TOvcBaseArrayEditor.DoGetItemColor(Index : Integer; var FG, BG : TColor);
 begin
   if Assigned(FOnGetItemColor) then
     FOnGetItemColor(Self, Index, FG, BG);
 end;
 
-procedure TOvcBaseArrayEditor.DoOnSelect(NewIndex : LongInt);
+procedure TOvcBaseArrayEditor.DoOnSelect(NewIndex : Integer);
   {-perform scroll action notification}
 begin
   {if another array editor is connected, pass msg to it}
@@ -926,7 +926,7 @@ procedure TOvcBaseArrayEditor.Paint;
 var
   CR          : TRect;
   IR, Clip    : TRect;
-  I           : LongInt;
+  I           : Integer;
   X, Y        : Integer;
   T           : array[0..MaxEditLen] of Char;
   P           : PChar;
@@ -1062,7 +1062,7 @@ begin
   end;
 end;
 
-procedure TOvcBaseArrayEditor.SetNumItems(Value : LongInt);
+procedure TOvcBaseArrayEditor.SetNumItems(Value : Integer);
 begin
   if csLoading in ComponentState then
     aeNumRows := Height div FRowHeight;
@@ -1229,7 +1229,7 @@ begin
   end;
 end;
 
-function TOvcBaseArrayEditor.WriteCellValue : LongInt;
+function TOvcBaseArrayEditor.WriteCellValue : Integer;
   {-write the current cell value. return 0 or error code}
 begin
   Result := DoPutCellValue;
@@ -1278,7 +1278,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcSimpleArrayEditor.DoGetCellValue(Index : LongInt);
+procedure TOvcSimpleArrayEditor.DoGetCellValue(Index : Integer);
   {-get value for this array index and assign to the edit field}
 begin
   aeItemPtr := nil;
@@ -1293,7 +1293,7 @@ begin
   end;
 end;
 
-function TOvcSimpleArrayEditor.DoPutCellValue : LongInt;
+function TOvcSimpleArrayEditor.DoPutCellValue : Integer;
   {-assign the value of the edit field to the associated variable}
 begin
   Result := 0;
@@ -1301,12 +1301,12 @@ begin
     Result := TSimpleCellField(aeCell).GetValue(aeItemPtr^);
 end;
 
-procedure TOvcSimpleArrayEditor.SetActiveIndex(Value : LongInt);
+procedure TOvcSimpleArrayEditor.SetActiveIndex(Value : Integer);
   {-set the currently selected item}
 var
-  OldItem  : LongInt;
+  OldItem  : Integer;
   Scrolled : Boolean;
-  Err      : LongInt;
+  Err      : Integer;
 begin
   if csDesigning in ComponentState then
     Exit;
@@ -1545,7 +1545,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcPictureArrayEditor.DoGetCellValue(Index : LongInt);
+procedure TOvcPictureArrayEditor.DoGetCellValue(Index : Integer);
   {-get value for this array index and assign to the edit field}
 begin
   aeItemPtr := nil;
@@ -1560,7 +1560,7 @@ begin
   end;
 end;
 
-function TOvcPictureArrayEditor.DoPutCellValue : LongInt;
+function TOvcPictureArrayEditor.DoPutCellValue : Integer;
   {-assign the value of the edit field to the associated variable}
 begin
   Result := 0;
@@ -1568,12 +1568,12 @@ begin
     Result := TPictureCellField(aeCell).GetValue(aeItemPtr^);
 end;
 
-procedure TOvcPictureArrayEditor.SetActiveIndex(Value : LongInt);
+procedure TOvcPictureArrayEditor.SetActiveIndex(Value : Integer);
   {-set the currently selected item}
 var
-  OldItem  : LongInt;
+  OldItem  : Integer;
   Scrolled : Boolean;
-  Err      : LongInt;
+  Err      : Integer;
 begin
   if csDesigning in ComponentState then
     Exit;
@@ -1815,8 +1815,8 @@ begin
   {set defaults}
   aeDataType       := nftLongInt;
   aePictureMask    := '##########';
-  aeRangeHi.rtLong := High(LongInt);
-  aeRangeLo.rtLong := Low(LongInt);
+  aeRangeHi.rtLong := High(Integer);
+  aeRangeLo.rtLong := Low(Integer);
 end;
 
 destructor TOvcNumericArrayEditor.Destroy;
@@ -1825,7 +1825,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcNumericArrayEditor.DoGetCellValue(Index : LongInt);
+procedure TOvcNumericArrayEditor.DoGetCellValue(Index : Integer);
   {-get value for this array index and assign to the edit field}
 begin
   aeItemPtr := nil;
@@ -1840,7 +1840,7 @@ begin
   end;
 end;
 
-function TOvcNumericArrayEditor.DoPutCellValue : LongInt;
+function TOvcNumericArrayEditor.DoPutCellValue : Integer;
   {-assign the value of the edit field to the associated variable}
 begin
   Result := 0;
@@ -1848,12 +1848,12 @@ begin
     Result := TNumericCellField(aeCell).GetValue(aeItemPtr^);
 end;
 
-procedure TOvcNumericArrayEditor.SetActiveIndex(Value : LongInt);
+procedure TOvcNumericArrayEditor.SetActiveIndex(Value : Integer);
   {-set the currently selected item}
 var
-  OldItem  : LongInt;
+  OldItem  : Integer;
   Scrolled : Boolean;
-  Err      : LongInt;
+  Err      : Integer;
 begin
   if csDesigning in ComponentState then
     Exit;

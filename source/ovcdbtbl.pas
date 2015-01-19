@@ -857,7 +857,7 @@ end;
 function TOvcVisibleColumns.IndexOf(ColNum : Integer) : Integer;
 begin
   for Result := 0 to Pred(FList.Count) do
-    if ColNum = LongInt(FList[Result]) then
+    if ColNum = Integer(FList[Result]) then
       Exit;
 
   Result := -1;
@@ -865,7 +865,7 @@ end;
 
 function TOvcVisibleColumns.GetColumn(Index : Integer) : TOvcDbTableColumn;
 begin
-  Result := TOvcDbTableColumn(FTable.Columns[LongInt(FList[Index])]);
+  Result := TOvcDbTableColumn(FTable.Columns[Integer(FList[Index])]);
 end;
 
 function TOvcVisibleColumns.GetCount : Integer;
@@ -883,7 +883,7 @@ var
   Col : Integer;
 begin
   if Index1 <> Index2 then begin
-    Col := LongInt(FList[Index1]);
+    Col := Integer(FList[Index1]);
     Delete(Index1);
     Insert(Index2, Col);
   end;
@@ -1001,7 +1001,7 @@ begin
     if tbIsOnGridLine(Msg.Pos.X, Msg.Pos.Y) then
       Msg.Result := 1
     else
-      Msg.Result := LongInt(tbIsInMoveArea(Msg.Pos.X, Msg.Pos.Y));
+      Msg.Result := NativeInt(tbIsInMoveArea(Msg.Pos.X, Msg.Pos.Y));
   end;
 end;
 
@@ -1098,7 +1098,7 @@ procedure TOvcCustomDbTable.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
   with Params do
-    Style := LongInt(Style) or OvcData.ScrollBarStyles[FScrollBars]
+    Style := Integer(Style) or OvcData.ScrollBarStyles[FScrollBars]
                    or OvcData.BorderStyles[FBorderStyle];
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1179,17 +1179,17 @@ end;
 
 procedure TOvcCustomDbTable.ctimQueryColor(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(Color);
+  Msg.Result := NativeInt(Color);
 end;
 
 procedure TOvcCustomDbTable.ctimQueryFont(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(Font);
+  Msg.Result := NativeInt(Font);
 end;
 
 procedure TOvcCustomDbTable.ctimQueryLockedCols(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(LockedColumns);
+  Msg.Result := NativeInt(LockedColumns);
 end;
 
 procedure TOvcCustomDbTable.ctimQueryLockedRows(var Msg : TMessage);
@@ -1199,12 +1199,12 @@ end;
 
 procedure TOvcCustomDbTable.ctimQueryActiveCol(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(ActiveColumn);
+  Msg.Result := NativeInt(ActiveColumn);
 end;
 
 procedure TOvcCustomDbTable.ctimQueryActiveRow(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(ActiveRow);
+  Msg.Result := NativeInt(ActiveRow);
 end;
 
 procedure TOvcCustomDbTable.ctimRemoveCell(var Msg : TMessage);
@@ -1235,10 +1235,10 @@ begin
       tbSetFocus(tbActiveCell.EditHandle);
 
       if not (tbActiveCell is TOvcTCComboBox) then
-        PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, LongInt(Msg.Pos))
+        PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, Integer(Msg.Pos))
       else if (tbActiveCell is TOvcTCComboBox) then begin
         if TOvcTCComboBox(tbActiveCell).Style <> csDropDownList then
-          PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, LongInt(Msg.Pos));
+          PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, Integer(Msg.Pos));
       end;
 
     end;
@@ -1933,7 +1933,7 @@ begin
     ValidateRect(Handle, @CR);
 
     {validate area occupied by combobox list}
-    SendMessage(tbActiveCell.EditHandle, CB_GETDROPPEDCONTROLRECT, 0, LongInt(@CR));
+    SendMessage(tbActiveCell.EditHandle, CB_GETDROPPEDCONTROLRECT, 0, NativeInt(@CR));
     CR.TopLeft := ScreenToClient(CR.TopLeft);
     CR.BottomRight := ScreenToClient(CR.BottomRight);
     ValidateRect(Handle, @CR);
@@ -4222,7 +4222,7 @@ procedure TOvcCustomDbTable.tbGetFieldValue(AField : TField;
 var
 //  S   : string[255];
 //  I   : SmallInt absolute S;
-//  L   : LongInt absolute S;
+//  L   : Integer absolute S;
 //  W   : Word absolute S;
 //  B   : Boolean absolute S;
 //  E   : Extended absolute S;
@@ -5077,7 +5077,7 @@ procedure TOvcCustomDbTable.tbSetFieldValue(AField : TField;
 var
   S   : string[255];          //SZ FIXME
   I   : SmallInt absolute S;
-  L   : LongInt absolute S;
+  L   : Integer absolute S;
   W   : Word absolute S;
   B   : Boolean absolute S;
   E   : Extended absolute S;
@@ -5267,7 +5267,7 @@ begin
       if IsSequenced then begin
         SINew.nMin := 1;
         SINew.nPage := Self.VisibleRowCount;
-        SINew.nMax := LongInt(DWORD(RecordCount) + SINew.nPage - 1);
+        SINew.nMax := Integer(DWORD(RecordCount) + SINew.nPage - 1);
         if State in [dsInactive, dsBrowse, dsEdit] then
           SINew.nPos := RecNo;  {else keep old pos}
       end else begin
@@ -5335,7 +5335,7 @@ begin
           R.BottomRight := ScreenToClient(R.BottomRight);
           ValidateRect(Handle, @R);
 
-          SendMessage(Msg.lParam, CB_GETDROPPEDCONTROLRECT, 0, LongInt(@R));
+          SendMessage(Msg.lParam, CB_GETDROPPEDCONTROLRECT, 0, NativeInt(@R));
           {validate area occupied by combobox list}
           R.TopLeft := ScreenToClient(R.TopLeft);
           R.BottomRight := ScreenToClient(R.BottomRight);
@@ -5546,7 +5546,7 @@ begin
   if Region = (otrInMain) then begin
     SetActiveCell(Row, Col);
     PostMessage(Handle, ctim_StartEdit, 0, 0);
-    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, LongInt(Msg.Pos));
+    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
   end;
 
   inherited;
@@ -5642,10 +5642,10 @@ begin
           if not (dtoAlwaysEditing in Options) and (ActiveRow = Row) and
              (ActiveColumn = Col) and WasFocused then begin
             PostMessage(Handle, ctim_StartEdit, 0, 0);
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, LongInt(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
           end else if (dtoAlwaysEditing in Options) then begin
             PostMessage(Handle, ctim_StartEdit, 0, 0);
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, LongInt(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
           end;
 
           SetActiveCell(Row, Col);

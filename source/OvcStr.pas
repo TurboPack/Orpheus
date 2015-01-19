@@ -60,7 +60,7 @@ type
 
 function BinaryBPChar(Dest : PChar; B : Byte) : PChar;
   {-Return a binary PChar string for a byte}
-function BinaryLPChar(Dest : PChar; L : LongInt) : PChar;
+function BinaryLPChar(Dest : PChar; L : Integer) : PChar;
   {-Return the binary PChar string for a long integer}
 function BinaryWPChar(Dest : PChar; W : Word) : PChar;
   {-Return the binary PChar string for a word}
@@ -79,7 +79,7 @@ function DetabPChar(Dest : PChar; Src : PChar; TabSize : Byte) : PChar;
   {-Expand tabs in a PChar string to blanks}
 function HexBPChar(Dest : PChar; B : Byte) : PChar;
   {-Return hex PChar string for byte}
-function HexLPChar(Dest : PChar; L : LongInt) : PChar;
+function HexLPChar(Dest : PChar; L : Integer) : PChar;
   {-Return the hex PChar string for a long integer}
 function HexPtrPChar(Dest : PChar; P : Pointer) : PChar;
   {-Return hex PChar string for pointer}
@@ -87,7 +87,7 @@ function HexWPChar(Dest : PChar; W : Word) : PChar;
   {-Return the hex PChar string for a word}
 function LoCaseChar(C : Char) : Char;
   {-Convert C to lower case}
-function OctalLPChar(Dest : PChar; L : LongInt) : PChar;
+function OctalLPChar(Dest : PChar; L : Integer) : PChar;
   {-Return the octal PChar string for a long integer}
 function StrChDeletePrim(P : PChar; Pos : Cardinal) : PChar;
   {-Primitive routine to delete a character from a PChar string}
@@ -108,7 +108,7 @@ function StrStInsertPrim(Dest, S : PChar; Pos : Cardinal) : PChar;
     primitive version modifies the source directly}
 function StrStPos(P, S : PChar; var Pos : Cardinal) : Boolean;
   {-Sets Pos to position of the S in P, returns True if found}
-function StrToLongPChar(S : PChar; var I : LongInt) : Boolean;
+function StrToLongPChar(S : PChar; var I : NativeInt) : Boolean;
   {-Convert a PChar string to a long integer}
 procedure TrimAllSpacesPChar(P : PChar);
   {-Trim leading and trailing blanks from P}
@@ -154,14 +154,14 @@ begin
   Dest^ := #0;
 end;
 
-function BinaryLPChar(Dest : PChar; L : LongInt) : PChar;
-  {-Return binary string for LongInt}
+function BinaryLPChar(Dest : PChar; L : Integer) : PChar;
+  {-Return binary string for Integer}
 var
-  I : LongInt;
+  I : Integer;
 begin
   Result := Dest;
   for I := 31 downto 0 do begin
-    Dest^ := Digits[Ord(L and LongInt(1 shl I) <> 0)]; {0 or 1}
+    Dest^ := Digits[Ord(L and Integer(1 shl I) <> 0)]; {0 or 1}
     Inc(Dest);
   end;
   Dest^ := #0;
@@ -404,7 +404,7 @@ begin
 end;
 
 
-function HexLPChar(Dest : PChar; L : LongInt) : PChar;
+function HexLPChar(Dest : PChar; L : Integer) : PChar;
   {-Return the hex string for a long integer}
 var
   T2 : Array[0..4] of Char;
@@ -418,8 +418,8 @@ function HexPtrPChar(Dest : PChar; P : Pointer) : PChar;
 var
   T2 : Array[0..4] of Char;
 begin
-  StrCat(HexWPChar(Dest, HIWORD(LongInt(P))), ':');
-  Result := StrCat(Dest, HexWPChar(T2, LOWORD(LongInt(P))));
+  StrCat(HexWPChar(Dest, HIWORD(Integer(P))), ':');
+  Result := StrCat(Dest, HexWPChar(T2, LOWORD(NativeInt(P))));
 end;
 
 
@@ -453,7 +453,7 @@ begin
   result := Char(CharLower(PChar(C)));
 end;
 
-function OctalLPChar(Dest : PChar; L : LongInt) : PChar;
+function OctalLPChar(Dest : PChar; L : Integer) : PChar;
   {-Return the octal PChar string for a long integer
 
    Changes:
@@ -633,8 +633,8 @@ begin
   end;
 end;
 
-function StrToLongPChar(S : PChar; var I : LongInt) : Boolean;
-  {-Convert a string to a longint, returning true if successful}
+function StrToLongPChar(S : PChar; var I : NativeInt) : Boolean;
+  {-Convert a string to a Integer, returning true if successful}
 //SZ Unicode verified 27.01.2010
 var
   Code : Cardinal;

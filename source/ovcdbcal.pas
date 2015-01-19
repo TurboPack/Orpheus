@@ -232,7 +232,7 @@ end;
 
 procedure TOvcDbCalendar.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbCalendar.Create(AOwner : TComponent);

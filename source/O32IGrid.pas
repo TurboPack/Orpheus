@@ -89,7 +89,7 @@ type
   TO32GridEdit = class(TCustomMaskEdit)
   protected {private}
     FGrid      : TO32CustomInspectorGrid;
-    FClickTime : Longint;
+    FClickTime : Integer;
     Updating   : Boolean;
     procedure InternalMove(const Loc: TRect; Redraw: Boolean);
     procedure SetGrid(Value: TO32CustomInspectorGrid);
@@ -129,7 +129,7 @@ type
   TO32GridCombo = class(TCustomComboBox)
   protected {private}
     FGrid       : TO32CustomInspectorGrid;
-    FClickTime  : Longint;
+    FClickTime  : Integer;
     FStyle      : TComboBoxStyle;
     Updating   : Boolean;
     procedure InternalMove(const Loc: TRect; Redraw: Boolean);
@@ -166,7 +166,7 @@ type
   TO32GridColorCombo = class(TOvcCustomColorComboBox)
   protected {private}
     FGrid      : TO32CustomInspectorGrid;
-    FClickTime : Longint;
+    FClickTime : Integer;
     FStyle     : TComboBoxStyle;
     Updating   : Boolean;
     procedure InternalMove(const Loc: TRect; Redraw: Boolean);
@@ -204,7 +204,7 @@ type
   TO32GridFontCombo = class(TOvcFontComboBox)
   protected {private}
     FGrid      : TO32CustomInspectorGrid;
-    FClickTime : Longint;
+    FClickTime : Integer;
     FStyle     : TComboBoxStyle;
     Updating   : Boolean;
     procedure InternalMove(const Loc: TRect; Redraw: Boolean);
@@ -409,7 +409,7 @@ type
     FAnchor               : TGridCoord;
     FBorderStyle          : TBorderStyle;
     FCanEditModify        : Boolean;
-    FColCount             : Longint;
+    FColCount             : Integer;
     FColWidths            : Pointer;
     FTabStops             : Pointer;
     FCurrent              : TGridCoord;
@@ -422,20 +422,20 @@ type
     FGridLineWidth        : Integer;
     FOptions              : TGridOptions;
     FReadOnly             : Boolean;
-    FRowCount             : Longint;
+    FRowCount             : Integer;
     FRowHeights           : Pointer;
     FSorted               : Boolean;
     FScrollBars           : TScrollStyle;
     FTopLeft              : TGridCoord;
-    FSizingIndex          : Longint;
+    FSizingIndex          : Integer;
     FSizingPos            : Integer;
     FSizingOfs            : Integer;
-    FMoveIndex            : LongInt;
-    FMovePos              : Longint;
+    FMoveIndex            : Integer;
+    FMovePos              : Integer;
     FHitTest              : TPoint;
     FInplaceEdit          : TWinControl;
-    FInplaceCol           : LongInt;
-    FInplaceRow           : Longint;
+    FInplaceCol           : Integer;
+    FInplaceRow           : Integer;
     FColOffset            : Integer;
     FDefaultDrawing       : Boolean;
     FEditorMode           : Boolean;
@@ -475,10 +475,10 @@ type
     function  CalcMaxTopLeft(const Coord: TGridCoord;
                 const DrawInfo: TGridDrawInfo): TGridCoord;
     procedure CancelMode;
-    procedure ChangeSize(NewColCount, NewRowCount: Longint);
+    procedure ChangeSize(NewColCount, NewRowCount: Integer);
     procedure ClampInView(const Coord: TGridCoord);
     procedure DrawMove;
-    procedure FocusCell(ACol, ARow: Longint; MoveAnchor: Boolean);
+    procedure FocusCell(ACol, ARow: Integer; MoveAnchor: Boolean);
     procedure UpdateCellContents;
     procedure GridRectToScreenRect(GridRect: TGridRect;
                 var ScreenRect: TRect; IncludeLine: Boolean);
@@ -493,26 +493,26 @@ type
     procedure MoveAnchor(const NewAnchor: TGridCoord);
     procedure MoveAndScroll(Mouse, CellHit: Integer; var DrawInfo: TGridDrawInfo;
                 var Axis: TGridAxisDrawInfo; Scrollbar: Integer; const MousePt: TPoint);
-    procedure MoveCurrent(ACol, ARow: Longint; MoveAnchor, Show: Boolean);
-    procedure MoveTopLeft(ALeft, ATop: Longint);
-    procedure ResizeCol(Index: Longint; OldSize, NewSize: Integer);
-    procedure ResizeRow(Index: Longint; OldSize, NewSize: Integer);
+    procedure MoveCurrent(ACol, ARow: Integer; MoveAnchor, Show: Boolean);
+    procedure MoveTopLeft(ALeft, ATop: Integer);
+    procedure ResizeCol(Index: Integer; OldSize, NewSize: Integer);
+    procedure ResizeRow(Index: Integer; OldSize, NewSize: Integer);
     procedure ScrollDataInfo(DX, DY: Integer; var DrawInfo: TGridDrawInfo);
     procedure SelectionMoved(const OldSel: TGridRect);
     procedure TopLeftMoved(const OldTopLeft: TGridCoord);
     procedure UpdateScrollPos;
     procedure UpdateScrollRange;
-    function  GetColWidths(Index: Longint): Integer;
+    function  GetColWidths(Index: Integer): Integer;
     function GetItemCount: Integer;
-    function  GetRowHeights(Index: Longint): Integer;
+    function  GetRowHeights(Index: Integer): Integer;
     function  GetSelection: TGridRect;
-    function  GetTabStops(Index: Longint): Boolean;
+    function  GetTabStops(Index: Integer): Boolean;
     function IsEditing: Boolean;
     function  IsActiveControl: Boolean;
     procedure ReadColWidths(Reader: TReader);
     procedure ReadRowHeights(Reader: TReader);
-    procedure SetCol(Value: Longint);
-    procedure SetColWidths(Index: Longint; Value: Integer);
+    procedure SetCol(Value: Integer);
+    procedure SetColWidths(Index: Integer; Value: Integer);
     procedure SetDefaultRowHeight(Value: Integer);
     procedure SetEditorMode(Value: Boolean);
     procedure SetFixedRows(Value: Integer);
@@ -521,15 +521,15 @@ type
     procedure SetChildIndentation(Value: Word);
     procedure SetOptions(Value: TGridOptions);
     procedure SetReadOnly(Value: Boolean);
-    procedure SetRow(Value: Longint);
+    procedure SetRow(Value: Integer);
     procedure SetImageList(Value: TImageList);
-    procedure SetRowCount(Value: Longint);
-    procedure SetRowHeights(Index: Longint; Value: Integer);
+    procedure SetRowCount(Value: Integer);
+    procedure SetRowHeights(Index: Integer; Value: Integer);
     procedure SetScrollBars(Value: TScrollStyle);
     procedure SetSelection(Value: TGridRect);
     procedure SetSorted(Value: Boolean);
-    procedure SetTabStops(Index: Longint; Value: Boolean);
-    procedure SetTopRow(Value: Longint);
+    procedure SetTabStops(Index: Integer; Value: Boolean);
+    procedure SetTopRow(Value: Integer);
     procedure UpdateEdit;
     procedure UpdateText;
     procedure WriteColWidths(Writer: TWriter);
@@ -557,7 +557,7 @@ type
     procedure CalcDrawInfo(var DrawInfo: TGridDrawInfo);
     procedure CalcFixedInfo(var DrawInfo: TGridDrawInfo);
     procedure CalcSizingState(X, Y: Integer; var State: TGridState;
-                var Index: Longint; var SizingPos, SizingOfs: Integer;
+                var Index: Integer; var SizingPos, SizingOfs: Integer;
                 var FixedInfo: TGridDrawInfo); virtual;
     procedure CalcRowHeight;
     function  CreateEditor: TWinControl; virtual;
@@ -573,11 +573,11 @@ type
     procedure MouseUp(Button: TMouseButton; Shift: TShiftState;
                 X, Y: Integer); override;
 
-    procedure AdjustSize(Index, Amount: Longint; Rows: Boolean); reintroduce; dynamic;
+    procedure AdjustSize(Index, Amount: Integer; Rows: Boolean); reintroduce; dynamic;
 
-    function BoxRect(ALeft, ATop, ARight, ABottom: Longint): TRect;
+    function BoxRect(ALeft, ATop, ARight, ABottom: Integer): TRect;
     procedure DoExit; override;
-    function CellRect(ACol, ARow: Longint): TRect;
+    function CellRect(ACol, ARow: Integer): TRect;
     function CanEditAcceptKey(Key: Char): Boolean; dynamic;
     function CanGridAcceptKey(Key: Word; Shift: TShiftState): Boolean; dynamic;
     function CanEditModify: Boolean; dynamic;
@@ -587,9 +587,9 @@ type
     procedure DoOnExpand(Index: Integer);
     procedure DoOnCollapse(Index: Integer);
     procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
-    function GetEditText(ACol, ARow: Longint): string; dynamic;
-    procedure SetEditText(ACol, ARow: Longint; const Value: string); dynamic;
-    function GetEditMask(ACol, ARow: Longint): string; dynamic;
+    function GetEditText(ACol, ARow: Integer): string; dynamic;
+    procedure SetEditText(ACol, ARow: Integer; const Value: string); dynamic;
+    function GetEditMask(ACol, ARow: Integer): string; dynamic;
     function GetEditLimit: Integer; dynamic;
     function GetGridWidth: Integer;
     function GetGridHeight: Integer;
@@ -597,14 +597,14 @@ type
     procedure ShowEditor;
     procedure ShowEditorChar(Ch: Char);
     procedure EditorChanged;
-    procedure DrawCell(ACol, ARow: Longint; ARect: TRect;
+    procedure DrawCell(ACol, ARow: Integer; ARect: TRect;
                 AState: TGridDrawState); virtual;
     procedure DefineProperties(Filer: TFiler); override;
-    function SelectCell(ACol, ARow: Longint): Boolean; virtual;
-    procedure SizeChanged(OldColCount, OldRowCount: Longint); dynamic;
+    function SelectCell(ACol, ARow: Integer): Boolean; virtual;
+    procedure SizeChanged(OldColCount, OldRowCount: Integer); dynamic;
     function Sizing(X, Y: Integer): Boolean;
     procedure ScrollData(DX, DY: Integer);
-    procedure InvalidateCell(ACol, ARow: Longint);
+    procedure InvalidateCell(ACol, ARow: Integer);
     procedure TopLeftChanged; dynamic;
     procedure TimedScroll(Direction: TGridScrollDirection); dynamic;
     procedure Paint; override;
@@ -656,8 +656,8 @@ type
 
     property AutoExpand: Boolean read FAutoExpand write FAutoExpand;
     property ActiveItem: Integer read FActiveItem write SetActiveItem;
-    property Col: Longint read FCurrent.X write SetCol;
-    property ColWidths[Index: Longint]: Integer read GetColWidths write SetColWidths;
+    property Col: Integer read FCurrent.X write SetCol;
+    property ColWidths[Index: Integer]: Integer read GetColWidths write SetColWidths;
     property DefaultRowHeight: Integer read FDefaultRowHeight write SetDefaultRowHeight default 24;
     property EditCellColor: TColor read FEditCellColor write SetEditCellColor;
     property Editing: Boolean read IsEditing;
@@ -670,12 +670,12 @@ type
     property ItemCount: Integer read GetItemCount;
     property Items[Index: Integer]: TO32InspectorItem read GetItems;
     property Options: TGridOptions read FOptions write SetOptions;
-    property RowHeights[Index: Longint]: Integer read GetRowHeights write SetRowHeights;
+    property RowHeights[Index: Integer]: Integer read GetRowHeights write SetRowHeights;
     property ScrollBars: TScrollStyle read FScrollBars write SetScrollBars default ssBoth;
     property Selection: TGridRect read GetSelection write SetSelection;
-    property TabStops[Index: Longint]: Boolean read GetTabStops write SetTabStops;
-    property TopRow: Longint read FTopLeft.Y write SetTopRow;
-    property ActiveRow: Longint read FCurrent.Y write SetRow;
+    property TabStops[Index: Integer]: Boolean read GetTabStops write SetTabStops;
+    property TopRow: Integer read FTopLeft.Y write SetTopRow;
+    property ActiveRow: Integer read FCurrent.Y write SetRow;
 
   {To be published}
 
@@ -693,7 +693,7 @@ type
     property Images: TImageList read FImages write SetImageList default nil;
     property ParentColor default False;
     property ReadOnly: Boolean read FReadOnly write SetReadOnly default false;
-    property RowCount: Longint read FRowCount;
+    property RowCount: Integer read FRowCount;
     property Selected: TO32InspectorItem read GetSelectedItem;
     property Sorted: Boolean read FSorted write SetSorted default false;
 
@@ -823,7 +823,7 @@ begin
   end;
 end;
 
-function PointInGridRect(Col, Row: Longint; const Rect: TGridRect): Boolean;
+function PointInGridRect(Col, Row: Integer; const Rect: TGridRect): Boolean;
 begin
   Result := (Col >= Rect.Left) and (Col <= Rect.Right) and (Row >= Rect.Top)
     and (Row <= Rect.Bottom);
@@ -898,10 +898,10 @@ begin
 end;
 {=====}
 
-procedure ModifyExtents(var Extents: Pointer; Index, Amount: Longint;
+procedure ModifyExtents(var Extents: Pointer; Index, Amount: Integer;
   Default: Integer);
 var
-  LongSize, OldSize: LongInt;
+  LongSize, OldSize: Integer;
   NewSize: Integer;
   I: Integer;
 begin
@@ -933,7 +933,7 @@ begin
 end;
 {=====}
 
-procedure UpdateExtents(var Extents: Pointer; NewSize: Longint;
+procedure UpdateExtents(var Extents: Pointer; NewSize: Integer;
   Default: Integer);
 var
   OldSize: Integer;
@@ -962,7 +962,7 @@ begin
 end;
 {=====}
 
-function LongMulDiv(Mult1, Mult2, Div1: Longint): Longint; stdcall;
+function LongMulDiv(Mult1, Mult2, Div1: Integer): Integer; stdcall;
   external 'kernel32.dll' name 'MulDiv';
 
 
@@ -1080,7 +1080,7 @@ procedure TO32GridEdit.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, Longint(@Result.StartPos), Longint(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -1144,7 +1144,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, Longint(@Selection.StartPos), Longint(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -1184,7 +1184,7 @@ end;
 
 procedure TO32GridEdit.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, Longint($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
 end;
 {=====}
 
@@ -1254,7 +1254,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, LongInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -1330,7 +1330,7 @@ procedure TO32GridCombo.DropDownList(Value: Boolean);
 var
   R: TRect;
 begin
-  SendMessage(Handle, CB_SHOWDROPDOWN, Longint(Value), 0);
+  SendMessage(Handle, CB_SHOWDROPDOWN, NativeInt(Value), 0);
   R := ClientRect;
   InvalidateRect(Handle, @R, True);
 end;
@@ -1417,7 +1417,7 @@ procedure TO32GridCombo.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, Longint(@Result.StartPos), Longint(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -1477,7 +1477,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, Longint(@Selection.StartPos), Longint(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -1519,7 +1519,7 @@ end;
 
 procedure TO32GridCombo.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, Longint($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
 end;
 {=====}
 
@@ -1567,7 +1567,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, LongInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -1634,7 +1634,7 @@ procedure TO32GridColorCombo.DropDownList(Value: Boolean);
 var
   R: TRect;
 begin
-  SendMessage(Handle, CB_SHOWDROPDOWN, Longint(Value), 0);
+  SendMessage(Handle, CB_SHOWDROPDOWN, NativeInt(Value), 0);
   R := ClientRect;
   InvalidateRect(Handle, @R, True);
 end;
@@ -1720,7 +1720,7 @@ procedure TO32GridColorCombo.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, Longint(@Result.StartPos), Longint(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -1780,7 +1780,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, Longint(@Selection.StartPos), Longint(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -1836,7 +1836,7 @@ end;
 
 procedure TO32GridColorCombo.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, Longint($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
 end;
 {=====}
 
@@ -1884,7 +1884,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, LongInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -1956,7 +1956,7 @@ procedure TO32GridFontCombo.DropDownList(Value: Boolean);
 var
   R: TRect;
 begin
-  SendMessage(Handle, CB_SHOWDROPDOWN, Longint(Value), 0);
+  SendMessage(Handle, CB_SHOWDROPDOWN, NativeInt(Value), 0);
   R := ClientRect;
   InvalidateRect(Handle, @R, True);
 end;
@@ -2042,7 +2042,7 @@ procedure TO32GridFontCombo.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, Longint(@Result.StartPos), Longint(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -2102,7 +2102,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, Longint(@Selection.StartPos), Longint(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -2158,7 +2158,7 @@ end;
 
 procedure TO32GridFontCombo.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, Longint($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
 end;
 {=====}
 
@@ -2209,7 +2209,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, LongInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -3401,20 +3401,20 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.AdjustSize(Index, Amount: Longint; Rows: Boolean);
+procedure TO32CustomInspectorGrid.AdjustSize(Index, Amount: Integer; Rows: Boolean);
 var
   NewCur: TGridCoord;
-  OldRows, OldCols: Longint;
-  MovementX, MovementY: Longint;
+  OldRows, OldCols: Integer;
+  MovementX, MovementY: Integer;
   MoveRect: TGridRect;
   ScrollArea: TRect;
-  AbsAmount: Longint;
+  AbsAmount: Integer;
 
-  function DoSizeAdjust(var Count: Longint; var Extents: Pointer;
-    DefaultExtent: Integer; var Current: Longint): Longint;
+  function DoSizeAdjust(var Count: Integer; var Extents: Pointer;
+    DefaultExtent: Integer; var Current: Integer): Integer;
   var
     I: Integer;
-    NewCount: Longint;
+    NewCount: Integer;
   begin
     NewCount := Count + Amount;
     if NewCount < Index then
@@ -3470,7 +3470,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.BoxRect(ALeft, ATop, ARight, ABottom: Longint): TRect;
+function TO32CustomInspectorGrid.BoxRect(ALeft, ATop, ARight, ABottom: Integer): TRect;
 var
   GridRect: TGridRect;
 begin
@@ -3490,7 +3490,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.CellRect(ACol, ARow: Longint): TRect;
+function TO32CustomInspectorGrid.CellRect(ACol, ARow: Integer): TRect;
 begin
   Result := BoxRect(ACol, ARow, ACol, ARow);
 end;
@@ -3560,7 +3560,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.GetEditMask(ACol, ARow: Longint): string;
+function TO32CustomInspectorGrid.GetEditMask(ACol, ARow: Integer): string;
 var
   Mask: string;
 begin
@@ -3571,7 +3571,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.GetEditText(ACol, ARow: Longint): string;
+function TO32CustomInspectorGrid.GetEditText(ACol, ARow: Integer): string;
 var
   Text: string;
 begin
@@ -3584,7 +3584,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetEditText(ACol, ARow: Longint; const Value: string);
+procedure TO32CustomInspectorGrid.SetEditText(ACol, ARow: Integer; const Value: string);
 begin
   TO32InspectorItem(FItems.VisibleItems[ARow]).AsString := Value;
 end;
@@ -3712,7 +3712,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.DrawCell(ACol, ARow: Longint; ARect: TRect;
+procedure TO32CustomInspectorGrid.DrawCell(ACol, ARow: Integer; ARect: TRect;
   AState: TGridDrawState);
 
   procedure DrawGlyph(ARect: TRect; Item: Integer);
@@ -3919,12 +3919,12 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.SelectCell(ACol, ARow: Longint): Boolean;
+function TO32CustomInspectorGrid.SelectCell(ACol, ARow: Integer): Boolean;
 begin
   Result := True;
 end;
 
-procedure TO32CustomInspectorGrid.SizeChanged(OldColCount, OldRowCount: Longint);
+procedure TO32CustomInspectorGrid.SizeChanged(OldColCount, OldRowCount: Integer);
 begin
 end;
 {=====}
@@ -3933,7 +3933,7 @@ function TO32CustomInspectorGrid.Sizing(X, Y: Integer): Boolean;
 var
   DrawInfo: TGridDrawInfo;
   State: TGridState;
-  Index: Longint;
+  Index: Integer;
   Pos, Ofs: Integer;
 begin
   State := FGridState;
@@ -3961,10 +3961,10 @@ var
   FocRect: TRect;
   I: Integer;
 
-  procedure DrawCells(ACol, ARow: Longint; StartX, StartY, StopX, StopY: Integer;
+  procedure DrawCells(ACol, ARow: Integer; StartX, StartY, StopX, StopY: Integer;
     Color: TColor; IncludeDrawState: TGridDrawState);
   var
-    CurCol, CurRow: Longint;
+    CurCol, CurRow: Integer;
     Where: TRect;
     DrawState: TGridDrawState;
     Focused: Boolean;
@@ -4084,7 +4084,7 @@ function TO32CustomInspectorGrid.CalcCoordFromPoint(X, Y: Integer;
 
   function DoCalc(const AxisInfo: TGridAxisDrawInfo; N: Integer): Integer;
   var
-    I, Start, Stop: Longint;
+    I, Start, Stop: Integer;
     Line: Integer;
   begin
     with AxisInfo do
@@ -4116,7 +4116,7 @@ function TO32CustomInspectorGrid.CalcCoordFromPoint(X, Y: Integer;
 
   function DoCalcRightToLeft(const AxisInfo: TGridAxisDrawInfo; N: Integer): Integer;
   var
-    I, Start, Stop: Longint;
+    I, Start, Stop: Integer;
     Line: Integer;
   begin
     N := ClientWidth - N;
@@ -4233,7 +4233,7 @@ function TO32CustomInspectorGrid.CalcMaxTopLeft(const Coord: TGridCoord;
   function CalcMaxCell(const Axis: TGridAxisDrawInfo; Start: Integer): Integer;
   var
     Line: Integer;
-    I, Extent: Longint;
+    I, Extent: Integer;
   begin
     Result := Start;
     with Axis do
@@ -4265,7 +4265,7 @@ end;
 {=====}
 
 procedure TO32CustomInspectorGrid.CalcSizingState(X, Y: Integer; var State: TGridState;
-  var Index: Longint; var SizingPos, SizingOfs: Integer;
+  var Index: Integer; var SizingPos, SizingOfs: Integer;
   var FixedInfo: TGridDrawInfo);
 
   procedure CalcAxisState(const AxisInfo: TGridAxisDrawInfo; Pos: Integer;
@@ -4354,9 +4354,9 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.ChangeSize(NewColCount, NewRowCount: Longint);
+procedure TO32CustomInspectorGrid.ChangeSize(NewColCount, NewRowCount: Integer);
 var
-  OldColCount, OldRowCount: Longint;
+  OldColCount, OldRowCount: Integer;
   OldDrawInfo: TGridDrawInfo;
 
   procedure MinRedraw(const OldInfo, NewInfo: TGridAxisDrawInfo; Axis: Integer);
@@ -4480,7 +4480,7 @@ end;
 {=====}
 
 { - modified}
-procedure TO32CustomInspectorGrid.FocusCell(ACol, ARow: Longint; MoveAnchor: Boolean);
+procedure TO32CustomInspectorGrid.FocusCell(ACol, ARow: Integer; MoveAnchor: Boolean);
 begin
   UpdateCellContents;
   MoveCurrent(ACol, ARow, MoveAnchor, True);
@@ -4554,7 +4554,7 @@ procedure TO32CustomInspectorGrid.GridRectToScreenRect(GridRect: TGridRect;
 
   function LinePos(const AxisInfo: TGridAxisDrawInfo; Line: Integer): Integer;
   var
-    Start, I: Longint;
+    Start, I: Integer;
   begin
     with AxisInfo do
     begin
@@ -4647,7 +4647,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.InvalidateCell(ACol, ARow: Longint);
+procedure TO32CustomInspectorGrid.InvalidateCell(ACol, ARow: Integer);
 var
   Rect: TGridRect;
 begin
@@ -4682,13 +4682,13 @@ var
   DrawInfo: TGridDrawInfo;
   RTLFactor: Integer;
 
-  function MaxNum: Longint;
+  function MaxNum: Integer;
   begin
     if ScrollBar = SB_HORZ then Result := MaxTopLeft.X
     else Result := MaxTopLeft.Y;
   end;
 
-  function PageUp: Longint;
+  function PageUp: Integer;
   var
     MaxTopLeft: TGridCoord;
   begin
@@ -4699,7 +4699,7 @@ var
     if Result < 1 then Result := 1;
   end;
 
-  function PageDown: Longint;
+  function PageDown: Integer;
   var
     DrawInfo: TGridDrawInfo;
   begin
@@ -4711,7 +4711,7 @@ var
     if Result < 1 then Result := 1;
   end;
 
-  function CalcScrollBar(Value, ARTLFactor: Longint): Longint;
+  function CalcScrollBar(Value, ARTLFactor: Integer): Integer;
   begin
     Result := Value;
     case ScrollCode of
@@ -4780,7 +4780,7 @@ var
   end;
 
 var
-  Temp: Longint;
+  Temp: Integer;
 begin
   RTLFactor := 1;
   if Visible and CanFocus and TabStop and not (csDesigning in ComponentState) then
@@ -4826,7 +4826,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.MoveCurrent(ACol, ARow: Longint; MoveAnchor,
+procedure TO32CustomInspectorGrid.MoveCurrent(ACol, ARow: Integer; MoveAnchor,
   Show: Boolean);
 var
   OldSel: TGridRect;
@@ -4855,7 +4855,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.MoveTopLeft(ALeft, ATop: Longint);
+procedure TO32CustomInspectorGrid.MoveTopLeft(ALeft, ATop: Integer);
 var
   OldTopLeft: TGridCoord;
 begin
@@ -4868,13 +4868,13 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.ResizeCol(Index: Longint; OldSize, NewSize: Integer);
+procedure TO32CustomInspectorGrid.ResizeCol(Index: Integer; OldSize, NewSize: Integer);
 begin
   InvalidateGrid;
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.ResizeRow(Index: Longint; OldSize, NewSize: Integer);
+procedure TO32CustomInspectorGrid.ResizeRow(Index: Integer; OldSize, NewSize: Integer);
 begin
   InvalidateGrid;
 end;
@@ -4950,10 +4950,10 @@ end;
 procedure TO32CustomInspectorGrid.TopLeftMoved(const OldTopLeft: TGridCoord);
 
   function CalcScroll(const AxisInfo: TGridAxisDrawInfo;
-    OldPos, CurrentPos: Integer; var Amount: Longint): Boolean;
+    OldPos, CurrentPos: Integer; var Amount: Integer): Boolean;
   var
-    Start, Stop: Longint;
-    I: Longint;
+    Start, Stop: Integer;
+    I: Integer;
   begin
     Result := False;
     with AxisInfo do
@@ -5062,7 +5062,7 @@ var
     MaxTopLeft := CalcMaxTopLeft(MaxTopLeft, DrawInfo);
   end;
 
-  procedure SetAxisRange(var Max, Old, Current: Longint; Code: Word;
+  procedure SetAxisRange(var Max, Old, Current: Integer; Code: Word;
     Fixeds: Integer);
   begin
     CalcSizeInfo;
@@ -5220,7 +5220,7 @@ var
     if PageHeight < 1 then PageHeight := 1;
   end;
 
-  procedure Restrict(var Coord: TGridCoord; MinX, MinY, MaxX, MaxY: Longint);
+  procedure Restrict(var Coord: TGridCoord; MinX, MinY, MaxX, MaxY: Integer);
   begin
     with Coord do
     begin
@@ -5533,7 +5533,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.GetColWidths(Index: Longint): Integer;
+function TO32CustomInspectorGrid.GetColWidths(Index: Integer): Integer;
 begin
   if (FColWidths = nil) or (Index >= 2) then
     Result := 64{DefaultColWidth}
@@ -5548,7 +5548,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.GetRowHeights(Index: Longint): Integer;
+function TO32CustomInspectorGrid.GetRowHeights(Index: Integer): Integer;
 begin
   if (FRowHeights = nil) or (Index >= RowCount) then
     Result := DefaultRowHeight
@@ -5581,7 +5581,7 @@ begin
 end;
 {=====}
 
-function TO32CustomInspectorGrid.GetTabStops(Index: Longint): Boolean;
+function TO32CustomInspectorGrid.GetTabStops(Index: Integer): Boolean;
 begin
   if FTabStops = nil then Result := True
   else Result := Boolean(PIntArray(FTabStops)^[Index + 1]);
@@ -5594,13 +5594,13 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetCol(Value: Longint);
+procedure TO32CustomInspectorGrid.SetCol(Value: Integer);
 begin
   if Col <> Value then FocusCell(Value, ActiveRow, True);
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetColWidths(Index: Longint; Value: Integer);
+procedure TO32CustomInspectorGrid.SetColWidths(Index: Integer; Value: Integer);
 begin
   if FColWidths = nil then
     UpdateExtents(FColWidths, 2, 64);
@@ -5703,7 +5703,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetRow(Value: Longint);
+procedure TO32CustomInspectorGrid.SetRow(Value: Integer);
 begin
   if ActiveRow <> Value then FocusCell(Col, Value, True);
 end;
@@ -5716,7 +5716,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetRowCount(Value: Longint);
+procedure TO32CustomInspectorGrid.SetRowCount(Value: Integer);
 begin
   if FRowCount <> Value then
   begin
@@ -5726,7 +5726,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetRowHeights(Index: Longint; Value: Integer);
+procedure TO32CustomInspectorGrid.SetRowHeights(Index: Integer; Value: Integer);
 begin
   if FRowHeights = nil then
     UpdateExtents(FRowHeights, RowCount, DefaultRowHeight);
@@ -5772,7 +5772,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetTabStops(Index: Longint; Value: Boolean);
+procedure TO32CustomInspectorGrid.SetTabStops(Index: Integer; Value: Boolean);
 begin
   if FTabStops = nil then
     UpdateExtents(FTabStops, 2, Integer(True));
@@ -5782,7 +5782,7 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.SetTopRow(Value: Longint);
+procedure TO32CustomInspectorGrid.SetTopRow(Value: Integer);
 begin
   if FTopLeft.Y <> Value then MoveTopLeft(0, Value);
 end;
@@ -5901,7 +5901,7 @@ procedure TO32CustomInspectorGrid.WMSetCursor(var Msg: TWMSetCursor);
 var
   DrawInfo: TGridDrawInfo;
   State: TGridState;
-  Index: Longint;
+  Index: Integer;
   Pos, Ofs: Integer;
   Cur: HCURSOR;
 begin
@@ -6046,7 +6046,7 @@ end;
 
 procedure TO32CustomInspectorGrid.CMDesignHitTest(var Msg: TCMDesignHitTest);
 begin
-  Msg.Result := Longint(BOOL(Sizing(Msg.Pos.X, Msg.Pos.Y)));
+  Msg.Result := NativeInt(BOOL(Sizing(Msg.Pos.X, Msg.Pos.Y)));
 end;
 {=====}
 

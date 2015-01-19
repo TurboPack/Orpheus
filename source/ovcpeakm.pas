@@ -163,7 +163,7 @@ implementation
 uses
   OvcFormatSettings;
 
-function TIntToStr(L : LongInt) : String;
+function TIntToStr(L : Integer) : String;
 var
   i,j : Integer;
 begin
@@ -347,8 +347,8 @@ begin
     end else
       ScaleMargin := 0;
     MeterLen := ClHeight - (MarginTop+MarginBottom);
-    DividerPos := round((longint(Value) * MeterLen / (AxMax-TickSep)));
-    PeakPos := ClRect.Top + MarginTop + MeterLen - round((longint(Peak) * MeterLen / (AxMax-TickSep)));
+    DividerPos := round((Integer(Value) * MeterLen / (AxMax-TickSep)));
+    PeakPos := ClRect.Top + MarginTop + MeterLen - round((Integer(Peak) * MeterLen / (AxMax-TickSep)));
     UsedLen := DividerPos;
     UnusedLen := MeterLen - UsedLen;
     if ShowValues then
@@ -399,15 +399,15 @@ begin
         Pen.Color := BarColor;
         First := True;
         if HistorySize > 0 then begin
-          MoveTo(HistorySize + X, MarginTop + MeterLen - round((longint(Value) * MeterLen / (AxMax-TickSep))));
+          MoveTo(HistorySize + X, MarginTop + MeterLen - round((Integer(Value) * MeterLen / (AxMax-TickSep))));
           for i := 0 to pred(HistorySize) do
             if FHistory^[i] <> -1 then
               if First then begin
-                MoveTo(X+i, MarginTop + MeterLen - round((longint(FHistory^[i]) * MeterLen / (AxMax-TickSep))));
+                MoveTo(X+i, MarginTop + MeterLen - round((Integer(FHistory^[i]) * MeterLen / (AxMax-TickSep))));
                 First := False;
               end else
-                LineTo(X+i, MarginTop + MeterLen - round((longint(FHistory^[i]) * MeterLen / (AxMax-TickSep))));
-          LineTo(HistorySize + X, MarginTop + MeterLen - round((longint(Value) * MeterLen / (AxMax-TickSep))));
+                LineTo(X+i, MarginTop + MeterLen - round((Integer(FHistory^[i]) * MeterLen / (AxMax-TickSep))));
+          LineTo(HistorySize + X, MarginTop + MeterLen - round((Integer(Value) * MeterLen / (AxMax-TickSep))));
         end;
       end;
     end;

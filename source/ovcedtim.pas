@@ -77,13 +77,13 @@ type
     FOnSetTime           : TNotifyEvent;
 
     {property methods}
-    function GetAsHours : LongInt;
-    function GetAsMinutes : LongInt;
-    function GetAsSeconds : LongInt;
+    function GetAsHours : Integer;
+    function GetAsMinutes : Integer;
+    function GetAsSeconds : Integer;
     function GetTime : TDateTime;
-    procedure SetAsHours(Value : LongInt);
-    procedure SetAsMinutes(Value : LongInt);
-    procedure SetAsSeconds(Value : LongInt);
+    procedure SetAsHours(Value : Integer);
+    procedure SetAsMinutes(Value : Integer);
+    procedure SetAsSeconds(Value : Integer);
     procedure SetDurationDisplay(Value : TOvcDurationDisplay);
     procedure SetShowSeconds(Value : Boolean);
     procedure SetShowUnits(Value : Boolean);
@@ -140,11 +140,11 @@ type
     {public properties}
     property AsDateTime : TDateTime
       read GetTime write SetTime;
-    property AsHours : LongInt
+    property AsHours : Integer
       read GetAsHours write SetAsHours;
-    property AsMinutes : LongInt
+    property AsMinutes : Integer
       read GetAsMinutes write SetAsMinutes;
-    property AsSeconds : LongInt
+    property AsSeconds : Integer
       read GetAsSeconds write SetAsSeconds;
   end;
 
@@ -221,7 +221,7 @@ implementation
 uses
   OVCStr, OvcFormatSettings;
 
-procedure DateTimeToHMS(D : TDateTime; var H, M, S : LongInt);
+procedure DateTimeToHMS(D : TDateTime; var H, M, S : Integer);
 var
   HS, Days : Double;
 begin
@@ -235,7 +235,7 @@ begin
   H := Trunc(H  + Days * 24);
 end;
 
-function HMSToDateTime(H, M, S : LongInt) : TDateTime;
+function HMSToDateTime(H, M, S : Integer) : TDateTime;
 var
   HID, MID, SID : Double;
 begin
@@ -275,7 +275,7 @@ end;
 
 function TOvcCustomTimeEdit.FormatTime(Value : TDateTime) : string;
 var
-  H, M, S  : LongInt;
+  H, M, S  : Integer;
   TimeMask : string;
 begin
   TimeMask := OvcIntlSup.InternationalTime(FShowSeconds);
@@ -316,25 +316,25 @@ begin
   end;
 end;
 
-function TOvcCustomTimeEdit.GetAsHours : LongInt;
+function TOvcCustomTimeEdit.GetAsHours : Integer;
 var
-  H, M, S  : LongInt;
+  H, M, S  : Integer;
 begin
   DateTimeToHMS(FTime, H, M, S);
   Result := H;
 end;
 
-function TOvcCustomTimeEdit.GetAsMinutes : LongInt;
+function TOvcCustomTimeEdit.GetAsMinutes : Integer;
 var
-  H, M, S  : LongInt;
+  H, M, S  : Integer;
 begin
   DateTimeToHMS(FTime, H, M, S);
   Result := H*60+M;
 end;
 
-function TOvcCustomTimeEdit.GetAsSeconds : LongInt;
+function TOvcCustomTimeEdit.GetAsSeconds : Integer;
 var
-  H, M, S  : LongInt;
+  H, M, S  : Integer;
 begin
   DateTimeToHMS(FTime, H, M, S);
   Result := (H*60+M)*60+S;
@@ -346,7 +346,7 @@ begin
   Result := FTime;
 end;
 
-procedure TOvcCustomTimeEdit.SetAsHours(Value : LongInt);
+procedure TOvcCustomTimeEdit.SetAsHours(Value : Integer);
 var
   D, H : Integer;
 begin
@@ -356,7 +356,7 @@ begin
   SetTime(D + EncodeTime(H, 0, 0, 0));
 end;
 
-procedure TOvcCustomTimeEdit.SetAsMinutes(Value : LongInt);
+procedure TOvcCustomTimeEdit.SetAsMinutes(Value : Integer);
 var
   D, H, M : Integer;
 begin
@@ -368,7 +368,7 @@ begin
   SetTime(D + EncodeTime(H, M, 0, 0));
 end;
 
-procedure TOvcCustomTimeEdit.SetAsSeconds(Value : LongInt);
+procedure TOvcCustomTimeEdit.SetAsSeconds(Value : Integer);
 var
   D, H, M, S : Integer;
 begin

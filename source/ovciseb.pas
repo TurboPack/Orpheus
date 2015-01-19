@@ -63,7 +63,7 @@ type
 
     {internal methods}
     procedure isTimerEvent(Sender : TObject; Handle : Integer;
-                           Interval : Cardinal; ElapsedTime : LongInt);
+                           Interval : Cardinal; ElapsedTime : Integer);
 
   protected
     procedure DoExit;
@@ -152,7 +152,7 @@ begin
 end;
 
 procedure TOvcBaseISE.isTimerEvent(Sender : TObject;
-          Handle : Integer; Interval : Cardinal; ElapsedTime : LongInt);
+          Handle : Integer; Interval : Cardinal; ElapsedTime : Integer);
 begin
   {perform a search if modified}
   if Modified then begin

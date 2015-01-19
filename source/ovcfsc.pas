@@ -79,9 +79,9 @@ type
     {property variables}
     FAcceleration    : Integer;         {value used to determine acceleration}
     FAutoRepeat      : Boolean;         {repeat if button held}
-    FDelayTime       : LongInt;
+    FDelayTime       : Integer;
     FDelta           : Double;          {amount to change by}
-    FRepeatCount     : LongInt;
+    FRepeatCount     : Integer;
     FFocusedControl  : TWinControl;     {the control to give the focus to}
     FShowArrows      : Boolean;
     FStyle           : TOvcFlatSpinnerStyle;
@@ -91,7 +91,7 @@ type
     FOnClick         : TFlatSpinClickEvent;
 
     {private instance variables}
-    fscNextMsgTime    : LongInt;
+    fscNextMsgTime    : Integer;
 
     {regions for the five spin button sections}
     fscUpRgn          : hRgn;
@@ -204,7 +204,7 @@ type
     procedure SetBounds(ALeft, ATop, AWidth, AHeight: Integer);
       override;
 
-    property RepeatCount : LongInt
+    property RepeatCount : Integer
       read FRepeatCount;
 
   published
@@ -242,7 +242,7 @@ type
       read FDelta
       write FDelta;
 
-    property DelayTime : LongInt
+    property DelayTime : Integer
       read FDelayTime
       write FDelayTime
       default 500;
@@ -398,7 +398,7 @@ begin
               ((FFocusedControl is TOvcBaseEntryField) or
               (FFocusedControl is TCustomEdit))) then begin
     if fscMouseOverBtn then begin
-      if LongInt(GetTickCount) > fscNextMsgTime then begin
+      if Integer(GetTickCount) > fscNextMsgTime then begin
 
         {auto link with Orpheus entry fields}
         if Assigned(FFocusedControl) and (FFocusedControl is TOvcBaseEntryField) then begin
@@ -429,7 +429,7 @@ begin
           FOnClick(Self, State, Delta, FWrapMode);
 
         {setup for next time}
-        fscNextMsgTime := LongInt(GetTickCount) + DelayTime - Acceleration*10*FRepeatCount;
+        fscNextMsgTime := Integer(GetTickCount) + DelayTime - Acceleration*10*FRepeatCount;
         Inc(FRepeatCount);
       end;
     end;

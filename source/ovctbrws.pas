@@ -143,7 +143,7 @@ function NewRowStyle(AHeight : integer; AHidden : boolean) : PRowStyle;
       end;
   end;
 {--------}
-function DelRow(Index : longint; Item : pointer; ExtraData : pointer) : boolean; far;
+function DelRow(Index : Integer; Item : pointer; ExtraData : pointer) : boolean; far;
   {-Iterator to delete a row style from the sparse list}
   var
     R : PRowStyle absolute Item;
@@ -360,7 +360,7 @@ type
     M, D : integer;
   end;
   {------}
-function ScaleHeight(Index : longint; Item : pointer;
+function ScaleHeight(Index : Integer; Item : pointer;
                      ExtraData : pointer) : boolean; far;
   var
     RS : PRowStyle absolute Item;

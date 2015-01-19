@@ -46,9 +46,9 @@ uses
   OvcDate, O32SR;
 
 const
-  BorderStyles    : array[TBorderStyle] of LongInt =
+  BorderStyles    : array[TBorderStyle] of Integer =
                     (0, WS_BORDER);
-  ScrollBarStyles : array [UITypes.TScrollStyle] of LongInt =
+  ScrollBarStyles : array [UITypes.TScrollStyle] of Integer =
                     (0, WS_HSCROLL, WS_VSCROLL, WS_HSCROLL or WS_VSCROLL);
 
 {some colors that are not defined by Delphi}
@@ -264,15 +264,15 @@ type
     02 : (rtSht  : ShortInt);             {01}
     03 : (rtInt  : SmallInt);             {02}
     04 : (rtWord : Word);                 {02}
-    05 : (rtLong : LongInt);              {04}
+    05 : (rtLong : NativeInt);            {04}
     06 : (rtSgl  : Single);               {04}
     07 : (rtPtr  : Pointer);              {04}
      08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
     10 : (rtComp : Comp);                 {08}
     11 : (rtExt  : Extended);             {10}
-    12 : (rtDate : LongInt);              {04}
-    13 : (rtTime : LongInt);              {04}
+    12 : (rtDate : Integer);              {04}
+    13 : (rtTime : Integer);              {04}
     14 : (rt10   : array[1..10] of Byte); {10} {forces structure to size of 10 bytes}
   end;
 
@@ -324,7 +324,7 @@ type
            Key2  : Byte;     {second keys' virtual key code, if any}
            SS2   : Byte;     {shift state of second key}
            Cmd   : Word);    {command to return for this entry}
-      1 : (Keys  : LongInt); {used for sorting, searching, and storing}
+      1 : (Keys  : Integer); {used for sorting, searching, and storing}
   end;
 
 const
@@ -408,7 +408,7 @@ const
   OM_ISATTACHED          = OM_FIRST + 17;
     {sent to other controls to see if they are attached. Used by attached
      button components and components that use an internal validator.
-     Result is LongInt(Self) if true}
+     Result is Integer(Self) if true}
   OM_VALIDATE            = OM_FIRST + 18;
     {Sent to the FlexEdit as a call for it to Validate Itself}
 
@@ -419,33 +419,33 @@ type
     Msg    : Cardinal;
     Error  : Word;
     Unused : Word;
-    lParam : LongInt;
-    Result : LongInt;
+    lParam : Integer;
+    Result : Integer;
   end;
 
   TOMSetFocus = packed record
     Msg    : Cardinal;
     wParam : Integer;
     Control: TWinControl;
-    Result : LongInt;
+    Result : Integer;
   end;
 
   TOMShowStatus = packed record
     Msg    : Cardinal;
     Column : Integer;
-    Line   : LongInt;
-    Result : LongInt;
+    Line   : Integer;
+    Result : Integer;
   end;
 
 
 type
   TShowStatusEvent =
-    procedure(Sender : TObject; LineNum : LongInt; ColNum : Integer)
+    procedure(Sender : TObject; LineNum : Integer; ColNum : Integer)
     of object;
     {-event to notify of a viewer or editor caret position change}
 
   TTopLineChangedEvent =
-    procedure(Sender : TObject; Line : LongInt)
+    procedure(Sender : TObject; Line : Integer)
     of object;
     {-event to notify when the top line changes for the editor or viewer}
 

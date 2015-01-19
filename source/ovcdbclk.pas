@@ -147,7 +147,7 @@ end;
 
 procedure TOvcDbClock.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 
 constructor TOvcDbClock.Create(AOwner : TComponent);

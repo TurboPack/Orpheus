@@ -295,7 +295,7 @@ type
 
     {property methods}
     function GetAsFloat : Double;
-    function GetAsInteger : LongInt;
+    function GetAsInteger : Integer;
     function GetAsString : string;
     function GetPopupColors : TOvcCalcColors;
     function GetPopupDecimals : Integer;
@@ -303,7 +303,7 @@ type
     function GetPopupHeight : Integer;
     function GetPopupWidth : Integer;
     procedure SetAsFloat(Value : Double);
-    procedure SetAsInteger(Value : LongInt);
+    procedure SetAsInteger(Value : Integer);
     procedure SetAsString(const Value : string);
     procedure SetPopupColors(Value : TOvcCalcColors);
     procedure SetPopupDecimals(Value : Integer);
@@ -324,7 +324,7 @@ type
 
     destructor Destroy; override;
 
-    property AsInteger : LongInt
+    property AsInteger : Integer
       read GetAsInteger
       write SetAsInteger;
 
@@ -802,7 +802,7 @@ begin
   Result := StrToFloat(S);
 end;
 
-function TOvcBorderedNumberEdit.GetAsInteger : LongInt;
+function TOvcBorderedNumberEdit.GetAsInteger : Integer;
 begin
   Result := Round(GetAsFloat);
 end;
@@ -870,7 +870,7 @@ begin
   Text := FloatToStr(Value);
 end;
 
-procedure TOvcBorderedNumberEdit.SetAsInteger(Value : LongInt);
+procedure TOvcBorderedNumberEdit.SetAsInteger(Value : Integer);
 begin
   Text := IntToStr(Value);
 end;

@@ -66,15 +66,15 @@ type
     LastPage : POvcPoolPage;
     LastPageTop : Pointer;
     LastPageEnd : Pointer;
-    InternalSize : LongInt;
-    ItemsPerPage : LongInt;
+    InternalSize : Integer;
+    ItemsPerPage : Integer;
     DeletedList : Pointer;
     OwnerThread : DWord;
   protected
     procedure NewPage;
   public
     procedure Clear;
-    constructor Create(ItemSize : LongInt);
+    constructor Create(ItemSize : Integer);
     destructor Destroy; override;
     function NewItem : Pointer;
     procedure DeleteItem(Item : Pointer);
@@ -238,8 +238,8 @@ type
   TOvcFCRemoveNotifier = procedure(const Value) of object;
   TOvcLiteCache = class
   protected
-    function GetTimeStamp(Index: Integer): LongInt;
-    procedure SetTimeStamp(Index: Integer; const Value: LongInt);
+    function GetTimeStamp(Index: Integer): NativeInt;
+    procedure SetTimeStamp(Index: Integer; const Value: NativeInt);
     function GetKeySlot(Index: Integer): Pointer;
     function GetValueSlot(Index: Integer): Pointer;
   protected
@@ -248,7 +248,7 @@ type
     FCacheSize : Integer;
     FRemoveNotifier : TOvcFCRemoveNotifier;
     FValueSize : Integer;
-    property TimeStamp[Index : Integer] : LongInt read GetTimeStamp write SetTimeStamp;
+    property TimeStamp[Index : Integer] : NativeInt read GetTimeStamp write SetTimeStamp;
     property KeySlot[Index : Integer] : Pointer read GetKeySlot;
     property ValueSlot[Index : Integer] : Pointer read GetValueSlot;
   public
@@ -762,7 +762,7 @@ end;
 
 procedure TOvcLiteCache.AddValue(Key : Pointer; const Value);
 var
-  Old : LongInt;
+  Old : Integer;
   i,NewSlot : Integer;
 begin
   if CacheCount >= FCacheSize then begin
@@ -804,7 +804,7 @@ end;
 constructor TOvcLiteCache.Create(ValueSize, CacheSize: Integer);
 begin
   GetMem(Buffer, CacheSize *
-    (sizeof(Pointer) + ValueSize + sizeof(LongInt))); {Key, Value, Time stamp}
+    (sizeof(Pointer) + ValueSize + sizeof(Integer))); {Key, Value, Time stamp}
   CacheCount := 0;
   FCacheSize := CacheSize;
   FValueSize := ValueSize;
@@ -813,20 +813,20 @@ end;
 destructor TOvcLiteCache.Destroy;
 begin
   Clear;
-  FreeMem(Buffer{, FCacheSize * (sizeof(Pointer) + FValueSize + sizeof(LongInt))});
+  FreeMem(Buffer{, FCacheSize * (sizeof(Pointer) + FValueSize + sizeof(Integer))});
     {last item is size of time stamp}
   inherited Destroy;
 end;
 
 function TOvcLiteCache.GetKeySlot(Index: Integer): Pointer;
 begin
-  Result := @PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))];
+  Result := @PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(Integer))];
 end;
 
-function TOvcLiteCache.GetTimeStamp(Index: Integer): LongInt;
+function TOvcLiteCache.GetTimeStamp(Index: Integer): NativeInt;
 begin
-  Result := LongInt(Pointer(@
-    PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))
+  Result := NativeInt(Pointer(@
+    PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(Integer))
       + sizeof(Pointer) + FValueSize])^);
 end;
 
@@ -850,7 +850,7 @@ end;
 function TOvcLiteCache.GetValueSlot(Index: Integer): Pointer;
 begin
   Result := @PByte(Buffer)[Index * (sizeof(Pointer)
-    + FValueSize + sizeof(LongInt)) + sizeof(Pointer)];
+    + FValueSize + sizeof(Integer)) + sizeof(Pointer)];
 end;
 
 procedure TOvcLiteCache.RemoveValue(Key : Pointer);
@@ -864,10 +864,10 @@ begin
     end;
 end;
 
-procedure TOvcLiteCache.SetTimeStamp(Index: Integer; const Value: LongInt);
+procedure TOvcLiteCache.SetTimeStamp(Index: Integer; const Value: NativeInt);
 begin
-  LongInt(Pointer(@
-    PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(LongInt))
+  NativeInt(Pointer(@
+    PByte(Buffer)[Index * (sizeof(Pointer) + FValueSize + sizeof(Integer))
       + sizeof(Pointer) + FValueSize])^)
       := Value;
 end;
@@ -937,7 +937,7 @@ begin
   DeletedList := nil;
 end;
 
-constructor TOvcPoolManager.Create(ItemSize : LongInt);
+constructor TOvcPoolManager.Create(ItemSize : Integer);
 begin
   if ItemSize > dlmMaxItemSize then
     raise Exception.Create('PoolManager does not support items > 4K');

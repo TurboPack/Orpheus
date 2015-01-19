@@ -1590,7 +1590,7 @@ begin
         be converted to Adds, otherwise they should be processed as changes.}
       if FUpdates.First(Node) then
         repeat
-          if LongInt(Node.UserData) = 1 then
+          if NativeInt(Node.UserData) = 1 then
             Node.UserData := Pointer(0) {deleted, mark as processed}
           else begin
             if Index.Contents.ItemExists(Node.Item) then
@@ -1607,7 +1607,7 @@ begin
       Index.ProcessDeletes(FUpdates); {process any deletes flagged by ProcessUpdates}
       if FUpdates.First(Node) then
         repeat
-          if LongInt(Node.UserData) <> 0 then
+          if NativeInt(Node.UserData) <> 0 then
             Node.UserData := Pointer(2); {mark for re-add}
         until not FUpdates.Next(Node);
       Index.Root.ProcessAdds(FUpdates, 2); {level 1 used for filtering}
@@ -1765,7 +1765,7 @@ var
 begin
   if Deletes.First(Node) then
     repeat
-      if LongInt(Node.UserData) = 1 then begin
+      if NativeInt(Node.UserData) = 1 then begin
         CNode := Contents.FindNode(Node.Item);
         if CNode <> nil then begin
           CurGroup := CNode.UserData;
@@ -1830,7 +1830,7 @@ begin
     repeat
       {process items flagged for processing, items with userdata <> 2 will
        already have been deleted or flagged as new adds}
-      if LongInt(Node.UserData) = 2 then begin
+      if NativeInt(Node.UserData) = 2 then begin
         {get the group that the item belonged to previously}
         CNode := Contents.FindNode(Node.Item);
         CurGroup := CNode.UserData;
@@ -2459,7 +2459,7 @@ begin
 
   if Adds.First(Node) then
     repeat
-      if LongInt(Node.UserData) >= (Level - 1) then begin
+      if NativeInt(Node.UserData) >= (Level - 1) then begin
         if (FElements.Count = 0) then
           if HaveAny and (FAbsGroupColumn >= 0) then
             Rslt := FOwner.Owner.DoCompareFields(DataHere, Node.Item, FAbsGroupColumn)
@@ -2536,7 +2536,7 @@ begin
       { If this group contains items rather than subgroups, process the items here. }
       if Adds.First(Node) then
         repeat
-          if LongInt(Node.UserData) >= Level then begin
+          if NativeInt(Node.UserData) >= Level then begin
             Assert(Node.Item <> nil);
             FElements.Add(Node.Item);
             FOwner.Contents.AddObject(Node.Item, Self);
@@ -2631,7 +2631,7 @@ begin
     I := 0;
     while I < Adds.Count do begin
       Node := Adds[I];
-      if LongInt(Node.UserData) >= (Level - 1) then begin
+      if NativeInt(Node.UserData) >= (Level - 1) then begin
         Node.UserData := Pointer(Level);
         DataHere := Node.Item;
         HaveAny := True;
@@ -2643,7 +2643,7 @@ begin
       inc(I);
       while I < Adds.Count do begin
         Node := Adds[I];
-        if LongInt(Node.UserData) >= (Level - 1) then
+        if NativeInt(Node.UserData) >= (Level - 1) then
           if FOwner.Owner.DoCompareFields(DataHere, Node.Item, FAbsGroupColumn) <> 0 then
             break
           else
@@ -2659,7 +2659,7 @@ begin
       J := I;
       while I < Adds.Count do begin
         Node := Adds[I];
-        if LongInt(Node.UserData) >= (Level - 1) then
+        if NativeInt(Node.UserData) >= (Level - 1) then
           if FOwner.Owner.DoCompareFields(DataHere, Node.Item, FAbsGroupColumn) <> 0 then
             break
           else
@@ -2669,7 +2669,7 @@ begin
       I := J - 1;
       while I >= 0 do begin
         Node := Adds[I];
-        if LongInt(Node.UserData) >= (Level - 1) then
+        if NativeInt(Node.UserData) >= (Level - 1) then
           if FOwner.Owner.DoCompareFields(DataHere, Node.Item, FAbsGroupColumn) <> 0 then
             break
           else
@@ -2690,7 +2690,7 @@ begin
       SubList := TOvcFastList.Create;
       for I := 0 to Adds.Count - 1 do begin
         Node := Adds[I];
-        if LongInt(Node.UserData) >= Level then
+        if NativeInt(Node.UserData) >= Level then
           SubList.Add(Node);
       end;
 
@@ -2749,7 +2749,7 @@ begin
       { If this group contains items rather than subgroups, process the items here. }
       for i := Adds.Count - 1 downto 0 do begin
         Node := Adds[I];
-        if LongInt(Node.UserData) >= Level then begin
+        if NativeInt(Node.UserData) >= Level then begin
           Assert(Node.Item <> nil);
           FElements.Add(Node.Item);
           FOwner.Contents.AddObject(Node.Item, Self);
@@ -3013,7 +3013,7 @@ begin
   {note: SubList is list of items here}
   if Adds.First(Node) then
     repeat
-      if LongInt(Node.UserData) >= (Level - 1) then begin
+      if NativeInt(Node.UserData) >= (Level - 1) then begin
         Node.UserData := Pointer(0); {Mark the entry as used}
         SubList.Add(Node.Item);
       end;
@@ -3091,7 +3091,7 @@ begin
       {note: SubList is list of nodes here}
       if Adds.First(Node) then
         repeat
-          if LongInt(Node.UserData) >= (Level - 1) then begin
+          if NativeInt(Node.UserData) >= (Level - 1) then begin
             Node.UserData := Pointer(Level);
             SubList.Add(Node);
           end;
@@ -3163,7 +3163,7 @@ begin
     { If this group contains items rather than subgroups, process the items here. }
     if Adds.First(Node) then
       repeat
-        if LongInt(Node.UserData) >= (Level - 1) then begin
+        if NativeInt(Node.UserData) >= (Level - 1) then begin
           Assert(Node.Item <> nil);
           FElements.Add(Node.Item);
           FOwner.Contents.AddObject(Node.Item, Self);

@@ -133,7 +133,7 @@ begin
       abPrevWndProc := Pointer(GetWindowLong(AttachedControl.Handle, GWL_WNDPROC));
 
       {change to ours}
-      SetWindowLong(AttachedControl.Handle, GWL_WNDPROC, LongInt(abNewWndProc));
+      SetWindowLong(AttachedControl.Handle, GWL_WNDPROC, NativeInt(abNewWndProc));
     end;
   end;
 end;
@@ -189,7 +189,7 @@ procedure TOvcAttachedButton.abUnHookControl;
 begin
   if (AttachedControl <> nil) then begin
     if Assigned(abPrevWndProc) and AttachedControl.HandleAllocated then
-      SetWindowLong(AttachedControl.Handle, GWL_WNDPROC, LongInt(abPrevWndProc));
+      SetWindowLong(AttachedControl.Handle, GWL_WNDPROC, NativeInt(abPrevWndProc));
   end;
   abPrevWndProc := nil;
 end;
@@ -225,7 +225,7 @@ begin
 
     {if we get this message, we must be attached -- return self}
     if Msg = OM_ISATTACHED then
-      Result := LongInt(Self);
+      Result := NativeInt(Self);
   end;
 end;
 

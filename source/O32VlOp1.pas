@@ -166,7 +166,7 @@ begin
     if (P <> NewWndProc) then begin
       PrevWndProc := P;
       {redirect message handling to ours}
-      SetWindowLong(FHookedControl.Handle, GWL_WNDPROC, LongInt(NewWndProc));
+      SetWindowLong(FHookedControl.Handle, GWL_WNDPROC, NativeInt(NewWndProc));
     end;
   end;
 end;
@@ -176,7 +176,7 @@ procedure TValidatorOptions.UnHookControl;
 begin
   if (FHookedControl <> nil) then begin
     if Assigned(PrevWndProc) and FHookedControl.HandleAllocated then
-      SetWindowLong(FHookedControl.Handle, GWL_WNDPROC, LongInt(PrevWndProc));
+      SetWindowLong(FHookedControl.Handle, GWL_WNDPROC, NativeInt(PrevWndProc));
   end;
   PrevWndProc := nil;
 end;

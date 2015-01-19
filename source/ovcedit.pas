@@ -132,7 +132,7 @@ type
     FMargins       : TOvcEditorMargins; {Options for the editor margins        }
     FBorders            : TOvcBorders;  {basic pen borders                     }
     FBorderStyle        : TBorderStyle; {border style to use                   }
-    FByteLimit          : LongInt;      {max characters in editor              }
+    FByteLimit          : Integer;      {max characters in editor              }
     FClipboardChars  : TClipboardChars; {set of chars to not change in         }
                                         {CopyToClipboard                       }
     FFixedFont          : TOvcFixedFont;{fixed font                            }
@@ -143,7 +143,7 @@ type
                                         {CopyToClipboard                       }
     FMarginColor        : TColor;       {color of Margin area                  }
     FParaLengthLimit    : Integer;      {max paragraph size                    }
-    FParaLimit          : LongInt;      {max number of paragraphs              }
+    FParaLimit          : Integer;      {max number of paragraphs              }
     FReadOnly           : Boolean;      {true if read only                     }
     FScrollBars         : TScrollStyle; {scroll bar style to use               }
     FScrollBarsAlways   : Boolean;      {true to force scroll bars             }
@@ -183,9 +183,9 @@ type
     edCols              : Integer;    {number of columns displayable in window }
     edColWid            : Integer;    {width of one column                     }
     edCurCol            : Integer;    {current column in edCurLine             }
-    edCurLine           : LongInt;    {current line                            }
-    edCurPara           : LongInt;    {current paragraph                       }
-    edDivisor           : LongInt;    {divisor for scroll bars                 }
+    edCurLine           : Integer;    {current line                            }
+    edCurPara           : Integer;    {current paragraph                       }
+    edDivisor           : Integer;    {divisor for scroll bars                 }
     edHDelta            : Integer;    {horizontal scroll delta                 }
     edHltBgn            : TMarker;    {starting pos for highlight              }
     edHltBgnL          : TOvcTextPos; {starting pos for highlight - Line,Col   }
@@ -209,12 +209,12 @@ type
     edeRows             : Integer;    {number of editable rows (=edRows [-1])  }
     edSelCursor         : hCursor;    {selection cursor                        }
     edSelCursorOn       : Boolean;    {is selection cursor in use?             }
-    edTopLine           : LongInt;    {line at top of window                   }
-    edTopPara           : LongInt;    {paragraph at top of window              }
+    edTopLine           : Integer;    {line at top of window                   }
+    edTopPara           : Integer;    {paragraph at top of window              }
     edTopPos            : Integer;    {offset into edTopPara for start of      }
                                       {edTopLine                               }
     edVScroll           : Boolean;    {if True, we have a vertical scroll bar  }
-    edVSMax             : LongInt;    {max value for vertical scroll bar       }
+    edVSMax             : Integer;    {max value for vertical scroll bar       }
     edSuppressChar      : Boolean;    {suppress next character                 }
 
     edRectSelect        : Boolean;    { 4.08 True if we are selecting a        }
@@ -237,16 +237,16 @@ type
     function GetRightMargin: Integer;
     procedure SetRightMargin(Value : Integer);
 
-    function GetLineCount : LongInt;
-    function GetLineLength(LineNum : LongInt) : Integer;
+    function GetLineCount : Integer;
+    function GetLineLength(LineNum : Integer) : Integer;
     function GetModified : Boolean;
     function GetNextEditor : TOvcCustomEditor;
-    function GetParaPointer(ParaNum : LongInt) : PChar;
-    function GetParaLength(ParaNum : LongInt) : Integer;
+    function GetParaPointer(ParaNum : Integer) : PChar;
+    function GetParaLength(ParaNum : Integer) : Integer;
     function GetPrevEditor : TOvcCustomEditor;
-    function GetStringLine(LineNum : LongInt) : string;
+    function GetStringLine(LineNum : Integer) : string;
     function GetTextString : string;
-    function GetTopLine : LongInt;
+    function GetTopLine : Integer;
     function GetVisibleColumns : Integer;
     function GetVisibleRows : Integer;
 
@@ -263,7 +263,7 @@ type
     procedure SetModified(Value : Boolean);
     procedure SetOvrCaretType(const Value : TOvcCaret);
     procedure SetParaLengthLimit(Value : Integer);
-    procedure SetParaLimit(Value : LongInt);
+    procedure SetParaLimit(Value : Integer);
     procedure SetScrollBars(Value : TScrollStyle);
     procedure SetScrollBarsAlways(Value : Boolean);
     procedure SetScrollPastEnd(Value : Boolean);
@@ -277,7 +277,7 @@ type
     procedure SetTabSize(Value : Byte);
     procedure SetTabType(Value : TTabType);
     procedure SetTextString(const Value : string);
-    procedure SetTopLine(Value : LongInt);
+    procedure SetTopLine(Value : Integer);
     procedure SetUndoBufferSize(Value : Word);
     procedure SetWordDelimiters(const Value : string);
     procedure SetWordWrap(Value : Boolean);
@@ -296,7 +296,7 @@ type
     function edCaretInWindow(var Col : Word) : Boolean;
     procedure edCaretLeft(Shift : Boolean);
     procedure edCaretRight(Shift : Boolean);
-    procedure edChangeTopLine(Value : LongInt);
+    procedure edChangeTopLine(Value : Integer);
     procedure edColorChanged(AColor : TObject);
     procedure edDeleteLine;
     procedure edDeleteSelection;
@@ -306,20 +306,20 @@ type
     procedure edDetach;
     procedure edDoTab;
     procedure edFixedFontChanged(Sender : TObject);
-    function edGetEditLine(LineNum : LongInt; Buf : PChar; BufLen : Word) : Integer;
-    function  edGetIndentLevel(N : LongInt; Col : Integer) : Integer;
+    function edGetEditLine(LineNum : Integer; Buf : PChar; BufLen : Word) : Integer;
+    function  edGetIndentLevel(N : Integer; Col : Integer) : Integer;
     function edGetRowHt: Integer;
-    procedure edGetMousePos(var Line : LongInt; var Col : Integer);
+    procedure edGetMousePos(var Line : Integer; var Col : Integer);
     function  edHaveHighlight : Boolean;
     procedure edHScrollPrim(Delta : Integer);
     procedure edInsertChar(Ch : Char);
     function edInsertTextAtCaret(P : PChar) : Word;
     function edIsWordDelim(Ch : Char) : Boolean;
     function edIsStringHighlighted(S : PChar; MatchCase : Boolean) : Boolean;
-    procedure edMoveCaret(HDelta : Integer; VDelta : LongInt; MVP, DragH : Boolean);
-    procedure edMoveCaretPrim(HDelta : Integer; VDelta : LongInt; MVP, DragH, AbsCol : Boolean);
-    procedure edMoveCaretTo(Line : LongInt; Col : Integer; DragH : Boolean);
-    procedure edMoveCaretToPP(Para : LongInt; Pos : Integer; DragH : Boolean);
+    procedure edMoveCaret(HDelta : Integer; VDelta : Integer; MVP, DragH : Boolean);
+    procedure edMoveCaretPrim(HDelta : Integer; VDelta : Integer; MVP, DragH, AbsCol : Boolean);
+    procedure edMoveCaretTo(Line : Integer; Col : Integer; DragH : Boolean);
+    procedure edMoveCaretToPP(Para : Integer; Pos : Integer; DragH : Boolean);
     procedure edMoveToEndOfLine(Shift : Boolean);
     procedure edNewLine(BreakP, Follow : Boolean);
     procedure edPositionCaret(Col : Word);
@@ -327,42 +327,42 @@ type
     procedure edReadMargin(Reader : TReader);
     procedure edRecreateWnd;
     procedure edRedraw(Now : Boolean);
-    procedure edRefreshLines(Start, Stop : LongInt);
+    procedure edRefreshLines(Start, Stop : Integer);
     function  edReplaceSelection(P : PChar) : Word;
     procedure edResetHighlight(Refresh : Boolean);
-    function edSearchReplace(FS, RS : PChar; Options : TSearchOptionSet) : LongInt;
+    function edSearchReplace(FS, RS : PChar; Options : TSearchOptionSet) : Integer;
     procedure edSetCaretSize;
     procedure edSetHScrollPos;
     procedure edSetHScrollRange;
     procedure edSetLineNumbersWidth;
-    procedure edSetSelectionPP(Para1 : LongInt; Pos1 : Integer;
-                               Para2 : LongInt; Pos2 : Integer;
+    procedure edSetSelectionPP(Para1 : Integer; Pos1 : Integer;
+                               Para2 : Integer; Pos2 : Integer;
                                CaretAtEnd : Boolean);
-    procedure edSetSelPrim(Para1 : LongInt; Pos1 : Integer;
-                           Para2 : LongInt; Pos2 : Integer);
+    procedure edSetSelPrim(Para1 : Integer; Pos1 : Integer;
+                           Para2 : Integer; Pos2 : Integer);
     procedure edSetVScrollPos;
     procedure edSetVScrollRange;
     procedure edUpdateVScrollRange;
     procedure edUpdateVScrollPos;
     procedure edUpdateHighlight(Refresh : Boolean);
     procedure edUpdateHScrollPos;
-    procedure edVScrollPrim(Delta : LongInt);
+    procedure edVScrollPrim(Delta : Integer);
     procedure edWordLeft(Shift : Boolean);
     procedure edWordRight(Shift : Boolean);
 
     {routines for updating attached windows}
-    procedure edUpdateOnDeletedParaPrim(N : LongInt; Current : Boolean);
+    procedure edUpdateOnDeletedParaPrim(N : Integer; Current : Boolean);
       virtual;
-    procedure edUpdateOnDeletedTextPrim(N : LongInt; Pos, Count : Integer;
+    procedure edUpdateOnDeletedTextPrim(N : Integer; Pos, Count : Integer;
                                       Current : Boolean);
       virtual;
-    procedure edUpdateOnInsertedParaPrim(N : LongInt; Pos, Indent : Integer;
+    procedure edUpdateOnInsertedParaPrim(N : Integer; Pos, Indent : Integer;
                                          Current : Boolean);
       virtual;
-    procedure edUpdateOnInsertedTextPrim(N : LongInt; Pos, Count : Integer;
+    procedure edUpdateOnInsertedTextPrim(N : Integer; Pos, Count : Integer;
                                          Current : Boolean);
       virtual;
-    procedure edUpdateOnJoinedParasPrim(N : LongInt; Pos : Integer; Current : Boolean);
+    procedure edUpdateOnJoinedParasPrim(N : Integer; Pos : Integer; Current : Boolean);
       virtual;
 
     {VCL control methods}
@@ -435,10 +435,10 @@ type
       {-call the OnError method, if assigned, otherwise raise exception}
     procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
       override;
-    procedure DoOnShowStatus(LineNum : LongInt; ColNum : Word);
+    procedure DoOnShowStatus(LineNum : Integer; ColNum : Word);
       dynamic;
       {-call the OnShowStatus mehtod, if assigned}
-    procedure DoOnTopLineChanged(Line : LongInt);
+    procedure DoOnTopLineChanged(Line : Integer);
       dynamic;
       {-perform notification of a top line changed}
     procedure DoOnUserCommand(Command : Word);
@@ -447,14 +447,14 @@ type
     procedure edAddSampleParas;
       dynamic;
       {-add sample text, if designing}
-    procedure edScrollPrim(HDelta : Integer; VDelta : LongInt);
+    procedure edScrollPrim(HDelta : Integer; VDelta : Integer);
       dynamic;
 
     {virtual property mentods}
     function GetReadOnly : Boolean;
       virtual;
       {-return read-only status}
-    procedure SetByteLimit(Value : LongInt);
+    procedure SetByteLimit(Value : Integer);
       virtual;
       {-set a limit on the total number of bytes}
 
@@ -465,7 +465,7 @@ type
       read FNewStyleIndent write SetNewStyleIndent;
     property BorderStyle : TBorderStyle
       read FBorderStyle write SetBorderStyle;
-    property ByteLimit : LongInt
+    property ByteLimit : Integer
       read FByteLimit write SetByteLimit;
     property CaretIns : TOvcCaret
       read GetInsCaretType write SetInsCaretType;
@@ -485,7 +485,7 @@ type
       read FMargins write FMargins;
     property ParaLengthLimit : Integer
       read FParaLengthLimit write SetParaLengthLimit;
-    property ParaLimit : LongInt
+    property ParaLimit : Integer
       read FParaLimit write SetParaLimit;
     property ReadOnly : Boolean
       read GetReadOnly write FReadOnly;
@@ -551,11 +551,11 @@ type
 
     procedure edResetPositionInfo;
     procedure edAdjustMargins;
-    procedure edUpdateOnDeletedPara(N : LongInt);
-    procedure edUpdateOnDeletedText(N : LongInt; Pos, Count : Integer);
-    procedure edUpdateOnInsertedPara(N : LongInt; Pos, Indent : Integer);
-    procedure edUpdateOnInsertedText(N : LongInt; Pos, Count : Integer);
-    procedure edUpdateOnJoinedParas(N : LongInt; Pos : Integer);
+    procedure edUpdateOnDeletedPara(N : Integer);
+    procedure edUpdateOnDeletedText(N : Integer; Pos, Count : Integer);
+    procedure edUpdateOnInsertedPara(N : Integer; Pos, Indent : Integer);
+    procedure edUpdateOnInsertedText(N : Integer; Pos, Count : Integer);
+    procedure edUpdateOnJoinedParas(N : Integer; Pos : Integer);
 
     constructor Create(AOwner : TComponent);
       override;
@@ -595,35 +595,35 @@ type
       {-allow window updates}
     procedure FlushUndoBuffer;
       {-flush the undo buffer}
-    function GetCaretPosition(var Col : Integer) : LongInt;
+    function GetCaretPosition(var Col : Integer) : Integer;
       {-return the current position of the caret}
     function GetCurrentWord : string;
       {-return the word at the current caret position}
-    function GetLine(LineNum : LongInt; Dest : PChar; DestLen : Integer) : PChar;
+    function GetLine(LineNum : Integer; Dest : PChar; DestLen : Integer) : PChar;
       {-get the specified line}
-    function GetMarkerPosition(N : Byte; var Col : Integer) : LongInt;
+    function GetMarkerPosition(N : Byte; var Col : Integer) : Integer;
       {-return the current position of the specified marker}
-    procedure GetMousePos(var L : LongInt; var C : Integer; Existing : Boolean);
+    procedure GetMousePos(var L : Integer; var C : Integer; Existing : Boolean);
       {-return line and column based on current mouse position}
-    function GetPara(ParaNum : LongInt; var Len : Word) : PChar;
+    function GetPara(ParaNum : Integer; var Len : Word) : PChar;
       {-get the specified paragraph}
-    function GetPrintableLine(LineNum : LongInt; Dest : PChar; DestLen : Integer) : Integer;
+    function GetPrintableLine(LineNum : Integer; Dest : PChar; DestLen : Integer) : Integer;
       {-get a line in a format suitable for printing}
-    function GetSelection(var Line1 : LongInt; var Col1 : Integer; var Line2 : LongInt; var Col2 : Integer) : Boolean;
+    function GetSelection(var Line1 : Integer; var Col1 : Integer; var Line2 : Integer; var Col2 : Integer) : Boolean;
       {-return True if any text is currently selected}
     procedure GotoMarker(N : Byte);
       {-move the caret to the specified text marker}
     function GetSelTextBuf(Buffer : PChar;
-                           BufSize : LongInt) : LongInt;
+                           BufSize : Integer) : Integer;
       {-return the selected text in Buffer and len as Result}
-    function GetSelTextLen : LongInt;
+    function GetSelTextLen : Integer;
       {-return the length of the selected text}
-    function GetText(P : PChar; Size : LongInt) : LongInt;
+    function GetText(P : PChar; Size : Integer) : Integer;
       {-copy text in editor into P; limit is Size (includes null)}
     function GetTextBuf(Buffer : PChar;
-                        BufSize : LongInt) : LongInt;
+                        BufSize : Integer) : Integer;
       {-copy text in editor into Buffer; limit is Size (includes null)}
-    function GetTextLen : LongInt;
+    function GetTextLen : Integer;
       {-get the total number of characters}
     function HasSelection : Boolean;
       {-return True if any text is selected}
@@ -631,11 +631,11 @@ type
       {-replace the current selection with a text string}
     procedure InsertString(const S : string);
       {-replace the current selection with a text string}
-    procedure LineToPara(var L : LongInt; var C : Integer);
+    procedure LineToPara(var L : Integer; var C : Integer);
       {-convert a line,column coordinate to a paragraph,position coordinate}
-    function ParaCount : LongInt;
+    function ParaCount : Integer;
       {-return the total number of paragraphs}
-    procedure ParaToLine(var L : LongInt; var C : Integer);
+    procedure ParaToLine(var L : Integer; var C : Integer);
       {-convert a paragraph,position coordinate to a line,column coordinate}
     procedure PasteFromClipboard;
       dynamic;
@@ -648,7 +648,7 @@ type
       dynamic;
     procedure Deselect(CaretAtEnd : Boolean);
       {-remove any text highlighing}
-    function Replace(const S, R : string; Options : TSearchOptionSet) : LongInt;
+    function Replace(const S, R : string; Options : TSearchOptionSet) : Integer;
       {-search for a string and replace it with another string. return count}
       dynamic;
     procedure ResetScrollBars(UpdateScreen : Boolean);
@@ -657,15 +657,15 @@ type
       {-search for a string returning True if found}
     procedure SelectAll(CaretAtEnd : Boolean);
       {-select all text in the editor}
-    procedure SetCaretPosition(Line : LongInt; Col : Integer);
+    procedure SetCaretPosition(Line : Integer; Col : Integer);
       {-move the caret to a specified line and column}
     procedure SetMarker(N : Byte); dynamic;
       {-set a text marker at the current caret position}
-    procedure SetMarkerAt(N : Byte; Line : LongInt; Col : Integer);
+    procedure SetMarkerAt(N : Byte; Line : Integer; Col : Integer);
       dynamic;
       {-set a text marker at the specified position}
-    procedure SetSelection(Line1 : LongInt; Col1 : Integer;
-                           Line2 : LongInt; Col2 : Integer;
+    procedure SetSelection(Line1 : Integer; Col1 : Integer;
+                           Line2 : Integer; Col2 : Integer;
                            CaretAtEnd : Boolean);
       {-select a region of text}
     procedure SetSelTextBuf(Buffer : PChar);
@@ -677,7 +677,7 @@ type
     procedure Undo;
       {-undo the last change}
       dynamic;
-    procedure XYToLineCol(X, Y : Integer; var Line : LongInt; var Col : Integer);
+    procedure XYToLineCol(X, Y : Integer; var Line : Integer; var Col : Integer);
 
 
     property Borders : TOvcBorders
@@ -702,16 +702,16 @@ type
     property LeftColumn : Integer
       read GetLeftColumn write SetLeftColumn;
 
-    property Lines[LineNum : LongInt] : string
+    property Lines[LineNum : Integer] : string
       read GetStringLine;
 
-    property LineCount : LongInt
+    property LineCount : Integer
       read GetLineCount;
 
-    property LineLength[LineNum : LongInt] : Integer
+    property LineLength[LineNum : Integer] : Integer
       read GetLineLength;
 
-    property MaxLength : LongInt
+    property MaxLength : Integer
       read FByteLimit
       write SetByteLimit
       stored False;
@@ -727,23 +727,23 @@ type
     property NextEditor : TOvcCustomEditor
       read GetNextEditor;
 
-    property ParaLength[ParaNum : LongInt] : Integer
+    property ParaLength[ParaNum : Integer] : Integer
       read GetParaLength;
 
-    property ParaPointer[ParaNum : LongInt] : PChar
+    property ParaPointer[ParaNum : Integer] : PChar
       read GetParaPointer;
 
     property PrevEditor : TOvcCustomEditor
       read GetPrevEditor;
 
-    property TextLength : LongInt
+    property TextLength : Integer
       read GetTextLen;
 
     property Text : string
       read GetTextString
       write SetTextString;
 
-    property TopLine : LongInt
+    property TopLine : Integer
       read GetTopLine
       write SetTopLine
       stored False;
@@ -1207,7 +1207,7 @@ function TOvcCustomEditor.AppendPara(Para : PChar) : Word;
 var
   I      : Word;
   SLen   : Word;
-  SaveLC : LongInt;
+  SaveLC : Integer;
 begin
   SaveLC := edParas.LineCount;
 
@@ -1361,8 +1361,8 @@ end;
 procedure TOvcCustomEditor.CopyToClipboard;
   {-copy highlighted text to clipboard}
 var
-  I, Size   : LongInt;
-  N, N1, N2 : LongInt;
+  I, Size   : Integer;
+  N, N1, N2 : Integer;
   C, C1, C2 : Integer;
   H         : THandle;
   S, T      : PChar;
@@ -1618,7 +1618,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do begin
-    Style := LongInt(Style) or ScrollBarStyles[FScrollBars]
+    Style := Integer(Style) or ScrollBarStyles[FScrollBars]
                    or BorderStyles[FBorderStyle];
   end;
 
@@ -1681,8 +1681,8 @@ end;
 procedure TOvcCustomEditor.DeleteAll(UpdateScreen : Boolean);
   {-delete all text}
 var
-  SBL  : LongInt;
-  SPL  : LongInt;
+  SBL  : Integer;
+  SPL  : Integer;
   SPLL : Integer;
   SWC  : Integer;
   SUS  : Word;
@@ -1731,7 +1731,7 @@ end;
 procedure TOvcCustomEditor.Deselect(CaretAtEnd : Boolean);
   {-remove any text highlighing}
 var
-  L1, L2 : LongInt;
+  L1, L2 : Integer;
   C1, C2 : Integer;
 begin
   {L := GetCaretPosition(C);}
@@ -1846,14 +1846,14 @@ begin
     ProcessCommand(ccScrollUp, 0);
 end;
 
-procedure TOvcCustomEditor.DoOnShowStatus(LineNum : LongInt; ColNum : Word);
+procedure TOvcCustomEditor.DoOnShowStatus(LineNum : Integer; ColNum : Word);
   {-call the OnShowStatus mehtod, if assigned}
 begin
   if Assigned(FOnShowStatus) then
     FOnShowStatus(Self, LineNum, ColNum);
 end;
 
-procedure TOvcCustomEditor.DoOnTopLineChanged(Line : LongInt);
+procedure TOvcCustomEditor.DoOnTopLineChanged(Line : Integer);
   {-perform notification of a top line changed}
 begin
   if Assigned(FOnTopLineChanged) then
@@ -1871,7 +1871,7 @@ procedure TOvcCustomEditor.edAddSampleParas;
   {-add sample text if designing}
 var
   I : Integer;
-  L : array[0..0] of LongInt;
+  L : array[0..0] of Integer;
   A : array[0..255] of Char;
 begin
   if csDesigning in ComponentState then begin
@@ -1911,7 +1911,7 @@ procedure TOvcCustomEditor.edCalcRowColInfo;
                  enough space }
 var
   Metrics : TTextMetric;
-  OldRows : LongInt;
+  OldRows : Integer;
   OldCols, i : Integer;
 begin
   {set canvas font to selected font}
@@ -1992,7 +1992,7 @@ end;
 procedure TOvcCustomEditor.edCaretLeft(Shift : Boolean);
   {-move caret left one column}
 var
-  Line : LongInt;
+  Line : Integer;
   Pos  : Integer;
 begin
   Pos := edLinePos+edCurCol;
@@ -2019,7 +2019,7 @@ begin
     edMoveCaretTo(edCurLine+1, 1, Shift);
 end;
 
-procedure TOvcCustomEditor.edChangeTopLine(Value : LongInt);
+procedure TOvcCustomEditor.edChangeTopLine(Value : Integer);
 begin
   if Value <> edTopLine then begin
     edTopLine := Value;
@@ -2035,7 +2035,7 @@ end;
 
 procedure TOvcCustomEditor.edDeleteLine;
 var
-  Para        : LongInt;
+  Para        : Integer;
   Pos         : Integer;
   S           : PChar;
   Len         : Word;
@@ -2068,7 +2068,7 @@ begin
 end;
 
 
-procedure edInsertSpaces(Editor:TOvcCustomEditor; P:LongInt; Pos:Integer; Len:Word);
+procedure edInsertSpaces(Editor:TOvcCustomEditor; P:Integer; Pos:Integer; Len:Word);
 const
   spaces: PChar = '        ';
 begin
@@ -2081,7 +2081,7 @@ end;
 
 procedure TOvcCustomEditor.edDeleteSelection;
 var
-  BP, EP, I, hP, P, dBC, dEC         : LongInt;
+  BP, EP, I, hP, P, dBC, dEC         : Integer;
   BC, EC, effBC, effEC, BCmax, ECmax : Integer;
   hC, CurPos                         : Integer;
   S                                  : PChar;
@@ -2331,7 +2331,7 @@ procedure TOvcCustomEditor.edDoTab;
   var
     TabPos : Word;
 
-    function NextIndentCol(LineNum : LongInt; Start : Word) : Word;
+    function NextIndentCol(LineNum : Integer; Start : Word) : Word;
       {-return the column number where next tab past start is}
     var
       S    : PChar;
@@ -2401,7 +2401,7 @@ begin
   Perform(CM_FONTCHANGED, 0, 0);
 end;
 
-function TOvcCustomEditor.edGetEditLine(LineNum : LongInt;
+function TOvcCustomEditor.edGetEditLine(LineNum : Integer;
          Buf : PChar; BufLen : Word) : Integer;
   {-get the specified line}
 var
@@ -2415,7 +2415,7 @@ begin
   Result := StrLen(Buf);
 end;
 
-function TOvcCustomEditor.edGetIndentLevel(N : LongInt; Col : Integer) : Integer;
+function TOvcCustomEditor.edGetIndentLevel(N : Integer; Col : Integer) : Integer;
 var
   S   : PChar;
   I   : Word;
@@ -2441,7 +2441,7 @@ begin
     result := edRowHt;
 end;
 
-procedure TOvcCustomEditor.XYToLineCol(X, Y : Integer; var Line : LongInt; var Col : Integer);
+procedure TOvcCustomEditor.XYToLineCol(X, Y : Integer; var Line : Integer; var Col : Integer);
 var
   S   : PChar;
   Len : Word;
@@ -2481,7 +2481,7 @@ begin
     Col := edCols + edHDelta;
 end;
 
-procedure TOvcCustomEditor.edGetMousePos(var Line : LongInt; var Col : Integer);
+procedure TOvcCustomEditor.edGetMousePos(var Line : Integer; var Col : Integer);
 var
   Pt  : TPoint;
 begin
@@ -2509,7 +2509,7 @@ var
   Insert      : Boolean;
   SaveLinking : Boolean;
   PPN         : TParaNode;
-  SaveCL      : LongInt;
+  SaveCL      : Integer;
 begin
   if edHaveHighlight then begin
     edParas.UndoBuffer.BeginComplexOp(SaveLinking);
@@ -2549,13 +2549,13 @@ function TOvcCustomEditor.edInsertTextAtCaret(P : PChar) : Word;
 const
   BlockSize = $F000;
 var
-  CurPara : LongInt;
+  CurPara : Integer;
   CurPos  : Integer;
   S, P2   : PChar;
-  SaveLen : LongInt;
+  SaveLen : Integer;
   Len     : Word;
-  Pos     : LongInt;
-  Offset  : LongInt;
+  Pos     : Integer;
+  Offset  : Integer;
   Ch      : Char;
   SaveLinking : Boolean;
   CurCol, effCurCol, dCurCol: Integer;
@@ -2700,16 +2700,16 @@ begin
 end;
 
 procedure TOvcCustomEditor.edMoveCaret(HDelta : Integer;
-          VDelta : LongInt; MVP, DragH : Boolean);
+          VDelta : Integer; MVP, DragH : Boolean);
 begin
   edMoveCaretPrim(HDelta, VDelta, MVP, DragH, False);
 end;
 
 procedure TOvcCustomEditor.edMoveCaretPrim(HDelta : Integer;
-          VDelta : LongInt; MVP, DragH, AbsCol : Boolean);
+          VDelta : Integer; MVP, DragH, AbsCol : Boolean);
 var
-  SaveCL : LongInt;
-  NewTop : LongInt;
+  SaveCL : Integer;
+  NewTop : Integer;
   NewHO  : Integer;
   SaveVP : Integer;
   MaxCol : Word;
@@ -2810,14 +2810,14 @@ begin
     edPositionCaret(Col);
 end;
 
-procedure TOvcCustomEditor.edMoveCaretTo(Line : LongInt; Col : Integer; DragH : Boolean);
+procedure TOvcCustomEditor.edMoveCaretTo(Line : Integer; Col : Integer; DragH : Boolean);
 begin
   edMoveCaretPrim(Col-edCurCol, Line-edCurLine, False, DragH, True);
 end;
 
-procedure TOvcCustomEditor.edMoveCaretToPP(Para : LongInt; Pos : Integer; DragH : Boolean);
+procedure TOvcCustomEditor.edMoveCaretToPP(Para : Integer; Pos : Integer; DragH : Boolean);
 var
-  Line : LongInt;
+  Line : Integer;
   Col  : Integer;
 begin
   Line := edParas.FindLineByPara(Para, Pos, Col);
@@ -2979,7 +2979,7 @@ begin
     Update;
 end;
 
-procedure TOvcCustomEditor.edRefreshLines(Start, Stop : LongInt);
+procedure TOvcCustomEditor.edRefreshLines(Start, Stop : Integer);
   {-invalidate the region that includes lines from 'Stop' to 'Stop'
 
    -Changes
@@ -2990,7 +2990,7 @@ procedure TOvcCustomEditor.edRefreshLines(Start, Stop : LongInt);
                  out with no futher hint)... }
 var
   CR : TRect;
-  T  : LongInt;
+  T  : Integer;
 begin
   if edRedrawPending then
     Exit;
@@ -3097,11 +3097,11 @@ begin
   ResetScrollBars(True);
 end;
 
-procedure TOvcCustomEditor.edScrollPrim(HDelta : Integer; VDelta : LongInt);
+procedure TOvcCustomEditor.edScrollPrim(HDelta : Integer; VDelta : Integer);
 var
   CR    : TRect;
   SaveD : Integer;
-  SaveT : LongInt;
+  SaveT : Integer;
   CRW   : Integer;
   CRH   : Integer;
   HD    : Integer;
@@ -3191,7 +3191,7 @@ begin
   Invalidate;
 end;
 
-function TOvcCustomEditor.edSearchReplace(FS, RS : PChar; Options : TSearchOptionSet) : LongInt;
+function TOvcCustomEditor.edSearchReplace(FS, RS : PChar; Options : TSearchOptionSet) : Integer;
 type
   SearchFunc = function(var Buffer; BufLength : Cardinal;
                         var BT : BTable; Match : PChar;
@@ -3205,7 +3205,7 @@ var
   FindSelection : Boolean;
   Global        : Boolean;
   SFunc         : SearchFunc;
-  CurPara       : LongInt;
+  CurPara       : Integer;
   CurPos        : Integer;
   SearchLen     : Integer;
   ReplaceLen    : Integer;
@@ -3213,7 +3213,7 @@ var
   I             : Cardinal;
   SLen          : Word;
   BT            : BTable;
-  Count         : LongInt;
+  Count         : Integer;
   RangeLo       : TMarker;
   RangeHi       : TMarker;
   MatchString   : array[0..MaxSearchString] of Char;
@@ -3305,7 +3305,7 @@ var
         Result := SaveFirst;
         Exit;
       end else begin
-        SaveFirst := First+LongInt(I);
+        SaveFirst := First+Integer(I);
         Inc(First, I+1);
       end;
     end;
@@ -3458,7 +3458,7 @@ begin
     end else begin
       repeat
         I := Succ(SLen-CurPos);
-        if LongInt(I) < SearchLen then
+        if Integer(I) < SearchLen then
           NextPara
         else begin
           {look for a match in this paragraph starting at CurPos}
@@ -3547,12 +3547,12 @@ begin
     SetScrollRange(Handle, SB_HORZ, 0, 0, False);
 end;
 
-procedure TOvcCustomEditor.edSetSelectionPP(Para1 : LongInt; Pos1 : Integer;
-                                      Para2 : LongInt; Pos2 : Integer;
+procedure TOvcCustomEditor.edSetSelectionPP(Para1 : Integer; Pos1 : Integer;
+                                      Para2 : Integer; Pos2 : Integer;
                                       CaretAtEnd : Boolean);
 var
-  Line1 : LongInt;
-  Line2 : LongInt;
+  Line1 : Integer;
+  Line2 : Integer;
   Col1  : Integer;
   Col2  : Integer;
 begin
@@ -3561,8 +3561,8 @@ begin
   SetSelection(Line1, Col1, Line2, Col2, CaretAtEnd);
 end;
 
-procedure TOvcCustomEditor.edSetSelPrim(Para1 : LongInt; Pos1 : Integer;
-                             Para2 : LongInt; Pos2 : Integer);
+procedure TOvcCustomEditor.edSetSelPrim(Para1 : Integer; Pos1 : Integer;
+                             Para2 : Integer; Pos2 : Integer);
 begin
   edHltBgn.Para := Para1;
   edHltBgn.Pos := Pos1;
@@ -3594,7 +3594,7 @@ end;
 procedure TOvcCustomEditor.edSetVScrollRange;
   {-set the vertical scroll bar range}
 var
-  Size : LongInt;
+  Size : Integer;
 begin
   if not HandleAllocated then
     Exit;
@@ -3630,10 +3630,10 @@ var
   SaveEnd  : TMarker;
   TmpPos   : TMarker;
   SwpPos   : TMarker;
-  Start    : LongInt;
-  Stop     : LongInt;
+  Start    : Integer;
+  Stop     : Integer;
 
-  procedure UpdateStartStop(L : LongInt);
+  procedure UpdateStartStop(L : Integer);
   begin
     if L < Start then
       Start := L
@@ -3695,7 +3695,7 @@ begin
   edPendingHSP := True;
 end;
 
-procedure TOvcCustomEditor.edUpdateOnInsertedText(N : LongInt; Pos, Count : Integer);
+procedure TOvcCustomEditor.edUpdateOnInsertedText(N : Integer; Pos, Count : Integer);
 var
   PEF, PEC : TOvcCustomEditor;
 begin
@@ -3707,13 +3707,13 @@ begin
   until (PEC = PEF);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnInsertedTextPrim(N : LongInt; Pos, Count : Integer;
+procedure TOvcCustomEditor.edUpdateOnInsertedTextPrim(N : Integer; Pos, Count : Integer;
                                            Current : Boolean);
 var
   M       : TMarker;
   SaveBgn : TMarker;
   SaveEnd : TMarker;
-  SP      : LongInt;
+  SP      : Integer;
   C       : Integer;
   SPos    : Integer;
 begin
@@ -3762,7 +3762,7 @@ begin
   edRedraw(False);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnInsertedPara(N : LongInt; Pos, Indent : Integer);
+procedure TOvcCustomEditor.edUpdateOnInsertedPara(N : Integer; Pos, Indent : Integer);
 var
   PEF, PEC : TOvcCustomEditor;
 begin
@@ -3774,13 +3774,13 @@ begin
   until (PEC = PEF);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnInsertedParaPrim(N : LongInt; Pos, Indent : Integer;
+procedure TOvcCustomEditor.edUpdateOnInsertedParaPrim(N : Integer; Pos, Indent : Integer;
                                            Current : Boolean);
 var
   M       : TMarker;
   SaveBgn : TMarker;
   SaveEnd : TMarker;
-  SP      : LongInt;
+  SP      : Integer;
   C       : Integer;
 begin
   {fix edTopPara, edTopLine, and edTopPos}
@@ -3832,7 +3832,7 @@ begin
   edRedraw(False);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnDeletedPara(N : LongInt);
+procedure TOvcCustomEditor.edUpdateOnDeletedPara(N : Integer);
 var
   PEF, PEC : TOvcCustomEditor;
 begin
@@ -3844,12 +3844,12 @@ begin
   until (PEC = PEF);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnDeletedParaPrim(N : LongInt; Current : Boolean);
+procedure TOvcCustomEditor.edUpdateOnDeletedParaPrim(N : Integer; Current : Boolean);
 var
   M       : TMarker;
   SaveBgn : TMarker;
   SaveEnd : TMarker;
-  SP      : LongInt;
+  SP      : Integer;
   C       : Integer;
 begin
   {fix edTopLine and edTopPos}
@@ -3910,7 +3910,7 @@ begin
   edRedraw(False);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnDeletedText(N : LongInt; Pos, Count : Integer);
+procedure TOvcCustomEditor.edUpdateOnDeletedText(N : Integer; Pos, Count : Integer);
 var
   PEF, PEC : TOvcCustomEditor;
 begin
@@ -3922,13 +3922,13 @@ begin
   until (PEC = PEF);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnDeletedTextPrim(N : LongInt;
+procedure TOvcCustomEditor.edUpdateOnDeletedTextPrim(N : Integer;
           Pos, Count : Integer; Current : Boolean);
 var
   M       : TMarker;
   SaveBgn : TMarker;
   SaveEnd : TMarker;
-  SP      : LongInt;
+  SP      : Integer;
   C       : Integer;
   SPos    : Integer;
 begin
@@ -3977,7 +3977,7 @@ begin
   edRedraw(False);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnJoinedParas(N : LongInt; Pos : Integer);
+procedure TOvcCustomEditor.edUpdateOnJoinedParas(N : Integer; Pos : Integer);
 var
   PEF, PEC : TOvcCustomEditor;
 begin
@@ -3989,13 +3989,13 @@ begin
   until (PEC = PEF);
 end;
 
-procedure TOvcCustomEditor.edUpdateOnJoinedParasPrim(N : LongInt; Pos : Integer;
+procedure TOvcCustomEditor.edUpdateOnJoinedParasPrim(N : Integer; Pos : Integer;
                                           Current : Boolean);
 var
   M       : TMarker;
   SaveBgn : TMarker;
   SaveEnd : TMarker;
-  SP      : LongInt;
+  SP      : Integer;
   C       : Integer;
 begin
   {fix edTopLine and edLinePos}
@@ -4053,7 +4053,7 @@ begin
   edPendingVSR := True;
 end;
 
-procedure TOvcCustomEditor.edVScrollPrim(Delta : LongInt);
+procedure TOvcCustomEditor.edVScrollPrim(Delta : Integer);
 begin
   edScrollPrim(0, Delta);
 end;
@@ -4063,8 +4063,8 @@ procedure TOvcCustomEditor.edWordLeft(Shift : Boolean);
 var
   S    : PChar;
   Len  : Word;
-  Para : LongInt;
-  Line : LongInt;
+  Para : Integer;
+  Line : Integer;
   Pos  : Integer;
 begin
   Para := edCurPara;
@@ -4091,7 +4091,7 @@ procedure TOvcCustomEditor.edWordRight(Shift : Boolean);
 var
   S    : PChar;
   Len  : Word;
-  Para : LongInt;
+  Para : Integer;
   Pos  : Integer;
 begin
   Para := edCurPara;
@@ -4126,7 +4126,7 @@ begin
   edParas.UndoBuffer.Flush;
 end;
 
-function TOvcCustomEditor.GetCaretPosition(var Col : Integer) : LongInt;
+function TOvcCustomEditor.GetCaretPosition(var Col : Integer) : Integer;
   {-returns current line number as result, column in Col}
 begin
   Col := edCurCol;
@@ -4181,7 +4181,7 @@ begin
   Result := edCaret.InsCaretType;
 end;
 
-function TOvcCustomEditor.GetLine(LineNum : LongInt; Dest : PChar;
+function TOvcCustomEditor.GetLine(LineNum : Integer; Dest : PChar;
          DestLen : Integer) : PChar;
   {-get the specified line}
 begin
@@ -4199,13 +4199,13 @@ begin
   Result := Succ(edHDelta);
 end;
 
-function TOvcCustomEditor.GetLineCount : LongInt;
+function TOvcCustomEditor.GetLineCount : Integer;
   {-get the total number of lines}
 begin
   Result := edParas.LineCount;
 end;
 
-function TOvcCustomEditor.GetLineLength(LineNum : LongInt) : Integer;
+function TOvcCustomEditor.GetLineLength(LineNum : Integer) : Integer;
   {-get the length of the line}
 begin
   if (LineNum < 1) or (LineNum > edParas.LineCount) then
@@ -4214,7 +4214,7 @@ begin
     Result := edParas.LineLength(LineNum)
 end;
 
-function TOvcCustomEditor.GetMarkerPosition(N : Byte; var Col : Integer) : LongInt;
+function TOvcCustomEditor.GetMarkerPosition(N : Byte; var Col : Integer) : Integer;
   {-return the current position of the specified marker}
 begin
   Result := -1;
@@ -4234,7 +4234,7 @@ begin
   Result := edParas.Modified;
 end;
 
-procedure TOvcCustomEditor.GetMousePos(var L : LongInt; var C : Integer;
+procedure TOvcCustomEditor.GetMousePos(var L : Integer; var C : Integer;
                                        Existing : Boolean);
   {-return line and column based on current mouse position}
 var
@@ -4261,7 +4261,7 @@ begin
   Result := edCaret.OvrCaretType;
 end;
 
-function TOvcCustomEditor.GetPara(ParaNum : LongInt; var Len : Word) : PChar;
+function TOvcCustomEditor.GetPara(ParaNum : Integer; var Len : Word) : PChar;
   {-get the specified paragraph}
 var
   S   : PChar;
@@ -4281,7 +4281,7 @@ begin
   Result := S;
 end;
 
-function TOvcCustomEditor.GetParaLength(ParaNum : LongInt) : Integer;
+function TOvcCustomEditor.GetParaLength(ParaNum : Integer) : Integer;
   {-get the length of the paragraph ParaNum}
 begin
   if (ParaNum < 1) or (ParaNum > edParas.ParaCount) then
@@ -4290,7 +4290,7 @@ begin
     Result := edParas.ParaLength(ParaNum);
 end;
 
-function TOvcCustomEditor.GetParaPointer(ParaNum : LongInt) : PChar;
+function TOvcCustomEditor.GetParaPointer(ParaNum : Integer) : PChar;
   {-get a pointer to the specified paragraph}
 var
   Len : Word;
@@ -4307,7 +4307,7 @@ begin
   Result := edPrev;
 end;
 
-function TOvcCustomEditor.GetPrintableLine(LineNum : LongInt;
+function TOvcCustomEditor.GetPrintableLine(LineNum : Integer;
          Dest : PChar; DestLen : Integer) : Integer;
   {-get a line in a format suitable for printing}
 var
@@ -4353,8 +4353,8 @@ begin
   Result := FReadOnly;
 end;
 
-function TOvcCustomEditor.GetSelection(var Line1 : LongInt; var Col1 : Integer;
-                              var Line2 : LongInt; var Col2 : Integer) : Boolean;
+function TOvcCustomEditor.GetSelection(var Line1 : Integer; var Col1 : Integer;
+                              var Line2 : Integer; var Col2 : Integer) : Boolean;
   {-returns True if any text is currently selected}
 begin
   if edHaveHighlight then begin
@@ -4367,14 +4367,14 @@ begin
     Result := False;
 end;
 
-function TOvcCustomEditor.GetSelTextBuf(Buffer : PChar; BufSize: LongInt) : LongInt;
+function TOvcCustomEditor.GetSelTextBuf(Buffer : PChar; BufSize: Integer) : Integer;
   {-return the selected text in Buffer and len as Result}
 var
   BC, EC : Integer;
-  BP, EP : LongInt;
+  BP, EP : Integer;
   Len    : Word;
   P      : PChar;
-  I, N   : LongInt;
+  I, N   : Integer;
 begin
   if edHaveHighlight then begin
     Dec(BufSize);
@@ -4457,13 +4457,13 @@ begin
   end;
 end;
 
-function TOvcCustomEditor.GetSelTextLen : LongInt;
+function TOvcCustomEditor.GetSelTextLen : Integer;
   {-return the length of the selected text}
 var
   BC, EC : Integer;
-  BP, EP : LongInt;
+  BP, EP : Integer;
   Len    : Word;
-  N      : LongInt;
+  N      : Integer;
 begin
   if edHaveHighlight then begin
     BP := edHltBgn.Para;
@@ -4493,7 +4493,7 @@ begin
     Result := 0;
 end;
 
-function TOvcCustomEditor.GetStringLine(LineNum : LongInt) : string;
+function TOvcCustomEditor.GetStringLine(LineNum : Integer) : string;
   {-return the text for the specified line}
 var
   I : Integer;
@@ -4517,12 +4517,12 @@ begin
   {$ENDIF}
 end;
 
-function TOvcCustomEditor.GetText(P : PChar; Size : LongInt) : LongInt;
+function TOvcCustomEditor.GetText(P : PChar; Size : Integer) : Integer;
   {-copy text in editor into P; limit is Size (includes null)}
 var
   S    : PChar;
   Len  : Word;
-  I, N : LongInt;
+  I, N : Integer;
 begin
   Result := 0;
   if Size = 0 then
@@ -4554,7 +4554,7 @@ begin
     Result := I+1;
 end;
 
-function TOvcCustomEditor.GetTextBuf(Buffer : PChar; BufSize : LongInt) : LongInt;
+function TOvcCustomEditor.GetTextBuf(Buffer : PChar; BufSize : Integer) : Integer;
   {-copy text in editor into Buffer; limit is Size (includes null)}
 begin
   Result := GetText(Buffer, BufSize);
@@ -4585,13 +4585,13 @@ begin
 end;
 
 
-function TOvcCustomEditor.GetTextLen : LongInt;
+function TOvcCustomEditor.GetTextLen : Integer;
   {-get the total number of characters of text}
 begin
   Result := edParas.CharCount;
 end;
 
-function TOvcCustomEditor.GetTopLine : LongInt;
+function TOvcCustomEditor.GetTopLine : Integer;
   {-get the number of line at the top of window}
 begin
   Result := edTopLine;
@@ -4647,7 +4647,7 @@ begin
   edReplaceSelection(P);
 end;
 
-procedure TOvcCustomEditor.LineToPara(var L : LongInt; var C : Integer);
+procedure TOvcCustomEditor.LineToPara(var L : Integer; var C : Integer);
   {-convert a Line,Col coordinate to a Paragraph,Pos coordinate}
 var
   LinePos : Integer;
@@ -4672,8 +4672,8 @@ var
   FirstRow    : Integer;
   LastRow     : Integer;
   FarRt       : Integer;
-  HBLine      : LongInt;
-  HELine      : LongInt;
+  HBLine      : Integer;
+  HELine      : Integer;
   effHBCol    : Integer;
   effHECol    : Integer;
 
@@ -4692,14 +4692,14 @@ var
     Canvas.Brush.Color := Graphics.ColorToRGB(FHighlightColors.BackColor);
   end;
 
-  procedure DrawBookMark(N : LongInt; Row : Integer); near;
+  procedure DrawBookMark(N : Integer; Row : Integer); near;
   var
     Y   : Integer;
     HM  : Integer;
     I   : Integer;
     DR  : TRect;
     SR  : TRect;
-    PL  : LongInt;
+    PL  : Integer;
     PC  : Integer;
     BMW : Integer;
     BMH : Integer;
@@ -4731,7 +4731,7 @@ var
     end;
   end;
 
-  procedure DrawLineNumber(Num: LongInt; Row: Integer);
+  procedure DrawLineNumber(Num: Integer; Row: Integer);
   var
     X, Y: Integer;
   begin
@@ -4740,7 +4740,7 @@ var
     Canvas.TextOut(X, Y, IntToStr(Num));
   end;
 
-  procedure SetRowRect(R : LongInt);
+  procedure SetRowRect(R : Integer);
   begin
     {set bounding rectangle for Row}
     FR.Top := (Pred(R) * edGetRowHt);
@@ -4794,7 +4794,7 @@ var
     end;
   end;
 
-  procedure DrawComplexRow(S : PChar; Len, Row : Integer; N : LongInt);
+  procedure DrawComplexRow(S : PChar; Len, Row : Integer; N : Integer);
     {-draw a row that has highlighting}
   var
     Len1, Len2, Len3, Lhilf, Col1 : Integer;
@@ -4877,7 +4877,7 @@ var
     end;
     if Len2 > 0 then begin
       {draw highlighted portion of line}
-      if LongInt(FR.Left)+(Len2*edColWid) > FarRt then
+      if Integer(FR.Left)+(Len2*edColWid) > FarRt then
         FR.Right := FarRt
       else
         FR.Right := FR.Left+(Len2*edColWid);
@@ -4896,7 +4896,7 @@ var
     end;
   end;
 
-  procedure DrawRow(N : LongInt; Row : Integer);
+  procedure DrawRow(N : Integer; Row : Integer);
     {-draw line N on the specified Row of the window}
   var
     S, T                : PChar;
@@ -5170,13 +5170,13 @@ begin
   edPaintBorders;
 end;
 
-function TOvcCustomEditor.ParaCount : LongInt;
+function TOvcCustomEditor.ParaCount : Integer;
   {-return the total number of paragraphs}
 begin
   Result := edParas.ParaCount;
 end;
 
-procedure TOvcCustomEditor.ParaToLine(var L : LongInt; var C : Integer);
+procedure TOvcCustomEditor.ParaToLine(var L : Integer; var C : Integer);
   {-convert a Paragraph,Pos coordinate to a Line,Col coordinate}
 begin
   if (L < 1) or (L > edParas.ParaCount) then
@@ -5378,7 +5378,7 @@ begin
     edMoveCaretTo(edCurLine, edCurCol, False)
 end;
 
-function TOvcCustomEditor.Replace(const S, R : string; Options : TSearchOptionSet) : LongInt;
+function TOvcCustomEditor.Replace(const S, R : string; Options : TSearchOptionSet) : Integer;
   {-search for string S and replace with R, returning -1 if S not found,
     else a replacement count}
 var
@@ -5441,7 +5441,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomEditor.SetByteLimit(Value : LongInt);
+procedure TOvcCustomEditor.SetByteLimit(Value : Integer);
   {-set a limit on the total number of bytes}
 begin
   if Value > -1 then begin
@@ -5450,7 +5450,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomEditor.SetCaretPosition(Line : LongInt; Col : Integer);
+procedure TOvcCustomEditor.SetCaretPosition(Line : Integer; Col : Integer);
   {-move cursor to Line,Col}
 begin
   if (Line < 1) or (Line > edParas.LineCount) or (Col < 1) then
@@ -5549,7 +5549,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomEditor.SetMarkerAt(N : Byte; Line : LongInt; Col : Integer);
+procedure TOvcCustomEditor.SetMarkerAt(N : Byte; Line : Integer; Col : Integer);
   {-set the specified text marker to the specified position}
 begin
   if (N < edMaxMarkers)  then begin
@@ -5600,7 +5600,7 @@ begin
   end;
 end;
 
-procedure TOvcCustomEditor.SetParaLimit(Value : LongInt);
+procedure TOvcCustomEditor.SetParaLimit(Value : Integer);
   {-set a limit on the total number of paragraphs}
 begin
   if Value > 0 then begin
@@ -5664,8 +5664,8 @@ begin
   end;
 end;
 
-procedure TOvcCustomEditor.SetSelection(Line1 : LongInt; Col1 : Integer;
-                               Line2 : LongInt; Col2 : Integer;
+procedure TOvcCustomEditor.SetSelection(Line1 : Integer; Col1 : Integer;
+                               Line2 : Integer; Col2 : Integer;
                                CaretAtEnd : Boolean);
 begin
   if edParas.CharCount > 0 then begin
@@ -5842,7 +5842,7 @@ begin
 end;
 
 
-procedure TOvcCustomEditor.SetTopLine(Value : LongInt);
+procedure TOvcCustomEditor.SetTopLine(Value : Integer);
   {-set the index of the first visible line}
 begin
   if (Value < 1) or (Value > edParas.LineCount) then
@@ -6046,9 +6046,9 @@ procedure TOvcCustomEditor.WMLButtonDblClk(var Msg : TWMLButtonDblClk);
 var
   S       : PChar;
   Len     : Word;
-  Line    : LongInt;
-  Para    : LongInt;
-  BL, EL  : LongInt;
+  Line    : Integer;
+  Para    : Integer;
+  BL, EL  : Integer;
   Pos1    : Integer;
   Pos2    : Integer;
   LinePos : Integer;
@@ -6124,10 +6124,10 @@ end;
 
 procedure TOvcCustomEditor.WMLButtonDown(var Msg : TWMLButtonDown);
 var
-  Line        : LongInt;
-  SL          : LongInt;
-  SelLine     : LongInt;
-  BL, EL      : LongInt;
+  Line        : Integer;
+  SL          : Integer;
+  SelLine     : Integer;
+  BL, EL      : Integer;
   Col         : Integer;
   SC          : Integer;
   SelCol      : Integer;
@@ -6136,11 +6136,11 @@ var
   OffScn      : Boolean;
   LeftBtn     : Byte;
   Pt          : TPoint;
-  Distance    : LongInt;
-  PrevTime    : LongInt;
-  Ticks       : LongInt;
+  Distance    : Integer;
+  PrevTime    : Integer;
+  Ticks       : Integer;
   R           : TRect;
-  MaxDistance : LongInt;
+  MaxDistance : Integer;
 begin
   inherited;
 
@@ -6206,7 +6206,7 @@ begin
         Distance := (R.Top - Pt.Y)
       else
         Distance := MaxDistance;
-      Ticks := LongInt(timeGetTime) - PrevTime;
+      Ticks := Integer(timeGetTime) - PrevTime;
       if Ticks > MaxDistance-Distance then begin
 
         Pt := ScreenToClient(Pt);
@@ -6360,9 +6360,9 @@ end;
 
 procedure TOvcCustomEditor.WMVScroll(var Msg: TWMVScroll);
 var
-  NewTop, Total, Max, L : LongInt;
+  NewTop, Total, Max, L : Integer;
 
-  function CheckLine(LineNum : Longint) : Longint;
+  function CheckLine(LineNum : Integer) : Integer;
   begin
     Result := LineNum;
     if LineNum < 1 then
@@ -6391,7 +6391,7 @@ begin
           Max := edVSMax;
           CheckLine(edParas.LineCount);
           if Total <> edParas.LineCount then begin
-            L := (LongInt(Msg.Pos) * edVSMax) div Max;
+            L := (Integer(Msg.Pos) * edVSMax) div Max;
             NewTop := L * edDivisor;
           end else
             NewTop := CheckLine(Msg.Pos * edDivisor);
@@ -6591,7 +6591,7 @@ function TOvcCustomTextFileEditor.suggestEncoding: TEncoding;
   {-suggest an encoding for SaveToFile (either FEncoding or
     TEncoding.UTF8) - based on the content of the editor. }
 var
-  I : LongInt;
+  I : Integer;
 begin
   if not FEncoding.IsSingleByte then
     {if 'FEncoding' is not a single-byte encoding it can be used independent of the
@@ -6617,7 +6617,7 @@ procedure TOvcCustomTextFileEditor.SaveToFile(const Name : string; const AEncodi
    Changes:
      03/2011, AB: <tab>-characters have been transformed to spaces when saving the file }
 var
-  I, PC, J         : LongInt;
+  I, PC, J         : Integer;
   sBuffer          : string;
   FileStream       : TFileStream;
   Buffer, Preamble : TBytes;

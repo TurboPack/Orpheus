@@ -301,7 +301,7 @@ type
     procedure lobTimerEvent(Sender : TObject;
                             Handle : Integer;
                             Interval : Cardinal;
-                            ElapsedTime : LongInt);
+                            ElapsedTime : Integer);
 
     {VCL message methods}
     procedure CMCtl3DChanged(var Msg : TMessage); message CM_CTL3DCHANGED;
@@ -1139,7 +1139,7 @@ end;
 
 procedure TO32CustomLookOutBar.CMDesignHitTest(var Msg : TCMDesignHitTest);
 begin
-  Msg.Result := LongInt(lobOverButton);
+  Msg.Result := Integer(lobOverButton);
 end;
 {=====}
 
@@ -1163,7 +1163,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or BorderStyles[FBorderStyle];
+    Style := Integer(Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1815,7 +1815,7 @@ end;
 {=====}
 
 procedure TO32CustomLookOutBar.lobTimerEvent(Sender : TObject; Handle : Integer;
-          Interval : Cardinal; ElapsedTime : LongInt);
+          Interval : Cardinal; ElapsedTime : Integer);
 var
   Pt : TPoint;
   Form : TCustomForm;

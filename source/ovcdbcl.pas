@@ -555,7 +555,7 @@ begin
     if IsSequenced then begin
       SINew.nMin := 1;
       SINew.nPage := clNumRows;
-      SINew.nMax := LongInt(DWORD(RecordCount) + SINew.nPage - 1);
+      SINew.nMax := Integer(DWORD(RecordCount) + SINew.nPage - 1);
       if State in [dsInactive, dsBrowse, dsEdit] then
         SINew.nPos := RecNo;  {else keep old pos}
     end else begin
@@ -647,7 +647,7 @@ end;
 
 procedure TOvcDbColumnList.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := Integer(FDataLink);
 end;
 
 constructor TOvcDbColumnList.Create(AOwner : TComponent);
@@ -721,7 +721,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or ScrollBarStyles[FScrollBars]
+    Style := Integer(Style) or ScrollBarStyles[FScrollBars]
                    or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -940,7 +940,7 @@ begin
         {adjust display string for horizontal scroll}
         P := @Buf[0];
         if clHDelta > 0 then begin
-          if clHDelta < LongInt(StrLen(Buf)) then
+          if clHDelta < Integer(StrLen(Buf)) then
             P := @Buf[clHDelta]
           else
             P := '';

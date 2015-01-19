@@ -54,7 +54,7 @@ type
       FFont       : TFont;
       FHint       : string;
       FMargin     : Integer;
-      FReferences : longint;
+      FReferences : Integer;
       FTable      : TOvcTableAncestor;
       FTextHiColor: TColor;
       {property fields - odd size}
@@ -239,7 +239,7 @@ type
       function CanStopEditing(SaveValue : boolean) : boolean; {for Orpheus 1.0 compatibility}
       function FilterTableKey(var Msg : TWMKey) : TOvcTblKeyNeeds; virtual;
 
-      procedure PostMessageToTable(Msg, wParam, lParam : longint);
+      procedure PostMessageToTable(Msg, wParam, lParam : Integer);
 
       procedure SendKeyToTable(var Msg : TWMKey);
       procedure SaveEditedData(Data : pointer); virtual;
@@ -284,7 +284,7 @@ type
       property CellEditor : TControl
          read GetCellEditor;
 
-      property References : longint
+      property References : Integer
          read FReferences;
 
       property Table : TOvcTableAncestor
@@ -304,7 +304,7 @@ type
       FTable        : TOvcTableAncestor;
 
       {other fields}
-      tcCellAttrCount : longint; {count of non-blank cells}
+      tcCellAttrCount : Integer; {count of non-blank cells}
 
 
     protected
@@ -546,7 +546,7 @@ procedure TOvcBaseTableCell.tcPaint(TableCanvas : TCanvas;
       end;
   end;
 {--------}
-procedure TOvcBaseTableCell.PostMessageToTable(Msg, wParam, lParam : longint);
+procedure TOvcBaseTableCell.PostMessageToTable(Msg, wParam, lParam : Integer);
   begin
     if Assigned(FTable) and FTable.HandleAllocated  then
       PostMessage(FTable.Handle, Msg, wParam, lParam)
@@ -707,7 +707,7 @@ procedure TOvcBaseTableCell.SetTable(T : TOvcTableAncestor);
       if (not Assigned(T)) or (T is TOvcTableAncestor) then
         begin
           if Assigned(FTable) and FTable.HandleAllocated then
-            SendMessage(FTable.Handle, ctim_RemoveCell, 0, longint(Self));
+            SendMessage(FTable.Handle, ctim_RemoveCell, 0, NativeInt(Self));
           FTable := T;
           FOnCfgChanged := nil;
           FReferences := 0;
@@ -781,7 +781,7 @@ function TOvcBaseTableCell.TableWantsEnter : boolean;
   var
     Typecast : record
       case boolean of
-        false : (LI : longint);
+        false : (LI : Integer);
         true  : (TblOpts : TOvcTblOptionSet);
     end;
   begin
@@ -797,7 +797,7 @@ function TOvcBaseTableCell.TableWantsTab : boolean;
   var
     Typecast : record
       case boolean of
-        false : (LI : longint);
+        false : (LI : Integer);
         true  : (TblOpts : TOvcTblOptionSet);
     end;
   begin
@@ -927,16 +927,16 @@ procedure ResetCellAttribute(SA : TOvcSparseArray; RowNum : TRowNum; ColNum : TC
 type
   PDelColRec = ^TDelColRec;
   TDelColRec = packed record
-    dcrCellAttrCount : longint;
-    dcrColNum        : longint;
+    dcrCellAttrCount : Integer;
+    dcrColNum        : Integer;
   end;
   PExchColRec = ^TExchColRec;
   TExchColRec = packed record
-    ecrColNum1 : longint;
-    ecrColNum2 : longint;
+    ecrColNum1 : Integer;
+    ecrColNum2 : Integer;
   end;
 {--------}
-function DelCellAttribute(Index : longint;
+function DelCellAttribute(Index : Integer;
                           Item : pointer;
                           ExtraData : pointer) : boolean; far;
   var
@@ -946,7 +946,7 @@ function DelCellAttribute(Index : longint;
     Result := true;
   end;
 {--------}
-function DelSparseArray(Index : longint;
+function DelSparseArray(Index : Integer;
                         Item : pointer;
                         ExtraData : pointer) : boolean; far;
   var
@@ -957,7 +957,7 @@ function DelSparseArray(Index : longint;
     Result := true;
   end;
 {--------}
-function DelCellMinor(Index : longint;
+function DelCellMinor(Index : Integer;
                       Item : pointer;
                       ExtraData : pointer) : boolean; far;
   var
@@ -972,7 +972,7 @@ function DelCellMinor(Index : longint;
     Result := true;
   end;
 {--------}
-function DelCellMajor(Index : longint;
+function DelCellMajor(Index : Integer;
                       Item : pointer;
                       ExtraData : pointer) : boolean; far;
   var
@@ -982,7 +982,7 @@ function DelCellMajor(Index : longint;
     Result := true;
   end;
 {--------}
-function DelCol(Index : longint;
+function DelCol(Index : Integer;
                 Item : pointer;
                 ExtraData : pointer) : boolean; far;
   var
@@ -1000,7 +1000,7 @@ function DelCol(Index : longint;
     Result := true;
   end;
 {--------}
-function ExchCols(Index : longint;
+function ExchCols(Index : Integer;
                   Item : pointer;
                   ExtraData : pointer) : boolean; far;
   var
@@ -1012,12 +1012,12 @@ function ExchCols(Index : longint;
     Result := true;
   end;
 {--------}
-function InsCol(Index : longint;
+function InsCol(Index : Integer;
                 Item : pointer;
                 ExtraData : pointer) : boolean; far;
   var
     SL : TOvcSparseArray absolute Item;
-    ColNum : longint absolute ExtraData;
+    ColNum : Integer absolute ExtraData;
   begin
     SL.Insert(ColNum, nil);
     Result := true;
@@ -1162,7 +1162,7 @@ function TOvcTableCells.GetFont(RowNum : TRowNum; ColNum : TColNum) : TFont;
 {--------}
 procedure TOvcTableCells.InsertCol(ColNum : TColNum);
   var
-    LI : longint;
+    LI : Integer;
   begin
     if (tcCellAttrCount > 0) then
       begin

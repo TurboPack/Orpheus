@@ -68,7 +68,7 @@ procedure TTestOVCDate.TestDMYtoStDate;
 type
   TData = record
     y,m,d,e: Integer;
-    res:     LongInt;
+    res:     Integer;
   end;
 const
   cSomeData : array[0..11] of TData =
@@ -111,7 +111,7 @@ procedure TTestOVCDate.TestStDateToDMY;
 type
   TData = record
     y,m,d: Integer;
-    st:    LongInt;
+    st:    Integer;
   end;
 const
   cSomeData : array[0..11] of TData =
@@ -220,7 +220,7 @@ procedure TTestOVCDate.TestDateTimeToStDate;
 type
   TData = record
     y,m,d: Integer;
-    res:    LongInt;
+    res:    Integer;
   end;
 const
   cSomeData : array[0..10] of TData =

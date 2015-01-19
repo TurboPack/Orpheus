@@ -297,7 +297,7 @@ procedure TOvcSelectionList.DeselectCellRange(FromRow : TRowNum; FromCol : TColN
                                               ToRow : TRowNum; ToCol : TColNum);
   var
     ColNum : TColNum;
-    SwapTemp : longint;
+    SwapTemp : Integer;
   begin
     {save the caller from himself: sort the rows/cols into ascending order}
     if FromRow > ToRow then
@@ -530,7 +530,7 @@ procedure TOvcSelectionList.SelectCellRange(FromRow : TRowNum; FromCol : TColNum
                                             ToRow : TRowNum; ToCol : TColNum);
   var
     ColNum : TColNum;
-    SwapTemp : longint;
+    SwapTemp : Integer;
   begin
     {save the caller from himself: sort the rows/cols into ascending order}
     if FromRow > ToRow then

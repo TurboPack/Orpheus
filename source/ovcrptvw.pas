@@ -134,8 +134,8 @@ type
     procedure Click; override;
     procedure DoEndDrag(Target: TObject; X, Y: Integer); override;
     procedure DoStartDrag(var DragObject: TDragObject); override;
-    function DoOnIsSelected(Index : LongInt) : Boolean; override;
-    procedure DoOnSelect(Index : LongInt; Selected : Boolean); override;
+    function DoOnIsSelected(Index : Integer) : Boolean; override;
+    procedure DoOnSelect(Index : Integer; Selected : Boolean); override;
     procedure DragOver(Source: TObject; X, Y: Integer; State: TDragState;
       var Accept: Boolean); override;
     procedure DrawGroupItem(Canvas : TCanvas; Data : Pointer;
@@ -153,7 +153,7 @@ type
     procedure InternalSetItemIndex(Index: Integer; DeselectOld: Boolean);
     procedure Paint; override;
     procedure SetGridLines(Value : TOvcRVGridLines);
-    procedure SetItemIndex(Index : LongInt); override;
+    procedure SetItemIndex(Index : Integer); override;
     procedure SetMultiSelect(Value : Boolean); override;
     procedure SimulatedClick; override;
     procedure vlbCalcFontFields; override;
@@ -688,7 +688,7 @@ type
     FHideSelection           : Boolean;
     {FHoverTimer              : Integer;}
     FKeySearch               : Boolean;
-    FKeyTimeout              : LongInt;
+    FKeyTimeout              : Integer;
     FPageNumber              : Integer;
     FPrinterProperties       : TOvcRvPrintProps;
     FDetailPrint             : TNotifyEvent;
@@ -826,7 +826,7 @@ type
       FieldIndex: Integer): Integer;
     {procedure HideHint;}
     {procedure HoverTimerEvent(Sender : TObject; Handle : Integer;
-                       Interval : Cardinal; ElapsedTime : LongInt);}
+                       Interval : Cardinal; ElapsedTime : Integer);}
     procedure InternalBeginUpdate(LockIndexer : Boolean);
     procedure InternalEndUpdate(UnlockIndexer : Boolean);
     procedure ListDblClick(Sender : TObject);
@@ -1082,7 +1082,7 @@ type
                    default False;
       {- Enable/disable key search. Requires an OnKeySearch event to be
          assigned as well.}
-    property KeyTimeout : LongInt
+    property KeyTimeout : Integer
                    read FKeyTimeout write FKeyTimeout
                    default rvDefKeyTimeout;
     property MultiSelect : Boolean
@@ -1605,7 +1605,7 @@ begin
   TOvcCustomReportView(Owner).DragDrop(Source, X, Y);
 end;
 
-function TOvcRVListBox.DoOnIsSelected(Index: LongInt): Boolean;
+function TOvcRVListBox.DoOnIsSelected(Index: Integer): Boolean;
 begin
   if csDesigning in ComponentState then
     Result := False
@@ -2272,7 +2272,7 @@ begin
 end;
 
 { new}
-procedure TOvcRVListBox.InternalSetItemIndex(Index : LongInt; DeselectOld: Boolean);
+procedure TOvcRVListBox.InternalSetItemIndex(Index : Integer; DeselectOld: Boolean);
   {-change the currently selected item}
 begin
   {verify valid index}
@@ -2315,7 +2315,7 @@ begin
 end;
 
 { new}
-procedure TOvcRVListBox.SetItemIndex(Index : LongInt);
+procedure TOvcRVListBox.SetItemIndex(Index : Integer);
   {-change the currently selected item}
 begin
   InternalSetItemIndex(Index, True);
@@ -3803,7 +3803,7 @@ end;
 
 procedure TOvcCustomReportView.HScrollPrim(Delta : Integer);
 var
-  SaveD : LongInt;
+  SaveD : Integer;
 begin
   SaveD := HScrollDelta;
   if Delta < 0 then
@@ -3812,7 +3812,7 @@ begin
     else
       Inc(HScrollDelta, Delta)
   else
-    if LongInt(HScrollDelta)+Delta > LongInt(ClientExtra) then
+    if Integer(HScrollDelta)+Delta > Integer(ClientExtra) then
       HScrollDelta := ClientExtra
     else
       Inc(HScrollDelta, Delta);
@@ -3896,7 +3896,7 @@ begin
   Result := '';
 end;
 
-procedure TOvcRVListBox.DoOnSelect(Index : LongInt; Selected : Boolean);
+procedure TOvcRVListBox.DoOnSelect(Index : Integer; Selected : Boolean);
   {-notify of selection change}
 type
   TBigBoolArray = array[0..pred(MaxInt)] of Boolean;
@@ -4702,7 +4702,7 @@ function TOvcCustomReportView.ItemAtPos(Pos : TPoint) : Pointer;
 {- Return Item at Pos in embedded listbox. Typically used with
          popup menus}
 var
-  IX : LongInt;
+  IX : Integer;
 begin
   IX := FRVListBox.ItemAtPos(Pos, False);
   if IX <> -1 then
@@ -4927,7 +4927,7 @@ end;
 
 (* !!.02
 procedure TOvcCustomReportView.HoverTimerEvent(Sender : TObject; Handle : Integer;
-                         Interval : Cardinal; ElapsedTime : LongInt);
+                         Interval : Cardinal; ElapsedTime : Integer);
 {display/hide hint with truncated text}
 var
   S : string;
@@ -5071,7 +5071,7 @@ end;
 
 procedure TOvcCustomReportView.MakeGroupVisible(GRef : TOvcRvIndexGroup);
 begin
-  PostMessage(Handle, OM_MakeGroupVisible, 0, longint(GRef));
+  PostMessage(Handle, OM_MakeGroupVisible, 0, Integer(GRef));
 end;
 
 procedure TOvcCustomReportView.WMMakeGroupVisible(var Msg : TMessage);

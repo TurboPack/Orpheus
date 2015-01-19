@@ -51,7 +51,7 @@ type
 
 type
   TMarker = packed record
-    Para  : LongInt;  {number of paragraph}
+    Para  : Integer;  {number of paragraph}
     Pos   : Integer;  {position in paragraph}
   end;
   TMarkerArray = array[0..9] of TMarker;
@@ -59,7 +59,7 @@ type
 type
   {text position record}
   TOvcTextPos = packed record
-    Line : LongInt;
+    Line : Integer;
     Col  : Integer;
   end;
 

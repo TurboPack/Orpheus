@@ -287,8 +287,8 @@ begin
   FPictureMask     := 'iiiiiiiiiii';
   efFieldClass     := fcNumeric;
   efDataType       := nfGetDataType(FNumericDataType);
-  efRangeHi.rtLong := High(LongInt);
-  efRangeLo.rtLong := Low(LongInt);
+  efRangeHi.rtLong := High(Integer);
+  efRangeLo.rtLong := Low(Integer);
 
   //clc prevents ImeEditor from opening
 imeMode := imDisable;
@@ -834,7 +834,7 @@ var
 
   procedure IncDecValueLongInt;
   var
-    L : LongInt;
+    L : NativeInt;
     S    : TEditString;
   begin
     pbStripPicture(S, efEditSt);
@@ -1082,17 +1082,17 @@ var
     if TransferFlag = otf_GetData then begin
       pbStripPicture(S, efEditSt);
 
-      if not efStr2Long(S, LongInt(DataPtr^)) then
-        LongInt(DataPtr^) := 0;
+      if not efStr2Long(S, NativeInt(DataPtr^)) then
+        NativeInt(DataPtr^) := 0;
     end else begin
-      efLong2Str(S, LongInt(DataPtr^));
+      efLong2Str(S, NativeInt(DataPtr^));
       pbMergePicture(efEditSt, S);
     end;
   end;
 
   procedure TransferWord;
   var
-    L      : LongInt;
+    L      : NativeInt;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1110,7 +1110,7 @@ var
 
   procedure TransferInteger;
   var
-    L      : LongInt;
+    L      : NativeInt;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1128,7 +1128,7 @@ var
 
   procedure TransferByte;
   var
-    L      : LongInt;
+    L      : NativeInt;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1146,7 +1146,7 @@ var
 
   procedure TransferShortInt;
   var
-    L      : LongInt;
+    L      : NativeInt;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1348,7 +1348,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateLongInt;
   var
-    L : LongInt;
+    L : NativeInt;
     S    : TEditString;
   begin
     pbStripPicture(S, efEditSt);
@@ -1368,7 +1368,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateWord;
   var
-    L : LongInt;
+    L : NativeInt;
     W : Word;
     S    : TEditString;
   begin
@@ -1390,7 +1390,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateInteger;
   var
-    L : LongInt;
+    L : NativeInt;
     I : Integer;
     S    : TEditString;
   begin
@@ -1412,7 +1412,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateByte;
   var
-    L : LongInt;
+    L : NativeInt;
     B : Byte;
     S    : TEditString;
   begin
@@ -1434,7 +1434,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateShortInt;
   var
-    L  : LongInt;
+    L  : NativeInt;
     Si : Byte;
     S    : TEditString;
   begin

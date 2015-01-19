@@ -60,9 +60,9 @@ type
   protected
     FOvcEdit : TOvcTimeEditEx;
 
-    FAsHours    : longint;
-    FAsMinutes  : longint;
-    FAsSeconds  : longint;
+    FAsHours    : Integer;
+    FAsMinutes  : Integer;
+    FAsSeconds  : Integer;
 
     {base property values}
     FBiDiMode      : TBiDiMode;
@@ -208,9 +208,9 @@ type
     procedure SetOnMouseUp(Value : TMouseEvent);
 
     {property methods}
-    function GetAsHours : LongInt;
-    function GetAsMinutes : LongInt;
-    function GetAsSeconds : LongInt;
+    function GetAsHours : Integer;
+    function GetAsMinutes : Integer;
+    function GetAsSeconds : Integer;
     function GetDefaultToPM : Boolean;
     function GetDurationDisplay : TOvcDurationDisplay;
     function GetNowString : string;
@@ -225,9 +225,9 @@ type
     function GetOnPreParseTime : TOvcPreParseTimeEvent;
     function GetOnSetTime : TNotifyEvent;
 
-    procedure SetAsHours(Value : LongInt);
-    procedure SetAsMinutes(Value : LongInt);
-    procedure SetAsSeconds(Value : LongInt);
+    procedure SetAsHours(Value : Integer);
+    procedure SetAsMinutes(Value : Integer);
+    procedure SetAsSeconds(Value : Integer);
     procedure SetDefaultToPM(Value : Boolean);
     procedure SetDurationDisplay(Value : TOvcDurationDisplay);
     procedure SetNowString(const Value : string);
@@ -252,15 +252,15 @@ type
       read GetTime
       write SetTime;
 
-    property AsHours : LongInt
+    property AsHours : Integer
       read GetAsHours
       write SetAsHours;
 
-    property AsMinutes : LongInt
+    property AsMinutes : Integer
       read GetAsMinutes
       write SetAsMinutes;
 
-    property AsSeconds : LongInt
+    property AsSeconds : Integer
       read GetAsSeconds
       write SetAsSeconds;
 
@@ -543,19 +543,19 @@ begin
 end;
 
 
-function TOvcBorderedTimeEdit.GetAsHours : LongInt;
+function TOvcBorderedTimeEdit.GetAsHours : Integer;
 begin
   Result := FOvcEdit.AsHours;
   FAsHours := Result;
 end;
 
-function TOvcBorderedTimeEdit.GetAsMinutes : LongInt;
+function TOvcBorderedTimeEdit.GetAsMinutes : Integer;
 begin
   Result := FOvcEdit.AsMinutes;
   FAsMinutes := Result;
 end;
 
-function TOvcBorderedTimeEdit.GetAsSeconds : LongInt;
+function TOvcBorderedTimeEdit.GetAsSeconds : Integer;
 begin
   Result := FOvcEdit.AsSeconds;
   FAsSeconds := Result;
@@ -634,19 +634,19 @@ begin
   FOnSetTime := Result;
 end;
 
-procedure TOvcBorderedTimeEdit.SetAsHours(Value : LongInt);
+procedure TOvcBorderedTimeEdit.SetAsHours(Value : Integer);
 begin
   FOvcEdit.AsHours := Value;
   FAsHours := Value;
 end;
 
-procedure TOvcBorderedTimeEdit.SetAsMinutes(Value : LongInt);
+procedure TOvcBorderedTimeEdit.SetAsMinutes(Value : Integer);
 begin
   FOvcEdit.AsMinutes := Value;
   FAsMinutes := Value;
 end;
 
-procedure TOvcBorderedTimeEdit.SetAsSeconds(Value : LongInt);
+procedure TOvcBorderedTimeEdit.SetAsSeconds(Value : Integer);
 begin
   FOvcEdit.AsSeconds := Value;
   FAsSeconds := Value;

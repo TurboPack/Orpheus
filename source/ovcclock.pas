@@ -146,8 +146,8 @@ type
     FDrawMarks        : Boolean;
     FElapsedDays      : Integer;
     FElapsedHours     : Integer;
-    FElapsedMinutes   : LongInt;
-    FElapsedSeconds   : LongInt;
+    FElapsedMinutes   : Integer;
+    FElapsedSeconds   : Integer;
     FHandOptions      : TOvcHandOptions;
     FTime             : TDateTime;
     FMilitaryTime     : Boolean;
@@ -178,9 +178,9 @@ type
     {property methods}
     function GetElapsedDays : Integer;
     function GetElapsedHours : Integer;
-    function GetElapsedMinutes : LongInt;
-    function GetElapsedSeconds : LongInt;
-    function GetElapsedSecondsTotal : LongInt;
+    function GetElapsedMinutes : Integer;
+    function GetElapsedSeconds : Integer;
+    function GetElapsedSecondsTotal : Integer;
     procedure SetActive(Value : Boolean);
     procedure SetClockFace(Value : TBitMap);
     procedure SetClockMode(Value : TOvcClockMode);
@@ -190,12 +190,12 @@ type
     procedure SetHourOffset(Value : Integer);
     procedure SetSecondOffset(Value : Integer);
     {internal methods}
-    function ckConvertMsToDateTime(Value : LongInt) : TDateTime;
+    function ckConvertMsToDateTime(Value : Integer) : TDateTime;
     procedure ckHandOptionChange(Sender : TObject);
     procedure ckDigitalOptionChange(Sender : TObject);
     procedure SizeDigitalDisplay;
     procedure ckTimerEvent(Sender : TObject; Handle : Integer;
-                Interval : Cardinal; ElapsedTime : LongInt);
+                Interval : Cardinal; ElapsedTime : Integer);
     procedure DoOnHourChange;
     procedure DoOnMinuteChange;
     procedure DoOnSecondChange;
@@ -239,9 +239,9 @@ type
       read FDisplayMode write SetDisplayMode;
     property ElapsedDays : Integer read GetElapsedDays;
     property ElapsedHours : Integer read GetElapsedHours;
-    property ElapsedMinutes : LongInt read GetElapsedMinutes;
-    property ElapsedSeconds : LongInt read GetElapsedSeconds;
-    property ElapsedSecondsTotal : LongInt read GetElapsedSecondsTotal;
+    property ElapsedMinutes : Integer read GetElapsedMinutes;
+    property ElapsedSeconds : Integer read GetElapsedSeconds;
+    property ElapsedSecondsTotal : Integer read GetElapsedSecondsTotal;
     property Time : TDateTime read FTime write SetTime;
   end;
 
@@ -557,9 +557,9 @@ begin
 end;
 {=====}
 
-function TOvcCustomClock.ckConvertMsToDateTime(Value : LongInt) : TDateTime;
+function TOvcCustomClock.ckConvertMsToDateTime(Value : Integer) : TDateTime;
 var
-  S, Days : LongInt;
+  S, Days : Integer;
   Hour, Minute, Second : Word;
 begin
   S := Value div 1000;
@@ -610,7 +610,7 @@ end;
 {=====}
 
 procedure TOvcCustomClock.ckTimerEvent(Sender : TObject; Handle : Integer;
-            Interval : Cardinal; ElapsedTime : LongInt);
+            Interval : Cardinal; ElapsedTime : Integer);
 var
   Hour, Minute, Second, MSecond : Word;
   C, D                          : Integer;
@@ -701,7 +701,7 @@ begin
 end;
 {=====}
 
-function TOvcCustomClock.GetElapsedMinutes: LongInt;
+function TOvcCustomClock.GetElapsedMinutes: Integer;
 var
   Hour     : Word;
   Min      : Word;
@@ -719,7 +719,7 @@ begin
 end;
 {=====}
 
-function TOvcCustomClock.GetElapsedSeconds : LongInt;
+function TOvcCustomClock.GetElapsedSeconds : Integer;
 var
   Hour     : Word;
   Min      : Word;
@@ -737,7 +737,7 @@ begin
 end;
 {=====}
 
-function TOvcCustomClock.GetElapsedSecondsTotal : LongInt;
+function TOvcCustomClock.GetElapsedSecondsTotal : Integer;
 begin
   if ckClockHandle > -1 then
     ckTotalSeconds :=

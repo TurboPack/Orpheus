@@ -874,7 +874,7 @@ end;
 
 procedure TOvcDataFiler.SetWCharProperty(const S : string; PropInfo : PExPropInfo);
 begin
-  SetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo), LongInt(S[1]));
+  SetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo), NativeInt(S[1]));
 end;
 
 procedure TOvcDataFiler.StoreAllProperties(AObject : TObject);

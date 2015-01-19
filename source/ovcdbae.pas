@@ -52,7 +52,7 @@ type
     of object;
   {event to notify of a scroll action}
   TIndicatorClickEvent =
-    procedure(Sender : TObject; Row : LongInt)
+    procedure(Sender : TObject; Row : Integer)
     of object;
 
 type
@@ -100,7 +100,7 @@ type
   
 
   protected {private}
-    FActiveRow           : LongInt;      {the row index of the active item}
+    FActiveRow           : Integer;      {the row index of the active item}
     FAutoRowHeight       : Boolean;      {auto row height}
     FBorderStyle         : TBorderStyle; {border around the control}
     FDataField           : string;       {database field name}
@@ -151,7 +151,7 @@ type
     function GetField : TField;
     function GetRangeHi : string;
     function GetRangeLo : string;
-    procedure SetActiveRow(Value : LongInt);
+    procedure SetActiveRow(Value : Integer);
     procedure SetAutoRowHeight(Value : Boolean);
     procedure SetBorderStyle(Value : TBorderStyle);
     procedure SetDataField(const Value : string);
@@ -178,7 +178,7 @@ type
     procedure aeAdjustIntegralHeight;
     procedure aeAdjustRowHeight;
     procedure aeColorChanged(AColor : TObject);
-    procedure aeMoveCell(NewIndex : LongInt);
+    procedure aeMoveCell(NewIndex : Integer);
     procedure aeReadRangeHi(Stream : TStream);
     procedure aeReadRangeLo(Stream : TStream);
     procedure aeUpdateActive;
@@ -253,7 +253,7 @@ type
     procedure DoGetItemColor(AField : TField; ARow : Integer; var FG, BG : TColor);
       virtual;
       {-get the color values for the cell}
-    procedure DoOnIndicatorClick(Row : LongInt);
+    procedure DoOnIndicatorClick(Row : Integer);
       dynamic;
       {-perform indicator click notification}
 
@@ -402,7 +402,7 @@ type
 
   
 
-    property ActiveRow : LongInt
+    property ActiveRow : Integer
       read FActiveRow
       write SetActiveRow
       stored False;
@@ -791,7 +791,7 @@ begin
   TLocalEF(aeCell).efGetSampleDisplayData(P);
 end;
 
-procedure TOvcBaseDbArrayEditor.aeMoveCell(NewIndex : LongInt);
+procedure TOvcBaseDbArrayEditor.aeMoveCell(NewIndex : Integer);
   {-moves the cell to the specified row Index}
 begin
   if Assigned(aeCell) then
@@ -869,7 +869,7 @@ begin
     if IsSequenced then begin
       SINew.nMin := 1;
       SINew.nPage := aeNumRows;
-      SINew.nMax := LongInt(DWORD(RecordCount) + SINew.nPage - 1);
+      SINew.nMax := Integer(DWORD(RecordCount) + SINew.nPage - 1);
       if State in [dsInactive, dsBrowse, dsEdit] then
         SINew.nPos := RecNo;  {else keep old pos}
     end else begin
@@ -1001,12 +1001,12 @@ end;
 
 procedure TOvcBaseDbArrayEditor.CreateParams(var Params: TCreateParams);
 const
-  ScrollBar : array[Boolean] of LongInt = (0, WS_VSCROLL);
+  ScrollBar : array[Boolean] of Integer = (0, WS_VSCROLL);
 begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := LongInt(Style) or
+    Style := Integer(Style) or
       ScrollBar[FUseScrollBar] or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -1074,7 +1074,7 @@ begin
     FOnGetItemColor(Self, AField, ARow, FG, BG);
 end;
 
-procedure TOvcBaseDbArrayEditor.DoOnIndicatorClick(Row : LongInt);
+procedure TOvcBaseDbArrayEditor.DoOnIndicatorClick(Row : Integer);
   {-perform indicator click notification}
 begin
   if not (csDesigning in ComponentState) and Assigned(FOnIndicatorClick) then
@@ -1125,9 +1125,9 @@ procedure TOvcBaseDbArrayEditor.Paint;
 var
   CR          : TRect;
   IR, Clip    : TRect;
-  I           : LongInt;
+  I           : Integer;
   X, Y        : Integer;
-  SaveActive  : LongInt;
+  SaveActive  : Integer;
   Left        : Integer;
   Indicator   : Integer;
   HasFocus    : Boolean;
@@ -1293,7 +1293,7 @@ begin
     DataLink.DataSet.MoveBy(Delta);
 end;
 
-procedure TOvcBaseDbArrayEditor.SetActiveRow(Value : LongInt);
+procedure TOvcBaseDbArrayEditor.SetActiveRow(Value : Integer);
   {-set the currently selected item}
 begin
   if (DataLink = nil) or not DataLink.Active then
@@ -1596,7 +1596,7 @@ end;
 procedure TOvcBaseDbArrayEditor.WMLButtonDown(var Msg : TWMLButtonDown);
 var
   P   : TPoint;
-  Row : LongInt;
+  Row : Integer;
 begin
   inherited;
 

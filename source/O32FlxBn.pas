@@ -63,7 +63,7 @@ type
     FFlexButton: TO32CustomFlexButton;
     FBGColor: TColor;
     {internal methods}
-    procedure DrawCell(ACol, ARow: Longint; ARect: TRect;
+    procedure DrawCell(ACol, ARow: Integer; ARect: TRect;
                        AState: TGridDrawState); override;
     procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState;
@@ -318,7 +318,7 @@ begin
 end;
 {=====}
 
-procedure TO32FlxBtnPopMenu.DrawCell(ACol, ARow: Longint; ARect: TRect;
+procedure TO32FlxBtnPopMenu.DrawCell(ACol, ARow: Integer; ARect: TRect;
                                      AState: TGridDrawState);
 var
   TmpImage: TBitmap;
@@ -390,7 +390,7 @@ end;
 procedure TO32FlxBtnPopMenu.MouseDown(Button: TMouseButton; Shift: TShiftState;
  X, Y: Integer);
 var
-  C, R: LongInt;
+  C, R: Integer;
 begin
   MouseToCell(X, Y, C, R);
   if R > -1 then

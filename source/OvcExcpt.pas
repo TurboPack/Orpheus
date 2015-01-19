@@ -47,7 +47,7 @@ type
   {*** Base Orpheus exeption class ***}
   EOvcException = class(Exception)
   public
-    ErrorCode : LongInt;
+    ErrorCode : Integer;
   end;
 
   {*** General ***}
@@ -245,7 +245,7 @@ var
   S  : string;
 begin
   case DataType of
-    fsubLongInt  : inherited CreateFmt(GetOrphStr(SCInvalidRange), [Low(LongInt), High(LongInt)]);
+    fsubLongInt  : inherited CreateFmt(GetOrphStr(SCInvalidRange), [Low(Integer), High(Integer)]);
     fsubWord     : inherited CreateFmt(GetOrphStr(SCInvalidRange), [Low(Word), High(Word)]);
     fsubInteger  : inherited CreateFmt(GetOrphStr(SCInvalidRange), [Low(SmallInt), High(SmallInt)]);
     fsubByte     : inherited CreateFmt(GetOrphStr(SCInvalidRange), [Low(Byte), High(Byte)]);

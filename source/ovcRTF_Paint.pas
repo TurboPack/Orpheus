@@ -82,7 +82,7 @@ type
     Text: PChar;
   end;
 
-function EditStreamInCallback(dwCookie: DWORD_PTR; pbBuff: PByte; cb: Longint; var pcb: Longint): Longint; stdcall;
+function EditStreamInCallback(dwCookie: DWORD_PTR; pbBuff: PByte; cb: Integer; var pcb: Integer): Integer; stdcall;
 var
   Cookie: PCookie;
 begin

@@ -453,7 +453,7 @@ end;
 { Remove method. Removes an item from the MRU list. }
 procedure TOvcMenuMRU.Remove(const Value: string);
 var
-  I : longint;
+  I : Integer;
 begin
   I := FItems.IndexOf(Value);
   if (I > -1) then

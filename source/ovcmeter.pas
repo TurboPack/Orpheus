@@ -245,7 +245,7 @@ begin
     MeterLen := ClHeight
   else
     MeterLen := ClWidth;
-  DividerPos := (longint(PercentValue) * MeterLen) div 100;
+  DividerPos := (Integer(PercentValue) * MeterLen) div 100;
   if (DividerPos < 3) then begin
     UsedLen := 0;
     UnusedLen := MeterLen;
@@ -285,7 +285,7 @@ begin
           CopyMode := cmSrcCopy;
           CopyRect(Rect(ClRect.Left, ClRect.Top, ClRect.Left + UsedLen,
             ClRect.Top + ClHeight - 1), UsedImage.Canvas,Rect(0, 0,
-            round(LongInt(UsedImage.Width) * UsedLen / MeterLen) - 1,
+            round(Integer(UsedImage.Width) * UsedLen / MeterLen) - 1,
             UsedImage.Height - 1));
         end;
       end;
@@ -320,7 +320,7 @@ begin
                      ClRect.Top + UnusedLen - 1),
             UnusedImage.Canvas,Rect(
              0, 0, UnusedImage.Width - 1,
-             round(LongInt(UnUsedImage.Height) * UnusedLen / MeterLen - 1)));
+             round(Integer(UnUsedImage.Height) * UnusedLen / MeterLen - 1)));
         end;
       end;
 

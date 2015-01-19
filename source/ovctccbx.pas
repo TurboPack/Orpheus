@@ -362,7 +362,7 @@ const
   ComboBoxHeight = 24;
 
 var
-  ComboBoxResourceCount : longint = 0;
+  ComboBoxResourceCount : Integer = 0;
 
 {===TOvcTCComboBoxEditOld================================================}
 constructor TOvcTCComboBoxEditOld.Create(AOwner : TComponent);
@@ -374,7 +374,7 @@ constructor TOvcTCComboBoxEditOld.Create(AOwner : TComponent);
 destructor TOvcTCComboBoxEditOld.Destroy;
   begin
     if (Style = csDropDown) or (Style = csSimple) then
-      SetWindowLong(EditField, GWL_WNDPROC, longint(PrevEditWndProc));
+      SetWindowLong(EditField, GWL_WNDPROC, NativeInt(PrevEditWndProc));
     FreeObjectInstance(NewEditWndProc);
     inherited Destroy;
   end;
@@ -389,7 +389,7 @@ procedure TOvcTCComboBoxEditOld.CreateWnd;
         if (Style = csSimple) then
           EditField := GetWindow(EditField, GW_HWNDNEXT);
         PrevEditWndProc := pointer(GetWindowLong(EditField, GWL_WNDPROC));
-        SetWindowLong(EditField, GWL_WNDPROC, longint(NewEditWndProc));
+        SetWindowLong(EditField, GWL_WNDPROC, NativeInt(NewEditWndProc));
       end;
   end;
 {--------}
@@ -416,7 +416,7 @@ function  TOvcTCComboBoxEditOld.FilterWMKEYDOWN(var Msg : TWMKey) : boolean;
     type
       LH = packed record L, H : word; end;
     var
-      GetSel : longint;
+      GetSel : Integer;
     begin
       GetSel := SendMessage(EditField, EM_GETSEL, 0, 0);
       S := LH(GetSel).L;
@@ -1799,7 +1799,7 @@ procedure TOvcTCComboEdit.WMKeyDown(var Msg: TWMKey);
     type
       LH = packed record L, H : word; end;
     var
-      GetSel : longint;
+      GetSel : Integer;
     begin
       GetSel := SendMessage(Handle, EM_GETSEL, 0, 0);
       S := LH(GetSel).L;

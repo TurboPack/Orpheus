@@ -257,7 +257,7 @@ type
     procedure DoOnPreEdit(Sender : TObject; LosingControl : TWinControl);
       {-call the method assigned to the OnPreEdit event}
     procedure DoOnTimerTrigger(Sender : TObject; Handle : Integer;
-                               Interval : Cardinal; ElapsedTime : LongInt);
+                               Interval : Cardinal; ElapsedTime : Integer);
 
     procedure DelayNotify(Sender : TObject; NotifyCode : Word);
       {-start the chain of events that will fire the OnDelayNotify event}
@@ -954,7 +954,7 @@ begin
   if Assigned(PF) then begin
     for I := 0 to Pred(PF.ComponentCount) do begin
       if PF.Components[I] = FControl then begin
-        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, LongInt(Self));
+        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, NativeInt(Self));
         PostMessage(FControl.Handle, OM_RECORDLABELPOSITION, 0, 0);
         Break;
       end;
@@ -1464,7 +1464,7 @@ end;
 procedure TOvcController.DelayNotify(Sender : TObject; NotifyCode : Word);
 begin
   if Assigned(FOnDelayNotify) then
-    PostMessage(Handle, OM_DELAYNOTIFY, NotifyCode, LongInt(Sender));
+    PostMessage(Handle, OM_DELAYNOTIFY, NotifyCode, NativeInt(Sender));
 end;
 
 destructor TOvcController.Destroy;
@@ -1508,7 +1508,7 @@ begin
   else
     H := 0;
 
-  PostMessage(Handle, OM_POSTEDIT, H, LongInt(Sender));
+  PostMessage(Handle, OM_POSTEDIT, H, NativeInt(Sender));
 end;
 
 procedure TOvcController.DoOnPreEdit(Sender : TObject; LosingControl : TWinControl);
@@ -1520,11 +1520,11 @@ begin
   else
     H := 0;
 
-  PostMessage(Handle, OM_PREEDIT, H, LongInt(Sender));
+  PostMessage(Handle, OM_PREEDIT, H, NativeInt(Sender));
 end;
 
 procedure TOvcController.DoOnTimerTrigger(Sender : TObject; Handle : Integer;
-                         Interval : Cardinal; ElapsedTime : LongInt);
+                         Interval : Cardinal; ElapsedTime : Integer);
 begin
   if Assigned(FOnTimerTrigger) then
     FOnTimerTrigger(Sender, Handle, Interval, ElapsedTime);
@@ -1619,7 +1619,7 @@ var
 
         {ask the controller to give the focus back to this field}
         if ChangeFocus and not ErrorPending then begin
-          PostMessage(Handle, OM_SETFOCUS, 0, LongInt(EF));
+          PostMessage(Handle, OM_SETFOCUS, 0, NativeInt(EF));
           ErrorPending := True;
         end;
 
@@ -1675,7 +1675,7 @@ begin
 
         {ask the controller to give the focus back to this field}
         if not ErrorPending then begin
-          PostMessage(Handle, OM_SETFOCUS, 0, LongInt(EF));
+          PostMessage(Handle, OM_SETFOCUS, 0, NativeInt(EF));
           ErrorPending := True;
         end;
 

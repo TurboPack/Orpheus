@@ -59,7 +59,7 @@ type
 
     {property methods}
     function GetAsFloat : Double;
-    function GetAsInteger : LongInt;
+    function GetAsInteger : Integer;
     function GetAsString : string;
     function GetPopupColors : TOvcCalcColors;
     function GetPopupDecimals : Integer;
@@ -68,7 +68,7 @@ type
     function GetPopupWidth : Integer;
     function GetReadOnly : Boolean;
     procedure SetAsFloat(Value : Double);
-    procedure SetAsInteger(Value : LongInt);
+    procedure SetAsInteger(Value : Integer);
     procedure SetAsString(const Value : string);
     procedure SetPopupColors(Value : TOvcCalcColors);
     procedure SetPopupDecimals(Value : Integer);
@@ -121,7 +121,7 @@ type
     procedure PopupOpen;
       override;
 
-    property AsInteger : LongInt
+    property AsInteger : Integer
       read GetAsInteger
       write SetAsInteger;
 
@@ -243,7 +243,7 @@ begin
   Result := StrToFloat(S);
 end;
 
-function TOvcCustomNumberEdit.GetAsInteger : LongInt;
+function TOvcCustomNumberEdit.GetAsInteger : Integer;
 begin
   Result := Round(GetAsFloat);
 end;
@@ -527,7 +527,7 @@ begin
   Text := FloatToStr(Value);
 end;
 
-procedure TOvcCustomNumberEdit.SetAsInteger(Value : LongInt);
+procedure TOvcCustomNumberEdit.SetAsInteger(Value : Integer);
 begin
   Text := IntToStr(Value);
 end;

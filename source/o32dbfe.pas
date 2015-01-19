@@ -213,7 +213,7 @@ end;
 
 procedure TO32dbFlexEdit.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := LongInt(FDataLink);
+  Msg.Result := NativeInt(FDataLink);
 end;
 {=====}
 

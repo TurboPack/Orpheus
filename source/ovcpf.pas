@@ -534,7 +534,7 @@ procedure TOvcCustomPictureField.efEdit(var Msg : TMessage; Cmd : Word);
       J := EndOfSubField;
       Delta := efHPos-I;
       StrStDeletePrim(efEditSt, I, Delta);
-      if Succ(J-Delta) >= LongInt(StrLen(efEditSt)) then begin
+      if Succ(J-Delta) >= Integer(StrLen(efEditSt)) then begin
         StrCat(efEditSt, ' ');
         if Delta > 1 then
           StrInsertChars(efEditSt, ' ', Succ(J-Delta), Delta-1);
@@ -678,7 +678,7 @@ procedure TOvcCustomPictureField.efEdit(var Msg : TMessage; Cmd : Word);
           Ch := #0;
         if Found then
           if Ch = IntlSupport.DecimalChar then
-            if efHPos > LongInt(DotPos) then
+            if efHPos > Integer(DotPos) then
               Ch := #0
             else begin
               pbFixNumber(DotPos, StBgn, StEnd, True, False);
@@ -1182,10 +1182,10 @@ procedure TOvcCustomPictureField.efEdit(var Msg : TMessage; Cmd : Word);
 ExitPoint:
     {see if we need to fix a number}
     if Found then begin
-      if (SaveHPos < LongInt(DotPos)) and (efHPos > LongInt(DotPos)) then begin
+      if (SaveHPos < Integer(DotPos)) and (efHPos > Integer(DotPos)) then begin
         pbFixNumber(DotPos, StBgn, StEnd, True, False);
         Inc(MF);
-      end else if (SaveHPos > LongInt(DotPos)) and (efHPos < LongInt(DotPos)) then begin
+      end else if (SaveHPos > Integer(DotPos)) and (efHPos < Integer(DotPos)) then begin
         pbFixNumber(DotPos, StBgn, StEnd, False, True);
         Inc(MF);
       end;
@@ -1521,7 +1521,7 @@ var
 
   procedure IncDecValueLongInt;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     pbStripPicture(S, efEditSt);
 
@@ -2013,17 +2013,17 @@ var
   end;
 
   procedure TransferLongInt;
-    {-transfer data to or from LongInt fields}
+    {-transfer data to or from Integer fields}
   var
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
       pbStripPicture(S, efEditSt);
 
-      if not efStr2Long(S, LongInt(DataPtr^)) then
-        LongInt(DataPtr^) := 0;
+      if not efStr2Long(S, NativeInt(DataPtr^)) then
+        Integer(DataPtr^) := 0;
     end else begin
-      efLong2Str(S, LongInt(DataPtr^));
+      efLong2Str(S, Integer(DataPtr^));
       pbMergePicture(efEditSt, S);
     end;
   end;
@@ -2031,7 +2031,7 @@ var
   procedure TransferWord;
     {-transfer data to or from Word fields}
   var
-    L : LongInt;
+    L : NativeInt;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2050,7 +2050,7 @@ var
   procedure TransferInteger;
     {-transfer data to or from Integer fields}
   var
-    L : LongInt;
+    L : NativeInt;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2069,7 +2069,7 @@ var
   procedure TransferByte;
     {-transfer data to or from Byte fields}
   var
-    L : LongInt;
+    L : NativeInt;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2088,7 +2088,7 @@ var
   procedure TransferShortInt;
     {-transfer data to or from ShortInt fields}
   var
-    L : LongInt;
+    L : NativeInt;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2425,7 +2425,7 @@ var
 
   procedure ValidateLongInt;
   var
-    L : LongInt;
+    L : NativeInt;
   begin
     pbStripPicture(S, efEditSt);
 
@@ -2444,7 +2444,7 @@ var
 
   procedure ValidateWord;
   var
-    L : LongInt;
+    L : NativeInt;
     W : Word;
   begin
     pbStripPicture(S, efEditSt);
@@ -2465,7 +2465,7 @@ var
 
   procedure ValidateInteger;
   var
-    L : LongInt;
+    L : NativeInt;
     I : Integer;
   begin
     pbStripPicture(S, efEditSt);
@@ -2486,7 +2486,7 @@ var
 
   procedure ValidateByte;
   var
-    L : LongInt;
+    L : NativeInt;
     B : Byte;
   begin
     pbStripPicture(S, efEditSt);
@@ -2507,7 +2507,7 @@ var
 
   procedure ValidateShortInt;
   var
-    L  : LongInt;
+    L  : NativeInt;
     Si : ShortInt;
   begin
     pbStripPicture(S, efEditSt);

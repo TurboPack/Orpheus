@@ -186,7 +186,7 @@ type
 
 {callback used by FontIsSymbol()}
 function GetFontCharSet(lpLF : PLogFont; lpTM : PTextMetric;
-         FontType : Integer; lParam : LongInt): Integer; far; stdcall;
+         FontType : Integer; lParam : NativeInt): Integer; far; stdcall;
 begin
   PByte(lParam)^ := lpLF^.lfCharSet;
   Result := 0;
@@ -194,7 +194,7 @@ end;
 
 {font family enumeration callbacks}
 function EnumFontFamProc(lpLF : PEnumLogFont; lpTM : PNewTextMetric;
-         FontType : Integer; lParam : LongInt) : Integer; far; stdcall;
+         FontType : Integer; lParam : NativeInt) : Integer; far; stdcall;
 var
   FontCombo : TOvcFontComboBox;
   Bitmap    : TBitmap;
@@ -228,7 +228,7 @@ begin
 end;
 
 function EnumPrinterFontFamProc(lpLF : PEnumLogFont; lpTM : PNewTextMetric;
-         FontType : Integer; lParam : LongInt) : Integer; far; stdcall;
+         FontType : Integer; lParam : NativeInt) : Integer; far; stdcall;
 var
   FontCombo : TOvcFontComboBox;
   Bitmap    : TBitmap;
@@ -414,7 +414,7 @@ begin
     VK_DOWN, VK_UP:
       begin
         { Update the preview control's font AFTER the selection has been updated }
-        PostMessage(Handle, OM_FONTUPDATEPREVIEW, 0, LongInt(Self));
+        PostMessage(Handle, OM_FONTUPDATEPREVIEW, 0, NativeInt(Self));
       end;
   end;
 

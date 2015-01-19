@@ -204,7 +204,7 @@ begin
 end;
 {=====}
 
-function TO32Validators.GetItem(Index : LongInt) : TO32ValidatorItem;
+function TO32Validators.GetItem(Index : Integer) : TO32ValidatorItem;
 begin
   result := TO32ValidatorItem(inherited GetItem(Index));
 end;

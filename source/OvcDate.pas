@@ -51,7 +51,7 @@ uses
   Windows, SysUtils;
 
 type
-  TStDate = LongInt;
+  TStDate = Integer;
   PStDate = ^TStDate;
     {In STDATE, dates are stored in long integer format as the number of days
     since January 1, 1600}
@@ -65,7 +65,7 @@ type
   TStBondDateType = (bdtActual, bdt30E360, bdt30360, bdt30360psa);
     {An enumerated type used for calculating bond date differences}
 
-  TStTime = LongInt;
+  TStTime = Integer;
   PStTime = ^TStTime;
     {STDATE handles time in a manner similar to dates, representing a given
     time of day as the number of seconds since midnight}
@@ -87,14 +87,14 @@ const
   Date1980 = $00021E28;  {This constant contains the Julian date for 01/01/1980}
   Date2000 = $00023AB1;  {This constant contains the Julian date for 01/01/2000}
   {This value is used to represent an invalid date, such as 12/32/1992}
-  BadDate = LongInt($FFFFFFFF);
+  BadDate = Integer($FFFFFFFF);
 
   DeltaJD     = $00232DA8;   {Days between 1/1/-4173 and 1/1/1600}
 
   MinTime = 0;          {Minimum valid time for a time variable - 00:00:00 am}
   MaxTime = 86399;      {Maximum valid time for a time variable - 23:59:59 pm}
   {This value is used to represent an invalid time of day, such as 12:61:00}
-  BadTime = LongInt($FFFFFFFF);
+  BadTime = Integer($FFFFFFFF);
 
   SecondsInDay = 86400;      {Number of seconds in a day}
   SecondsInHour = 3600;      {Number of seconds in an hour}
@@ -203,11 +203,11 @@ function RoundToNearestMinute(const T : TStTime; Truncate : Boolean) : TStTime;
   {-------- routines for DateTimeRec records ---------}
 
 procedure DateTimeDiff(DT1 : TStDateTimeRec; var DT2 : TStDateTimeRec;
-                       var Days : LongInt; var Secs : LongInt);
+                       var Days : Integer; var Secs : Integer);
   {-Return the difference in days and seconds between two points in time}
 
 procedure IncDateTime(DT1 : TStDateTimeRec; var DT2 : TStDateTimeRec;
-                      Days : Integer; Secs : LongInt);
+                      Days : Integer; Secs : Integer);
   {-Increment (or decrement) a date and time by the specified number of days
   and seconds}
 
@@ -276,9 +276,9 @@ begin
 end;
 
 
-procedure ExchangeLongInts(var I, J : LongInt); register;
+procedure ExchangeLongInts(var I, J : Integer); register;
 var
-  K : LongInt;
+  K : Integer;
 begin
   K := I;
   I := J;
@@ -370,8 +370,8 @@ begin
     end;
     Dec(Year, MinYear);
     Result :=
-      ((LongInt(Year div 100)*146097) div 4)+
-      ((LongInt(Year mod 100)*1461) div 4)+
+      ((Integer(Year div 100)*146097) div 4)+
+      ((Integer(Year mod 100)*1461) div 4)+
       (((153*Month)+2) div 5)+Day+First2Months;
   end;
 end;
@@ -480,7 +480,7 @@ end;
 procedure StDateToDMY(Julian : TStDate; var Day, Month, Year : Integer);
   {-Convert from a julian date to month, day, year}
 var
-  I, J : LongInt;
+  I, J : Integer;
 begin
   if Julian = BadDate then begin
     Day := 0;
@@ -496,7 +496,7 @@ begin
       Day := Julian-30;
     end;
   end else begin
-    I := (4*LongInt(Julian-First2Months))-1;
+    I := (4*Integer(Julian-First2Months))-1;
 
     J := (4*((I mod 146097) div 4))+3;
     Year := (100*(I div 146097))+(J div 1461);
@@ -635,7 +635,7 @@ var
   Day2,
   Month2,
   Year2       : Integer;
-  IY          : LongInt;
+  IY          : Integer;
 begin
   {we want Date2 > Date1}
   if Date1 > Date2 then
@@ -692,9 +692,9 @@ begin
   end
   else begin
     Hours := T div SecondsInHour;
-    Dec(T, LongInt(Hours)*SecondsInHour);
+    Dec(T, Integer(Hours)*SecondsInHour);
     Minutes := T div SecondsInMinute;
-    Dec(T, LongInt(Minutes)*SecondsInMinute);
+    Dec(T, Integer(Minutes)*SecondsInMinute);
     Seconds := T;
   end;
 end;
@@ -705,7 +705,7 @@ var
   T : TStTime;
 begin
   Hours := Hours mod HoursInDay;
-  T := (LongInt(Hours)*SecondsInHour)+(LongInt(Minutes)*SecondsInMinute)+Seconds;
+  T := (Integer(Hours)*SecondsInHour)+(Integer(Minutes)*SecondsInMinute)+Seconds;
   Result := T mod SecondsInDay;
 end;
 
@@ -779,7 +779,7 @@ end;
 
 
 procedure DateTimeDiff(DT1 : TStDateTimeRec; var DT2 : TStDateTimeRec;
-                       var Days : LongInt; var Secs : LongInt);
+                       var Days : Integer; var Secs : Integer);
   {-Return the difference in days and seconds between two points in time}
 var
   tDT1, tDT2 : TStDateTimeRec;
@@ -846,14 +846,14 @@ begin
   end;
 end;
 
-procedure IncDateTime(DT1 : TStDateTimeRec; var DT2 : TStDateTimeRec; Days : Integer; Secs : LongInt);
+procedure IncDateTime(DT1 : TStDateTimeRec; var DT2 : TStDateTimeRec; Days : Integer; Secs : Integer);
   {-Increment (or decrement) DT1 by the specified number of days and seconds
     and put the result in DT2}
 begin
   DT2 := DT1;
 
   {date first}
-  Inc(DT2.D, LongInt(Days));
+  Inc(DT2.D, Integer(Days));
 
   if Secs < 0 then begin
     {change the sign}
@@ -886,7 +886,7 @@ end;
 
 function Convert2ByteDate(TwoByteDate : Word) : TStDate;
 begin
-  Result := LongInt(TwoByteDate) + Date1900;
+  Result := Integer(TwoByteDate) + Date1900;
 end;
 
 function Convert4ByteDate(FourByteDate : TStDate) : Word;
