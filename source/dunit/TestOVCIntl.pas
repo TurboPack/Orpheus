@@ -189,10 +189,10 @@ begin
       TProtectedIntlSub(OvcIntlSup).isMergeIntoPicture(@pic[0], cSomeData[i].ch, cSomeData[i].i);
       case i of
         0: res := Format(' %3.3s ',[FormatSettings.ShortMonthNames[2]]);
-        1: res := UpperCase(Format('%-10.10s',[FormatSettings.LongMonthNames[12]]));
+        1: res := AnsiUpperCase(Format('%-10.10s',[FormatSettings.LongMonthNames[12]]));
         2: res := Format('%2.2s',[FormatSettings.ShortDayNames[1]]);
         3: res := Format('%3.3s',[FormatSettings.LongDayNames[1]]);
-        4: res := UpperCase(Format('%-10.10s',[FormatSettings.LongDayNames[2]]));
+        4: res := AnsiUpperCase(Format('%-10.10s',[FormatSettings.LongDayNames[2]]));
         else res := cSomeData[i].res;
       end;
       CheckEqualsString(res, pic, Format('Test #%d failed',[i]));
