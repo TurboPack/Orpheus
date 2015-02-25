@@ -1,4 +1,4 @@
-TurboPower Orpheus
+TurboPack Orpheus
 
 
 Table of contents
@@ -18,7 +18,7 @@ C++Builder. It contains over 120 components covering everything from
 data entry to calendars and clocks. Other noteworthy components
 include an Object Inspector, LookOut bar, & report views.
 
-This is a source-only release of TurboPower Orpheus. It includes
+This is a source-only release of TurboPack Orpheus. It includes
 designtime and runtime packages for Delphi and CBuilder and supports Win32 and Win64.
 
 ==============================================
@@ -26,7 +26,7 @@ designtime and runtime packages for Delphi and CBuilder and supports Win32 and W
 2. Package names
 
 
-TurboPower Orpheus package names have the following form:
+TurboPack Orpheus package names have the following form:
 
 OrpheusDR.bpl (Delphi Runtime)
 OrpheusDD.bpl (Delphi Designtime)
@@ -44,7 +44,7 @@ OrpheusDBCD.bpl (C++Builder data aware Designtime)
 3. Installation
 
 
-To install TurboPower Orpheus into your IDE, take the following
+To install TurboPack Orpheus into your IDE, take the following
 steps:
 
   1. Unzip the release files into a directory (e.g., d:\orpheus).
