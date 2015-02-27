@@ -765,7 +765,8 @@ begin
   if (FField = nil) and (Length(FDataField) > 0) then
     if (Table <> nil) and (Table.DataLink.DataSet <> nil) then begin
       with Table.Datalink.Dataset do
-        SetField(FindField(FDataField)); { no exceptions }
+        if Active then
+          SetField(FindField(FDataField)); { no exceptions }
     end;
 
   Result := FField;
