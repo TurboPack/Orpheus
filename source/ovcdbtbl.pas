@@ -674,9 +674,6 @@ end;
 function TOvcDbTableDataLink.GetDefaultFields : Boolean;
 begin
   Result := True;
-
-  if DataSet <> nil then
-    Result := DataSet.Fields.LifeCycles = [TFieldLifeCycle.lcAutomatic];
 end;
 
 function TOvcDbTableDataLink.GetFields(Index : Integer) : TField;
@@ -768,8 +765,7 @@ begin
   if (FField = nil) and (Length(FDataField) > 0) then
     if (Table <> nil) and (Table.DataLink.DataSet <> nil) then begin
       with Table.Datalink.Dataset do
-        if Active or (Fields.LifeCycles <> [TFieldLifeCycle.lcAutomatic]) then
-          SetField(FindField(FDataField)); { no exceptions }
+        SetField(FindField(FDataField)); { no exceptions }
     end;
 
   Result := FField;

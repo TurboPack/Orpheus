@@ -802,8 +802,7 @@ begin
   begin
     if (DataSource <> nil) and (DataSource.DataSet <> nil) then
     begin
-      if DataSource.DataSet.Fields.LifeCycles <> [TFieldLifeCycle.lcAutomatic] then
-        Result := DataSource.DataSet.FindField(FDataLink.FieldName);
+      Result := DataSource.DataSet.FindField(FDataLink.FieldName);
     end;
   end;
 end;

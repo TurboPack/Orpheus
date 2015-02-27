@@ -784,7 +784,7 @@ begin
   end;
 
   {conditionally remove non-visible Fields}
-  if not ShowHidden and (DataSource.DataSet.Fields.LifeCycles <> [TFieldLifeCycle.lcAutomatic]) then begin
+  if not ShowHidden then begin
     for I := Pred(Items.Count) downto 0 do begin
       IndexInfo := TOvcIndexInfo(Items.Objects[I]);
       Fld := DataSource.DataSet.FieldByName(IndexInfo.FFields[0]);
