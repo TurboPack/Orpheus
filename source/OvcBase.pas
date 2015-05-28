@@ -2677,6 +2677,8 @@ procedure TOvcPopupWindow.Popup(P: TPoint);
 begin
   Left := P.X;
   Top := P.Y;
+  if Owner is TControl then
+    PopupParent := GetParentForm(TControl(Owner));
   Show;
 end;
 
