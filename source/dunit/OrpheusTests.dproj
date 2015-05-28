@@ -3,11 +3,11 @@
         <ProjectGuid>{81987D03-471A-4B63-9F29-340594B9385A}</ProjectGuid>
         <MainSource>OrpheusTests.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
-        <ProjectVersion>16.0</ProjectVersion>
+        <ProjectVersion>17.2</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <Basis>True</Basis>
         <Platform>Win32</Platform>
