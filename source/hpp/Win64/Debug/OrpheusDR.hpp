@@ -163,13 +163,6 @@
 #include <O32WideCharSet.hpp>
 #include <ovcBidi.hpp>
 #include <ovcThemes.hpp>
-#include <ovctcedtHTMLText.hpp>
-#include <ovctcedtTextFormatBar.hpp>
-#include <ovcRTF_TOM.hpp>
-#include <ovcRTF_Paint.hpp>
-#include <ovcRTF_IText.hpp>
-#include <ovcRTF_RichOle.hpp>
-#include <ovctccheckcbx.hpp>
 #include <OvcTCHeaderExtended.hpp>
 #include <System.Types.hpp>	// (rtl)
 #include <System.UITypes.hpp>	// (rtl)
@@ -265,10 +258,6 @@
 #include <System.MaskUtils.hpp>	// (rtl)
 #include <Vcl.Mask.hpp>	// (vcl)
 #include <Vcl.Grids.hpp>	// (vcl)
-#include <System.Win.StdVCL.hpp>	// (rtl)
-#include <Vcl.AxCtrls.hpp>	// (vcl)
-#include <Vcl.OleConst.hpp>	// (vcl)
-#include <Vcl.OleCtrls.hpp>	// (vcl)
 
 //-- user supplied -----------------------------------------------------------
 

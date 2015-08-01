@@ -163,6 +163,7 @@
 #include <O32WideCharSet.hpp>
 #include <ovcBidi.hpp>
 #include <ovcThemes.hpp>
+#include <OvcTCHeaderExtended.hpp>
 #include <ovctcedtHTMLText.hpp>
 #include <ovctcedtTextFormatBar.hpp>
 #include <ovcRTF_TOM.hpp>
@@ -170,7 +171,6 @@
 #include <ovcRTF_IText.hpp>
 #include <ovcRTF_RichOle.hpp>
 #include <ovctccheckcbx.hpp>
-#include <OvcTCHeaderExtended.hpp>
 #include <Winapi.Windows.hpp>	// (rtl)
 #include <System.Internal.ExcUtils.hpp>	// (rtl)
 #include <System.SysUtils.hpp>	// (rtl)

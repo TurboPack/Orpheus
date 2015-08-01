@@ -636,6 +636,14 @@ end;
 procedure TOvcTCCheckComboBoxEdit.SetCheckedItems(const Value: TStrings);
 begin
   FCheckedItems.Assign(Value);
+  // Assigning FCheckedItems also assignes the "Sorted" and "Duplicates"
+  // properties but we need to ignore duplicates - otherwise it is not
+  // possible to uncheck items reliably after save/loadrecreateitems
+  if FCheckedItems is TStringList then // FCheckedItems is created as TStringList, but we better double check
+  begin
+    TStringList(FCheckedItems).Sorted := True;
+    TStringList(FCheckedItems).Duplicates := dupIgnore;
+  end;
 end;
 
 procedure TOvcTCCheckComboBoxEdit.SetDropDownCount(const Value: Integer);

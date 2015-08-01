@@ -481,6 +481,8 @@ procedure TOvcTCCustomHTMLText.StartEditing(RowNum : TRowNum; ColNum : TColNum;
     with FEdit do
       begin
         Parent := FTable;
+        Font := CellAttr.caFont;    // the font must be set before setting FEdit.HTMLText, otherwise formatting will be lost on start editing
+        Font.Color := CellAttr.caFontColor;
         if Data=nil then
           Text := ''
         else case FDataStringType of
@@ -489,8 +491,6 @@ procedure TOvcTCCustomHTMLText.StartEditing(RowNum : TRowNum; ColNum : TColNum;
           tstString:      FEdit.HTMLText := PChar(PString(Data)^); // SetTextBuf(PChar(PString(Data)^))
         end;
         Color := CellAttr.caColor;
-//        Font := CellAttr.caFont;
-//        Font.Color := CellAttr.caFontColor;
         MaxLength := Self.MaxLength;
         WantReturns := Self.WantReturns;
         WantTabs := Self.WantTabs;
@@ -556,6 +556,7 @@ var
   TextRect: TRect;
   State: Integer;
   Doc: ITextDocument;
+  Font: TFont;
 begin
   {if the cell is invisible or the passed data is nil and we're not
    designing, all's done}
@@ -578,7 +579,15 @@ begin
   Painter := TOvcRTFPainter.Create;
   try
     Doc := Painter.GetDoc;  // must store GetDoc in a temporary variable so it can be set to nil before Painter.Free
-    TOvcTCHtmlTextEdit.FillIDocument(Doc, sBuffer, False, CellAttr.caFont);
+    CellAttr.caFont.Color := CellAttr.caFontColor;
+    Font := TFont.Create;
+    try
+      Font.Assign(CellAttr.caFont);
+      Font.Color := CellAttr.caFontColor;
+      TOvcTCHtmlTextEdit.FillIDocument(Doc, sBuffer, False, Font);
+    finally
+      Font.Free;
+    end;
     Doc := nil;
 
     inherited tcPaint(TableCanvas, CellRect, RowNum, ColNum, CellAttr, Data);    {blank out the cell - must be done after loading the document to avoid flicker }
@@ -665,6 +674,8 @@ var
     begin
       Doc.Selection.Font.Name := AFont.Name;
       Doc.Selection.Font.Size := AFont.Size;
+      if (AFont.Color <> clOvcTableDefault) and (AFont.Color <> clDefault) then
+        Doc.Selection.Font.ForeColor := ColorToRGB(AFont.Color);
     end;
     Doc.Selection.Font.Bold := -Ord(fsBold in CurFontStyles);
     Doc.Selection.Font.Italic := -Ord(fsItalic in CurFontStyles);
