@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovctcsim.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovctcsim.pas' rev: 30.00 (Windows)
 
 #ifndef OvctcsimHPP
 #define OvctcsimHPP
@@ -26,8 +26,8 @@
 #include <ovctcell.hpp>
 #include <ovctcbef.hpp>
 #include <Vcl.Graphics.hpp>
-#include <ovcbase.hpp>
 #include <ovctcstr.hpp>
+#include <ovcbase.hpp>
 #include <ovccaret.hpp>
 #include <System.UITypes.hpp>
 #include <ovccmd.hpp>

@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdata.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdata.pas' rev: 30.00 (Windows)
 
 #ifndef OvcdataHPP
 #define OvcdataHPP
@@ -70,6 +70,8 @@ typedef TRangeType *PRangeType;
 #pragma pack(push,1)
 struct DECLSPEC_DRECORD TRangeType
 {
+	
+public:
 	union
 	{
 		struct 
@@ -161,6 +163,8 @@ typedef TOvcCmdRec *POvcCmdRec;
 #pragma pack(push,1)
 struct DECLSPEC_DRECORD TOvcCmdRec
 {
+	
+public:
 	union
 	{
 		struct 

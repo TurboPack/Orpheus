@@ -7,7 +7,7 @@
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
-        <ProjectVersion>17.2</ProjectVersion>
+        <ProjectVersion>18.0</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <Basis>True</Basis>
         <Platform>Win32</Platform>

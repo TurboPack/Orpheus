@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'o32dbfe.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'o32dbfe.pas' rev: 30.00 (Windows)
 
 #ifndef O32dbfeHPP
 #define O32dbfeHPP
@@ -35,9 +35,9 @@
 #include <ovcmisc.hpp>
 #include <o32flxed.hpp>
 #include <System.Types.hpp>
+#include <o32editf.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <System.UITypes.hpp>
-#include <o32editf.hpp>
 #include <o32bordr.hpp>
 
 //-- user supplied -----------------------------------------------------------

@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcRTF_IText.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcRTF_IText.pas' rev: 30.00 (Windows)
 
 #ifndef Ovcrtf_itextHPP
 #define Ovcrtf_itextHPP
@@ -57,6 +57,8 @@ typedef Winapi::Activex::TOleEnum tomConstants;
 
 struct DECLSPEC_DRECORD __MIDL_IWinTypes_0009
 {
+	
+public:
 	union
 	{
 		struct 

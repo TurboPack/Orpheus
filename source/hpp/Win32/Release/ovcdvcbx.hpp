@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdvcbx.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdvcbx.pas' rev: 30.00 (Windows)
 
 #ifndef OvcdvcbxHPP
 #define OvcdvcbxHPP
@@ -20,8 +20,8 @@
 #include <Winapi.Messages.hpp>
 #include <ovccmbx.hpp>
 #include <ovcdrcbx.hpp>
-#include <Vcl.StdCtrls.hpp>
 #include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
 #include <System.UITypes.hpp>
 #include <Vcl.Graphics.hpp>
 #include <ovcbase.hpp>

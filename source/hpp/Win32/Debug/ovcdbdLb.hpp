@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdbdLb.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdbdLb.pas' rev: 30.00 (Windows)
 
 #ifndef OvcdbdlbHPP
 #define OvcdbdlbHPP
@@ -24,6 +24,7 @@
 #include <Winapi.Messages.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <ovcrlbl.hpp>
+#include <ovcbase.hpp>
 #include <System.UITypes.hpp>
 
 //-- user supplied -----------------------------------------------------------
