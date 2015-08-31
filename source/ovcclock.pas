@@ -256,9 +256,9 @@ type
     property Color;
     property Controller;
     property ClockFace;
-    property ClockMode default cmClock;
+    property ClockMode;
     property DigitalOptions;
-    property DisplayMode default dmAnalog;
+    property DisplayMode;
     property DrawMarks default True;
     property Hint;
     property HandOptions;
