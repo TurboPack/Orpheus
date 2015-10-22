@@ -810,7 +810,7 @@ begin
   {Calculate the effective cell width (the cell width less the size of the button)}
   R := CellRect;
   dec(R.Right, OvcComboBoxButtonWidth);
-  if (ActiveRow = RowNum) and (ActiveCol = ColNum) then begin
+  if (ActiveRow = RowNum) and (ActiveCol = ColNum) or LCellAttr.caAlwaysShowDropDown then begin
     if FHideButton then begin
       {let ancestor paint the text}
       inherited tcPaint(TableCanvas, CellRect, RowNum, ColNum, LCellAttr, @S);

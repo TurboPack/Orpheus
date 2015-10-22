@@ -35,9 +35,9 @@
 #include <ovcmisc.hpp>
 #include <o32flxed.hpp>
 #include <System.Types.hpp>
-#include <o32editf.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <System.UITypes.hpp>
+#include <o32editf.hpp>
 #include <o32bordr.hpp>
 
 //-- user supplied -----------------------------------------------------------

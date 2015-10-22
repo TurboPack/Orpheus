@@ -26,8 +26,8 @@
 #include <ovctcell.hpp>
 #include <ovctcbef.hpp>
 #include <Vcl.Graphics.hpp>
-#include <ovctcstr.hpp>
 #include <ovcbase.hpp>
+#include <ovctcstr.hpp>
 #include <ovccaret.hpp>
 #include <System.UITypes.hpp>
 #include <ovccmd.hpp>

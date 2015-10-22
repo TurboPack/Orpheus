@@ -20,8 +20,8 @@
 #include <ovcbase.hpp>
 #include <ovceditf.hpp>
 #include <ovcbordr.hpp>
-#include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
+#include <Vcl.Controls.hpp>
 
 //-- user supplied -----------------------------------------------------------
 

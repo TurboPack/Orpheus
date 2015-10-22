@@ -269,9 +269,9 @@ __published:
 	__property Color = {default=-16777211};
 	__property Controller;
 	__property ClockFace;
-	__property ClockMode = {default=0};
+	__property ClockMode;
 	__property DigitalOptions;
-	__property DisplayMode = {default=0};
+	__property DisplayMode;
 	__property DrawMarks = {default=1};
 	__property Hint = {default=0};
 	__property HandOptions;

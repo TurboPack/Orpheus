@@ -124,6 +124,7 @@ public:
 	System::Uitypes::TColor caBorderColor;
 	Vcl::Graphics::TPenStyle caBorderStyle;
 	int caBorderWidth;
+	bool caAlwaysShowDropDown;
 };
 #pragma pack(pop)
 

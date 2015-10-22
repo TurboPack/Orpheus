@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcclock.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcclock.pas' rev: 30.00 (Windows)
 
 #ifndef OvcclockHPP
 #define OvcclockHPP
@@ -269,9 +269,9 @@ __published:
 	__property Color = {default=-16777211};
 	__property Controller;
 	__property ClockFace;
-	__property ClockMode = {default=0};
+	__property ClockMode;
 	__property DigitalOptions;
-	__property DisplayMode = {default=0};
+	__property DisplayMode;
 	__property DrawMarks = {default=1};
 	__property Hint = {default=0};
 	__property HandOptions;

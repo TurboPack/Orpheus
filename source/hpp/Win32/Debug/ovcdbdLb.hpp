@@ -24,7 +24,6 @@
 #include <Winapi.Messages.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <ovcrlbl.hpp>
-#include <ovcbase.hpp>
 #include <System.UITypes.hpp>
 
 //-- user supplied -----------------------------------------------------------

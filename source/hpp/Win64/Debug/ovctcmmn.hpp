@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovctcmmn.pas' rev: 29.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovctcmmn.pas' rev: 30.00 (Windows)
 
 #ifndef OvctcmmnHPP
 #define OvctcmmnHPP
@@ -124,6 +124,7 @@ public:
 	System::Uitypes::TColor caBorderColor;
 	Vcl::Graphics::TPenStyle caBorderStyle;
 	int caBorderWidth;
+	bool caAlwaysShowDropDown;
 };
 #pragma pack(pop)
 

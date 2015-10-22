@@ -25,8 +25,8 @@
 #include <ovcbase.hpp>
 #include <ovcrvidx.hpp>
 #include <ovcrptvw.hpp>
-#include <Vcl.Controls.hpp>
 #include <System.Types.hpp>
+#include <Vcl.Controls.hpp>
 #include <System.UITypes.hpp>
 #include <Vcl.Forms.hpp>
 #include <ovcfiler.hpp>

@@ -27,8 +27,8 @@
 #include <ovcuser.hpp>
 #include <Vcl.Graphics.hpp>
 #include <ovcpb.hpp>
-#include <ovctcstr.hpp>
 #include <ovcbase.hpp>
+#include <ovctcstr.hpp>
 #include <ovccaret.hpp>
 #include <System.UITypes.hpp>
 #include <ovccmd.hpp>

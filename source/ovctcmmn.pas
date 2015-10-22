@@ -186,6 +186,9 @@ type
     caBorderColor : TColor;          {..Border Color - clOvcTableDefault}
     caBorderStyle : TPenStyle;       {..Border Style (solid, dotted, ...}
     caBorderWidth : Integer;         {..Border Thickness}
+
+    // SZ new attributes for cell dropdown 05.09.2015
+    caAlwaysShowDropDown: Boolean;
   end;
 
   TOvcRowAttributes = packed record // SZ attributes for row border 15.02.2011
