@@ -26,6 +26,12 @@
 {*                                                                            *}
 {* ***** END LICENSE BLOCK *****                                              *}
 
+// PM 05-NOV-2015 Fixed error in WMSetCursor
+//                Added theming support in procedure TOvcCustomCalculator.Paint
+//                Added theming support in procedure TOvcCustomCalculator.cDrawCalcButton
+// PM 07-NOV-2015 Extended Theming support with mouse over hot tracking
+//                Fixed refresh bug of display, by uncommenting a line in TOvcCustomCalculator.cRefreshDisplays
+
 {$I OVC.INC}
 
 {$B-} {Complete Boolean Evaluation}
@@ -43,7 +49,7 @@ interface
 uses
   UITypes, Types, Windows, Buttons, Classes, ClipBrd, Controls, ExtCtrls,
   Forms, Graphics, Menus, Messages, StdCtrls, SysUtils, OvcData, OvcConst, OvcBase,
-  OvcMisc;
+  OvcMisc, Vcl.Themes;
 
 type
   TOvcCalculatorButton = (
@@ -334,13 +340,16 @@ type
     cTape              : TOvcCalcTape;
     cEngine            : TOvcCustomCalculatorEngine;
 
+    cMouseOverButton   : TOvcCalculatorButton;  // PM 07-NOV-2015 For mouse over theme styling
+    cMouseTracking     : Boolean;
+
     {internal methods}
     procedure cAdjustHeight;
     procedure cCalculateLook;
     procedure cClearAll;
     procedure cColorChange(Sender : TObject);
     procedure cDisplayError;
-    procedure cDrawCalcButton(const Button : TOvcButtonInfo; const Pressed : Boolean);
+    procedure cDrawCalcButton(const Button : TOvcButtonInfo; const Pressed, MouseOver : Boolean);  // PM 07-11-2015 Added MouseOVer parameter
     procedure cDrawFocusState;
     procedure cDrawSizeLine;
     procedure cEvaluate(const Button : TOvcCalculatorButton);
@@ -404,6 +413,8 @@ type
       message WM_LBUTTONUP;
     procedure WMMouseMove(var Msg : TWMMouse);
       message WM_MOUSEMOVE;
+    procedure WMMouseLeave(var Msg: TWMMouse);      // PM 07-NOV-2015
+      message WM_MOUSELEAVE;                        // PM 07-NOV-2015
     procedure WMNCHitTest(var Msg : TWMNCHitTest);
       message WM_NCHITTEST;
     procedure WMSetText(var Msg : TWMSetText);
@@ -1637,21 +1648,60 @@ begin
   MessageBeep(0);
 end;
 
-procedure TOvcCustomCalculator.cDrawCalcButton(const Button : TOvcButtonInfo; const Pressed : Boolean);
-var
-  TR  : TRect;
-  Buf : array[0..255] of Char;
-begin
-  if Button.Visible then begin
-    TR := DrawButtonFace(Canvas, Button.Position, 1, bsNew, False, Pressed, False);
-    StrPLCopy(Buf, Button.Caption, 255);
-    DrawText(Canvas.Handle, Buf, StrLen(Buf), TR,
-             DT_CENTER or DT_VCENTER or DT_SINGLELINE);
+procedure TOvcCustomCalculator.cDrawCalcButton(const Button : TOvcButtonInfo; const Pressed, MouseOver : Boolean);
 
-    if Focused and (Button.Caption = '=') then
-      cDrawFocusState;
+  Procedure cDrawCalcButton_NoTheme;  // PM 05-NOV-2015 old non themed draw routine
+  var
+    TR  : TRect;
+    Buf : array[0..255] of Char;
+  begin
+    if Button.Visible then begin
+      TR := DrawButtonFace(Canvas, Button.Position, 1, bsNew, False, Pressed, False);
+      StrPLCopy(Buf, Button.Caption, 255);
+      DrawText(Canvas.Handle, Buf, StrLen(Buf), TR,
+               DT_CENTER or DT_VCENTER or DT_SINGLELINE);
+
+      if Focused and (Button.Caption = '=') then
+        cDrawFocusState;
+    end;
   end;
+
+  Procedure cDrawCalcButton_Themed;  // PM 05-NOV-2015 new themed draw routine
+  var
+    lDetails: TThemedElementDetails;
+    lRect: TRect;
+
+  begin
+    if not Button.Visible then
+      exit;
+
+    if Pressed then
+    begin
+      lDetails := StyleServices.GetElementDetails(tbPushButtonPressed);
+    end
+    else if MouseOver then
+    begin
+      lDetails := StyleServices.GetElementDetails(tbPushButtonHot);
+    end
+    else if Focused and (Button.Caption = '=')  then
+    begin
+      lDetails := StyleServices.GetElementDetails(tbPushButtonDefaulted);
+    end
+    else
+      lDetails := StyleServices.GetElementDetails(tbPushButtonNormal);
+
+    StyleServices.DrawElement(Canvas.Handle, lDetails, Button.Position);
+    lRect := Button.Position;
+    StyleServices.DrawText(Canvas.Handle, lDetails, Button.Caption, lRect, [tfCenter, tfVerticalCenter, tfSingleLine], Canvas.Font.Color);
+  end;
+
+begin
+  if StyleServices.Enabled then
+    cDrawCalcButton_Themed      // PM 05-NOV-2015 if theming is enabled, draw themed
+  else
+    cDrawCalcButton_NoTheme;    // PM 05-NOV-2015 else use the hold routine
 end;
+
 
 procedure TOvcCustomCalculator.cDrawFocusState;
 var
@@ -1750,7 +1800,7 @@ begin
     Exit;
 
   cTape.RefreshDisplays;
-{  DisplayValue := DisplayValue; }
+  DisplayValue := DisplayValue; // PM 08-11-2015 uncommented, because it is needed to refresh display. e.g. on horisontal resize
 end;
 
 procedure TOvcCustomCalculator.cSetDisplayString(const Value : string);
@@ -2037,10 +2087,10 @@ var
   end;
 
 begin
-  if not (coShowTape in FOptions) then
-    Exit;
-
-  if csDesigning in ComponentState then begin
+//  if not (coShowTape in FOptions) then
+//    Exit;
+//  if csDesigning in ComponentState then begin
+  if (coShowTape in FOptions) and (csDesigning in ComponentState) then begin // else cursor is only updated if showtape is enabled
     if (Msg.HitTest = HTCLIENT) then begin
       cOverBar := False;
       vHitTest := ScreenToClient(cHitTest);
@@ -2107,6 +2157,10 @@ begin
 end;
 
 procedure TOvcCustomCalculator.WMMouseMove(var Msg : TWMMouse);
+
+var
+  B     : TOvcCalculatorButton;  // PM 07-11-2015
+  mEvnt : TTrackMouseEvent;      // PM 07-11-2015
 begin
   inherited;
 
@@ -2121,7 +2175,50 @@ begin
       cSizeOffset := calcDefMinSize + cTape.Top;
     cDrawSizeLine;
   end;
+
+  // PM 07-NOV-2015 logic to check i mouse is hovering a button, used for theming
+  if not cMouseTracking then  // to trigger an MouseLeave notifikation
+  begin
+    mEvnt.cbSize := SizeOf(mEvnt);
+    mEvnt.dwFlags := TME_LEAVE;
+    mEvnt.hwndTrack := Handle;
+    TrackMouseEvent(mEvnt);
+    cMouseTracking := True;
+  end;
+
+  if not PtInRect(cButtons[cMouseOverButton].Position, Point(Msg.XPos,Msg.YPos)) then
+  begin
+    InvalidateRect(Handle, @cButtons[cMouseOverButton].Position, False);
+    cMouseOverButton := cbNone;
+    for B := Low(cButtons) to High(cButtons) do
+    begin
+      if cButtons[B].Visible and PtInRect(cButtons[B].Position, Point(Msg.XPos,Msg.YPos)) then
+      begin
+        cMouseOverButton := B;
+        InvalidateRect(Handle, @cButtons[cMouseOverButton].Position, False);
+        Break;
+      end;
+    end;
+  end;
+  Msg.Result := 0;
 end;
+
+
+// PM 07-NOV-2015 make sure to disable hot tracking
+procedure TOvcCustomCalculator.WMMouseLeave(var Msg : TWMMouse);
+begin
+  inherited;
+
+  if not (cMouseOverButton = cbNone) then
+  begin
+    InvalidateRect(Handle, @cButtons[cMouseOverButton].Position, False);
+    cMouseOverButton := cbNone;
+  end;
+  cMouseTracking  := false;
+  Msg.Result      := 0;
+end;
+
+
 
 procedure TOvcCustomCalculator.CopyToClipboard;
 begin
@@ -2191,6 +2288,9 @@ begin
 
   if csDesigning in ComponentState then
     cTabCursor := Screen.Cursors[crVSplit];
+
+  cMouseOverButton := cbNone; // PM 07-NOV-2015 For mouse over theme styling
+  cMouseTracking   := false;
 end;
 
 constructor TOvcCustomCalculator.CreateEx(AOwner : TComponent; AsPopup : Boolean);
@@ -2624,10 +2724,13 @@ end;
 
 procedure TOvcCustomCalculator.Paint;
 var
-  B  : TOvcCalculatorButton;
+  B       : TOvcCalculatorButton;
 begin
   Canvas.Font := Font;
-  Canvas.Brush.Color := clBtnFace;
+  if StyleServices.Enabled then                                   //PM 05-Nov-2015 if theming enabled
+    Canvas.Brush.Color := StyleServices.GetSystemColor(clBtnFace) //PM 05-Nov-2015 get theming color
+  else                                                            //PM 05-Nov-2015
+    Canvas.Brush.Color := clBtnFace;
   Canvas.FillRect(ClientRect);
 
 {  if Ctl3D then begin              //SZ this causes 100% CPU usage when Themes are active, moved to CreateWnd
@@ -2654,7 +2757,7 @@ begin
     else if (B in [cbInvert, cbChangeSign, cbPercent, cbSqrt]) then
       Canvas.Font.Color := FColors.FunctionButtons;
 
-    cDrawCalcButton(cButtons[B], (B = cDownButton));
+    cDrawCalcButton(cButtons[B], (B = cDownButton), (B = cMouseOverButton));
   end;
 end;
 

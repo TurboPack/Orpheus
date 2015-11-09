@@ -32,6 +32,7 @@
 #include <ovcconst.hpp>
 #include <ovcbase.hpp>
 #include <ovcmisc.hpp>
+#include <Vcl.Themes.hpp>
 
 //-- user supplied -----------------------------------------------------------
 
@@ -275,12 +276,14 @@ protected:
 	HICON cTabCursor;
 	TOvcCalcTape* cTape;
 	TOvcCustomCalculatorEngine* cEngine;
+	TOvcCalculatorButton cMouseOverButton;
+	bool cMouseTracking;
 	void __fastcall cAdjustHeight(void);
 	void __fastcall cCalculateLook(void);
 	void __fastcall cClearAll(void);
 	void __fastcall cColorChange(System::TObject* Sender);
 	void __fastcall cDisplayError(void);
-	void __fastcall cDrawCalcButton(const TOvcButtonInfo &Button, const bool Pressed);
+	void __fastcall cDrawCalcButton(const TOvcButtonInfo &Button, const bool Pressed, const bool MouseOver);
 	void __fastcall cDrawFocusState(void);
 	void __fastcall cDrawSizeLine(void);
 	void __fastcall cEvaluate(const TOvcCalculatorButton Button);
@@ -324,6 +327,7 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMLButtonDown(Winapi::Messages::TWMMouse &Msg);
 	HIDESBASE MESSAGE void __fastcall WMLButtonUp(Winapi::Messages::TWMMouse &Msg);
 	HIDESBASE MESSAGE void __fastcall WMMouseMove(Winapi::Messages::TWMMouse &Msg);
+	MESSAGE void __fastcall WMMouseLeave(Winapi::Messages::TWMMouse &Msg);
 	HIDESBASE MESSAGE void __fastcall WMNCHitTest(Winapi::Messages::TWMNCHitTest &Msg);
 	MESSAGE void __fastcall WMSetText(Winapi::Messages::TWMSetText &Msg);
 	HIDESBASE MESSAGE void __fastcall WMSetCursor(Winapi::Messages::TWMSetCursor &Msg);
