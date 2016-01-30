@@ -2046,7 +2046,8 @@ as suggested by him.
       tbActCell.StopEditing(SaveValue, Data);
       tbActCell := nil;
       try
-        DoDoneEdit(ActiveRow, ActiveCol);
+        if SaveValue then
+          DoDoneEdit(ActiveRow, ActiveCol);
       finally
         if not (otoAlwaysEditing in Options) then
           InvalidateCell(ActiveRow, ActiveCol);
