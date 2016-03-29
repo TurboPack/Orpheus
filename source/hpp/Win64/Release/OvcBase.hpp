@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcbase.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcbase.pas' rev: 31.00 (Windows)
 
 #ifndef OvcbaseHPP
 #define OvcbaseHPP
@@ -471,7 +471,7 @@ class PASCALIMPLEMENTATION TOvcCollection : public System::Classes::TPersistent
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	System::Classes::TComponent* operator[](int Index) { return Item[Index]; }
+	System::Classes::TComponent* operator[](int Index) { return this->Item[Index]; }
 	
 protected:
 	TOvcCollectibleClass FItemClass;
@@ -522,7 +522,7 @@ class PASCALIMPLEMENTATION TO32Collection : public System::Classes::TCollection
 	typedef System::Classes::TCollection inherited;
 	
 public:
-	TO32CollectionItem* operator[](int Index) { return Item[Index]; }
+	TO32CollectionItem* operator[](int Index) { return this->Item[Index]; }
 	
 protected:
 	Vcl::Forms::TForm* FItemEditor;

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcspary.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcspary.pas' rev: 31.00 (Windows)
 
 #ifndef OvcsparyHPP
 #define OvcsparyHPP
@@ -34,7 +34,7 @@ class PASCALIMPLEMENTATION TOvcSparseArray : public System::TObject
 	typedef System::TObject inherited;
 	
 public:
-	void * operator[](int Index) { return Items[Index]; }
+	void * operator[](int Index) { return this->Items[Index]; }
 	
 protected:
 	int FCount;

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcRTF_Paint.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcRTF_Paint.pas' rev: 31.00 (Windows)
 
 #ifndef Ovcrtf_paintHPP
 #define Ovcrtf_paintHPP

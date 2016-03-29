@@ -206,8 +206,17 @@ contains
   O32SBar in '..\..\source\O32SBar.pas',
   o32WideCharSet in '..\..\source\o32WideCharSet.pas',
   ovcBidi in '..\..\source\ovcBidi.pas',
-  ovcThemes in '..\..\source\ovcThemes.pas' {$ENDIF},
-  OvcTCHeaderExtended in '..\..\source\OvcTCHeaderExtended.pas' {$ENDIF};
+  ovcThemes in '..\..\source\ovcThemes.pas',
+  OvcTCHeaderExtended in '..\..\source\OvcTCHeaderExtended.pas'
+{$IFDEF CPUX86},
+  ovctcedtHTMLText in '..\..\source\ovctcedtHTMLText.pas',
+  ovctcedtTextFormatBar in '..\..\source\ovctcedtTextFormatBar.pas' {ovcTextFormatBar},
+  ovcRTF_TOM in '..\..\source\ovcRTF_TOM.pas',
+  ovcRTF_Paint in '..\..\source\ovcRTF_Paint.pas',
+  ovcRTF_IText in '..\..\source\ovcRTF_IText.pas',
+  ovcRTF_RichOle in '..\..\source\ovcRTF_RichOle.pas',
+  ovctccheckcbx in '..\..\source\ovctccheckcbx.pas'
+{$ENDIF};
 
 end.
 

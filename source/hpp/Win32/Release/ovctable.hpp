@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovctable.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovctable.pas' rev: 31.00 (Windows)
 
 #ifndef OvctableHPP
 #define OvctableHPP
@@ -173,7 +173,7 @@ protected:
 	void __fastcall SetScrollBars(const System::Uitypes::TScrollStyle SB);
 	void __fastcall SetTopRow(int RowNum);
 	void __fastcall SetColorUnused(System::Uitypes::TColor CU);
-	DYNAMIC void __fastcall ChangeScale(int M, int D);
+	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
 	bool __fastcall tbCalcActiveCellRect(System::Types::TRect &ACR);
 	int __fastcall tbCalcCellsFromRect(const System::Types::TRect &UR, System::Types::TRect &GR);
@@ -411,6 +411,11 @@ public:
 	__property Ovctcell::TOvcTableCells* Cells = {read=FCells};
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomTable(HWND ParentWindow) : Ovctcmmn::TOvcTableAncestor(ParentWindow) { }
+	
+	/* Hoisted overloads: */
+	
+protected:
+	DYNAMIC inline void __fastcall  ChangeScale(int M, int D, bool isDpiChange){ Vcl::Controls::TWinControl::ChangeScale(M, D, isDpiChange); }
 	
 };
 

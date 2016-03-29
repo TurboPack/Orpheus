@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovclb.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovclb.pas' rev: 31.00 (Windows)
 
 #ifndef OvclbHPP
 #define OvclbHPP
@@ -88,7 +88,7 @@ public:
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	void __fastcall ClearTabStops(void);
 	void __fastcall ResetHorizontalScrollbar(void);
-	void __fastcall SetTabStops(int const *Value, const int Value_High);
+	void __fastcall SetTabStops(const int *Value, const int Value_High);
 	__property Ovcbase::TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};
 	__property Ovcbase::TOvcController* Controller = {read=FController, write=SetController};
 public:

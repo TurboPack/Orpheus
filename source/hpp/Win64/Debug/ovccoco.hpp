@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccoco.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccoco.pas' rev: 31.00 (Windows)
 
 #ifndef OvccocoHPP
 #define OvccocoHPP
@@ -77,7 +77,7 @@ class PASCALIMPLEMENTATION TCommentList : public System::TObject
 	typedef System::TObject inherited;
 	
 public:
-	System::UnicodeString operator[](int Idx) { return Comments[Idx]; }
+	System::UnicodeString operator[](int Idx) { return this->Comments[Idx]; }
 	
 private:
 	System::Classes::TList* fList;

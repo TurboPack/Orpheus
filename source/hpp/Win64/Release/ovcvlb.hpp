@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcvlb.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcvlb.pas' rev: 31.00 (Windows)
 
 #ifndef OvcvlbHPP
 #define OvcvlbHPP
@@ -177,7 +177,7 @@ protected:
 	MESSAGE void __fastcall LBSetSel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall LBSetTabStops(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall LBSetTopIndex(Winapi::Messages::TMessage &Msg);
-	DYNAMIC void __fastcall ChangeScale(int M, int D);
+	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
 	virtual void __fastcall CreateWnd(void);
 	DYNAMIC void __fastcall DragCanceled(void);
@@ -242,7 +242,7 @@ public:
 	void __fastcall Scroll(int HDelta, int VDelta);
 	void __fastcall SelectAll(void);
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
-	void __fastcall SetTabStops(int const *Tabs, const int Tabs_High);
+	void __fastcall SetTabStops(const int *Tabs, const int Tabs_High);
 	__property Canvas;
 	__property int ItemIndex = {read=FItemIndex, write=SetItemIndex, nodefault};
 	__property System::Uitypes::TColor FillColor = {read=FFillColor, write=FFillColor, nodefault};
@@ -250,6 +250,11 @@ public:
 	__property int TopIndex = {read=FTopIndex, write=SetTopIndex, nodefault};
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomVirtualListBox(HWND ParentWindow) : Ovcbase::TOvcCustomControlEx(ParentWindow) { }
+	
+	/* Hoisted overloads: */
+	
+protected:
+	DYNAMIC inline void __fastcall  ChangeScale(int M, int D, bool isDpiChange){ Vcl::Controls::TWinControl::ChangeScale(M, D, isDpiChange); }
 	
 };
 

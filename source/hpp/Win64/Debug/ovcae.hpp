@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcae.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcae.pas' rev: 31.00 (Windows)
 
 #ifndef OvcaeHPP
 #define OvcaeHPP
@@ -126,7 +126,7 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMSize(Winapi::Messages::TWMSize &Msg);
 	HIDESBASE MESSAGE void __fastcall WMVScroll(Winapi::Messages::TWMScroll &Msg);
-	DYNAMIC void __fastcall ChangeScale(int M, int D);
+	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
 	virtual void __fastcall CreateWnd(void);
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
@@ -205,6 +205,11 @@ __published:
 	__property OnStartDrag;
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcBaseArrayEditor(HWND ParentWindow) : Ovcbase::TOvcCustomControlEx(ParentWindow) { }
+	
+	/* Hoisted overloads: */
+	
+protected:
+	DYNAMIC inline void __fastcall  ChangeScale(int M, int D, bool isDpiChange){ Vcl::Controls::TWinControl::ChangeScale(M, D, isDpiChange); }
 	
 };
 

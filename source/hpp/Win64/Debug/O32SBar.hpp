@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'o32sbar.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'o32sbar.pas' rev: 31.00 (Windows)
 
 #ifndef O32sbarHPP
 #define O32sbarHPP
@@ -131,7 +131,7 @@ class PASCALIMPLEMENTATION TO32StatusPanels : public System::Classes::TCollectio
 	typedef System::Classes::TCollection inherited;
 	
 public:
-	TO32StatusPanel* operator[](int Index) { return Items[Index]; }
+	TO32StatusPanel* operator[](int Index) { return this->Items[Index]; }
 	
 protected:
 	TO32CustomStatusBar* FStatusBar;
@@ -188,7 +188,7 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMPaint(Winapi::Messages::TWMPaint &Message);
 	HIDESBASE MESSAGE void __fastcall WMSize(Winapi::Messages::TWMSize &Message);
 	void __fastcall SetUseSystemFont(const bool Value);
-	DYNAMIC void __fastcall ChangeScale(int M, int D);
+	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
 	virtual void __fastcall CreateWnd(void);
 	virtual bool __fastcall DoHint(void);
@@ -224,6 +224,11 @@ public:
 	__property TO32DrawPanelEvent OnDrawPanel = {read=FOnDrawPanel, write=FOnDrawPanel};
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TO32CustomStatusBar(HWND ParentWindow) : Vcl::Controls::TWinControl(ParentWindow) { }
+	
+	/* Hoisted overloads: */
+	
+protected:
+	DYNAMIC inline void __fastcall  ChangeScale(int M, int D, bool isDpiChange){ Vcl::Controls::TWinControl::ChangeScale(M, D, isDpiChange); }
 	
 };
 

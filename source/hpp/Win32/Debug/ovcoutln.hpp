@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcoutln.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcoutln.pas' rev: 31.00 (Windows)
 
 #ifndef OvcoutlnHPP
 #define OvcoutlnHPP
@@ -62,7 +62,7 @@ class PASCALIMPLEMENTATION TOvcOutlineNode : public System::Classes::TPersistent
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	TOvcOutlineNode* operator[](int Index) { return Node[Index]; }
+	TOvcOutlineNode* operator[](int Index) { return this->Node[Index]; }
 	
 protected:
 	int FAddIndex;
@@ -185,7 +185,7 @@ class PASCALIMPLEMENTATION TOvcOutlineNodes : public System::Classes::TPersisten
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	TOvcOutlineNode* operator[](int Index) { return Node[Index]; }
+	TOvcOutlineNode* operator[](int Index) { return this->Node[Index]; }
 	
 protected:
 	TOvcCustomOutline* FOwner;

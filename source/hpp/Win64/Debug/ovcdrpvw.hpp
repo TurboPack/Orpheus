@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdrpvw.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdrpvw.pas' rev: 31.00 (Windows)
 
 #ifndef OvcdrpvwHPP
 #define OvcdrpvwHPP
@@ -144,7 +144,7 @@ class PASCALIMPLEMENTATION TOvcDataRvItems : public System::Classes::TPersistent
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	TOvcDataRvItem* operator[](int Index) { return Item[Index]; }
+	TOvcDataRvItem* operator[](int Index) { return this->Item[Index]; }
 	
 protected:
 	System::Classes::TList* FItems;

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdbhll.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdbhll.pas' rev: 31.00 (Windows)
 
 #ifndef OvcdbhllHPP
 #define OvcdbhllHPP
@@ -37,7 +37,7 @@ public:
 	virtual void __fastcall GetAliasPath(const System::UnicodeString aAlias, System::UnicodeString &aPath);
 	virtual void __fastcall GetAliasDriverName(const System::UnicodeString aAlias, System::UnicodeString &aDriver);
 	virtual void __fastcall GetTableNames(const System::UnicodeString aAlias, System::Classes::TStrings* aList);
-	virtual void __fastcall FindNearestKey(Data::Db::TDataSet* aDataSet, System::TVarRec const *aKeyValues, const int aKeyValues_High);
+	virtual void __fastcall FindNearestKey(Data::Db::TDataSet* aDataSet, const System::TVarRec *aKeyValues, const int aKeyValues_High);
 	virtual Data::Db::TIndexDefs* __fastcall GetIndexDefs(Data::Db::TDataSet* aDataSet);
 	virtual Data::Db::TField* __fastcall GetIndexField(Data::Db::TDataSet* aDataSet, int aFieldIndex);
 	virtual int __fastcall GetIndexFieldCount(Data::Db::TDataSet* aDataSet);
@@ -54,7 +54,7 @@ public:
 
 
 //-- var, const, procedure ---------------------------------------------------
-extern DELPHI_PACKAGE void __fastcall OvcFindNearestKey(TOvcDbEngineHelperBase* aHelper, Data::Db::TDataSet* aDataSet, System::TVarRec const *aKeyValues, const int aKeyValues_High);
+extern DELPHI_PACKAGE void __fastcall OvcFindNearestKey(TOvcDbEngineHelperBase* aHelper, Data::Db::TDataSet* aDataSet, const System::TVarRec *aKeyValues, const int aKeyValues_High);
 extern DELPHI_PACKAGE void __fastcall OvcGetAliasDriverName(TOvcDbEngineHelperBase* aHelper, const System::UnicodeString aAlias, System::UnicodeString &aDriver);
 extern DELPHI_PACKAGE void __fastcall OvcGetAliasNames(TOvcDbEngineHelperBase* aHelper, System::Classes::TStrings* aList);
 extern DELPHI_PACKAGE void __fastcall OvcGetAliasPath(TOvcDbEngineHelperBase* aHelper, const System::UnicodeString aAlias, System::UnicodeString &aPath);

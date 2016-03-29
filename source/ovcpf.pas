@@ -1453,10 +1453,6 @@ var
         Exit;
 
     {find the next/prev allowable character}
-{$IFNDEF WIN64}
-    { Win64-compiler "sees" that the following command is unnecessary }
-    OK := False;
-{$ENDIF}
     repeat
       repeat
         if Delta = 1 then

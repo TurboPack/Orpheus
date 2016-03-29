@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccmd.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccmd.pas' rev: 31.00 (Windows)
 
 #ifndef OvccmdHPP
 #define OvccmdHPP
@@ -42,7 +42,7 @@ class PASCALIMPLEMENTATION TOvcCommandTable : public System::Classes::TPersisten
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	Ovcdata::TOvcCmdRec operator[](int Index) { return Commands[Index]; }
+	Ovcdata::TOvcCmdRec operator[](int Index) { return this->Commands[Index]; }
 	
 protected:
 	bool FActive;
@@ -81,7 +81,7 @@ class PASCALIMPLEMENTATION TOvcCommandProcessor : public System::Classes::TPersi
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	TOvcCommandTable* operator[](int Index) { return Table[Index]; }
+	TOvcCommandTable* operator[](int Index) { return this->Table[Index]; }
 	
 protected:
 	System::Classes::TList* FTableList;
@@ -117,12 +117,12 @@ public:
 	virtual int __fastcall LoadCommandTable(const System::UnicodeString FileName);
 	void __fastcall ResetCommandProcessor(void);
 	virtual void __fastcall SaveCommandTable(const System::UnicodeString TableName, const System::UnicodeString FileName);
-	void __fastcall SetScanPriority(System::UnicodeString const *Names, const int Names_High);
+	void __fastcall SetScanPriority(const System::UnicodeString *Names, const int Names_High);
 	void __fastcall SetState(TOvcProcessorState State, System::Byte Key, System::Byte Shift);
 	System::Word __fastcall Translate(Winapi::Messages::TMessage &Msg);
-	System::Word __fastcall TranslateUsing(System::UnicodeString const *Tables, const int Tables_High, Winapi::Messages::TMessage &Msg);
+	System::Word __fastcall TranslateUsing(const System::UnicodeString *Tables, const int Tables_High, Winapi::Messages::TMessage &Msg);
 	System::Word __fastcall TranslateKey(System::Word Key, System::Classes::TShiftState ShiftState);
-	System::Word __fastcall TranslateKeyUsing(System::UnicodeString const *Tables, const int Tables_High, System::Word Key, System::Classes::TShiftState ShiftState);
+	System::Word __fastcall TranslateKeyUsing(const System::UnicodeString *Tables, const int Tables_High, System::Word Key, System::Classes::TShiftState ShiftState);
 	__property int Count = {read=GetCount, stored=false, nodefault};
 	__property TOvcCommandTable* Table[int Index] = {read=GetTable, write=SetTable/*, default*/};
 };

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovctbcls.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovctbcls.pas' rev: 31.00 (Windows)
 
 #ifndef OvctbclsHPP
 #define OvctbclsHPP
@@ -74,7 +74,7 @@ class PASCALIMPLEMENTATION TOvcTableColumns : public System::Classes::TPersisten
 	typedef System::Classes::TPersistent inherited;
 	
 public:
-	TOvcTableColumn* operator[](int ColNum) { return List[ColNum]; }
+	TOvcTableColumn* operator[](int ColNum) { return this->List[ColNum]; }
 	
 protected:
 	System::Classes::TList* FList;
