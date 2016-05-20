@@ -275,6 +275,8 @@ typedef void __fastcall (__closure *TRowResizeEvent)(System::TObject* Sender, in
 
 typedef void __fastcall (__closure *TCellNotifyEvent)(System::TObject* Sender, int RowNum, int ColNum);
 
+typedef void __fastcall (__closure *TCellEditorNotifyEvent)(System::TObject* Sender, int RowNum, int ColNum, TOvcTableCellAncestor* &CellEditor);
+
 typedef void __fastcall (__closure *TCellDataNotifyEvent)(System::TObject* Sender, int RowNum, int ColNum, void * &Data, TOvcCellDataPurpose Purpose);
 
 typedef void __fastcall (__closure *TCellAttrNotifyEvent)(System::TObject* Sender, int RowNum, int ColNum, TOvcCellAttributes &CellAttr);

@@ -310,6 +310,9 @@ type
     NewHeight: Integer) of object;
   TCellNotifyEvent = procedure (Sender : TObject;
                                 RowNum : TRowNum; ColNum : TColNum) of object;
+  TCellEditorNotifyEvent = procedure(Sender: TObject;
+                               RowNum: integer; ColNum: integer;
+                               var CellEditor: TOvcTableCellAncestor) of object;
   TCellDataNotifyEvent = procedure (Sender : TObject;
                                     RowNum : TRowNum; ColNum : TColNum;
                                     var Data : pointer;
