@@ -100,6 +100,7 @@ type
       FEnteringColumn     : TColNotifyEvent;        {entering column event}
       FEnteringRow        : TRowNotifyEvent;        {entering row event}
       FGetCellData        : TCellDataNotifyEvent;   {get cell data event}
+      FGetCellEditor      : TCellEditorNotifyEvent; {get cell editor event}
       FGetCellAttributes  : TCellAttrNotifyEvent;   {get cell attributes event}
       FLeavingColumn      : TColNotifyEvent;        {leaving column event}
       FLeavingRow         : TRowNotifyEvent;        {leaving row event}
@@ -276,6 +277,8 @@ type
       procedure DoGetCellData(RowNum : TRowNum; ColNum : TColNum;
                               var Data : pointer;
                               Purpose : TOvcCellDataPurpose); virtual;
+      procedure DoGetCellEditor(RowNum : TRowNum; ColNum : TColNum;
+                               var CellEditor: TOvcBaseTableCell); virtual;
       procedure DoLeavingColumn(ColNum : TColNum); virtual;
       procedure DoLeavingRow(RowNum : TRowNum); virtual;
       procedure DoLockedCellClick(RowNum : TRowNum; ColNum : TColNum); virtual;
@@ -539,6 +542,9 @@ type
       property OnGetCellData : TCellDataNotifyEvent
          read FGetCellData write FGetCellData;
 
+      property OnGetCellEditor : TCellEditorNotifyEvent
+         read FGetCellEditor write FGetCellEditor;
+
       property OnGetCellAttributes : TCellAttrNotifyEvent
          read FGetCellAttributes write FGetCellAttributes;
 
@@ -725,6 +731,7 @@ type
       property OnEnteringRow;
       property OnExit;
       property OnGetCellData;
+      property OnGetCellEditor;
       property OnGetCellAttributes;
       property OnGetRowAttributes;
       property OnKeyDown;
@@ -3238,12 +3245,17 @@ procedure TOvcCustomTable.tbEnsureRowIsVisible(RowNum : TRowNum);
 function TOvcCustomTable.tbFindCell(RowNum : TRowNum;
                                     ColNum : TColNum) : TOvcBaseTableCell;
   begin
-    Result := FCells[RowNum, ColNum];
+    Result := nil;
+    DoGetCellEditor(RowNum, ColNum, Result);
     if not Assigned(Result) then
-      if (RowNum < LockedRows) then
-        Result := FLockedRowsCell
-      else
-        Result := FCols[ColNum].DefaultCell;
+      begin
+        Result := FCells[RowNum, ColNum];
+        if not Assigned(Result) then
+          if (RowNum < LockedRows) then
+            Result := FLockedRowsCell
+          else
+            Result := FCols[ColNum].DefaultCell;
+      end;
   end;
 {--------}
 function  TOvcCustomTable.tbFindColInx(ColNum : TColNum) : integer;
@@ -5395,6 +5407,21 @@ procedure TOvcCustomTable.DoGetCellData(RowNum  : TRowNum; ColNum : TColNum;
 {$ENDIF}
     end;
   end;
+procedure TOvcCustomTable.DoGetCellEditor(RowNum: TRowNum; ColNum: TColNum;
+  var CellEditor: TOvcBaseTableCell);
+var
+   Cell: TOvcTableCellAncestor;
+begin
+    if ((ComponentState * [csLoading, csDestroying]) = []) and
+      HandleAllocated and
+      Assigned(FGetCellEditor) then begin
+         Cell := nil;
+         FGetCellEditor(Self, RowNum, ColNum, Cell);
+         if Cell is TOvcBaseTableCell then
+            CellEditor := Cell as TOvcBaseTableCell;
+    end;
+end;
+
 procedure TOvcCustomTable.DoGetRowAttributes(RowNum: TRowNum;
   var CellAttr: TOvcRowAttributes);
 begin
