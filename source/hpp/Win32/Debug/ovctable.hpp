@@ -93,6 +93,7 @@ protected:
 	Ovctcmmn::TColNotifyEvent FEnteringColumn;
 	Ovctcmmn::TRowNotifyEvent FEnteringRow;
 	Ovctcmmn::TCellDataNotifyEvent FGetCellData;
+	Ovctcmmn::TCellEditorNotifyEvent FGetCellEditor;
 	Ovctcmmn::TCellAttrNotifyEvent FGetCellAttributes;
 	Ovctcmmn::TColNotifyEvent FLeavingColumn;
 	Ovctcmmn::TRowNotifyEvent FLeavingRow;
@@ -225,6 +226,7 @@ protected:
 	virtual void __fastcall DoGetCellAttributes(int RowNum, int ColNum, Ovctcmmn::TOvcCellAttributes &CellAttr);
 	virtual void __fastcall DoGetRowAttributes(int RowNum, Ovctcmmn::TOvcRowAttributes &CellAttr);
 	virtual void __fastcall DoGetCellData(int RowNum, int ColNum, void * &Data, Ovctcmmn::TOvcCellDataPurpose Purpose);
+	virtual void __fastcall DoGetCellEditor(int RowNum, int ColNum, Ovctcell::TOvcBaseTableCell* &CellEditor);
 	virtual void __fastcall DoLeavingColumn(int ColNum);
 	virtual void __fastcall DoLeavingRow(int RowNum);
 	virtual void __fastcall DoLockedCellClick(int RowNum, int ColNum);
@@ -358,6 +360,7 @@ protected:
 	__property Ovctcmmn::TColNotifyEvent OnEnteringColumn = {read=FEnteringColumn, write=FEnteringColumn};
 	__property Ovctcmmn::TRowNotifyEvent OnEnteringRow = {read=FEnteringRow, write=FEnteringRow};
 	__property Ovctcmmn::TCellDataNotifyEvent OnGetCellData = {read=FGetCellData, write=FGetCellData};
+	__property Ovctcmmn::TCellEditorNotifyEvent OnGetCellEditor = {read=FGetCellEditor, write=FGetCellEditor};
 	__property Ovctcmmn::TCellAttrNotifyEvent OnGetCellAttributes = {read=FGetCellAttributes, write=FGetCellAttributes};
 	__property Ovctcmmn::TRowAttrNotifyEvent OnGetRowAttributes = {read=FOnGetRowAttributes, write=FOnGetRowAttributes};
 	__property Ovctcmmn::TColNotifyEvent OnLeavingColumn = {read=FLeavingColumn, write=FLeavingColumn};
@@ -499,6 +502,7 @@ __published:
 	__property OnEnteringRow;
 	__property OnExit;
 	__property OnGetCellData;
+	__property OnGetCellEditor;
 	__property OnGetCellAttributes;
 	__property OnGetRowAttributes;
 	__property OnKeyDown;
