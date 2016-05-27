@@ -831,6 +831,13 @@ begin
               Dest[I] := UserData.SubstChars[AnsiChar(PicChar)];
             pmDecimalPt :
               Dest[I] := IntlSupport.DecimalChar;
+           {**                         AUCOS - Patch                         **
+           ** If the picture mask contains a different literal char it still **
+           ** needs to decrement the position pointer. Otherwise a following **
+           ** non-literal char will be copied to the wrong position.         **
+           **                                    Andreas Scholz, 02.07.2012  ** }
+           else
+            Dec(SrcLen);
           end;
       end;
     end;
