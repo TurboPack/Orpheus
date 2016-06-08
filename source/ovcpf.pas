@@ -1947,7 +1947,11 @@ var
         efEditSt[0] := #0
       else begin
         StrPLCopy(efEditSt, PString(DataPtr)^, MaxLength);
-        if Length(PString(DataPtr)^)=MaxLength then
+        { 2014-12-02, Aucos Patch                                              }
+        {             The string shall only be stripped to fit the picture if  }
+        {             it exceeds the length. Equal length will result in       }
+        {             stripping a valid character.                             }
+        if Length(PString(DataPtr)^) > MaxLength then
           pbStripPicture(efEditSt,efEditSt);
       end;
       pbMergePicture(efEditSt, efEditSt);
@@ -2683,9 +2687,12 @@ var
     Sec : Integer;
   begin
     {allow blank time fields}
-    if not IntlSupport.TimePCharToHMS(efPicture, efEditSt, H, M, Sec) then
-      if (H = -1) and (M = -1) and ((Sec = -1) or (Sec = 0)) then
-        Exit;
+    { AUCOS - Patch,
+    Das darf nicht gemacht werden, weil dann letzlich das Feld eine Zeit -1
+    liefert, was groﬂe Probleme verursachen kann. Dirk 9.5.2012 }
+//    if not IntlSupport.TimePCharToHMS(efPicture, efEditSt, H, M, Sec) then
+//      if (H = -1) and (M = -1) and ((Sec = -1) or (Sec = 0)) then
+//        Exit;
 
     T := IntlSupport.TimePCharToTime(efPicture, efEditSt);
     if T = BadTime then
