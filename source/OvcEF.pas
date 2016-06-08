@@ -3181,7 +3181,7 @@ end;
 function TOvcBaseEntryField.GetAsInteger : Integer;
   {-returns the field value as a Integer Value}
 var
-  Li  : Integer;
+  Li  : NativeInt;
   Wo  : Word absolute Li;
   It  : SmallInt absolute Li;
   By  : Byte absolute Li;
