@@ -2687,9 +2687,12 @@ var
     Sec : Integer;
   begin
     {allow blank time fields}
-    if not IntlSupport.TimePCharToHMS(efPicture, efEditSt, H, M, Sec) then
-      if (H = -1) and (M = -1) and ((Sec = -1) or (Sec = 0)) then
-        Exit;
+    { AUCOS - Patch,
+    Das darf nicht gemacht werden, weil dann letzlich das Feld eine Zeit -1
+    liefert, was groﬂe Probleme verursachen kann. Dirk 9.5.2012 }
+//    if not IntlSupport.TimePCharToHMS(efPicture, efEditSt, H, M, Sec) then
+//      if (H = -1) and (M = -1) and ((Sec = -1) or (Sec = 0)) then
+//        Exit;
 
     T := IntlSupport.TimePCharToTime(efPicture, efEditSt);
     if T = BadTime then
