@@ -1947,7 +1947,11 @@ var
         efEditSt[0] := #0
       else begin
         StrPLCopy(efEditSt, PString(DataPtr)^, MaxLength);
-        if Length(PString(DataPtr)^)=MaxLength then
+        { 2014-12-02, Aucos Patch                                              }
+        {             The string shall only be stripped to fit the picture if  }
+        {             it exceeds the length. Equal length will result in       }
+        {             stripping a valid character.                             }
+        if Length(PString(DataPtr)^) > MaxLength then
           pbStripPicture(efEditSt,efEditSt);
       end;
       pbMergePicture(efEditSt, efEditSt);
