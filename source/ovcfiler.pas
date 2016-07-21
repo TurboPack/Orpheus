@@ -427,7 +427,8 @@ begin
     S := ReadString(Section, Item, '1')
   else
     S := ReadString(Section, Item, '0');
-  Result := S[1] = '1';
+  
+  Result := Copy(S, 1, 1) = '1';
 end;
 
 function TOvcAbstractStore.ReadInteger(const Section, Item : string; DefaultValue : Integer) : Integer;
