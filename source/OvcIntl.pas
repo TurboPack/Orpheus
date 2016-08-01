@@ -47,7 +47,7 @@ uses
   OvcStr, OvcDate;
 
 type
-  TCurrencySt = array[0..5] of Char;
+  TCurrencySt = string;
 
   
 
@@ -347,8 +347,8 @@ begin
   FAutoUpdate      := False;
 
   {substitution strings for semi-literal mask characters}
-  StrCopy(FCurrencyLtStr, DefaultIntlData.CurrencyLtStr);
-  StrCopy(FCurrencyRtStr, DefaultIntlData.CurrencyRtStr);
+  FCurrencyLtStr := DefaultIntlData.CurrencyLtStr;
+  FCurrencyRtStr := DefaultIntlData.CurrencyRtStr;
   FDecimalChar     := DefaultIntlData.DecimalChar;
   FCommaChar       := DefaultIntlData.CommaChar;
 
@@ -598,12 +598,12 @@ end;
 
 function TOvcIntlSup.GetCurrencyLtStr : string;
 begin
-  Result := StrPas(FCurrencyLtStr);
+  Result := FCurrencyLtStr;
 end;
 
 function TOvcIntlSup.GetCurrencyRtStr : string;
 begin
-  Result := StrPas(FCurrencyRtStr);
+  Result := FCurrencyRtStr;
 end;
 
 function TOvcIntlSup.InternationalCurrency(FormChar : Char; MaxDigits : Byte; Float,
@@ -671,13 +671,13 @@ begin
     Float := not Odd(wCurrencyForm);
 
   {plug in the picture characters for the currency symbol}
-  CLSlen := StrLen(FCurrencyLtStr);
+  CLSlen := FCurrencyLtStr.Length;
   if Float then
     StrStInsertPrim(Dest, CharStrPChar(Tmp, pmFloatDollar, CLSlen), 0)
   else if not Odd(wCurrencyForm) then
     StrStInsertPrim(Dest, CharStrPChar(Tmp, pmCurrencyLt, CLSlen), 0)
   else
-    StrCat(Dest, CharStrPChar(Tmp, pmCurrencyRt, StrLen(FCurrencyRtStr)));
+    StrCat(Dest, CharStrPChar(Tmp, pmCurrencyRt, FCurrencyRtStr.Length));
 
   {plug in special minus characters}
   if IsNumeric then
@@ -1416,15 +1416,15 @@ begin
 
 //  GetIntlString('sCurrency', DefaultIntlData.CurrencyLtStr,
 //    FCurrencyLtStr, SizeOf(FCurrencyLtStr));
-  StrPCopy(FCurrencyLtStr, GetLocaleString(LOCALE_SCURRENCY, DefaultIntlData.CurrencyLtStr));
-  StrCopy(FCurrencyRtStr, FCurrencyLtStr);
+  FCurrencyLtStr := GetLocaleString(LOCALE_SCURRENCY, DefaultIntlData.CurrencyLtStr);
+  FCurrencyRtStr := FCurrencyLtStr;
 
   wCurrencyForm := GetLocaleInt(LOCALE_ICURRENCY, 0); //wCurrencyForm := GetProfileInt('intl', 'iCurrency', 0);
   case wCurrencyForm of
     0 : {};
     1 : {};
-    2 : StrCat(FCurrencyLtStr, ' ');
-    3 : StrChInsertPrim(FCurrencyRtStr, ' ', 0);
+    2 : FCurrencyLtStr := FCurrencyLtStr + ' ';
+    3 : FCurrencyRtStr := ' ' + FCurrencyRtStr;
   end;
 
   wTLZero := GetLocaleInt(LOCALE_ITLZERO, 0) <> 0; //  wTLZero := GetProfileInt('intl', 'iTLZero', 0) <> 0;
@@ -1538,12 +1538,12 @@ end;
 
 procedure TOvcIntlSup.SetCurrencyLtStr(const Value : string);
 begin
-  StrPLCopy(FCurrencyLtStr, Value, Length(FCurrencyLtStr)-1);
+  FCurrencyLtStr := Value;
 end;
 
 procedure TOvcIntlSup.SetCurrencyRtStr(const Value : string);
 begin
-  StrPLCopy(FCurrencyRtStr, Value, Length(FCurrencyRtStr)-1);
+  FCurrencyRtStr := FCurrencyRtStr;
 end;
 
 function TOvcIntlSup.TimeStringToHMS(const Picture, S : string;

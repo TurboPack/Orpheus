@@ -33,14 +33,14 @@ namespace Ovcintl
 struct TIntlData;
 class DELPHICLASS TOvcIntlSup;
 //-- type declarations -------------------------------------------------------
-typedef System::StaticArray<System::WideChar, 6> TCurrencySt;
+typedef System::UnicodeString TCurrencySt;
 
 #pragma pack(push,1)
 struct DECLSPEC_DRECORD TIntlData
 {
 public:
-	TCurrencySt CurrencyLtStr;
-	TCurrencySt CurrencyRtStr;
+	System::UnicodeString CurrencyLtStr;
+	System::UnicodeString CurrencyRtStr;
 	System::WideChar DecimalChar;
 	System::WideChar CommaChar;
 	System::Byte CurrDigits;
@@ -59,8 +59,8 @@ class PASCALIMPLEMENTATION TOvcIntlSup : public System::TObject
 	
 protected:
 	bool FAutoUpdate;
-	TCurrencySt FCurrencyLtStr;
-	TCurrencySt FCurrencyRtStr;
+	System::UnicodeString FCurrencyLtStr;
+	System::UnicodeString FCurrencyRtStr;
 	System::WideChar FDecimalChar;
 	System::WideChar FCommaChar;
 	System::Byte FCurrencyDigits;
