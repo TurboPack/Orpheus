@@ -1543,7 +1543,7 @@ end;
 
 procedure TOvcIntlSup.SetCurrencyRtStr(const Value : string);
 begin
-  FCurrencyRtStr := FCurrencyRtStr;
+  FCurrencyRtStr := Value;
 end;
 
 function TOvcIntlSup.TimeStringToHMS(const Picture, S : string;
