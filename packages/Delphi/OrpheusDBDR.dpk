@@ -50,7 +50,7 @@ PACKAGE OrpheusDBDR;
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'TurboPack Orpheus Delphi datataware runtime package'}
-{$LIBSUFFIX '240'}
+{$LIBSUFFIX '250'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

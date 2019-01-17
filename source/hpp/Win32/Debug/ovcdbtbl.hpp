@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2015 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdbtbl.pas' rev: 30.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdbtbl.pas' rev: 32.00 (Windows)
 
 #ifndef OvcdbtblHPP
 #define OvcdbtblHPP
@@ -135,7 +135,7 @@ class PASCALIMPLEMENTATION TOvcVisibleColumns : public System::TObject
 	typedef System::TObject inherited;
 	
 public:
-	TOvcDbTableColumn* operator[](int Index) { return Column[Index]; }
+	TOvcDbTableColumn* operator[](int Index) { return this->Column[Index]; }
 	
 protected:
 	System::Classes::TList* FList;
@@ -339,7 +339,7 @@ protected:
 	void __fastcall tbUpdateBufferLimit(void);
 	void __fastcall tbUpdateVScrollBar(void);
 	void __fastcall tbWriteColData(System::Classes::TWriter* Writer);
-	DYNAMIC void __fastcall ChangeScale(int M, int D);
+	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
 	virtual void __fastcall CreateWnd(void);
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
@@ -417,9 +417,9 @@ public:
 	void __fastcall SetActiveCell(int RowNum, int ColNum);
 	bool __fastcall SetCellProperties(Data::Db::TField* AField, Ovctcell::TOvcBaseTableCell* ACell);
 	void __fastcall SetColumnOrderStrings(System::Classes::TStrings* const Cols);
-	void __fastcall SetColumnOrder(System::UnicodeString const *Cols, const int Cols_High);
+	void __fastcall SetColumnOrder(const System::UnicodeString *Cols, const int Cols_High);
 	void __fastcall SetColumnWidthsStrings(System::Classes::TStrings* const Cols);
-	void __fastcall SetColumnWidths(int const *Cols, const int Cols_High);
+	void __fastcall SetColumnWidths(const int *Cols, const int Cols_High);
 	bool __fastcall StartEditing(void);
 	bool __fastcall StopEditing(bool SaveValue);
 	__property Canvas;
@@ -433,6 +433,11 @@ public:
 	__property int VisibleRowCount = {read=FVisibleRowCount, nodefault};
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomDbTable(HWND ParentWindow) : Ovctcmmn::TOvcTableAncestor(ParentWindow) { }
+	
+	/* Hoisted overloads: */
+	
+protected:
+	DYNAMIC inline void __fastcall  ChangeScale(int M, int D, bool isDpiChange){ Vcl::Controls::TWinControl::ChangeScale(M, D, isDpiChange); }
 	
 };
 

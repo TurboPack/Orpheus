@@ -596,7 +596,6 @@ var
   F1,F2 : double;
   ActiveRecord: Integer;
 begin
-  result := 0;
   ActiveRecord := FDataLink.ActiveRecord;
   try
     case TField(FieldList[FieldIndex]).DataType of
@@ -821,23 +820,25 @@ end;
 
 function TOvcDbReportView.InternalRecordCount : Integer;
 var
-  P: Pointer;
+  lBookmark: TBookmark;
 begin
   if UseRecordCount then
     Result := DataSource.DataSet.RecordCount
-  else begin
+  else
+  begin
     Result := 0;
-    P := DataSource.DataSet.GetBookmark;
+    lBookmark := DataSource.DataSet.GetBookmark;
     DataSource.DataSet.DisableControls;
     try
       DataSource.DataSet.First;
-      while not DataSource.DataSet.eof do begin
-        inc(Result);
+      while not DataSource.DataSet.eof do
+      begin
+        Inc(Result);
         DataSource.DataSet.Next;
       end;
     finally
       try
-        DataSource.DataSet.GotoBookmark(P);
+        DataSource.DataSet.GotoBookmark(lBookmark);
       except
         {ignore failure - we're just trying to be nice}
       end;

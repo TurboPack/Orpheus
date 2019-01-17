@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovclkou0.pas' rev: 31.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovclkou0.pas' rev: 32.00 (Windows)
 
 #ifndef Ovclkou0HPP
 #define Ovclkou0HPP

@@ -1756,12 +1756,13 @@ begin
   {adjust size of all contained pages to fit our client area}
   L := 0;
   T := 0;
+  W := 0;
+  H := 0;
+
   if TabHeight = 0 then begin
     W := Self.Width;
     H := Self.Height;
   end else begin
-    W := 0;
-    H := 0;
     case FTabOrientation of
       toTop :
         begin

@@ -2,7 +2,7 @@
 // Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'OrpheusDD.dpk' rev: 31.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'OrpheusDD.dpk' rev: 32.00 (Windows)
 
 #ifndef OrpheusddHPP
 #define OrpheusddHPP
@@ -138,6 +138,11 @@
 #include <ovctgres.hpp>	// (OrpheusDR)
 #include <O32MouseMon.hpp>	// (OrpheusDR)
 #include <Vcl.CheckLst.hpp>	// (vclx)
+// SO_SFX: 250
+// PRG_EXT: .bpl
+// BPI_DIR: C:\Users\Public\Documents\Embarcadero\Studio\19.0\Dcp
+// OBJ_DIR: C:\Users\Public\Documents\Embarcadero\Studio\19.0\Dcp
+// OBJ_EXT: .obj
 
 //-- user supplied -----------------------------------------------------------
 

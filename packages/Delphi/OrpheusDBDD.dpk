@@ -50,7 +50,7 @@ PACKAGE OrpheusDBDD;
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'TurboPack Orpheus Delphi datataware designtime package'}
-{$LIBSUFFIX '240'}
+{$LIBSUFFIX '250'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 
