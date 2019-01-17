@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovceditf.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovceditf.pas' rev: 33.00 (Windows)
 
 #ifndef OvceditfHPP
 #define OvceditfHPP
@@ -48,27 +48,27 @@ class PASCALIMPLEMENTATION TOvcCustomEdit : public Vcl::Stdctrls::TCustomEdit
 protected:
 	Ovcbase::TOvcController* FController;
 	Ovcbase::TOvcLabelInfo* FLabelInfo;
-	System::UnicodeString __fastcall GetAbout(void);
-	Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel(void);
+	System::UnicodeString __fastcall GetAbout();
+	Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall SetController(Ovcbase::TOvcController* Value);
 	void __fastcall LabelChange(System::TObject* Sender);
 	void __fastcall LabelAttach(System::TObject* Sender, bool Value);
-	void __fastcall PositionLabel(void);
+	void __fastcall PositionLabel();
 	HIDESBASE MESSAGE void __fastcall CMVisibleChanged(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OrAssignLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OrPositionLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OrRecordLabelPosition(Winapi::Messages::TMessage &Msg);
 	Ovcbase::TOvcLabelPosition DefaultLabelPosition;
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
-	bool __fastcall ControllerAssigned(void);
+	bool __fastcall ControllerAssigned();
 	__property System::UnicodeString About = {read=GetAbout, write=SetAbout, stored=false};
 	__property Ovcbase::TOvcLabelInfo* LabelInfo = {read=FLabelInfo, write=FLabelInfo};
 	
 public:
 	__fastcall virtual TOvcCustomEdit(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomEdit(void);
+	__fastcall virtual ~TOvcCustomEdit();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	__property Ovcbase::TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};
 	__property Ovcbase::TOvcController* Controller = {read=FController, write=SetController};
@@ -138,7 +138,7 @@ __published:
 	__property OnStartDrag;
 public:
 	/* TOvcCustomEdit.Create */ inline __fastcall virtual TOvcEdit(System::Classes::TComponent* AOwner) : TOvcCustomEdit(AOwner) { }
-	/* TOvcCustomEdit.Destroy */ inline __fastcall virtual ~TOvcEdit(void) { }
+	/* TOvcCustomEdit.Destroy */ inline __fastcall virtual ~TOvcEdit() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcEdit(HWND ParentWindow) : TOvcCustomEdit(ParentWindow) { }

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovctimer.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovctimer.pas' rev: 33.00 (Windows)
 
 #ifndef OvctimerHPP
 #define OvctimerHPP
@@ -60,34 +60,34 @@ protected:
 	HWND tpHandle;
 	unsigned tpInterval;
 	int tpEnabledCount;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	int __fastcall GetElapsedTriggerTime(int Handle);
 	int __fastcall GetElapsedTriggerTimeSec(int Handle);
 	TTriggerEvent __fastcall GetOnTrigger(int Handle);
-	int __fastcall GetTriggerCount(void);
+	int __fastcall GetTriggerCount();
 	bool __fastcall GetTriggerEnabled(int Handle);
 	unsigned __fastcall GetTriggerInterval(int Handle);
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall SetOnTrigger(int Handle, TTriggerEvent Value);
 	void __fastcall SetTriggerEnabled(int Handle, bool Value);
 	void __fastcall SetTriggerInterval(int Handle, unsigned Value);
-	void __fastcall tpCalcNewInterval(void);
-	int __fastcall tpCountEnabledTriggers(void);
-	int __fastcall tpCreateTriggerHandle(void);
+	void __fastcall tpCalcNewInterval();
+	int __fastcall tpCountEnabledTriggers();
+	int __fastcall tpCreateTriggerHandle();
 	int __fastcall tpEventIndex(int Handle);
-	void __fastcall tpSortTriggers(void);
+	void __fastcall tpSortTriggers();
 	void __fastcall tpTimerWndProc(Winapi::Messages::TMessage &Msg);
-	void __fastcall tpUpdateTimer(void);
-	virtual void __fastcall DoTriggerNotification(void);
+	void __fastcall tpUpdateTimer();
+	virtual void __fastcall DoTriggerNotification();
 	
 public:
 	__fastcall virtual TOvcTimerPool(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcTimerPool(void);
+	__fastcall virtual ~TOvcTimerPool();
 	int __fastcall AddOneShot(TTriggerEvent OnTrigger, unsigned Interval);
 	int __fastcall AddOneTime(TTriggerEvent OnTrigger, unsigned Interval);
 	int __fastcall Add(TTriggerEvent OnTrigger, unsigned Interval);
 	HIDESBASE void __fastcall Remove(int Handle);
-	void __fastcall RemoveAll(void);
+	void __fastcall RemoveAll();
 	void __fastcall ResetElapsedTime(int Handle);
 	__property int Count = {read=GetTriggerCount, nodefault};
 	__property int ElapsedTime[int Handle] = {read=GetElapsedTriggerTime};

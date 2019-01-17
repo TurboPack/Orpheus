@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcvlb.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcvlb.pas' rev: 33.00 (Windows)
 
 #ifndef OvcvlbHPP
 #define OvcvlbHPP
@@ -124,17 +124,17 @@ protected:
 	void __fastcall SetRowHeight(int Value);
 	virtual void __fastcall SetScrollBars(const System::Uitypes::TScrollStyle Value);
 	void __fastcall SetShowHeader(bool Value);
-	void __fastcall vlbAdjustIntegralHeight(void);
-	virtual void __fastcall vlbCalcFontFields(void);
-	void __fastcall vlbClearAllItems(void);
+	void __fastcall vlbAdjustIntegralHeight();
+	virtual void __fastcall vlbCalcFontFields();
+	void __fastcall vlbClearAllItems();
 	void __fastcall vlbClearSelRange(int First, int Last);
 	void __fastcall vlbColorChanged(System::TObject* AColor);
 	void __fastcall vlbDragSelection(int First, int Last);
 	void __fastcall vlbDrawFocusRect(int Index);
-	void __fastcall vlbDrawHeader(void);
+	void __fastcall vlbDrawHeader();
 	void __fastcall vlbExtendSelection(int Index);
 	void __fastcall vlbHScrollPrim(int Delta);
-	void __fastcall vlbInitScrollInfo(void);
+	void __fastcall vlbInitScrollInfo();
 	void __fastcall vlbMakeItemVisible(int Index);
 	void __fastcall vlbNewActiveItem(int Index);
 	int __fastcall vlbScaleDown(int N);
@@ -142,11 +142,11 @@ protected:
 	void __fastcall vlbSelectRangePrim(int First, int Last, bool Select);
 	void __fastcall vlbSetAllItemsPrim(bool Select);
 	void __fastcall vlbSetFocusedIndex(int Index);
-	void __fastcall vlbSetHScrollPos(void);
-	void __fastcall vlbSetHScrollRange(void);
+	void __fastcall vlbSetHScrollPos();
+	void __fastcall vlbSetHScrollRange();
 	void __fastcall vlbSetSelRange(int First, int Last);
-	void __fastcall vlbSetVScrollPos(void);
-	void __fastcall vlbSetVScrollRange(void);
+	void __fastcall vlbSetVScrollPos();
+	void __fastcall vlbSetVScrollRange();
 	void __fastcall vlbToggleSelection(int Index);
 	void __fastcall vlbValidateItem(int Index);
 	void __fastcall vlbVScrollPrim(int Delta);
@@ -179,9 +179,9 @@ protected:
 	MESSAGE void __fastcall LBSetTopIndex(Winapi::Messages::TMessage &Msg);
 	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
-	DYNAMIC void __fastcall DragCanceled(void);
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall CreateWnd();
+	DYNAMIC void __fastcall DragCanceled();
+	virtual void __fastcall Paint();
 	virtual void __fastcall WndProc(Winapi::Messages::TMessage &Message);
 	DYNAMIC int __fastcall DoOnCharToItem(System::WideChar Ch);
 	DYNAMIC void __fastcall DoOnClickHeader(const System::Types::TPoint &Point);
@@ -197,7 +197,7 @@ protected:
 	virtual void __fastcall SetItemIndex(int Index);
 	virtual void __fastcall SetTopIndex(int Index);
 	virtual void __fastcall ForceTopIndex(int Index, bool ThumbTracking);
-	virtual void __fastcall SimulatedClick(void);
+	virtual void __fastcall SimulatedClick();
 	bool __fastcall IsValidIndex(int Index);
 	__property bool AutoRowHeight = {read=FAutoRowHeight, write=SetAutoRowHeight, default=1};
 	__property Vcl::Forms::TBorderStyle BorderStyle = {read=FBorderStyle, write=SetBorderStyle, default=1};
@@ -228,19 +228,19 @@ protected:
 	
 public:
 	__fastcall virtual TOvcCustomVirtualListBox(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomVirtualListBox(void);
-	virtual void __fastcall BeginUpdate(void);
-	void __fastcall CenterCurrentLine(void);
+	__fastcall virtual ~TOvcCustomVirtualListBox();
+	virtual void __fastcall BeginUpdate();
+	void __fastcall CenterCurrentLine();
 	void __fastcall CenterLine(int Index);
-	void __fastcall DeselectAll(void);
+	void __fastcall DeselectAll();
 	void __fastcall DrawItem(int Index);
-	virtual void __fastcall EndUpdate(void);
+	virtual void __fastcall EndUpdate();
 	void __fastcall InsertItemsAt(int Items, int Index);
 	void __fastcall DeleteItemsAt(int Items, int Index);
 	void __fastcall InvalidateItem(int Index);
 	int __fastcall ItemAtPos(const System::Types::TPoint &Pos, bool Existing);
 	void __fastcall Scroll(int HDelta, int VDelta);
-	void __fastcall SelectAll(void);
+	void __fastcall SelectAll();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	void __fastcall SetTabStops(const int *Tabs, const int Tabs_High);
 	__property Canvas;
@@ -329,7 +329,7 @@ __published:
 	__property OnStartDrag;
 public:
 	/* TOvcCustomVirtualListBox.Create */ inline __fastcall virtual TOvcVirtualListBox(System::Classes::TComponent* AOwner) : TOvcCustomVirtualListBox(AOwner) { }
-	/* TOvcCustomVirtualListBox.Destroy */ inline __fastcall virtual ~TOvcVirtualListBox(void) { }
+	/* TOvcCustomVirtualListBox.Destroy */ inline __fastcall virtual ~TOvcVirtualListBox() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcVirtualListBox(HWND ParentWindow) : TOvcCustomVirtualListBox(ParentWindow) { }

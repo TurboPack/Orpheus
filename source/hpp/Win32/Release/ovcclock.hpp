@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcclock.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcclock.pas' rev: 33.00 (Windows)
 
 #ifndef OvcclockHPP
 #define OvcclockHPP
@@ -51,10 +51,10 @@ class PASCALIMPLEMENTATION TOvcLEDClockDisplay : public O32ledlabel::TO32CustomL
 	typedef O32ledlabel::TO32CustomLEDLabel inherited;
 	
 public:
-	void __fastcall PaintSelf(void);
+	void __fastcall PaintSelf();
 public:
 	/* TO32CustomLEDLabel.Create */ inline __fastcall virtual TOvcLEDClockDisplay(System::Classes::TComponent* AOwner) : O32ledlabel::TO32CustomLEDLabel(AOwner) { }
-	/* TO32CustomLEDLabel.Destroy */ inline __fastcall virtual ~TOvcLEDClockDisplay(void) { }
+	/* TO32CustomLEDLabel.Destroy */ inline __fastcall virtual ~TOvcLEDClockDisplay() { }
 	
 };
 
@@ -79,10 +79,10 @@ protected:
 	void __fastcall SetBgColor(System::Uitypes::TColor Value);
 	void __fastcall SetSize(O32ledlabel::TSegmentSize Value);
 	void __fastcall SetShowSeconds(bool Value);
-	void __fastcall DoOnChange(void);
+	void __fastcall DoOnChange();
 	
 public:
-	__fastcall TOvcDigitalOptions(void);
+	__fastcall TOvcDigitalOptions();
 	__property System::Classes::TNotifyEvent OnChange = {read=FOnChange, write=FOnChange};
 	
 __published:
@@ -93,7 +93,7 @@ __published:
 	__property O32ledlabel::TSegmentSize Size = {read=FSize, write=SetSize, nodefault};
 	__property bool ShowSeconds = {read=FShowSeconds, write=SetShowSeconds, nodefault};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcDigitalOptions(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcDigitalOptions() { }
 	
 };
 
@@ -126,7 +126,7 @@ protected:
 	void __fastcall SetSecondHandWidth(int Value);
 	void __fastcall SetShowSecondHand(bool Value);
 	void __fastcall SetSolidHands(bool Value);
-	void __fastcall DoOnChange(void);
+	void __fastcall DoOnChange();
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
@@ -145,10 +145,10 @@ __published:
 	__property bool ShowSecondHand = {read=FShowSecondHand, write=SetShowSecondHand, nodefault};
 	__property bool SolidHands = {read=FSolidHands, write=SetSolidHands, nodefault};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcHandOptions(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcHandOptions() { }
 	
 public:
-	/* TObject.Create */ inline __fastcall TOvcHandOptions(void) : System::Classes::TPersistent() { }
+	/* TObject.Create */ inline __fastcall TOvcHandOptions() : System::Classes::TPersistent() { }
 	
 };
 
@@ -193,11 +193,11 @@ protected:
 	int ckMinutes;
 	int ckSeconds;
 	int ckTotalSeconds;
-	int __fastcall GetElapsedDays(void);
-	int __fastcall GetElapsedHours(void);
-	int __fastcall GetElapsedMinutes(void);
-	int __fastcall GetElapsedSeconds(void);
-	int __fastcall GetElapsedSecondsTotal(void);
+	int __fastcall GetElapsedDays();
+	int __fastcall GetElapsedHours();
+	int __fastcall GetElapsedMinutes();
+	int __fastcall GetElapsedSeconds();
+	int __fastcall GetElapsedSecondsTotal();
 	void __fastcall SetActive(bool Value);
 	void __fastcall SetClockFace(Vcl::Graphics::TBitmap* Value);
 	void __fastcall SetClockMode(TOvcClockMode Value);
@@ -209,20 +209,20 @@ protected:
 	System::TDateTime __fastcall ckConvertMsToDateTime(int Value);
 	void __fastcall ckHandOptionChange(System::TObject* Sender);
 	void __fastcall ckDigitalOptionChange(System::TObject* Sender);
-	void __fastcall SizeDigitalDisplay(void);
+	void __fastcall SizeDigitalDisplay();
 	void __fastcall ckTimerEvent(System::TObject* Sender, int Handle, unsigned Interval, int ElapsedTime);
-	void __fastcall DoOnHourChange(void);
-	void __fastcall DoOnMinuteChange(void);
-	void __fastcall DoOnSecondChange(void);
-	void __fastcall DoOnCountdownDone(void);
+	void __fastcall DoOnHourChange();
+	void __fastcall DoOnMinuteChange();
+	void __fastcall DoOnSecondChange();
+	void __fastcall DoOnCountdownDone();
 	void __fastcall PaintHands(Vcl::Graphics::TCanvas* ACanvas);
 	MESSAGE void __fastcall WMResize(Winapi::Messages::TWMSize &Msg);
 	HIDESBASE MESSAGE void __fastcall WMEraseBkgnd(Winapi::Messages::TWMEraseBkgnd &Msg);
 	MESSAGE void __fastcall WMGetDlgCode(Winapi::Messages::TWMNoParams &Msg);
-	virtual void __fastcall Loaded(void);
-	virtual void __fastcall Paint(void);
-	void __fastcall PaintAnalog(void);
-	void __fastcall PaintDigital(void);
+	virtual void __fastcall Loaded();
+	virtual void __fastcall Paint();
+	void __fastcall PaintAnalog();
+	void __fastcall PaintDigital();
 	virtual void __fastcall SetTime(System::TDateTime Value);
 	__property bool Active = {read=FActive, write=SetActive, nodefault};
 	__property Vcl::Graphics::TBitmap* ClockFace = {read=FClockFace, write=SetClockFace};
@@ -241,7 +241,7 @@ protected:
 	
 public:
 	__fastcall virtual TOvcCustomClock(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomClock(void);
+	__fastcall virtual ~TOvcCustomClock();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	__property TOvcClockDisplayMode DisplayMode = {read=FDisplayMode, write=SetDisplayMode, nodefault};
 	__property int ElapsedDays = {read=GetElapsedDays, nodefault};
@@ -296,7 +296,7 @@ __published:
 	__property OnSecondChange;
 public:
 	/* TOvcCustomClock.Create */ inline __fastcall virtual TOvcClock(System::Classes::TComponent* AOwner) : TOvcCustomClock(AOwner) { }
-	/* TOvcCustomClock.Destroy */ inline __fastcall virtual ~TOvcClock(void) { }
+	/* TOvcCustomClock.Destroy */ inline __fastcall virtual ~TOvcClock() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcClock(HWND ParentWindow) : TOvcCustomClock(ParentWindow) { }

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcclkdg.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcclkdg.pas' rev: 33.00 (Windows)
 
 #ifndef OvcclkdgHPP
 #define OvcclkdgHPP
@@ -50,7 +50,7 @@ __published:
 public:
 	/* TCustomForm.Create */ inline __fastcall virtual TOvcfrmClockDlg(System::Classes::TComponent* AOwner) : Vcl::Forms::TForm(AOwner) { }
 	/* TCustomForm.CreateNew */ inline __fastcall virtual TOvcfrmClockDlg(System::Classes::TComponent* AOwner, int Dummy) : Vcl::Forms::TForm(AOwner, Dummy) { }
-	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcfrmClockDlg(void) { }
+	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcfrmClockDlg() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcfrmClockDlg(HWND ParentWindow) : Vcl::Forms::TForm(ParentWindow) { }
@@ -64,13 +64,13 @@ class PASCALIMPLEMENTATION TOvcClockDialog : public Ovcdlg::TOvcBaseDialog
 	
 protected:
 	Ovcclock::TOvcClock* FClock;
-	Vcl::Graphics::TBitmap* __fastcall GetClockFace(void);
+	Vcl::Graphics::TBitmap* __fastcall GetClockFace();
 	void __fastcall SetClockFace(Vcl::Graphics::TBitmap* Value);
 	
 public:
 	__fastcall virtual TOvcClockDialog(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcClockDialog(void);
-	virtual bool __fastcall Execute(void);
+	__fastcall virtual ~TOvcClockDialog();
+	virtual bool __fastcall Execute();
 	__property Ovcclock::TOvcClock* Clock = {read=FClock};
 	
 __published:

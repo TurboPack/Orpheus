@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcclrcb.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcclrcb.pas' rev: 33.00 (Windows)
 
 #ifndef OvcclrcbHPP
 #define OvcclrcbHPP
@@ -45,19 +45,19 @@ class PASCALIMPLEMENTATION TOvcCustomColorComboBox : public Ovccmbx::TOvcBaseCom
 protected:
 	bool FShowColorNames;
 	int BoxWidth;
-	System::Uitypes::TColor __fastcall GetSelectedColor(void);
+	System::Uitypes::TColor __fastcall GetSelectedColor();
 	void __fastcall SetSelectedColor(System::Uitypes::TColor Value);
 	void __fastcall SetShowColorNames(bool Value);
 	System::Uitypes::TColor __fastcall ColorFromString(System::UnicodeString Str);
-	void __fastcall CalculateBoxWidth(void);
+	void __fastcall CalculateBoxWidth();
 	HIDESBASE MESSAGE void __fastcall CMFontChanged(Winapi::Messages::TMessage &Message);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	__property System::Uitypes::TColor SelectedColor = {read=GetSelectedColor, write=SetSelectedColor, nodefault};
 	__property bool ShowColorNames = {read=FShowColorNames, write=SetShowColorNames, default=1};
 	
 public:
 	__fastcall virtual TOvcCustomColorComboBox(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomColorComboBox(void);
+	__fastcall virtual ~TOvcCustomColorComboBox();
 	virtual void __fastcall DrawItem(int Index, const System::Types::TRect &Rect, Winapi::Windows::TOwnerDrawState State);
 	virtual void __fastcall DrawItemThemed(HDC DC, const Vcl::Themes::TThemedElementDetails &Details, int Index, const System::Types::TRect &Rect);
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
@@ -121,7 +121,7 @@ __published:
 	__property OnMouseWheel;
 public:
 	/* TOvcCustomColorComboBox.Create */ inline __fastcall virtual TOvcColorComboBox(System::Classes::TComponent* AOwner) : TOvcCustomColorComboBox(AOwner) { }
-	/* TOvcCustomColorComboBox.Destroy */ inline __fastcall virtual ~TOvcColorComboBox(void) { }
+	/* TOvcCustomColorComboBox.Destroy */ inline __fastcall virtual ~TOvcColorComboBox() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcColorComboBox(HWND ParentWindow) : TOvcCustomColorComboBox(ParentWindow) { }

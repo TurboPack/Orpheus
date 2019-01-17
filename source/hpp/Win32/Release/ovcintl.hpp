@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcintl.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcintl.pas' rev: 33.00 (Windows)
 
 #ifndef OvcintlHPP
 #define OvcintlHPP
@@ -85,9 +85,9 @@ protected:
 	System::StaticArray<System::WideChar, 30> wShortDate;
 	bool wTLZero;
 	bool w12Hour;
-	System::UnicodeString __fastcall GetCountry(void);
-	System::UnicodeString __fastcall GetCurrencyLtStr(void);
-	System::UnicodeString __fastcall GetCurrencyRtStr(void);
+	System::UnicodeString __fastcall GetCountry();
+	System::UnicodeString __fastcall GetCurrencyLtStr();
+	System::UnicodeString __fastcall GetCurrencyRtStr();
 	void __fastcall SetAutoUpdate(bool Value);
 	void __fastcall SetCurrencyLtStr(const System::UnicodeString Value);
 	void __fastcall SetCurrencyRtStr(const System::UnicodeString Value);
@@ -104,8 +104,8 @@ protected:
 	System::WideChar * __fastcall isTimeToTimeStringPrim(System::WideChar * Dest, System::WideChar * Picture, int T, bool Pack, System::WideChar * t1159, System::WideChar * t2359);
 	
 public:
-	__fastcall TOvcIntlSup(void);
-	__fastcall virtual ~TOvcIntlSup(void);
+	__fastcall TOvcIntlSup();
+	__fastcall virtual ~TOvcIntlSup();
 	System::UnicodeString __fastcall CurrentDateString(const System::UnicodeString Picture, bool Pack);
 	System::WideChar * __fastcall CurrentDatePChar(System::WideChar * Dest, System::WideChar * Picture, bool Pack);
 	System::UnicodeString __fastcall CurrentTimeString(const System::UnicodeString Picture, bool Pack);
@@ -135,7 +135,7 @@ public:
 	System::Byte __fastcall MonthPCharToMonth(System::WideChar * S, System::Byte Width);
 	System::UnicodeString __fastcall MonthToString(int Month);
 	System::WideChar * __fastcall MonthToPChar(System::WideChar * Dest, int Month);
-	void __fastcall ResetInternationalInfo(void);
+	void __fastcall ResetInternationalInfo();
 	bool __fastcall TimeStringToHMS(const System::UnicodeString Picture, const System::UnicodeString S, int &Hour, int &Minute, int &Second);
 	bool __fastcall TimePCharToHMS(System::WideChar * Picture, System::WideChar * S, int &Hour, int &Minute, int &Second);
 	int __fastcall TimeStringToTime(const System::UnicodeString Picture, const System::UnicodeString S);

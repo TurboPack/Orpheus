@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovclb.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovclb.pas' rev: 33.00 (Windows)
 
 #ifndef OvclbHPP
 #define OvclbHPP
@@ -51,18 +51,18 @@ protected:
 	System::Classes::TNotifyEvent FOnTabStopsChange;
 	System::StaticArray<int, 100> tlTabs;
 	System::StaticArray<int, 100> tlTabsDU;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall SetController(Ovcbase::TOvcController* Value);
 	void __fastcall SetHorizontalScroll(bool Value);
 	void __fastcall SetTabStopsStr(System::Classes::TStrings* Value);
-	Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel(void);
+	Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel();
 	void __fastcall LabelAttach(System::TObject* Sender, bool Value);
 	void __fastcall LabelChange(System::TObject* Sender);
-	void __fastcall PositionLabel(void);
+	void __fastcall PositionLabel();
 	int __fastcall tlGetItemWidth(int Index);
-	void __fastcall tlSetTabStops(void);
-	virtual void __fastcall tlResetHorizontalExtent(void);
+	void __fastcall tlSetTabStops();
+	virtual void __fastcall tlResetHorizontalExtent();
 	MESSAGE void __fastcall OMAssignLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMPositionLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMRecordLabelPosition(Winapi::Messages::TMessage &Msg);
@@ -73,9 +73,9 @@ protected:
 	MESSAGE void __fastcall LBDeleteString(Winapi::Messages::TMessage &Msg);
 	Ovcbase::TOvcLabelPosition DefaultLabelPosition;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
-	DYNAMIC void __fastcall DoOnTabStopsChanged(void);
+	DYNAMIC void __fastcall DoOnTabStopsChanged();
 	__property System::UnicodeString About = {read=GetAbout, write=SetAbout, stored=false};
 	__property bool HorizontalScroll = {read=FHorizontalScroll, write=SetHorizontalScroll, nodefault};
 	__property Ovcbase::TOvcLabelInfo* LabelInfo = {read=FLabelInfo, write=FLabelInfo};
@@ -84,10 +84,10 @@ protected:
 	
 public:
 	__fastcall virtual TOvcCustomListBox(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomListBox(void);
+	__fastcall virtual ~TOvcCustomListBox();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
-	void __fastcall ClearTabStops(void);
-	void __fastcall ResetHorizontalScrollbar(void);
+	void __fastcall ClearTabStops();
+	void __fastcall ResetHorizontalScrollbar();
 	void __fastcall SetTabStops(const int *Value, const int Value_High);
 	__property Ovcbase::TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};
 	__property Ovcbase::TOvcController* Controller = {read=FController, write=SetController};
@@ -151,7 +151,7 @@ __published:
 	__property OnTabStopsChange;
 public:
 	/* TOvcCustomListBox.Create */ inline __fastcall virtual TOvcListBox(System::Classes::TComponent* AOwner) : TOvcCustomListBox(AOwner) { }
-	/* TOvcCustomListBox.Destroy */ inline __fastcall virtual ~TOvcListBox(void) { }
+	/* TOvcCustomListBox.Destroy */ inline __fastcall virtual ~TOvcListBox() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcListBox(HWND ParentWindow) : TOvcCustomListBox(ParentWindow) { }

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccoco.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccoco.pas' rev: 33.00 (Windows)
 
 #ifndef OvccocoHPP
 #define OvccocoHPP
@@ -47,8 +47,8 @@ public:
 	__property int Col = {read=FCol, write=FCol, nodefault};
 	__property System::UnicodeString Data = {read=FData, write=FData};
 public:
-	/* TObject.Create */ inline __fastcall TCocoError(void) : System::TObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TCocoError(void) { }
+	/* TObject.Create */ inline __fastcall TCocoError() : System::TObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TCocoError() { }
 	
 };
 
@@ -69,8 +69,8 @@ public:
 	__property int Line = {read=fLine, write=fLine, nodefault};
 	__property int Column = {read=fColumn, write=fColumn, nodefault};
 public:
-	/* TObject.Create */ inline __fastcall TCommentItem(void) : System::TObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TCommentItem(void) { }
+	/* TObject.Create */ inline __fastcall TCommentItem() : System::TObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TCommentItem() { }
 	
 };
 
@@ -89,17 +89,17 @@ private:
 	System::UnicodeString __fastcall FixComment(const System::UnicodeString S);
 	System::UnicodeString __fastcall GetComments(int Idx);
 	void __fastcall SetComments(int Idx, const System::UnicodeString Value);
-	int __fastcall GetCount(void);
-	System::UnicodeString __fastcall GetText(void);
+	int __fastcall GetCount();
+	System::UnicodeString __fastcall GetText();
 	int __fastcall GetColumn(int Idx);
 	int __fastcall GetLine(int Idx);
 	void __fastcall SetColumn(int Idx, const int Value);
 	void __fastcall SetLine(int Idx, const int Value);
 	
 public:
-	__fastcall TCommentList(void);
-	__fastcall virtual ~TCommentList(void);
-	void __fastcall Clear(void);
+	__fastcall TCommentList();
+	__fastcall virtual ~TCommentList();
+	void __fastcall Clear();
 	void __fastcall Add(const System::UnicodeString S, const int aLine, const int aColumn);
 	__property System::UnicodeString Comments[int Idx] = {read=GetComments, write=SetComments/*, default*/};
 	__property int Line[int Idx] = {read=GetLine, write=SetLine};
@@ -122,14 +122,14 @@ private:
 	int fPos;
 	
 public:
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	__property int Line = {read=fLine, write=fLine, nodefault};
 	__property int Col = {read=fCol, write=fCol, nodefault};
 	__property int Len = {read=fLen, write=fLen, nodefault};
 	__property int Pos = {read=fPos, write=fPos, nodefault};
 public:
-	/* TObject.Create */ inline __fastcall TSymbolPosition(void) : System::TObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TSymbolPosition(void) { }
+	/* TObject.Create */ inline __fastcall TSymbolPosition() : System::TObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TSymbolPosition() { }
 	
 };
 
@@ -187,8 +187,8 @@ protected:
 	TStartTable FStartState;
 	System::WideChar __fastcall CapChAt(int pos);
 	virtual void __fastcall Get(int &sym) = 0 ;
-	virtual void __fastcall NextCh(void) = 0 ;
-	PStartTable __fastcall GetStartState(void);
+	virtual void __fastcall NextCh() = 0 ;
+	PStartTable __fastcall GetStartState();
 	void __fastcall SetStartState(PStartTable aStartTable);
 	__property int bpCurrToken = {read=FbpCurrToken, write=FbpCurrToken, nodefault};
 	__property int BufferPosition = {read=FBufferPosition, write=FBufferPosition, nodefault};
@@ -208,12 +208,12 @@ protected:
 	__property PStartTable StartState = {read=GetStartState, write=SetStartState};
 	
 public:
-	__fastcall TCocoRScanner(void);
-	__fastcall virtual ~TCocoRScanner(void);
+	__fastcall TCocoRScanner();
+	__fastcall virtual ~TCocoRScanner();
 	System::WideChar __fastcall CharAt(int pos);
 	System::UnicodeString __fastcall GetName(TSymbolPosition* Symbol);
 	System::UnicodeString __fastcall GetString(TSymbolPosition* Symbol);
-	void __fastcall _Reset(void);
+	void __fastcall _Reset();
 };
 
 
@@ -239,19 +239,19 @@ private:
 	TCocoRScanner* FScanner;
 	System::UnicodeString FSourceFileName;
 	int fExtra;
-	System::Classes::TMemoryStream* __fastcall GetSourceStream(void);
-	bool __fastcall GetSuccessful(void);
+	System::Classes::TMemoryStream* __fastcall GetSourceStream();
+	bool __fastcall GetSuccessful();
 	void __fastcall SetOnStatusUpdate(const TStatusUpdateProc Value);
 	void __fastcall SetSourceStream(System::Classes::TMemoryStream* const Value);
-	int __fastcall GetLineCount(void);
-	int __fastcall GetCharacterCount(void);
+	int __fastcall GetLineCount();
+	int __fastcall GetCharacterCount();
 	
 protected:
 	int fCurrentInputSymbol;
-	void __fastcall ClearErrors(void);
+	void __fastcall ClearErrors();
 	void __fastcall Expect(int n);
-	void __fastcall GenerateListing(void);
-	virtual void __fastcall Get(void) = 0 ;
+	void __fastcall GenerateListing();
+	virtual void __fastcall Get() = 0 ;
 	void __fastcall PrintErr(const System::UnicodeString line, int ErrorCode, int col, const System::UnicodeString Data);
 	void __fastcall StoreError(int nr, TSymbolPosition* Symbol, const System::UnicodeString Data, int ErrorType);
 	__property bool ClearSourceStream = {read=fClearSourceStream, write=fClearSourceStream, default=1};
@@ -276,12 +276,12 @@ public:
 	__property System::Classes::TList* ErrorList = {read=FErrorList, write=FErrorList};
 	__property System::Classes::TMemoryStream* SourceStream = {read=GetSourceStream, write=SetSourceStream};
 	__fastcall virtual TCocoRGrammar(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TCocoRGrammar(void);
+	__fastcall virtual ~TCocoRGrammar();
 	void __fastcall GetLine(int &pos, System::UnicodeString &line, bool &eof);
-	System::UnicodeString __fastcall LexName(void);
-	System::UnicodeString __fastcall LexString(void);
-	System::UnicodeString __fastcall LookAheadName(void);
-	System::UnicodeString __fastcall LookAheadString(void);
+	System::UnicodeString __fastcall LexName();
+	System::UnicodeString __fastcall LexString();
+	System::UnicodeString __fastcall LookAheadName();
+	System::UnicodeString __fastcall LookAheadString();
 	void __fastcall _StreamLine(System::UnicodeString s);
 	void __fastcall _StreamLn(const System::UnicodeString s);
 	void __fastcall SemError(const int errNo, const System::UnicodeString Data);

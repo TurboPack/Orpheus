@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcbtnhd.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcbtnhd.pas' rev: 33.00 (Windows)
 
 #ifndef OvcbtnhdHPP
 #define OvcbtnhdHPP
@@ -57,15 +57,15 @@ protected:
 	System::Types::TRect FPaintRect;
 	bool FVisible;
 	int FWidth;
-	DYNAMIC void __fastcall Changed(void);
+	DYNAMIC void __fastcall Changed();
 	void __fastcall SetAlignment(System::Classes::TAlignment Value);
 	void __fastcall SetCaption(const System::UnicodeString Value);
 	void __fastcall SetImageIndex(int Value);
 	void __fastcall SetLeftImageIndex(const int Value);
 	void __fastcall SetWidth(int Value);
-	DYNAMIC System::UnicodeString __fastcall GetBaseName(void);
-	virtual System::UnicodeString __fastcall GetDisplayText(void);
-	int __fastcall GetWidth(void);
+	DYNAMIC System::UnicodeString __fastcall GetBaseName();
+	virtual System::UnicodeString __fastcall GetDisplayText();
+	int __fastcall GetWidth();
 	void __fastcall SetVisible(const bool Value);
 	
 public:
@@ -82,7 +82,7 @@ __published:
 	__property bool Visible = {read=FVisible, write=SetVisible, default=1};
 	__property int Width = {read=GetWidth, write=SetWidth, default=75};
 public:
-	/* TOvcCollectible.Destroy */ inline __fastcall virtual ~TOvcButtonHeaderSection(void) { }
+	/* TOvcCollectible.Destroy */ inline __fastcall virtual ~TOvcButtonHeaderSection() { }
 	
 };
 
@@ -131,9 +131,9 @@ protected:
 	int MoveFrom;
 	int MoveTo;
 	bool SectionChanged;
-	int __fastcall GetResizeSection(void);
+	int __fastcall GetResizeSection();
 	TOvcButtonHeaderSection* __fastcall GetSection(int Index);
-	int __fastcall GetSectionCount(void);
+	int __fastcall GetSectionCount();
 	void __fastcall SetBorderStyle(Vcl::Forms::TBorderStyle Value);
 	void __fastcall AncestorNotFound(System::Classes::TReader* Reader, const System::UnicodeString ComponentName, System::Classes::TPersistentClass ComponentClass, System::Classes::TComponent* &Component);
 	virtual void __fastcall ReadState(System::Classes::TReader* Reader);
@@ -157,9 +157,9 @@ protected:
 	DYNAMIC void __fastcall MouseMove(System::Classes::TShiftState Shift, int X, int Y);
 	DYNAMIC void __fastcall MouseUp(System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall Paint();
 	DYNAMIC void __fastcall DoOnChangeTextAttr(Vcl::Graphics::TCanvas* Canvas, int Index);
-	virtual void __fastcall DoOnClick(void);
+	virtual void __fastcall DoOnClick();
 	DYNAMIC void __fastcall DoOnSized(int ASection, int AWidth);
 	DYNAMIC void __fastcall DoOnSizing(int ASection, int AWidth);
 	DYNAMIC bool __fastcall DoRearranging(int OldIndex, int NewIndex);
@@ -167,7 +167,7 @@ protected:
 	
 public:
 	__fastcall virtual TOvcButtonHeader(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcButtonHeader(void);
+	__fastcall virtual ~TOvcButtonHeader();
 	__property TOvcButtonHeaderSection* DragSection = {read=FDragSection};
 	__property System::Types::TRect PushRect = {read=FPushRect};
 	__property int ResizeSection = {read=GetResizeSection, nodefault};

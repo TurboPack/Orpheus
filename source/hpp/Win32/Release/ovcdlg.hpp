@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdlg.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdlg.pas' rev: 33.00 (Windows)
 
 #ifndef OvcdlgHPP
 #define OvcdlgHPP
@@ -44,7 +44,7 @@ protected:
 	int FLeft;
 	int FTop;
 	int FWidth;
-	bool __fastcall LeftTopUsed(void);
+	bool __fastcall LeftTopUsed();
 	
 __published:
 	__property TOvcDialogPosition Position = {read=FPosition, write=FPosition, default=0};
@@ -53,10 +53,10 @@ __published:
 	__property int Height = {read=FHeight, write=FHeight, nodefault};
 	__property int Width = {read=FWidth, write=FWidth, nodefault};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcDialogPlacement(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcDialogPlacement() { }
 	
 public:
-	/* TObject.Create */ inline __fastcall TOvcDialogPlacement(void) : System::Classes::TPersistent() { }
+	/* TObject.Create */ inline __fastcall TOvcDialogPlacement() : System::Classes::TPersistent() { }
 	
 };
 
@@ -85,8 +85,8 @@ protected:
 	
 public:
 	__fastcall virtual TOvcBaseDialog(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBaseDialog(void);
-	virtual bool __fastcall Execute(void) = 0 ;
+	__fastcall virtual ~TOvcBaseDialog();
+	virtual bool __fastcall Execute() = 0 ;
 };
 
 

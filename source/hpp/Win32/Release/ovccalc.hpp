@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccalc.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccalc.pas' rev: 33.00 (Windows)
 
 #ifndef OvccalcHPP
 #define OvccalcHPP
@@ -86,9 +86,9 @@ private:
 	bool FUpdating;
 	System::Classes::TNotifyEvent FOnChange;
 	bool SettingScheme;
-	void __fastcall DoOnChange(void);
+	void __fastcall DoOnChange();
 	System::Uitypes::TColor __fastcall GetColor(const int Index);
-	System::Uitypes::TColor __fastcall GetDisplayTextColor(void);
+	System::Uitypes::TColor __fastcall GetDisplayTextColor();
 	void __fastcall SetColor(const int Index, const System::Uitypes::TColor Value);
 	void __fastcall SetColorScheme(const TOvcCalcColorScheme Value);
 	void __fastcall SetDisplayTextColor(const System::Uitypes::TColor Value);
@@ -97,8 +97,8 @@ public:
 	TOvcCalcColorArray FCalcColors;
 	TOvcCalcColorScheme FColorScheme;
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	void __fastcall BeginUpdate(void);
-	void __fastcall EndUpdate(void);
+	void __fastcall BeginUpdate();
+	void __fastcall EndUpdate();
 	__property System::Classes::TNotifyEvent OnChange = {read=FOnChange, write=FOnChange};
 	
 __published:
@@ -112,10 +112,10 @@ __published:
 	__property System::Uitypes::TColor NumberButtons = {read=GetColor, write=SetColor, index=6, nodefault};
 	__property System::Uitypes::TColor OperatorButtons = {read=GetColor, write=SetColor, index=7, nodefault};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcCalcColors(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcCalcColors() { }
 	
 public:
-	/* TObject.Create */ inline __fastcall TOvcCalcColors(void) : System::Classes::TPersistent() { }
+	/* TObject.Create */ inline __fastcall TOvcCalcColors() : System::Classes::TPersistent() { }
 	
 };
 
@@ -125,12 +125,12 @@ class PASCALIMPLEMENTATION TOvcCalcPanel : public Vcl::Extctrls::TPanel
 	typedef Vcl::Extctrls::TPanel inherited;
 	
 protected:
-	DYNAMIC void __fastcall Click(void);
+	DYNAMIC void __fastcall Click();
 public:
 	/* TCustomPanel.Create */ inline __fastcall virtual TOvcCalcPanel(System::Classes::TComponent* AOwner) : Vcl::Extctrls::TPanel(AOwner) { }
 	
 public:
-	/* TCustomControl.Destroy */ inline __fastcall virtual ~TOvcCalcPanel(void) { }
+	/* TCustomControl.Destroy */ inline __fastcall virtual ~TOvcCalcPanel() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCalcPanel(HWND ParentWindow) : Vcl::Extctrls::TPanel(ParentWindow) { }
@@ -155,10 +155,10 @@ protected:
 public:
 	virtual bool __fastcall AddOperand(const System::Extended Value, const TOvcCalculatorOperation Button) = 0 ;
 	virtual bool __fastcall AddOperation(const TOvcCalculatorOperation Button) = 0 ;
-	void __fastcall ClearAll(void);
+	void __fastcall ClearAll();
 	void __fastcall PushOperand(const System::Extended Value);
-	System::Extended __fastcall PopOperand(void);
-	System::Extended __fastcall TopOperand(void);
+	System::Extended __fastcall PopOperand();
+	System::Extended __fastcall TopOperand();
 	__property int Decimals = {read=FDecimals, write=FDecimals, nodefault};
 	__property TOvcCalculatorOperation LastOperation = {read=cLastOperation, write=cLastOperation, nodefault};
 	__property System::Extended Memory = {read=cMemory, write=cMemory};
@@ -166,8 +166,8 @@ public:
 	__property bool ShowSeparatePercent = {read=FShowSeparatePercent, write=FShowSeparatePercent, nodefault};
 	__property TOvcCalcStates State = {read=cState, write=cState, nodefault};
 public:
-	/* TObject.Create */ inline __fastcall TOvcCustomCalculatorEngine(void) : System::TObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TOvcCustomCalculatorEngine(void) { }
+	/* TObject.Create */ inline __fastcall TOvcCustomCalculatorEngine() : System::TObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TOvcCustomCalculatorEngine() { }
 	
 };
 
@@ -191,25 +191,25 @@ protected:
 	int taMaxTapeCount;
 	bool taTapeInitialized;
 	int taWidth;
-	void __fastcall ValidateListBox(void);
-	Vcl::Graphics::TFont* __fastcall GetFont(void);
+	void __fastcall ValidateListBox();
+	Vcl::Graphics::TFont* __fastcall GetFont();
 	void __fastcall SetFont(Vcl::Graphics::TFont* const Value);
-	int __fastcall GetHeight(void);
+	int __fastcall GetHeight();
 	void __fastcall SetHeight(const int Value);
-	System::Classes::TStrings* __fastcall GetTape(void);
+	System::Classes::TStrings* __fastcall GetTape();
 	void __fastcall SetTape(System::Classes::TStrings* const Value);
-	System::Uitypes::TColor __fastcall GetTapeColor(void);
+	System::Uitypes::TColor __fastcall GetTapeColor();
 	void __fastcall SetTapeColor(const System::Uitypes::TColor Value);
-	int __fastcall GetTop(void);
+	int __fastcall GetTop();
 	void __fastcall SetTop(const int Value);
-	int __fastcall GetTopIndex(void);
+	int __fastcall GetTopIndex();
 	void __fastcall SetTopIndex(const int Value);
-	bool __fastcall GetVisible(void);
+	bool __fastcall GetVisible();
 	void __fastcall SetVisible(const bool Value);
-	int __fastcall GetWidth(void);
+	int __fastcall GetWidth();
 	void __fastcall SetWidth(const int Value);
 	void __fastcall Add(const System::UnicodeString Value);
-	void __fastcall DeleteFirst(void);
+	void __fastcall DeleteFirst();
 	void __fastcall taOnClick(System::TObject* Sender);
 	void __fastcall taOnDblClick(System::TObject* Sender);
 	void __fastcall taOnDrawItem(Vcl::Controls::TWinControl* Control, int Index, const System::Types::TRect &Rect, Winapi::Windows::TOwnerDrawState State);
@@ -217,14 +217,14 @@ protected:
 	
 public:
 	__fastcall TOvcCalcTape(System::Classes::TComponent* const AOwner, const int AOperandSize);
-	__fastcall virtual ~TOvcCalcTape(void);
-	void __fastcall InitializeTape(void);
+	__fastcall virtual ~TOvcCalcTape();
+	void __fastcall InitializeTape();
 	void __fastcall SetBounds(const int ALeft, const int ATop, const int AWidth, const int AHeight);
-	int __fastcall GetDisplayedItemCount(void);
+	int __fastcall GetDisplayedItemCount();
 	void __fastcall AddToTape(const System::UnicodeString Value, const System::UnicodeString OpString);
 	void __fastcall AddToTapeLeft(const System::UnicodeString Value);
-	void __fastcall ClearTape(void);
-	void __fastcall RefreshDisplays(void);
+	void __fastcall ClearTape();
+	void __fastcall RefreshDisplays();
 	void __fastcall SpaceTape(const System::WideChar Value);
 	__property Vcl::Graphics::TFont* Font = {read=GetFont, write=SetFont};
 	__property int Height = {read=GetHeight, write=SetHeight, nodefault};
@@ -278,29 +278,29 @@ protected:
 	TOvcCustomCalculatorEngine* cEngine;
 	TOvcCalculatorButton cMouseOverButton;
 	bool cMouseTracking;
-	void __fastcall cAdjustHeight(void);
-	void __fastcall cCalculateLook(void);
-	void __fastcall cClearAll(void);
+	void __fastcall cAdjustHeight();
+	void __fastcall cCalculateLook();
+	void __fastcall cClearAll();
 	void __fastcall cColorChange(System::TObject* Sender);
-	void __fastcall cDisplayError(void);
+	void __fastcall cDisplayError();
 	void __fastcall cDrawCalcButton(const TOvcButtonInfo &Button, const bool Pressed, const bool MouseOver);
-	void __fastcall cDrawFocusState(void);
-	void __fastcall cDrawSizeLine(void);
+	void __fastcall cDrawFocusState();
+	void __fastcall cDrawSizeLine();
 	void __fastcall cEvaluate(const TOvcCalculatorButton Button);
 	System::UnicodeString __fastcall cFormatString(const System::Extended Value);
-	int __fastcall cGetFontWidth(void);
-	void __fastcall cInvalidateIndicator(void);
-	void __fastcall cRefreshDisplays(void);
+	int __fastcall cGetFontWidth();
+	void __fastcall cInvalidateIndicator();
+	void __fastcall cRefreshDisplays();
 	void __fastcall cSetDisplayString(const System::UnicodeString Value);
 	void __fastcall cTapeFontChange(System::TObject* Sender);
-	int __fastcall GetDecimals(void);
-	int __fastcall GetMaxPaperCount(void);
-	System::Extended __fastcall GetMemory(void);
-	System::Extended __fastcall GetOperand(void);
-	System::Classes::TStrings* __fastcall GetTape(void);
-	Vcl::Graphics::TFont* __fastcall GetTapeFont(void);
-	int __fastcall GetTapeHeight(void);
-	bool __fastcall GetVisible(void);
+	int __fastcall GetDecimals();
+	int __fastcall GetMaxPaperCount();
+	System::Extended __fastcall GetMemory();
+	System::Extended __fastcall GetOperand();
+	System::Classes::TStrings* __fastcall GetTape();
+	Vcl::Graphics::TFont* __fastcall GetTapeFont();
+	int __fastcall GetTapeHeight();
+	bool __fastcall GetVisible();
 	void __fastcall SetBorderStyle(const Vcl::Forms::TBorderStyle Value);
 	void __fastcall SetDecimals(const int Value);
 	void __fastcall SetDisplay(const System::Extended Value);
@@ -332,11 +332,11 @@ protected:
 	MESSAGE void __fastcall WMSetText(Winapi::Messages::TWMSetText &Msg);
 	HIDESBASE MESSAGE void __fastcall WMSetCursor(Winapi::Messages::TWMSetCursor &Msg);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	DYNAMIC void __fastcall KeyDown(System::Word &Key, System::Classes::TShiftState Shift);
 	DYNAMIC void __fastcall MouseDown(System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
 	DYNAMIC void __fastcall MouseUp(System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall Paint();
 	__property Vcl::Forms::TBorderStyle BorderStyle = {read=FBorderStyle, write=SetBorderStyle, nodefault};
 	__property TOvcCalcColors* Colors = {read=FColors, write=FColors};
 	__property int Decimals = {read=GetDecimals, write=SetDecimals, nodefault};
@@ -351,12 +351,12 @@ protected:
 public:
 	__fastcall virtual TOvcCustomCalculator(System::Classes::TComponent* AOwner);
 	__fastcall virtual TOvcCustomCalculator(System::Classes::TComponent* AOwner, bool AsPopup);
-	__fastcall virtual ~TOvcCustomCalculator(void);
+	__fastcall virtual ~TOvcCustomCalculator();
 	DYNAMIC void __fastcall KeyPress(System::WideChar &Key);
 	void __fastcall PushOperand(const System::Extended Value);
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
-	void __fastcall CopyToClipboard(void);
-	void __fastcall PasteFromClipboard(void);
+	void __fastcall CopyToClipboard();
+	void __fastcall PasteFromClipboard();
 	void __fastcall PressButton(TOvcCalculatorButton Button);
 	__property System::Extended LastOperand = {read=FLastOperand, write=FLastOperand};
 	__property System::Extended Memory = {read=GetMemory, write=SetMemory};
@@ -420,7 +420,7 @@ __published:
 public:
 	/* TOvcCustomCalculator.Create */ inline __fastcall virtual TOvcCalculator(System::Classes::TComponent* AOwner) : TOvcCustomCalculator(AOwner) { }
 	/* TOvcCustomCalculator.CreateEx */ inline __fastcall virtual TOvcCalculator(System::Classes::TComponent* AOwner, bool AsPopup) : TOvcCustomCalculator(AOwner, AsPopup) { }
-	/* TOvcCustomCalculator.Destroy */ inline __fastcall virtual ~TOvcCalculator(void) { }
+	/* TOvcCustomCalculator.Destroy */ inline __fastcall virtual ~TOvcCalculator() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCalculator(HWND ParentWindow) : TOvcCustomCalculator(ParentWindow) { }

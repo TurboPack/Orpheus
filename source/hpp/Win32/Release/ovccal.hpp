@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccal.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccal.pas' rev: 33.00 (Windows)
 
 #ifndef OvccalHPP
 #define OvccalHPP
@@ -68,14 +68,14 @@ protected:
 	System::Uitypes::TColor __fastcall GetColor(int Index);
 	void __fastcall SetColor(int Index, System::Uitypes::TColor Value);
 	void __fastcall SetColorScheme(TOvcCalColorScheme Value);
-	void __fastcall DoOnChange(void);
+	void __fastcall DoOnChange();
 	
 public:
 	TOvcCalColorArray FCalColors;
 	TOvcCalColorScheme FColorScheme;
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	void __fastcall BeginUpdate(void);
-	void __fastcall EndUpdate(void);
+	void __fastcall BeginUpdate();
+	void __fastcall EndUpdate();
 	__property System::Classes::TNotifyEvent OnChange = {read=FOnChange, write=FOnChange};
 	
 __published:
@@ -87,10 +87,10 @@ __published:
 	__property System::Uitypes::TColor MonthAndYear = {read=GetColor, write=SetColor, index=4, nodefault};
 	__property System::Uitypes::TColor Weekend = {read=GetColor, write=SetColor, index=5, nodefault};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcCalColors(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcCalColors() { }
 	
 public:
-	/* TObject.Create */ inline __fastcall TOvcCalColors(void) : System::Classes::TPersistent() { }
+	/* TObject.Create */ inline __fastcall TOvcCalColors() : System::Classes::TPersistent() { }
 	
 };
 
@@ -149,12 +149,12 @@ protected:
 	System::TDateTime clRevertDate;
 	int clRowCount;
 	int clStartRow;
-	System::TDateTime __fastcall GetAsDateTime(void);
-	int __fastcall GetAsStDate(void);
-	System::TDateTime __fastcall GetCalendarDate(void);
-	int __fastcall GetDay(void);
-	int __fastcall GetMonth(void);
-	int __fastcall GetYear(void);
+	System::TDateTime __fastcall GetAsDateTime();
+	int __fastcall GetAsStDate();
+	System::TDateTime __fastcall GetCalendarDate();
+	int __fastcall GetDay();
+	int __fastcall GetMonth();
+	int __fastcall GetYear();
 	void __fastcall SetAsDateTime(System::TDateTime Value);
 	void __fastcall SetAsStDate(int Value);
 	void __fastcall SetBorderStyle(Vcl::Forms::TBorderStyle Value);
@@ -168,10 +168,10 @@ protected:
 	void __fastcall SetWeekStarts(TOvcDayType Value);
 	void __fastcall calChangeMonth(System::TObject* Sender);
 	void __fastcall calColorChange(System::TObject* Sender);
-	System::Types::TRect __fastcall calGetCurrentRectangle(void);
+	System::Types::TRect __fastcall calGetCurrentRectangle();
 	System::TDateTime __fastcall calGetValidDate(System::TDateTime ADate, int Delta);
-	void __fastcall calRebuildCalArray(void);
-	void __fastcall calRecalcSize(void);
+	void __fastcall calRebuildCalArray();
+	void __fastcall calRecalcSize();
 	HIDESBASE MESSAGE void __fastcall CMCtl3DChanged(Winapi::Messages::TMessage &Msg);
 	HIDESBASE MESSAGE void __fastcall CMEnter(Winapi::Messages::TMessage &Msg);
 	HIDESBASE MESSAGE void __fastcall CMExit(Winapi::Messages::TMessage &Msg);
@@ -181,30 +181,30 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
 	void __fastcall calBtnClick(System::TObject* Sender);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	DYNAMIC void __fastcall DoOnChange(System::TDateTime Value);
 	DYNAMIC bool __fastcall DoOnGetDateEnabled(System::TDateTime ADate);
 	DYNAMIC void __fastcall DoOnMouseWheel(System::Classes::TShiftState Shift, short Delta, short XPos, short YPos);
-	DYNAMIC bool __fastcall IsReadOnly(void);
+	DYNAMIC bool __fastcall IsReadOnly();
 	DYNAMIC void __fastcall KeyDown(System::Word &Key, System::Classes::TShiftState Shift);
 	DYNAMIC void __fastcall KeyPress(System::WideChar &Key);
 	DYNAMIC void __fastcall MouseDown(System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
 	DYNAMIC void __fastcall MouseUp(System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall Paint();
 	virtual void __fastcall SetCalendarDate(System::TDateTime Value);
 	
 public:
 	__fastcall virtual TOvcCustomCalendar(System::Classes::TComponent* AOwner);
 	__fastcall virtual TOvcCustomCalendar(System::Classes::TComponent* AOwner, bool AsPopup);
-	__fastcall virtual ~TOvcCustomCalendar(void);
+	__fastcall virtual ~TOvcCustomCalendar();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	System::UnicodeString __fastcall DateString(const System::UnicodeString Mask);
-	System::UnicodeString __fastcall DayString(void);
+	System::UnicodeString __fastcall DayString();
 	void __fastcall IncDay(int Delta);
 	void __fastcall IncMonth(int Delta);
 	void __fastcall IncYear(int Delta);
-	System::UnicodeString __fastcall MonthString(void);
-	void __fastcall SetToday(void);
+	System::UnicodeString __fastcall MonthString();
+	void __fastcall SetToday();
 	__property System::TDateTime AsDateTime = {read=GetAsDateTime, write=SetAsDateTime};
 	__property int AsStDate = {read=GetAsStDate, write=SetAsStDate, nodefault};
 	__property bool Browsing = {read=FBrowsing, nodefault};
@@ -293,7 +293,7 @@ __published:
 public:
 	/* TOvcCustomCalendar.Create */ inline __fastcall virtual TOvcCalendar(System::Classes::TComponent* AOwner) : TOvcCustomCalendar(AOwner) { }
 	/* TOvcCustomCalendar.CreateEx */ inline __fastcall virtual TOvcCalendar(System::Classes::TComponent* AOwner, bool AsPopup) : TOvcCustomCalendar(AOwner, AsPopup) { }
-	/* TOvcCustomCalendar.Destroy */ inline __fastcall virtual ~TOvcCalendar(void) { }
+	/* TOvcCustomCalendar.Destroy */ inline __fastcall virtual ~TOvcCalendar() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCalendar(HWND ParentWindow) : TOvcCustomCalendar(ParentWindow) { }

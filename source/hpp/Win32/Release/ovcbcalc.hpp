@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcbcalc.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcbcalc.pas' rev: 33.00 (Windows)
 
 #ifndef OvcbcalcHPP
 #define OvcbcalcHPP
@@ -59,7 +59,7 @@ public:
 	/* TOvcCustomNumberEdit.Create */ inline __fastcall virtual TOvcNumberEditEx(System::Classes::TComponent* AOwner) : Ovcedclc::TOvcNumberEdit(AOwner) { }
 	
 public:
-	/* TOvcEdPopup.Destroy */ inline __fastcall virtual ~TOvcNumberEditEx(void) { }
+	/* TOvcEdPopup.Destroy */ inline __fastcall virtual ~TOvcNumberEditEx() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcNumberEditEx(HWND ParentWindow) : Ovcedclc::TOvcNumberEdit(ParentWindow) { }
@@ -81,24 +81,24 @@ protected:
 	TOvcPopupEvent FOnPopupClose;
 	TOvcPopupEvent FOnPopupOpen;
 	bool FShowButton;
-	Vcl::Graphics::TBitmap* __fastcall GetButtonGlyph(void);
+	Vcl::Graphics::TBitmap* __fastcall GetButtonGlyph();
 	void __fastcall SetButtonGlyph(Vcl::Graphics::TBitmap* Value);
 	void __fastcall SetShowButton(bool Value);
-	int __fastcall GetButtonWidth(void);
+	int __fastcall GetButtonWidth();
 	HIDESBASE MESSAGE void __fastcall CMDialogKey(Winapi::Messages::TWMKey &Msg);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
-	DYNAMIC bool __fastcall GetButtonEnabled(void);
-	DYNAMIC void __fastcall GlyphChanged(void);
-	virtual void __fastcall Loaded(void);
+	virtual void __fastcall CreateWnd();
+	DYNAMIC bool __fastcall GetButtonEnabled();
+	DYNAMIC void __fastcall GlyphChanged();
+	virtual void __fastcall Loaded();
 	MESSAGE void __fastcall OnMsgClose(Winapi::Messages::TMessage &M);
 	MESSAGE void __fastcall OnMsgOpen(Winapi::Messages::TMessage &M);
 	
 public:
 	__fastcall virtual TOvcBorderEdPopup(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBorderEdPopup(void);
+	__fastcall virtual ~TOvcBorderEdPopup();
 	DYNAMIC void __fastcall PopupClose(System::TObject* Sender);
-	DYNAMIC void __fastcall PopupOpen(void);
+	DYNAMIC void __fastcall PopupOpen();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	virtual void __fastcall SetEditControl(Ovceditf::TOvcCustomEdit* EC);
 	__property Canvas;
@@ -169,48 +169,48 @@ protected:
 	bool PopupClosing;
 	System::Uitypes::TCursor HoldCursor;
 	bool WasAutoScroll;
-	System::Classes::TBiDiMode __fastcall GetBiDiMode(void);
-	System::Uitypes::TDragKind __fastcall GetDragKind(void);
-	bool __fastcall GetParentBiDiMode(void);
+	System::Classes::TBiDiMode __fastcall GetBiDiMode();
+	System::Uitypes::TDragKind __fastcall GetDragKind();
+	bool __fastcall GetParentBiDiMode();
 	virtual void __fastcall SetBiDiMode(System::Classes::TBiDiMode Value);
 	void __fastcall SetDragKind(System::Uitypes::TDragKind Value);
 	virtual void __fastcall SetParentBiDiMode(bool Value);
-	HIDESBASE System::UnicodeString __fastcall GetAbout(void);
-	bool __fastcall GetAutoSelect(void);
-	bool __fastcall GetAutoSize(void);
-	System::Uitypes::TEditCharCase __fastcall GetCharCase(void);
-	Ovcbase::TOvcController* __fastcall GetController(void);
-	System::Uitypes::TCursor __fastcall GetCursor(void);
-	System::Uitypes::TCursor __fastcall GetDragCursor(void);
-	HIDESBASE System::Uitypes::TDragMode __fastcall GetDragMode(void);
-	bool __fastcall GetEditEnabled(void);
-	Vcl::Graphics::TFont* __fastcall GetFont(void);
-	bool __fastcall GetHideSelection(void);
-	Vcl::Controls::TImeMode __fastcall GetImeMode(void);
-	System::UnicodeString __fastcall GetImeName(void);
-	int __fastcall GetMaxLength(void);
-	bool __fastcall GetOEMConvert(void);
-	bool __fastcall GetParentShowHint(void);
-	System::WideChar __fastcall GetPasswordChar(void);
-	bool __fastcall GetReadOnly(void);
-	bool __fastcall GetEditShowButton(void);
-	bool __fastcall GetParentFont(void);
-	bool __fastcall GetEditParentShowHint(void);
-	System::Classes::TNotifyEvent __fastcall GetOnChange(void);
-	System::Classes::TNotifyEvent __fastcall GetOnClick(void);
-	System::Classes::TNotifyEvent __fastcall GetOnDblClick(void);
-	Vcl::Controls::TDragDropEvent __fastcall GetOnDragDrop(void);
-	Vcl::Controls::TDragOverEvent __fastcall GetOnDragOver(void);
-	Vcl::Controls::TEndDragEvent __fastcall GetOnEndDrag(void);
-	Vcl::Controls::TKeyEvent __fastcall GetOnKeyDown(void);
-	Vcl::Controls::TKeyPressEvent __fastcall GetOnKeyPress(void);
-	Vcl::Controls::TKeyEvent __fastcall GetOnKeyUp(void);
-	Vcl::Controls::TMouseEvent __fastcall GetOnMouseDown(void);
-	Vcl::Controls::TMouseMoveEvent __fastcall GetOnMouseMove(void);
-	Vcl::Controls::TMouseEvent __fastcall GetOnMouseUp(void);
-	TOvcPopupEvent __fastcall GetOnPopupClose(void);
-	TOvcPopupEvent __fastcall GetOnPopupOpen(void);
-	TOvcPopupAnchor __fastcall GetPopupAnchor(void);
+	HIDESBASE System::UnicodeString __fastcall GetAbout();
+	bool __fastcall GetAutoSelect();
+	bool __fastcall GetAutoSize();
+	System::Uitypes::TEditCharCase __fastcall GetCharCase();
+	Ovcbase::TOvcController* __fastcall GetController();
+	System::Uitypes::TCursor __fastcall GetCursor();
+	System::Uitypes::TCursor __fastcall GetDragCursor();
+	HIDESBASE System::Uitypes::TDragMode __fastcall GetDragMode();
+	bool __fastcall GetEditEnabled();
+	Vcl::Graphics::TFont* __fastcall GetFont();
+	bool __fastcall GetHideSelection();
+	Vcl::Controls::TImeMode __fastcall GetImeMode();
+	System::UnicodeString __fastcall GetImeName();
+	int __fastcall GetMaxLength();
+	bool __fastcall GetOEMConvert();
+	bool __fastcall GetParentShowHint();
+	System::WideChar __fastcall GetPasswordChar();
+	bool __fastcall GetReadOnly();
+	bool __fastcall GetEditShowButton();
+	bool __fastcall GetParentFont();
+	bool __fastcall GetEditParentShowHint();
+	System::Classes::TNotifyEvent __fastcall GetOnChange();
+	System::Classes::TNotifyEvent __fastcall GetOnClick();
+	System::Classes::TNotifyEvent __fastcall GetOnDblClick();
+	Vcl::Controls::TDragDropEvent __fastcall GetOnDragDrop();
+	Vcl::Controls::TDragOverEvent __fastcall GetOnDragOver();
+	Vcl::Controls::TEndDragEvent __fastcall GetOnEndDrag();
+	Vcl::Controls::TKeyEvent __fastcall GetOnKeyDown();
+	Vcl::Controls::TKeyPressEvent __fastcall GetOnKeyPress();
+	Vcl::Controls::TKeyEvent __fastcall GetOnKeyUp();
+	Vcl::Controls::TMouseEvent __fastcall GetOnMouseDown();
+	Vcl::Controls::TMouseMoveEvent __fastcall GetOnMouseMove();
+	Vcl::Controls::TMouseEvent __fastcall GetOnMouseUp();
+	TOvcPopupEvent __fastcall GetOnPopupClose();
+	TOvcPopupEvent __fastcall GetOnPopupOpen();
+	TOvcPopupAnchor __fastcall GetPopupAnchor();
 	HIDESBASE void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall SetAutoSelect(bool Value);
 	virtual void __fastcall SetAutoSize(bool Value);
@@ -245,14 +245,14 @@ protected:
 	void __fastcall SetOnPopupClose(TOvcPopupEvent Value);
 	void __fastcall SetOnPopupOpen(TOvcPopupEvent Value);
 	void __fastcall SetPopupAnchor(TOvcPopupAnchor Value);
-	double __fastcall GetAsFloat(void);
-	int __fastcall GetAsInteger(void);
-	System::UnicodeString __fastcall GetAsString(void);
-	Ovccalc::TOvcCalcColors* __fastcall GetPopupColors(void);
-	int __fastcall GetPopupDecimals(void);
-	Vcl::Graphics::TFont* __fastcall GetPopupFont(void);
-	int __fastcall GetPopupHeight(void);
-	int __fastcall GetPopupWidth(void);
+	double __fastcall GetAsFloat();
+	int __fastcall GetAsInteger();
+	System::UnicodeString __fastcall GetAsString();
+	Ovccalc::TOvcCalcColors* __fastcall GetPopupColors();
+	int __fastcall GetPopupDecimals();
+	Vcl::Graphics::TFont* __fastcall GetPopupFont();
+	int __fastcall GetPopupHeight();
+	int __fastcall GetPopupWidth();
 	void __fastcall SetAsFloat(double Value);
 	void __fastcall SetAsInteger(int Value);
 	void __fastcall SetAsString(const System::UnicodeString Value);
@@ -263,11 +263,11 @@ protected:
 	void __fastcall SetPopupWidth(int Value);
 	HIDESBASE void __fastcall SetParentFont(bool Value);
 	void __fastcall SetEditParentShowHint(bool Value);
-	DYNAMIC void __fastcall GlyphChanged(void);
+	DYNAMIC void __fastcall GlyphChanged();
 	
 public:
 	__fastcall virtual TOvcBorderedNumberEdit(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBorderedNumberEdit(void);
+	__fastcall virtual ~TOvcBorderedNumberEdit();
 	__property int AsInteger = {read=GetAsInteger, write=SetAsInteger, nodefault};
 	__property double AsFloat = {read=GetAsFloat, write=SetAsFloat};
 	__property System::UnicodeString AsString = {read=GetAsString, write=SetAsString};

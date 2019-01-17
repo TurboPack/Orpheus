@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccolor.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccolor.pas' rev: 33.00 (Windows)
 
 #ifndef OvccolorHPP
 #define OvccolorHPP
@@ -42,8 +42,8 @@ protected:
 	void __fastcall SetUseDefault(bool Value);
 	void __fastcall ReadUseDefault(System::Classes::TReader* Reader);
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
-	DYNAMIC void __fastcall DoOnColorChange(void);
-	DYNAMIC void __fastcall ResetToDefaultColors(void);
+	DYNAMIC void __fastcall DoOnColorChange();
+	DYNAMIC void __fastcall ResetToDefaultColors();
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
@@ -55,7 +55,7 @@ __published:
 	__property System::Uitypes::TColor TextColor = {read=FTextColor, write=SetTextColor, nodefault};
 	__property bool UseDefault = {read=FUseDefault, write=SetUseDefault, stored=false, nodefault};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcColors(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcColors() { }
 	
 };
 

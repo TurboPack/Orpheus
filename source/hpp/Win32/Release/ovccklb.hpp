@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccklb.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccklb.pas' rev: 33.00 (Windows)
 
 #ifndef OvccklbHPP
 #define OvccklbHPP
@@ -91,14 +91,14 @@ protected:
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
 	DYNAMIC void __fastcall DoOnStateChange(int Index, Vcl::Stdctrls::TCheckBoxState OldState, Vcl::Stdctrls::TCheckBoxState NewState);
 	virtual void __fastcall DrawItem(int Index, const System::Types::TRect &Rect, Winapi::Windows::TOwnerDrawState AState);
-	virtual void __fastcall tlResetHorizontalExtent(void);
+	virtual void __fastcall tlResetHorizontalExtent();
 	__property Style = {default=0};
 	virtual void __fastcall LoadRecreateItems(System::Classes::TStrings* RecreateItems);
 	virtual void __fastcall SaveRecreateItems(System::Classes::TStrings* RecreateItems);
 	
 public:
 	__fastcall virtual TOvcCheckList(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCheckList(void);
+	__fastcall virtual ~TOvcCheckList();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	__property Canvas;
 	void __fastcall ChangeStateForAll(Vcl::Stdctrls::TCheckBoxState NewState);

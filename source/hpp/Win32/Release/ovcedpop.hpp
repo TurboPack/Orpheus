@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcedpop.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcedpop.pas' rev: 33.00 (Windows)
 
 #ifndef OvcedpopHPP
 #define OvcedpopHPP
@@ -41,10 +41,10 @@ class PASCALIMPLEMENTATION TOvcEdButton : public Vcl::Buttons::TBitBtn
 	typedef Vcl::Buttons::TBitBtn inherited;
 	
 public:
-	DYNAMIC void __fastcall Click(void);
+	DYNAMIC void __fastcall Click();
 public:
 	/* TBitBtn.Create */ inline __fastcall virtual TOvcEdButton(System::Classes::TComponent* AOwner) : Vcl::Buttons::TBitBtn(AOwner) { }
-	/* TBitBtn.Destroy */ inline __fastcall virtual ~TOvcEdButton(void) { }
+	/* TBitBtn.Destroy */ inline __fastcall virtual ~TOvcEdButton() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcEdButton(HWND ParentWindow) : Vcl::Buttons::TBitBtn(ParentWindow) { }
@@ -68,16 +68,16 @@ protected:
 	TOvcPopupEvent FOnPopupClose;
 	TOvcPopupEvent FOnPopupOpen;
 	bool FShowButton;
-	Vcl::Graphics::TBitmap* __fastcall GetButtonGlyph(void);
+	Vcl::Graphics::TBitmap* __fastcall GetButtonGlyph();
 	void __fastcall SetButtonGlyph(Vcl::Graphics::TBitmap* Value);
 	void __fastcall SetShowButton(bool Value);
-	int __fastcall GetButtonWidth(void);
+	int __fastcall GetButtonWidth();
 	HIDESBASE MESSAGE void __fastcall CMDialogKey(Winapi::Messages::TWMKey &Msg);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
-	DYNAMIC bool __fastcall GetButtonEnabled(void);
-	DYNAMIC void __fastcall GlyphChanged(void);
-	virtual void __fastcall Loaded(void);
+	virtual void __fastcall CreateWnd();
+	DYNAMIC bool __fastcall GetButtonEnabled();
+	DYNAMIC void __fastcall GlyphChanged();
+	virtual void __fastcall Loaded();
 	MESSAGE void __fastcall OnMsgClose(Winapi::Messages::TMessage &M);
 	MESSAGE void __fastcall OnMsgOpen(Winapi::Messages::TMessage &M);
 	__property TOvcPopupAnchor PopupAnchor = {read=FPopupAnchor, write=FPopupAnchor, nodefault};
@@ -85,11 +85,11 @@ protected:
 	
 public:
 	__fastcall virtual TOvcEdPopup(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcEdPopup(void);
+	__fastcall virtual ~TOvcEdPopup();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	__property Vcl::Graphics::TBitmap* ButtonGlyph = {read=GetButtonGlyph, write=SetButtonGlyph};
 	DYNAMIC void __fastcall PopupClose(System::TObject* Sender);
-	DYNAMIC void __fastcall PopupOpen(void);
+	DYNAMIC void __fastcall PopupOpen();
 	__property TOvcPopupEvent OnPopupClose = {read=FOnPopupClose, write=FOnPopupClose};
 	__property TOvcPopupEvent OnPopupOpen = {read=FOnPopupOpen, write=FOnPopupOpen};
 	__property bool PopupActive = {read=FPopupActive, nodefault};

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcrptvw.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcrptvw.pas' rev: 33.00 (Windows)
 
 #ifndef OvcrptvwHPP
 #define OvcrptvwHPP
@@ -71,23 +71,23 @@ protected:
 	int LastOffset;
 	bool InRearrange;
 	void __fastcall HideShowSizer(int Position);
-	void __fastcall HideSizer(void);
+	void __fastcall HideSizer();
 	void __fastcall ShowSizer(int ASection);
-	virtual void __fastcall DoOnClick(void);
-	DYNAMIC void __fastcall DblClick(void);
+	virtual void __fastcall DoOnClick();
+	DYNAMIC void __fastcall DblClick();
 	DYNAMIC void __fastcall DoOnSized(int ASection, int AWidth);
 	DYNAMIC void __fastcall DoOnSizing(int ASection, int AWidth);
 	DYNAMIC bool __fastcall DoRearranging(int OldIndex, int NewIndex);
 	DYNAMIC void __fastcall DoRearranged(int OldIndex, int NewIndex);
-	virtual void __fastcall Paint(void);
-	void __fastcall SetSortGlyph(void);
+	virtual void __fastcall Paint();
+	void __fastcall SetSortGlyph();
 	
 public:
-	void __fastcall Reload(void);
+	void __fastcall Reload();
 	__property TOvcRVListBox* ListBox = {read=FListBox, write=FListBox};
 public:
 	/* TOvcButtonHeader.Create */ inline __fastcall virtual TOvcRVHeader(System::Classes::TComponent* AOwner) : Ovcbtnhd::TOvcButtonHeader(AOwner) { }
-	/* TOvcButtonHeader.Destroy */ inline __fastcall virtual ~TOvcRVHeader(void) { }
+	/* TOvcButtonHeader.Destroy */ inline __fastcall virtual ~TOvcRVHeader() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcRVHeader(HWND ParentWindow) : Ovcbtnhd::TOvcButtonHeader(ParentWindow) { }
@@ -101,15 +101,15 @@ class PASCALIMPLEMENTATION TOvcRVFooter : public Ovcbtnhd::TOvcButtonHeader
 	
 protected:
 	TOvcRVListBox* FListBox;
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall Paint();
 	
 public:
-	void __fastcall Reload(void);
-	void __fastcall UpdateSections(void);
+	void __fastcall Reload();
+	void __fastcall UpdateSections();
 	__property TOvcRVListBox* ListBox = {read=FListBox, write=FListBox};
 public:
 	/* TOvcButtonHeader.Create */ inline __fastcall virtual TOvcRVFooter(System::Classes::TComponent* AOwner) : Ovcbtnhd::TOvcButtonHeader(AOwner) { }
-	/* TOvcButtonHeader.Destroy */ inline __fastcall virtual ~TOvcRVFooter(void) { }
+	/* TOvcButtonHeader.Destroy */ inline __fastcall virtual ~TOvcRVFooter() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcRVFooter(HWND ParentWindow) : Ovcbtnhd::TOvcButtonHeader(ParentWindow) { }
@@ -130,7 +130,7 @@ public:
 	/* TOvcColors.Create */ inline __fastcall virtual TOvcRvListSelectColors(System::Uitypes::TColor FG, System::Uitypes::TColor BG) : Ovccolor::TOvcColors(FG, BG) { }
 	
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcRvListSelectColors(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcRvListSelectColors() { }
 	
 };
 
@@ -149,8 +149,8 @@ protected:
 	bool IsSimulated;
 	System::Types::TRect HintRect;
 	TOvcRvListSelectColors* FSelectColor;
-	int __fastcall CalcMaxX(void);
-	DYNAMIC void __fastcall Click(void);
+	int __fastcall CalcMaxX();
+	DYNAMIC void __fastcall Click();
 	DYNAMIC void __fastcall DoEndDrag(System::TObject* Target, int X, int Y);
 	DYNAMIC void __fastcall DoStartDrag(Vcl::Controls::TDragObject* &DragObject);
 	virtual bool __fastcall DoOnIsSelected(int Index);
@@ -162,12 +162,12 @@ protected:
 	System::UnicodeString __fastcall GetStringAtPos(const System::Types::TPoint &XY);
 	void __fastcall InternalDrawItem(int N, const System::Types::TRect &CR);
 	void __fastcall InternalSetItemIndex(int Index, bool DeselectOld);
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall Paint();
 	void __fastcall SetGridLines(TOvcRVGridLines Value);
 	virtual void __fastcall SetItemIndex(int Index);
 	virtual void __fastcall SetMultiSelect(bool Value);
-	virtual void __fastcall SimulatedClick(void);
-	virtual void __fastcall vlbCalcFontFields(void);
+	virtual void __fastcall SimulatedClick();
+	virtual void __fastcall vlbCalcFontFields();
 	HIDESBASE void __fastcall vlbDrawFocusRect(Vcl::Graphics::TCanvas* Canvas, int Left, int Right, int Index);
 	HIDESBASE MESSAGE void __fastcall WMKeyDown(Winapi::Messages::TWMKey &Msg);
 	HIDESBASE MESSAGE void __fastcall WMLButtonDown(Winapi::Messages::TWMMouse &Msg);
@@ -179,7 +179,7 @@ public:
 	TOvcCustomReportView* ReportView;
 	DYNAMIC void __fastcall DragDrop(System::TObject* Source, int X, int Y);
 	__fastcall virtual TOvcRVListBox(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcRVListBox(void);
+	__fastcall virtual ~TOvcRVListBox();
 	__property TOvcRVGridLines GridLines = {read=FGridLines, write=SetGridLines, nodefault};
 	__property TOvcRVFooter* RVFooter = {read=FFooter, write=FFooter};
 	__property TOvcRVHeader* RVHeader = {read=FButtonHeader, write=FButtonHeader};
@@ -211,10 +211,10 @@ protected:
 	Ovcrvexpdef::TOvcRvExpression* FExp;
 	bool FDirty;
 	bool FDFMBased;
-	Ovcrvexpdef::TOvcRvExpression* __fastcall Exp(void);
-	DYNAMIC System::UnicodeString __fastcall GetBaseName(void);
-	virtual System::UnicodeString __fastcall GetDisplayText(void);
-	HIDESBASE TOvcCustomReportView* __fastcall GetOwnerReport(void);
+	Ovcrvexpdef::TOvcRvExpression* __fastcall Exp();
+	DYNAMIC System::UnicodeString __fastcall GetBaseName();
+	virtual System::UnicodeString __fastcall GetDisplayText();
+	HIDESBASE TOvcCustomReportView* __fastcall GetOwnerReport();
 	void __fastcall SetAlignment(System::Classes::TAlignment Value);
 	void __fastcall SetCaption(const System::UnicodeString Value);
 	virtual void __fastcall SetName(const System::Classes::TComponentName NewName);
@@ -228,13 +228,13 @@ protected:
 	
 public:
 	__fastcall virtual TOvcRvField(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcRvField(void);
+	__fastcall virtual ~TOvcRvField();
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	virtual System::Variant __fastcall GetValue(void * Data);
 	virtual System::UnicodeString __fastcall AsString(void * Data);
-	bool __fastcall InUse(void);
+	bool __fastcall InUse();
 	bool __fastcall RefersTo(TOvcRvField* const RefField);
-	void __fastcall ValidateExpression(void);
+	void __fastcall ValidateExpression();
 	
 __published:
 	__property System::Classes::TAlignment Alignment = {read=FAlignment, write=SetAlignment, default=0};
@@ -260,16 +260,16 @@ class PASCALIMPLEMENTATION TOvcRvFields : public Ovcrvidx::TOvcAbstractRvFields
 protected:
 	HIDESBASE TOvcRvField* __fastcall GetItem(int Index);
 	HIDESBASE void __fastcall SetItem(int Index, TOvcRvField* Value);
-	TOvcCustomReportView* __fastcall GetOwnerReport(void);
+	TOvcCustomReportView* __fastcall GetOwnerReport();
 	
 public:
 	__fastcall TOvcRvFields(TOvcCustomReportView* AOwner);
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	HIDESBASE TOvcRvField* __fastcall Add(void);
+	HIDESBASE TOvcRvField* __fastcall Add();
 	__property TOvcRvField* Items[int Index] = {read=GetItem, write=SetItem};
 	__property TOvcCustomReportView* Owner = {read=GetOwnerReport};
 public:
-	/* TOvcCollection.Destroy */ inline __fastcall virtual ~TOvcRvFields(void) { }
+	/* TOvcCollection.Destroy */ inline __fastcall virtual ~TOvcRvFields() { }
 	
 };
 
@@ -288,30 +288,30 @@ protected:
 	bool FVisible;
 	Ovcrvexpdef::TOvcRvExpression* FAggExp;
 	TOvcRvFieldSort FSortDirection;
-	DYNAMIC void __fastcall Changed(void);
-	DYNAMIC System::UnicodeString __fastcall GetBaseName(void);
-	HIDESBASE TOvcRvField* __fastcall GetField(void);
-	virtual System::UnicodeString __fastcall GetDisplayText(void);
-	TOvcCustomReportView* __fastcall GetOwnerReport(void);
-	TOvcRVView* __fastcall GetOwnerView(void);
-	int __fastcall GetPrintWidth(void);
-	bool __fastcall GetPrintWidthStored(void);
-	int __fastcall GetWidth(void);
-	bool __fastcall GetWidthStored(void);
+	DYNAMIC void __fastcall Changed();
+	DYNAMIC System::UnicodeString __fastcall GetBaseName();
+	HIDESBASE TOvcRvField* __fastcall GetField();
+	virtual System::UnicodeString __fastcall GetDisplayText();
+	TOvcCustomReportView* __fastcall GetOwnerReport();
+	TOvcRVView* __fastcall GetOwnerView();
+	int __fastcall GetPrintWidth();
+	bool __fastcall GetPrintWidthStored();
+	int __fastcall GetWidth();
+	bool __fastcall GetWidthStored();
 	void __fastcall SetAggregate(const System::UnicodeString Value);
 	virtual void __fastcall SetIndex(int Value);
 	void __fastcall SetPrintWidth(int Value);
 	void __fastcall SetVisible(const bool Value);
 	void __fastcall SetWidth(int Value);
-	Ovcrvexpdef::TOvcRvExpression* __fastcall GetAggExp(void);
+	Ovcrvexpdef::TOvcRvExpression* __fastcall GetAggExp();
 	virtual void __fastcall SaveToStorage(Ovcfiler::TOvcAbstractStore* Storage, const System::UnicodeString Prefix);
 	virtual bool __fastcall LoadFromStorage(Ovcfiler::TOvcAbstractStore* Storage, const System::UnicodeString Prefix);
-	bool __fastcall GetAllowResize(void);
+	bool __fastcall GetAllowResize();
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	__fastcall virtual TOvcRvViewField(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcRvViewField(void);
+	__fastcall virtual ~TOvcRvViewField();
 	__property Ovcrvexpdef::TOvcRvExpression* AggExp = {read=GetAggExp};
 	__property TOvcRvField* Field = {read=GetField};
 	__property TOvcCustomReportView* OwnerReport = {read=GetOwnerReport};
@@ -339,15 +339,15 @@ class PASCALIMPLEMENTATION TOvcRvViewFields : public Ovcrvidx::TOvcAbstractRvVie
 protected:
 	HIDESBASE TOvcRvViewField* __fastcall GetItem(int Index);
 	HIDESBASE void __fastcall SetItem(int Index, TOvcRvViewField* Value);
-	TOvcRVView* __fastcall GetOwnerView(void);
+	TOvcRVView* __fastcall GetOwnerView();
 	
 public:
 	__fastcall TOvcRvViewFields(TOvcRVView* AOwner);
-	HIDESBASE TOvcRvViewField* __fastcall Add(void);
+	HIDESBASE TOvcRvViewField* __fastcall Add();
 	__property TOvcRvViewField* Items[int Index] = {read=GetItem, write=SetItem};
 	__property TOvcRVView* Owner = {read=GetOwnerView};
 public:
-	/* TOvcCollection.Destroy */ inline __fastcall virtual ~TOvcRvViewFields(void) { }
+	/* TOvcCollection.Destroy */ inline __fastcall virtual ~TOvcRvViewFields() { }
 	
 };
 
@@ -369,9 +369,9 @@ protected:
 	bool FDFMBased;
 	Ovcrvexpdef::TOvcRvExpression* FFilterExp;
 	void __fastcall SetDirty(const bool Value);
-	TOvcRvViewFields* __fastcall GetViewFields(void);
+	TOvcRvViewFields* __fastcall GetViewFields();
 	HIDESBASE void __fastcall SetViewFields(TOvcRvViewFields* const Value);
-	DYNAMIC System::UnicodeString __fastcall GetBaseName(void);
+	DYNAMIC System::UnicodeString __fastcall GetBaseName();
 	HIDESBASE TOvcRvViewField* __fastcall GetViewField(int Index);
 	void __fastcall AncestorNotFound(System::Classes::TReader* Reader, const System::UnicodeString ComponentName, System::Classes::TPersistentClass ComponentClass, System::Classes::TComponent* &Component);
 	virtual void __fastcall ReadState(System::Classes::TReader* Reader);
@@ -381,19 +381,19 @@ protected:
 	void __fastcall SetTitle(const System::UnicodeString Value);
 	virtual void __fastcall SetFilter(const System::UnicodeString Value);
 	bool __fastcall Include(void * Data);
-	Ovcrvexpdef::TOvcRvExpression* __fastcall GetFilterExp(void);
+	Ovcrvexpdef::TOvcRvExpression* __fastcall GetFilterExp();
 	__property Ovcrvexpdef::TOvcRvExpression* FilterExp = {read=GetFilterExp};
-	TOvcCustomReportView* __fastcall OwnerReport(void);
+	TOvcCustomReportView* __fastcall OwnerReport();
 	System::UnicodeString __fastcall UniqueViewTitle(const System::UnicodeString Title);
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	__fastcall virtual TOvcRVView(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcRVView(void);
+	__fastcall virtual ~TOvcRVView();
 	__property bool Dirty = {read=FDirty, write=SetDirty, nodefault};
 	virtual void __fastcall SaveToStorage(Ovcfiler::TOvcAbstractStore* Storage, const System::UnicodeString Prefix);
 	virtual void __fastcall LoadFromStorage(Ovcfiler::TOvcAbstractStore* Storage, const System::UnicodeString Prefix);
-	void __fastcall Refresh(void);
+	void __fastcall Refresh();
 	__property TOvcRvViewField* ViewField[int Index] = {read=GetViewField};
 	
 __published:
@@ -421,12 +421,12 @@ protected:
 	
 public:
 	__fastcall TOvcRvViews(TOvcCustomReportView* AOwner);
-	virtual void __fastcall Clear(void);
+	virtual void __fastcall Clear();
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	HIDESBASE TOvcRVView* __fastcall Add(void);
+	HIDESBASE TOvcRVView* __fastcall Add();
 	__property TOvcRVView* Items[int Index] = {read=GetItem, write=SetItem};
 public:
-	/* TOvcCollection.Destroy */ inline __fastcall virtual ~TOvcRvViews(void) { }
+	/* TOvcCollection.Destroy */ inline __fastcall virtual ~TOvcRvViews() { }
 	
 };
 
@@ -456,7 +456,7 @@ class PASCALIMPLEMENTATION TRvPrintFont : public Vcl::Graphics::TFont
 	typedef Vcl::Graphics::TFont inherited;
 	
 protected:
-	bool __fastcall NameStored(void);
+	bool __fastcall NameStored();
 	
 __published:
 	__property Charset = {default=1};
@@ -465,8 +465,8 @@ __published:
 	__property Name = {stored=NameStored, default=0};
 	__property Style = {default=0};
 public:
-	/* TFont.Create */ inline __fastcall TRvPrintFont(void) : Vcl::Graphics::TFont() { }
-	/* TFont.Destroy */ inline __fastcall virtual ~TRvPrintFont(void) { }
+	/* TFont.Create */ inline __fastcall TRvPrintFont() : Vcl::Graphics::TFont() { }
+	/* TFont.Destroy */ inline __fastcall virtual ~TRvPrintFont() { }
 	
 };
 
@@ -492,8 +492,8 @@ protected:
 	void __fastcall SetPrintFont(TRvPrintFont* Value);
 	
 public:
-	__fastcall TOvcRvPrintProps(void);
-	__fastcall virtual ~TOvcRvPrintProps(void);
+	__fastcall TOvcRvPrintProps();
+	__fastcall virtual ~TOvcRvPrintProps();
 	
 __published:
 	__property bool AutoScaleColumns = {read=FAutoScaleColumns, write=FAutoScaleColumns, default=0};
@@ -526,32 +526,32 @@ protected:
 	TOvcCustomReportView* FOwner;
 	bool FShowGroupCaptionInHeader;
 	bool FShowGroupCaptionInList;
-	int __fastcall GetHeaderHeight(void);
+	int __fastcall GetHeaderHeight();
 	void __fastcall SetHeaderHeight(const int Value);
-	bool __fastcall NotHeaderAutoHeight(void);
+	bool __fastcall NotHeaderAutoHeight();
 	void __fastcall SetHeaderAutoHeight(const bool Value);
-	int __fastcall GetFooterHeight(void);
+	int __fastcall GetFooterHeight();
 	void __fastcall SetFooterHeight(const int Value);
-	bool __fastcall NotFooterAutoHeight(void);
+	bool __fastcall NotFooterAutoHeight();
 	void __fastcall SetFooterAutoHeight(const bool Value);
-	bool __fastcall GetHeaderAllowDragRearrange(void);
+	bool __fastcall GetHeaderAllowDragRearrange();
 	void __fastcall SetHeaderAllowDragRearrange(const bool Value);
-	Ovcbtnhd::TOvcBHDrawingStyle __fastcall GetFooterDrawingStyle(void);
-	Ovcbtnhd::TOvcBHDrawingStyle __fastcall GetHeaderDrawingStyle(void);
+	Ovcbtnhd::TOvcBHDrawingStyle __fastcall GetFooterDrawingStyle();
+	Ovcbtnhd::TOvcBHDrawingStyle __fastcall GetHeaderDrawingStyle();
 	void __fastcall SetFooterDrawingStyle(const Ovcbtnhd::TOvcBHDrawingStyle Value);
 	void __fastcall SetHeaderDrawingStyle(const Ovcbtnhd::TOvcBHDrawingStyle Value);
-	int __fastcall GetWheelDelta(void);
+	int __fastcall GetWheelDelta();
 	void __fastcall SetWheelDelta(const int Value);
-	bool __fastcall GetHeaderWordWrap(void);
+	bool __fastcall GetHeaderWordWrap();
 	void __fastcall SetHeaderLines(const int Value);
 	void __fastcall SetHeaderWordWrap(const bool Value);
-	int __fastcall GetFooterTextMargin(void);
-	int __fastcall GetHeaderTextMargin(void);
-	bool __fastcall GetListAutoRowHeight(void);
-	Vcl::Forms::TBorderStyle __fastcall GetListBorderStyle(void);
-	System::Uitypes::TColor __fastcall GetListColor(void);
-	int __fastcall GetListRowHeight(void);
-	TOvcRvListSelectColors* __fastcall GetListSelectColor(void);
+	int __fastcall GetFooterTextMargin();
+	int __fastcall GetHeaderTextMargin();
+	bool __fastcall GetListAutoRowHeight();
+	Vcl::Forms::TBorderStyle __fastcall GetListBorderStyle();
+	System::Uitypes::TColor __fastcall GetListColor();
+	int __fastcall GetListRowHeight();
+	TOvcRvListSelectColors* __fastcall GetListSelectColor();
 	void __fastcall SetFooterTextMargin(const int Value);
 	void __fastcall SetHeaderTextMargin(const int Value);
 	void __fastcall SetListAutoRowHeight(const bool Value);
@@ -561,7 +561,7 @@ protected:
 	void __fastcall SetListSelectColor(TOvcRvListSelectColors* const Value);
 	void __fastcall SetShowGroupCaptionInHeader(const bool Value);
 	void __fastcall SetShowGroupCaptionInList(const bool Value);
-	bool __fastcall NotListAutoRowHeight(void);
+	bool __fastcall NotListAutoRowHeight();
 	
 public:
 	__fastcall TOvcRVOptions(TOvcCustomReportView* AOwner);
@@ -588,7 +588,7 @@ __published:
 	__property bool ShowGroupCaptionInList = {read=FShowGroupCaptionInList, write=SetShowGroupCaptionInList, default=1};
 	__property int WheelDelta = {read=GetWheelDelta, write=SetWheelDelta, default=3};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcRVOptions(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcRVOptions() { }
 	
 };
 
@@ -604,7 +604,7 @@ typedef System::TMetaClass* TOvcReportViewClass;
 
 typedef int __fastcall (__closure *TAdvancePageMethod)(Vcl::Graphics::TCanvas* Canvas, int &CurY, int LineHeight, int VPage, int RenderPage, bool &Abort, int PrintStartLeft);
 
-typedef int __fastcall (__closure *TGetPageNumberMethod)(void);
+typedef int __fastcall (__closure *TGetPageNumberMethod)();
 
 class PASCALIMPLEMENTATION TOvcCustomReportView : public Ovcrvidx::TOvcAbstractReportView
 {
@@ -673,20 +673,20 @@ protected:
 	bool ViewDeleted;
 	bool LoadingViews;
 	bool Searching;
-	void __fastcall LockListPaint(void);
-	void __fastcall UnlockListPaint(void);
-	DYNAMIC void __fastcall Click(void);
+	void __fastcall LockListPaint();
+	void __fastcall UnlockListPaint();
+	DYNAMIC void __fastcall Click();
 	void __fastcall ColumnsChanged(System::TObject* Sender);
 	int __fastcall CompLineWidth2(int PrintStartLeft, int PrintStopRight);
-	int __fastcall CompLineWidth(void);
+	int __fastcall CompLineWidth();
 	int __fastcall CountSelected(bool StopOnFirst);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual TOvcRvViews* __fastcall CreateViewCollection(void);
-	virtual TOvcRVListBox* __fastcall CreateListBox(void);
-	virtual TOvcRVHeader* __fastcall CreateHeader(void);
-	virtual TOvcRVFooter* __fastcall CreateFooter(void);
-	virtual void __fastcall CreateWnd(void);
-	DYNAMIC void __fastcall DblClick(void);
+	virtual TOvcRvViews* __fastcall CreateViewCollection();
+	virtual TOvcRVListBox* __fastcall CreateListBox();
+	virtual TOvcRVHeader* __fastcall CreateHeader();
+	virtual TOvcRVFooter* __fastcall CreateFooter();
+	virtual void __fastcall CreateWnd();
+	DYNAMIC void __fastcall DblClick();
 	virtual void __fastcall DoBusy(bool SetOn);
 	virtual void __fastcall DoDetail(void * Data);
 	void __fastcall DoChangeNotification(TRvChangeEvent Event);
@@ -699,57 +699,57 @@ protected:
 	void __fastcall DoSectionHeader(Vcl::Graphics::TCanvas* Canvas, int &CurY, int LineHeight, int VPage, int PrintStartLeft);
 	virtual void __fastcall DoKeySearch(int FieldIndex, const System::UnicodeString SearchString);
 	virtual void __fastcall DoLinesChanged(int LineDelta, int Offset);
-	virtual void __fastcall DoLinesWillChange(void);
-	virtual void __fastcall DoSortingChanged(void);
+	virtual void __fastcall DoLinesWillChange();
+	virtual void __fastcall DoSortingChanged();
 	TOvcRvField* __fastcall GetColumn(int Index);
-	bool __fastcall GetColumnResize(void);
-	Ovcrvidx::TOvcRvIndexGroup* __fastcall GetCurrentGroup(void);
-	void * __fastcall GetCurrentItem(void);
+	bool __fastcall GetColumnResize();
+	Ovcrvidx::TOvcRvIndexGroup* __fastcall GetCurrentGroup();
+	void * __fastcall GetCurrentItem();
 	HIDESBASE TOvcRvField* __fastcall GetField(int Index);
-	virtual Ovcbase::TOvcCollectibleClass __fastcall GetFieldClassType(void);
-	TOvcRvFields* __fastcall GetFields(void);
+	virtual Ovcbase::TOvcCollectibleClass __fastcall GetFieldClassType();
+	TOvcRvFields* __fastcall GetFields();
 	HIDESBASE void __fastcall SetFields(TOvcRvFields* const Value);
-	bool __fastcall GetDesigning(void);
+	bool __fastcall GetDesigning();
 	HIDESBASE void __fastcall SetDesigning(const bool Value);
-	virtual Ovcbase::TOvcCollectibleClass __fastcall GetViewClassType(void);
-	TOvcRvViews* __fastcall GetViews(void);
+	virtual Ovcbase::TOvcCollectibleClass __fastcall GetViewClassType();
+	TOvcRvViews* __fastcall GetViews();
 	HIDESBASE void __fastcall SetViews(TOvcRvViews* const Value);
-	TOvcRVGridLines __fastcall GetGridLines(void);
+	TOvcRVGridLines __fastcall GetGridLines();
 	virtual System::UnicodeString __fastcall DoGetGroupString(TOvcRvViewField* ViewField, Ovcrvidx::TOvcRvIndexGroup* GroupRef);
-	virtual bool __fastcall GetHaveSelection(void);
-	virtual int __fastcall GetSelectionCount(void);
-	bool __fastcall GetIsGrouped(void);
-	Vcl::Controls::TImageList* __fastcall GetHeaderImages(void);
+	virtual bool __fastcall GetHaveSelection();
+	virtual int __fastcall GetSelectionCount();
+	bool __fastcall GetIsGrouped();
+	Vcl::Controls::TImageList* __fastcall GetHeaderImages();
 	void __fastcall SetHeaderImages(Vcl::Controls::TImageList* const Value);
-	bool __fastcall GetMultiSelect(void);
-	Vcl::Controls::TKeyEvent __fastcall GetOnKeyUp(void);
-	Vcl::Controls::TKeyEvent __fastcall GetOnKeyDown(void);
-	Vcl::Controls::TMouseEvent __fastcall GetOnMouseDown(void);
-	Vcl::Controls::TMouseMoveEvent __fastcall GetOnMouseMove(void);
-	Vcl::Controls::TMouseEvent __fastcall GetOnMouseUp(void);
-	int __fastcall GetPageNumber(void);
-	Vcl::Menus::TPopupMenu* __fastcall GetPopup(void);
-	bool __fastcall GetPrinting(void);
-	int __fastcall GetPrintAreaHeight(void);
-	int __fastcall GetPrintAreaWidth(void);
-	int __fastcall GetPrintPageHeight(void);
-	int __fastcall GetPrintPageWidth(void);
-	int __fastcall GetPrintStartLeft(void);
-	int __fastcall GetPrintStartTop(void);
-	int __fastcall GetPrintStopBottom(void);
-	int __fastcall GetPrintStopRight(void);
-	bool __fastcall GetSmoothScroll(void);
-	int __fastcall GetSortColumn(void);
-	bool __fastcall GetSortDescending(void);
+	bool __fastcall GetMultiSelect();
+	Vcl::Controls::TKeyEvent __fastcall GetOnKeyUp();
+	Vcl::Controls::TKeyEvent __fastcall GetOnKeyDown();
+	Vcl::Controls::TMouseEvent __fastcall GetOnMouseDown();
+	Vcl::Controls::TMouseMoveEvent __fastcall GetOnMouseMove();
+	Vcl::Controls::TMouseEvent __fastcall GetOnMouseUp();
+	int __fastcall GetPageNumber();
+	Vcl::Menus::TPopupMenu* __fastcall GetPopup();
+	bool __fastcall GetPrinting();
+	int __fastcall GetPrintAreaHeight();
+	int __fastcall GetPrintAreaWidth();
+	int __fastcall GetPrintPageHeight();
+	int __fastcall GetPrintPageWidth();
+	int __fastcall GetPrintStartLeft();
+	int __fastcall GetPrintStartTop();
+	int __fastcall GetPrintStopBottom();
+	int __fastcall GetPrintStopRight();
+	bool __fastcall GetSmoothScroll();
+	int __fastcall GetSortColumn();
+	bool __fastcall GetSortDescending();
 	TOvcRVView* __fastcall GetView(int Index);
 	int __fastcall CompareValues(void * Data1, void * Data2, int FieldIndex);
 	void __fastcall InternalBeginUpdate(bool LockIndexer);
 	void __fastcall InternalEndUpdate(bool UnlockIndexer);
 	void __fastcall ListDblClick(System::TObject* Sender);
 	void __fastcall ListKeyPress(System::TObject* Sender, System::WideChar &Key);
-	void __fastcall LoadColumnWidths(void);
-	virtual void __fastcall Loaded(void);
-	bool __fastcall LockUpdate(void);
+	void __fastcall LoadColumnWidths();
+	virtual void __fastcall Loaded();
+	bool __fastcall LockUpdate();
 	void __fastcall MakeGroupVisible(Ovcrvidx::TOvcRvIndexGroup* GRef);
 	MESSAGE void __fastcall WMMakeGroupVisible(Winapi::Messages::TMessage &Msg);
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
@@ -757,26 +757,26 @@ protected:
 	void __fastcall PFResize(System::TObject* Sender);
 	void __fastcall AncestorNotFound(System::Classes::TReader* Reader, const System::UnicodeString ComponentName, System::Classes::TPersistentClass ComponentClass, System::Classes::TComponent* &Component);
 	virtual void __fastcall ReadState(System::Classes::TReader* Reader);
-	void __fastcall RecalcWidth(void);
+	void __fastcall RecalcWidth();
 	void __fastcall BeginPrint(TRVPrintMode PrintMode, bool SelectedOnly);
 	void __fastcall EndPrint(TRVPrintMode PrintMode);
-	int __fastcall CalcHLinesNet(void);
+	int __fastcall CalcHLinesNet();
 	int __fastcall CalcHPages(const bool SelectedOnly, const int LinesPerPage);
 	void __fastcall DoLine(Vcl::Graphics::TCanvas* Canvas, int &CurY, int LineHeight, int VPage, int Line, int PrintStartLeft);
 	void __fastcall DoSectionFooter(Vcl::Graphics::TCanvas* Canvas, int &CurY, int LineHeight, int VPage, int PrintStartLeft);
 	int __fastcall AdvancePage(Vcl::Graphics::TCanvas* Canvas, int &CurY, int LineHeight, int VPage, int RenderPage, bool &Abort, int PrintStartLeft);
 	bool __fastcall RenderPageBlock(Vcl::Graphics::TCanvas* Canvas, const int LineHeight, const int LinesPerPage, const int VPage, const int HPage, TAdvancePageMethod AdvancePage, TGetPageNumberMethod PageNumber, int &LinesLeft, int &CurY, int PrintStartLeft);
-	void __fastcall ResizeColumn(void);
-	void __fastcall InitScrollInfo(void);
+	void __fastcall ResizeColumn();
+	void __fastcall InitScrollInfo();
 	void __fastcall HScrollPrim(int Delta);
-	void __fastcall LoadCustomViews(void);
+	void __fastcall LoadCustomViews();
 	int __fastcall PaintCell(Vcl::Graphics::TCanvas* Canvas, int CurY, void * Data, const System::UnicodeString S, TOvcRvViewField* Cell, int Left, bool BottomLine, bool TopLine, bool PaintIt, bool Clip, bool Last, int ImageIndex, int LineHeight);
 	void __fastcall PaintString(Vcl::Graphics::TCanvas* Canvas, int CurY, int LineHeight, System::UnicodeString S, System::Classes::TAlignment Alignment, int Left, int Right, const System::Uitypes::TFontStyles Attr);
-	void __fastcall SaveDirtyViews(void);
+	void __fastcall SaveDirtyViews();
 	void __fastcall ScaleColumn(int C);
-	void __fastcall ScaleColumnWidthsForPrint(void);
-	void __fastcall SetHScrollPos(void);
-	void __fastcall SetHScrollRange(void);
+	void __fastcall ScaleColumnWidthsForPrint();
+	void __fastcall SetHScrollPos();
+	void __fastcall SetHScrollRange();
 	HIDESBASE MESSAGE void __fastcall WMHScroll(Winapi::Messages::TWMScroll &Msg);
 	void __fastcall SetActiveView(const System::UnicodeString Value);
 	void __fastcall SetActiveViewByTitle(const System::UnicodeString Value);
@@ -800,7 +800,7 @@ protected:
 	void __fastcall SetSortColumn(int Value);
 	void __fastcall SetSortDescending(bool Value);
 	void __fastcall SetWidthChanged(bool Value);
-	void __fastcall StoreColumnWidths(void);
+	void __fastcall StoreColumnWidths();
 	int __fastcall PixelsToTwips(int T);
 	int __fastcall TwipsToPixels(int T);
 	__property bool WidthChanged = {read=FWidthChanged, write=SetWidthChanged, nodefault};
@@ -821,7 +821,7 @@ protected:
 	
 public:
 	__fastcall virtual TOvcCustomReportView(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomReportView(void);
+	__fastcall virtual ~TOvcCustomReportView();
 	virtual void __fastcall AssignStructure(TOvcCustomReportView* Source);
 	__property bool Designing = {read=GetDesigning, write=SetDesigning, nodefault};
 	__property TOvcRVHeader* InternalHeader = {read=FRVHeader};
@@ -839,29 +839,29 @@ public:
 	void __fastcall ReplaceView(const System::UnicodeString Name, TOvcRVView* NewDefinition);
 	void __fastcall SaveViewToStorage(Ovcfiler::TOvcAbstractStore* Storage, TOvcRVView* View);
 	System::UnicodeString __fastcall UniqueViewNameFromTitle(const System::UnicodeString Title);
-	void __fastcall ScaleColumnWidths(void);
+	void __fastcall ScaleColumnWidths();
 	__classmethod void __fastcall StretchDrawImageListImage(Vcl::Graphics::TCanvas* Canvas, Vcl::Controls::TImageList* ImageList, const System::Types::TRect &TargetRect, int ImageIndex, bool PreserveAspect);
-	void __fastcall BeginUpdate(void);
-	void __fastcall CenterCurrentLine(void);
+	void __fastcall BeginUpdate();
+	void __fastcall CenterCurrentLine();
 	TOvcRvField* __fastcall ColumnFromOffset(int XOffset);
-	int __fastcall DataCount(void);
+	int __fastcall DataCount();
 	bool __fastcall EditNewView(const System::UnicodeString Title);
-	bool __fastcall EditCurrentView(void);
-	bool __fastcall EditCopyOfCurrentView(void);
-	bool __fastcall EditCalculatedFields(void);
-	void __fastcall EndUpdate(void);
+	bool __fastcall EditCurrentView();
+	bool __fastcall EditCopyOfCurrentView();
+	bool __fastcall EditCalculatedFields();
+	void __fastcall EndUpdate();
 	virtual void __fastcall Enumerate(void * UserData);
 	virtual void __fastcall EnumerateSelected(void * UserData);
 	virtual void __fastcall EnumerateEx(bool Backwards, bool SelectedOnly, void * StartAfter, void * UserData);
 	__property TOvcRvFields* Fields = {read=GetFields, write=SetFields};
-	DYNAMIC bool __fastcall Focused(void);
+	DYNAMIC bool __fastcall Focused();
 	void * __fastcall GetGroupElement(Ovcrvidx::TOvcRvIndexGroup* G);
 	void __fastcall GotoNearest(void * DataRef);
 	void * __fastcall ItemAtPos(const System::Types::TPoint &Pos);
 	void __fastcall Navigate(TRvCurrentPosition NewPosition);
 	void __fastcall Print(TRVPrintMode PrintMode, bool SelectedOnly);
 	void __fastcall PrintPreview(TRVPrintMode PrintMode, bool SelectedOnly);
-	void __fastcall RebuildIndexes(void);
+	void __fastcall RebuildIndexes();
 	void __fastcall RegisterChangeNotification(TRVNotifyEvent ClientMethod);
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	void __fastcall UnRegisterChangeNotification(TRVNotifyEvent ClientMethod);
@@ -883,7 +883,7 @@ public:
 	__property bool HaveSelection = {read=GetHaveSelection, nodefault};
 	__property Vcl::Controls::TImageList* HeaderImages = {read=GetHeaderImages, write=SetHeaderImages};
 	__property bool HideSelection = {read=FHideSelection, write=SetHideSelection, default=0};
-	bool __fastcall IsEmpty(void);
+	bool __fastcall IsEmpty();
 	__property bool IsGrouped = {read=GetIsGrouped, nodefault};
 	__property bool KeySearch = {read=FKeySearch, write=FKeySearch, default=0};
 	__property int KeyTimeout = {read=FKeyTimeout, write=FKeyTimeout, default=1000};
@@ -931,7 +931,7 @@ public:
 	void __fastcall AddData(const void * Data);
 	void __fastcall ChangeData(const void * Data);
 	void __fastcall RemoveData(const void * Data);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	
 __published:
 	__property Anchors = {default=3};
@@ -1006,7 +1006,7 @@ __published:
 	__property OnViewSelect;
 public:
 	/* TOvcCustomReportView.Create */ inline __fastcall virtual TOvcReportView(System::Classes::TComponent* AOwner) : TOvcCustomReportView(AOwner) { }
-	/* TOvcCustomReportView.Destroy */ inline __fastcall virtual ~TOvcReportView(void) { }
+	/* TOvcCustomReportView.Destroy */ inline __fastcall virtual ~TOvcReportView() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcReportView(HWND ParentWindow) : TOvcCustomReportView(ParentWindow) { }

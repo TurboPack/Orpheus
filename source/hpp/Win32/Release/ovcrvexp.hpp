@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcrvexp.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcrvexp.pas' rev: 33.00 (Windows)
 
 #ifndef OvcrvexpHPP
 #define OvcrvexpHPP
@@ -48,7 +48,7 @@ public:
 	/* Exception.CreateResHelp */ inline __fastcall EOvcRvExp(System::PResStringRec ResStringRec, int AHelpContext)/* overload */ : System::Sysutils::Exception(ResStringRec, AHelpContext) { }
 	/* Exception.CreateResFmtHelp */ inline __fastcall EOvcRvExp(System::PResStringRec ResStringRec, const System::TVarRec *Args, const int Args_High, int AHelpContext)/* overload */ : System::Sysutils::Exception(ResStringRec, Args, Args_High, AHelpContext) { }
 	/* Exception.CreateResFmtHelp */ inline __fastcall EOvcRvExp(NativeUInt Ident, const System::TVarRec *Args, const int Args_High, int AHelpContext)/* overload */ : System::Sysutils::Exception(Ident, Args, Args_High, AHelpContext) { }
-	/* Exception.Destroy */ inline __fastcall virtual ~EOvcRvExp(void) { }
+	/* Exception.Destroy */ inline __fastcall virtual ~EOvcRvExp() { }
 	
 };
 
@@ -63,14 +63,14 @@ private:
 	Ovccoco::TCommentList* fLastCommentList;
 	void __fastcall CheckLiteral(int &Sym);
 	bool __fastcall Equal(System::UnicodeString s);
-	bool __fastcall Comment(void);
+	bool __fastcall Comment();
 	
 protected:
-	virtual void __fastcall NextCh(void);
+	virtual void __fastcall NextCh();
 	
 public:
-	__fastcall TOvcRvExpScanner(void);
-	__fastcall virtual ~TOvcRvExpScanner(void);
+	__fastcall TOvcRvExpScanner();
+	__fastcall virtual ~TOvcRvExpScanner();
 	virtual void __fastcall Get(int &sym);
 	__property CurrentSymbol;
 	__property NextSymbol;
@@ -88,15 +88,15 @@ class PASCALIMPLEMENTATION TOvcRvExp : public Ovccoco::TCocoRGrammar
 private:
 	System::StaticArray<System::StaticArray<Ovccoco::TBitSet, 4>, 7> symSet;
 	Ovccoco::TCommentEvent fInternalGrammarComment;
-	int __fastcall GetMajorVersion(void);
-	int __fastcall GetMinorVersion(void);
-	int __fastcall GetRelease(void);
-	int __fastcall GetBuild(void);
-	System::TDateTime __fastcall GetBuildDate(void);
-	System::UnicodeString __fastcall GetVersion(void);
+	int __fastcall GetMajorVersion();
+	int __fastcall GetMinorVersion();
+	int __fastcall GetRelease();
+	int __fastcall GetBuild();
+	System::TDateTime __fastcall GetBuildDate();
+	System::UnicodeString __fastcall GetVersion();
 	void __fastcall SetVersion(const System::UnicodeString Value);
 	bool __fastcall _In(SymbolSet &s, int x);
-	void __fastcall InitSymSet(void);
+	void __fastcall InitSymSet();
 	void __fastcall _BooleanLiteral(Ovcrvexpdef::TOvcRvExpNode* Parent, Ovcrvexpdef::TOvcRvExpBooleanLiteral* &BooleanLiteral);
 	void __fastcall _TimestampLiteral(Ovcrvexpdef::TOvcRvExpNode* Parent, Ovcrvexpdef::TOvcRvExpTimestampLiteral* &TimestampLiteral);
 	void __fastcall _TimeLiteral(Ovcrvexpdef::TOvcRvExpNode* Parent, Ovcrvexpdef::TOvcRvExpTimeLiteral* &TimeLiteral);
@@ -124,22 +124,22 @@ private:
 	void __fastcall _SimpleExpression(Ovcrvexpdef::TOvcRvExpNode* Parent, Ovcrvexpdef::TOvcRvExpSimpleExpression* &SimpleExpression);
 	void __fastcall _Aggregate(Ovcrvexpdef::TOvcRvExpNode* Parent, Ovcrvexpdef::TOvcRvExpAggregate* &Aggregate);
 	void __fastcall _CondExp(Ovcrvexpdef::TOvcRvExpNode* Parent, Ovcrvexpdef::TOvcRvExpression* &CondExp);
-	void __fastcall _OvcRvExp(void);
+	void __fastcall _OvcRvExp();
 	Ovcrvexpdef::TOvcRvExpression* FRootNode;
-	void __fastcall Init(void);
-	void __fastcall Final(void);
+	void __fastcall Init();
+	void __fastcall Final();
 	
 protected:
-	virtual void __fastcall Get(void);
+	virtual void __fastcall Get();
 	__property Ovccoco::TCommentEvent InternalGrammarComment = {read=fInternalGrammarComment, write=fInternalGrammarComment};
 	
 public:
 	__fastcall virtual TOvcRvExp(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcRvExp(void);
+	__fastcall virtual ~TOvcRvExp();
 	virtual System::UnicodeString __fastcall ErrorStr(const int ErrorCode, const System::UnicodeString Data);
-	void __fastcall Execute(void);
-	TOvcRvExpScanner* __fastcall GetScanner(void);
-	void __fastcall Parse(void);
+	void __fastcall Execute();
+	TOvcRvExpScanner* __fastcall GetScanner();
+	void __fastcall Parse();
 	__property ErrorList;
 	__property ListStream;
 	__property SourceStream;

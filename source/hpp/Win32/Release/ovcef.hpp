@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcef.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcef.pas' rev: 33.00 (Windows)
 
 #ifndef OvcefHPP
 #define OvcefHPP
@@ -69,8 +69,8 @@ protected:
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	__fastcall virtual TOvcEfColors(void);
-	__fastcall virtual ~TOvcEfColors(void);
+	__fastcall virtual TOvcEfColors();
+	__fastcall virtual ~TOvcEfColors();
 	
 __published:
 	__property Ovccolor::TOvcColors* Disabled = {read=FDisabled, write=FDisabled};
@@ -126,31 +126,31 @@ protected:
 	int efSelEnd;
 	int efTopMargin;
 	Ovcdata::TsefOptionSet sefOptions;
-	bool __fastcall GetAsBoolean(void);
-	int __fastcall GetAsCents(void);
-	System::Extended __fastcall GetAsExtended(void);
-	double __fastcall GetAsFloat(void);
-	int __fastcall GetAsInteger(void);
-	System::TDateTime __fastcall GetAsDateTime(void);
-	int __fastcall GetAsStDate(void);
-	int __fastcall GetAsStTime(void);
-	System::UnicodeString __fastcall GetAsString(void);
-	System::Variant __fastcall GetAsVariant(void);
-	int __fastcall GetCurrentPos(void);
-	System::Word __fastcall GetDataSize(void);
-	System::UnicodeString __fastcall GetDisplayString(void);
-	System::UnicodeString __fastcall GetEditString(void);
-	int __fastcall GetEpoch(void);
-	bool __fastcall GetEverModified(void);
-	Ovccaret::TOvcCaret* __fastcall GetInsCaretType(void);
-	bool __fastcall GetInsertMode(void);
-	bool __fastcall GetModified(void);
-	Ovccaret::TOvcCaret* __fastcall GetOvrCaretType(void);
-	System::UnicodeString __fastcall GetRangeHiStr(void);
-	System::UnicodeString __fastcall GetRangeLoStr(void);
-	int __fastcall GetSelLength(void);
-	int __fastcall GetSelStart(void);
-	System::UnicodeString __fastcall GetSelText(void);
+	bool __fastcall GetAsBoolean();
+	int __fastcall GetAsCents();
+	System::Extended __fastcall GetAsExtended();
+	double __fastcall GetAsFloat();
+	int __fastcall GetAsInteger();
+	System::TDateTime __fastcall GetAsDateTime();
+	int __fastcall GetAsStDate();
+	int __fastcall GetAsStTime();
+	System::UnicodeString __fastcall GetAsString();
+	System::Variant __fastcall GetAsVariant();
+	int __fastcall GetCurrentPos();
+	System::Word __fastcall GetDataSize();
+	System::UnicodeString __fastcall GetDisplayString();
+	System::UnicodeString __fastcall GetEditString();
+	int __fastcall GetEpoch();
+	bool __fastcall GetEverModified();
+	Ovccaret::TOvcCaret* __fastcall GetInsCaretType();
+	bool __fastcall GetInsertMode();
+	bool __fastcall GetModified();
+	Ovccaret::TOvcCaret* __fastcall GetOvrCaretType();
+	System::UnicodeString __fastcall GetRangeHiStr();
+	System::UnicodeString __fastcall GetRangeLoStr();
+	int __fastcall GetSelLength();
+	int __fastcall GetSelStart();
+	System::UnicodeString __fastcall GetSelText();
 	void __fastcall SetAsBoolean(bool Value);
 	void __fastcall SetAsCents(int Value);
 	void __fastcall SetAsDateTime(System::TDateTime Value);
@@ -185,14 +185,14 @@ protected:
 	void __fastcall SetZeroDisplay(Ovcdata::TZeroDisplay Value);
 	void __fastcall SetZeroDisplayValue(double Value);
 	void __fastcall efBorderChanged(System::TObject* ABorder);
-	void __fastcall efCalcTopMargin(void);
+	void __fastcall efCalcTopMargin();
 	void __fastcall efColorChanged(System::TObject* AColor);
 	System::Word __fastcall efGetTextExtent(System::WideChar * S, int Len);
-	void __fastcall efInitializeDataSize(void);
-	System::Word __fastcall GetDefStrType(void);
+	void __fastcall efInitializeDataSize();
+	System::Word __fastcall GetDefStrType();
 	bool __fastcall efIsSibling(HWND HW);
 	void __fastcall efMoveFocus(Vcl::Controls::TWinControl* C);
-	void __fastcall efPaintBorders(void);
+	void __fastcall efPaintBorders();
 	void __fastcall efPerformEdit(Winapi::Messages::TMessage &Msg, System::Word Cmd);
 	void __fastcall efPerformPreEditNotify(Vcl::Controls::TWinControl* C);
 	void __fastcall efPerformPostEditNotify(Vcl::Controls::TWinControl* C);
@@ -205,7 +205,7 @@ protected:
 	HIDESBASE MESSAGE void __fastcall CMDialogChar(Winapi::Messages::TWMKey &Msg);
 	HIDESBASE MESSAGE void __fastcall CMEnabledChanged(Winapi::Messages::TMessage &Msg);
 	HIDESBASE MESSAGE void __fastcall CMFontChanged(Winapi::Messages::TMessage &Msg);
-	void __fastcall ImeEnter(void);
+	void __fastcall ImeEnter();
 	MESSAGE void __fastcall WMImeNotify(Winapi::Messages::TMessage &Message);
 	MESSAGE void __fastcall OMGetDataSize(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMReportError(Ovcdata::TOMReportError &Msg);
@@ -235,10 +235,10 @@ protected:
 	MESSAGE void __fastcall EMSetModify(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall EMSetSel(Winapi::Messages::TMessage &Msg);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
-	virtual void __fastcall Paint(void);
-	DYNAMIC void __fastcall DoOnChange(void);
+	virtual void __fastcall Paint();
+	DYNAMIC void __fastcall DoOnChange();
 	DYNAMIC void __fastcall DoOnError(System::Word ErrorCode, const System::UnicodeString ErrorMsg);
 	DYNAMIC void __fastcall DoOnUserCommand(System::Word Command);
 	DYNAMIC void __fastcall DoOnUserValidation(System::Word &ErrorCode);
@@ -248,32 +248,32 @@ protected:
 	DYNAMIC void __fastcall DoPasteClick(System::TObject* Sender);
 	DYNAMIC void __fastcall DoDeleteClick(System::TObject* Sender);
 	DYNAMIC void __fastcall DoSelectAllClick(System::TObject* Sender);
-	DYNAMIC void __fastcall efAdjustSize(void);
+	DYNAMIC void __fastcall efAdjustSize();
 	virtual bool __fastcall efCanClose(bool DoValidation);
-	virtual void __fastcall efCaretToEnd(void);
-	virtual void __fastcall efCaretToStart(void);
+	virtual void __fastcall efCaretToEnd();
+	virtual void __fastcall efCaretToStart();
 	DYNAMIC void __fastcall efChangeMask(System::WideChar * Mask);
 	bool __fastcall efCharOK(System::WideChar PicChar, System::WideChar &Ch, System::WideChar PrevCh, bool Fix);
-	void __fastcall efConditionalBeep(void);
-	void __fastcall efCopyPrim(void);
+	void __fastcall efConditionalBeep();
+	void __fastcall efCopyPrim();
 	bool __fastcall efBinStr2Long(System::WideChar * St, NativeInt &L);
 	System::Word __fastcall efCalcDataSize(System::WideChar * St, System::Word MaxLen);
 	virtual void __fastcall efEdit(Winapi::Messages::TMessage &Msg, System::Word Cmd) = 0 ;
-	virtual System::Word __fastcall efEditBegin(void);
-	virtual bool __fastcall efFieldIsEmpty(void);
-	void __fastcall efFieldModified(void);
+	virtual System::Word __fastcall efEditBegin();
+	virtual bool __fastcall efFieldIsEmpty();
+	void __fastcall efFieldModified();
 	void __fastcall efFindCtrlChars(System::WideChar * P, int &ChCnt, int &CtCnt);
 	void __fastcall efFixCase(System::WideChar PicChar, System::WideChar &Ch, System::WideChar PrevCh);
 	virtual System::WideChar * __fastcall efGetDisplayString(System::WideChar * Dest, System::Word Size);
 	int __fastcall efGetMousePos(int MPos);
 	DYNAMIC void __fastcall efGetSampleDisplayData(System::WideChar * T);
 	DYNAMIC void __fastcall efIncDecValue(bool Wrap, double Delta) = 0 ;
-	bool __fastcall efIsNumericType(void);
-	virtual bool __fastcall efIsReadOnly(void);
+	bool __fastcall efIsNumericType();
+	virtual bool __fastcall efIsReadOnly();
 	void __fastcall efLong2Str(System::WideChar * P, int L);
 	void __fastcall efMapControlChars(System::WideChar * Dest, System::WideChar * Src);
-	DYNAMIC void __fastcall efMoveFocusToNextField(void);
-	DYNAMIC void __fastcall efMoveFocusToPrevField(void);
+	DYNAMIC void __fastcall efMoveFocusToNextField();
+	DYNAMIC void __fastcall efMoveFocusToPrevField();
 	System::WideChar __fastcall efNthMaskChar(System::Word N);
 	bool __fastcall efOctStr2Long(System::WideChar * St, NativeInt &L);
 	void __fastcall efPaintPrim(HDC DC, const System::Types::TRect &ARect, int Offset);
@@ -281,49 +281,49 @@ protected:
 	bool __fastcall efPositionCaret(bool Adjust);
 	System::UnicodeString __fastcall efRangeToStRange(const Ovcdata::TRangeType &Value);
 	bool __fastcall efStRangeToRange(const System::UnicodeString Value, Ovcdata::TRangeType &R);
-	virtual void __fastcall efRemoveBadOptions(void);
-	virtual void __fastcall efResetCaret(void);
-	void __fastcall efSaveEditString(void);
+	virtual void __fastcall efRemoveBadOptions();
+	virtual void __fastcall efResetCaret();
+	void __fastcall efSaveEditString();
 	void __fastcall efSetDefaultRange(System::Byte FT);
-	void __fastcall efSetInitialValue(void);
+	void __fastcall efSetInitialValue();
 	bool __fastcall efStr2Long(System::WideChar * P, NativeInt &L);
 	virtual System::Word __fastcall efTransfer(void * DataPtr, System::Word TransferFlag);
-	virtual System::Word __fastcall efValidateField(void) = 0 ;
+	virtual System::Word __fastcall efValidateField() = 0 ;
 	virtual void __fastcall efSetCaretPos(int Value);
 	virtual void __fastcall SetAsString(const System::UnicodeString Value);
 	virtual void __fastcall SetName(const System::Classes::TComponentName Value);
 	
 public:
 	__fastcall virtual TOvcBaseEntryField(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBaseEntryField(void);
+	__fastcall virtual ~TOvcBaseEntryField();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
-	void __fastcall ClearContents(void);
-	void __fastcall ClearSelection(void);
-	void __fastcall CopyToClipboard(void);
-	DYNAMIC void __fastcall CutToClipboard(void);
+	void __fastcall ClearContents();
+	void __fastcall ClearSelection();
+	void __fastcall CopyToClipboard();
+	DYNAMIC void __fastcall CutToClipboard();
 	void __fastcall DecreaseValue(bool Wrap, double Delta);
-	void __fastcall Deselect(void);
-	bool __fastcall FieldIsEmpty(void);
-	DYNAMIC System::UnicodeString __fastcall GetStrippedEditString(void);
+	void __fastcall Deselect();
+	bool __fastcall FieldIsEmpty();
+	DYNAMIC System::UnicodeString __fastcall GetStrippedEditString();
 	System::Word __fastcall GetValue(void *Data);
 	void __fastcall IncreaseValue(bool Wrap, double Delta);
-	bool __fastcall IsValid(void);
+	bool __fastcall IsValid();
 	DYNAMIC void __fastcall MergeWithPicture(const System::UnicodeString S);
 	void __fastcall MoveCaret(int Delta);
-	void __fastcall MoveCaretToEnd(void);
-	void __fastcall MoveCaretToStart(void);
-	DYNAMIC void __fastcall PasteFromClipboard(void);
+	void __fastcall MoveCaretToEnd();
+	void __fastcall MoveCaretToStart();
+	DYNAMIC void __fastcall PasteFromClipboard();
 	void __fastcall ProcessCommand(System::Word Cmd, System::Word CharCode);
-	void __fastcall ResetCaret(void);
-	DYNAMIC void __fastcall Restore(void);
-	void __fastcall SelectAll(void);
-	void __fastcall SetInitialValue(void);
+	void __fastcall ResetCaret();
+	DYNAMIC void __fastcall Restore();
+	void __fastcall SelectAll();
+	void __fastcall SetInitialValue();
 	void __fastcall SetRangeHi(const Ovcdata::TRangeType &Value);
 	void __fastcall SetRangeLo(const Ovcdata::TRangeType &Value);
 	void __fastcall SetSelection(System::Word Start, System::Word Stop);
 	void __fastcall SetValue(const void *Data);
 	DYNAMIC System::Word __fastcall ValidateContents(bool ReportError);
-	bool __fastcall ValidateSelf(void);
+	bool __fastcall ValidateSelf();
 	__property ParentColor = {default=0};
 	__property bool AsBoolean = {read=GetAsBoolean, write=SetAsBoolean, nodefault};
 	__property int AsCents = {read=GetAsCents, write=SetAsCents, nodefault};
