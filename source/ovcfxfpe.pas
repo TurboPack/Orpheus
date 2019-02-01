@@ -95,13 +95,13 @@ begin
   try
     FontDialog := TFontDialog.Create(Application);
     FF := TOvcFixedFont.Create;
-    FF.Assign(TOvcFixedFont(GetOrdValue));
+    FF.Assign(TOvcFixedFont(GetInt64Value));
     FontDialog.Font := FF.Font;
     FontDialog.Options :=
         FontDialog.Options + [fdForceFontExist, fdFixedPitchOnly];
     if FontDialog.Execute then begin
       FF.Font.Assign(FontDialog.Font);
-      SetOrdValue(NativeInt(FF));
+      SetInt64Value(Int64(FF));
     end;
   finally
     FontDialog.Free;

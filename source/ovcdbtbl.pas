@@ -402,8 +402,9 @@ type
     procedure DoOnIndicatorClick(RowNum, ColNum : Integer); dynamic;
     procedure DoOnLeftColumnChanged; dynamic;
     procedure DoOnLockedCellClick(RowNum, ColNum : Integer); dynamic;
-    procedure DoOnMouseWheel(Shift : TShiftState;
-                             Delta, XPos, YPos : SmallInt); override;
+    {DM - START CHANGE}
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+    {DM - END CHANGE}
     procedure DoOnPaintUnusedArea; virtual;
     procedure DoOnUnusedAreaClick(RowNum, ColNum : Integer); dynamic;
     procedure DoOnUserCommand(Cmd : Word); dynamic;
@@ -1098,8 +1099,8 @@ procedure TOvcCustomDbTable.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
   with Params do
-    Style := Integer(Style) or OvcData.ScrollBarStyles[FScrollBars]
-                   or OvcData.BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or DWORD(OvcData.ScrollBarStyles[FScrollBars])
+                   or DWORD(OvcData.BorderStyles[FBorderStyle]);
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
     Params.ExStyle := Params.ExStyle or WS_EX_CLIENTEDGE;
@@ -1235,10 +1236,10 @@ begin
       tbSetFocus(tbActiveCell.EditHandle);
 
       if not (tbActiveCell is TOvcTCComboBox) then
-        PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, Integer(Msg.Pos))
+        PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y))
       else if (tbActiveCell is TOvcTCComboBox) then begin
         if TOvcTCComboBox(tbActiveCell).Style <> csDropDownList then
-          PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, Integer(Msg.Pos));
+          PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
       end;
 
     end;
@@ -1343,15 +1344,18 @@ begin
     FOnLockedCellClick(Self, RowNum, ColNum);
 end;
 
-procedure TOvcCustomDbTable.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcCustomDbTable.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if result then Exit;
 
-  if Delta < 0 then
+  if WheelDelta < 0 then
     MoveActiveCell(ccDown)
   else
     MoveActiveCell(ccUp);
 end;
+{DM - END CHANGE}
 
 procedure TOvcCustomDbTable.DoOnPaintUnusedArea;
 begin
@@ -1933,7 +1937,7 @@ begin
     ValidateRect(Handle, @CR);
 
     {validate area occupied by combobox list}
-    SendMessage(tbActiveCell.EditHandle, CB_GETDROPPEDCONTROLRECT, 0, NativeInt(@CR));
+    SendMessage(tbActiveCell.EditHandle, CB_GETDROPPEDCONTROLRECT, 0, lParam(@CR));
     CR.TopLeft := ScreenToClient(CR.TopLeft);
     CR.BottomRight := ScreenToClient(CR.BottomRight);
     ValidateRect(Handle, @CR);
@@ -4249,7 +4253,7 @@ begin
 
         ftWideString : PString(Data)^ := AField.Text;
         ftSmallInt : PSmallInt(Data)^ := AField.AsInteger; //I := AField.AsInteger;
-        ftInteger  : PLongInt(Data)^ := AField.AsInteger; // L := AField.AsInteger;
+        ftInteger  : PInteger(Data)^ := AField.AsInteger; // L := AField.AsInteger;
         ftWord     : PWord(Data)^ := AField.AsInteger; // W := AField.AsInteger;
         ftBoolean  : PBoolean(Data)^ := AField.AsBoolean; // B := AField.AsBoolean;
         ftFloat    : PExtended(Data)^ := AField.AsFloat; // E := AField.AsFloat;
@@ -5074,7 +5078,7 @@ procedure TOvcCustomDbTable.tbSetFieldValue(AField : TField;
           ACell : TOvcBaseTableCell; Data : Pointer; Size : Integer);
   {-set the db field value}
 var
-  S   : string[255];          //SZ FIXME
+  S   : array [0..255] of Char;
   I   : SmallInt absolute S;
   L   : Integer absolute S;
   W   : Word absolute S;
@@ -5085,6 +5089,8 @@ var
   WT  : TStTime absolute S;
   H   : TDateTime;
   Idx : Integer;
+  sStrData: string;
+  bStrData: boolean;
 begin
   if (FDataLink.DataSet = nil) then
     Exit;
@@ -5092,6 +5098,9 @@ begin
   {exit if the datasource isn't in edit or insert mode}
   if not (FDataLink.DataSet.State in [dsEdit, dsInsert]) then
     Exit;
+
+  sStrData := '';
+  bStrData := false;
 
   if Assigned(AField) then begin
     if ACell.SpecialCellSupported(AField) then begin
@@ -5135,20 +5144,30 @@ begin
       Size := SizeOf(S);
     //If the field is a StringField then the data pointer is a PString.
     if AField.InheritsFrom(TStringField) then
-      S := ShortString(PString(Data)^)
+    begin
+      sStrData := PString(Data)^;
+      bStrData := true;
+    end
     else
       Move(Data^, S, Size);
 
     if (ACell is TOvcTCString) then
-      AField.Text := string(S)
+    begin
+      if bStrData then
+        AField.Text := sStrData
+      else
+        AField.Text := string(S);
+    end
     else if (ACell is TOvcTCSimpleField) or
             (ACell is TOvcTCPictureField) or
             (ACell is TOvcTCNumericField) then begin
       case AField.DataType of
-        ftString   : AField.Text := string(S);
+        ftString, ftWideString:
+          if bStrData then
+            AField.Text := sStrData
+          else
+            AField.Text := string(S);
 
-        {WideString Support}
-        ftWideString : AField.Text := string(S);
         ftSmallInt : AField.AsInteger := I;
         ftInteger  : AField.AsInteger := L;
         ftWord     : AField.AsInteger := W;
@@ -5334,7 +5353,7 @@ begin
           R.BottomRight := ScreenToClient(R.BottomRight);
           ValidateRect(Handle, @R);
 
-          SendMessage(Msg.lParam, CB_GETDROPPEDCONTROLRECT, 0, NativeInt(@R));
+          SendMessage(Msg.lParam, CB_GETDROPPEDCONTROLRECT, 0, lParam(@R));
           {validate area occupied by combobox list}
           R.TopLeft := ScreenToClient(R.TopLeft);
           R.BottomRight := ScreenToClient(R.BottomRight);
@@ -5475,9 +5494,9 @@ begin
       (
         (Msg.CharCode = VK_SPACE) or
         (
-         (VK_0 <= Msg.CharCode) and (Msg.CharCode <= VK_DIVIDE)
+         (VK_0 <= Msg.CharCode) and (Msg.CharCode <= VK_DIVIDE) and (Msg.CharCode <> VK_LWIN) and (Msg.CharCode <> VK_RWIN) and (Msg.CharCode <> VK_APPS) and (Msg.CharCode <> VK_SLEEP)
         ) or
-        (Msg.CharCode >= $BA)
+        (Msg.CharCode >= VK_OEM_1)
       )
     ) then begin
         StartEditing;
@@ -5545,7 +5564,7 @@ begin
   if Region = (otrInMain) then begin
     SetActiveCell(Row, Col);
     PostMessage(Handle, ctim_StartEdit, 0, 0);
-    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
   end;
 
   inherited;
@@ -5641,10 +5660,10 @@ begin
           if not (dtoAlwaysEditing in Options) and (ActiveRow = Row) and
              (ActiveColumn = Col) and WasFocused then begin
             PostMessage(Handle, ctim_StartEdit, 0, 0);
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
           end else if (dtoAlwaysEditing in Options) then begin
             PostMessage(Handle, ctim_StartEdit, 0, 0);
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
           end;
 
           SetActiveCell(Row, Col);

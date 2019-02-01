@@ -1139,7 +1139,7 @@ end;
 
 procedure TO32CustomLookOutBar.CMDesignHitTest(var Msg : TCMDesignHitTest);
 begin
-  Msg.Result := Integer(lobOverButton);
+  Msg.Result := lResult(lobOverButton);
 end;
 {=====}
 
@@ -1163,7 +1163,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := Integer(Style) or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1450,7 +1450,7 @@ function GetLargeIconDisplayName(Canvas : TCanvas;
 var
   TestRect : TRect;
   SH, DH : Integer;
-  Buf : array[0..255] of Char;
+  //Buf : array[0..255] of Char;
   I : Integer;
   TempName : string;
   Temp2 : string;
@@ -1463,8 +1463,7 @@ begin
     Right := 1;
     Bottom := 1;
   end;
-  SH := DrawText(Canvas.Handle, 'W W', 3, TestRect,
-    DT_SINGLELINE or DT_CALCRECT);
+  SH := DrawText(Canvas.Handle, 'W W', 3, TestRect, DT_SINGLELINE or DT_CALCRECT);
 
   {get double line height}
   with TestRect do begin
@@ -1473,14 +1472,12 @@ begin
     Right := 1;
     Bottom := 1;
   end;
-  DH := DrawText(Canvas.Handle, 'W W', 3, TestRect,
-    DT_WORDBREAK or DT_CALCRECT);
+  DH := DrawText(Canvas.Handle, 'W W', 3, TestRect, DT_WORDBREAK or DT_CALCRECT);
 
   {see if the text can fit within the existing rect without growing}
   TestRect := Rect;
-  StrPLCopy(Buf, TempName, 255);
-  DrawText(Canvas.Handle, Buf, Length(TempName), TestRect,
-            DT_WORDBREAK or DT_CALCRECT);
+  //StrPLCopy(Buf, TempName, 255);
+  DrawText(Canvas.Handle, PChar(TempName), Length(TempName), TestRect, DT_WORDBREAK or DT_CALCRECT);
   I := Pos(' ', TempName);
   if (RectHeight(TestRect) = SH) or (I < 2) then
     Result := GetDisplayString(Canvas, TempName, 1, RectWidth(Rect))
@@ -1490,47 +1487,38 @@ begin
     Temp2 := GetDisplayString(Canvas, Copy(TempName, 1, I-1), 1,
                               RectWidth(Rect));
     if CompareStr(Temp2, Copy(TempName, 1, I-1)) <> 0 then begin
-      Result := GetDisplayString(Canvas, Copy(TempName, 1, I-1), 1,
-                                 RectWidth(Rect)) +
+      Result := GetDisplayString(Canvas, Copy(TempName, 1, I-1), 1, RectWidth(Rect)) +
                 ' ' +
-                GetDisplayString(Canvas, Copy(TempName, I+1,
-                                 Length(TempName) - I), 1, RectWidth(Rect));
+                GetDisplayString(Canvas, Copy(TempName, I+1, Length(TempName) - I), 1, RectWidth(Rect));
     end else begin
       {2 or more lines, and the first line isn't getting an ellipsis}
-      if (RectHeight(TestRect) = DH) and
-         (RectWidth(TestRect) <= RectWidth(Rect)) then
+      if (RectHeight(TestRect) = DH) and (RectWidth(TestRect) <= RectWidth(Rect)) then
         {it will fit}
         Result := TempName
       else begin
         {it won't fit, but the first line wraps OK - 2nd line needs an ellipsis}
         TestRect.Right := Rect.Right + 1;
-        while (RectWidth(TestRect) > RectWidth(Rect)) or
-              (RectHeight(TestRect) > DH) do begin
+        while (RectWidth(TestRect) > RectWidth(Rect)) or (RectHeight(TestRect) > DH) do
+        begin
           if Length(TempName) > 1 then begin
             TestRect := Rect;
             Delete(TempName, Length(TempName), 1);
             TempName := Trim(TempName);
-            StrPLCopy(Buf, TempName + '...', 255);
-            DrawText(Canvas.Handle, Buf, Length(TempName) + 3, TestRect,
-              DT_WORDBREAK or DT_CALCRECT);
-            Result := TempName + '...';
+            Result := TempName + EllipsisStr;
+            DrawText(Canvas.Handle, PChar(Result), Length(Result), TestRect, DT_WORDBREAK or DT_CALCRECT);
           end else begin
-            Result := TempName + '..';
+            Result := TempName + Copy(EllipsisStr, 1, 2);
             TestRect := Rect;
-            StrPLCopy(Buf, Result, 255);
-            DrawText(Canvas.Handle, Buf, Length(Result), TestRect,
-                      DT_WORDBREAK or DT_CALCRECT);
-            if (RectWidth(TestRect) <= RectWidth(Rect)) and
-              (RectHeight(TestRect) > DH) then
-                Break;
-            Result := TempName + '.';
+            //StrPLCopy(Buf, Result, 255);
+            DrawText(Canvas.Handle, PChar(Result), Length(Result), TestRect, DT_WORDBREAK or DT_CALCRECT);
+            if (RectWidth(TestRect) <= RectWidth(Rect)) and (RectHeight(TestRect) > DH) then
+              Break;
+            Result := TempName + Copy(EllipsisStr, 1, 1);
             TestRect := Rect;
-            StrPLCopy(Buf, Result, 255);
-            DrawText(Canvas.Handle, Buf, Length(Result), TestRect,
-                      DT_WORDBREAK or DT_CALCRECT);
-            if (RectWidth(TestRect) <= RectWidth(Rect)) and
-              (RectHeight(TestRect) > DH) then
-                Break;
+            //StrPLCopy(Buf, Result, 255);
+            DrawText(Canvas.Handle, PChar(result), Length(Result), TestRect, DT_WORDBREAK or DT_CALCRECT);
+            if (RectWidth(TestRect) <= RectWidth(Rect)) and (RectHeight(TestRect) > DH) then
+              Break;
             Result := TempName;
           end;
         end;

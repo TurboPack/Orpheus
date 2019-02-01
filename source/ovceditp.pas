@@ -519,7 +519,7 @@ begin
   Dec(LineCount, LC-PPN.LineCount);
   FLine := Pred(LastN)+FL;
   if PPN.LineCount <> LC then
-    LLine := MaxLongInt
+    LLine := MaxInt
   else
     LLine := Pred(LastN)+LL;
   FixMarkersDeletedText(Editor, P, Pos, Count);
@@ -756,8 +756,8 @@ begin
   ParaCount := 0;
   LineCount := 1;
   CharCount := 0;
-  MaxParas := MaxLongInt;
-  MaxBytes := MaxLongInt;
+  MaxParas := MaxInt;
+  MaxBytes := MaxInt;
   MaxParaLen := High(SmallInt);
   WordWrap := Wrap;
   WrapColumn := 80;
@@ -860,7 +860,7 @@ begin
       FLine := FindLineByPara(OP, OPos, I);
       if FLine > 1 then
         Dec(FLine);
-      LLine := MaxLongInt;
+      LLine := MaxInt;
     end;
   finally
     FreeMem(Buffer);
@@ -945,7 +945,7 @@ begin
     Inc(LineCount, PPN.LineCount-LC);
     FLine := Pred(LastN)+FL;
     if PPN.LineCount <> LC then
-      LLine := MaxLongInt
+      LLine := MaxInt
     else
       LLine := Pred(LastN)+LL;
     FixMarkersInsertedText(Editor, P, Pos, SLen);
@@ -1229,8 +1229,8 @@ begin
   if (Paras <> 0) or (P > MaxParas) then begin
     if (P > MaxParas) or (ParaLength(ParaCount) <> 0) then
       M := MaxParas
-    else if MaxParas = MaxLongInt then
-      M := MaxLongInt
+    else if MaxParas = MaxInt then
+      M := MaxInt
     else
       M := MaxParas+1;
     if (ParaCount+Paras > M) then begin
@@ -1457,7 +1457,7 @@ begin
 
     FLine := Pred(LastN)+FL;
     if PPN.LineCount <> LC then
-      LLine := MaxLongInt
+      LLine := MaxInt
     else
       LLine := Pred(LastN)+LL;
 
@@ -1871,7 +1871,7 @@ function TOvcUndoBuffer.NthRec(N : Integer) : PUndoRec; register;
 begin
   result := PUndoRec(self.Buffer);
   while N>1 do begin
-    result := PUndoRec(Cardinal(result) + UndoRecSize + result^.DSize*SizeOf(Char));
+    result := PUndoRec(NativeUInt(result) + UndoRecSize + result^.DSize*SizeOf(Char));
     Dec(N);
   end;
 end;
@@ -2012,7 +2012,7 @@ begin
   D := PChar(@Last^.Data);
   case UT of
     utInsert :
-      Result := (Last^.PNum = P) and (Pos = Last^.PPos+Last^.DSize);
+      Result := (Last^.PNum = P) and (Cardinal(Pos) = Cardinal(Last^.PPos)+Last^.DSize);
     utDelete :
       if (Last^.PNum = P) then
         if (Pos = Last^.PPos) then

@@ -123,8 +123,9 @@ type
   end;
 
   {event method types}
-  TMouseWheelEvent = procedure(Sender : TObject; Shift : TShiftState;
-                                Delta, XPos, YPos : Word) of object;
+  {DM - START CHANGE}
+  // removed TMouseWheelEvent
+  {DM - END CHANGE}
 
   TDataErrorEvent =
     procedure(Sender : TObject; ErrorCode : Word; const ErrorMsg : string)
@@ -348,7 +349,9 @@ type
     {property variables}
     FAfterEnter         : TNotifyEvent;
     FAfterExit          : TNotifyEvent;
-    FOnMouseWheel       : TMouseWheelEvent;
+    {DM - START CHANGE}
+    // removed FOnMouseWheel       : TMouseWheelEvent;
+    {DM - END CHANGE}
     FLabelInfo          : TOvcLabelInfo;
     FInternal : Boolean; {flag to suppress name generation
                           on collection items}
@@ -382,17 +385,17 @@ type
     {windows message methods}
     procedure WMKillFocus(var Msg : TWMKillFocus);
       message WM_KILLFOCUS;
-    procedure WMMouseWheel(var Msg : TMessage);
-      message WM_MOUSEWHEEL;
+    {DM - START CHANGE}
+    // removed procedure WMMouseWheel
+    {DM - END CHANGE}
     procedure WMSetFocus(var Msg : TWMSetFocus);
       message WM_SETFOCUS;
 
   protected
     DefaultLabelPosition : TOvcLabelPosition;
-
-    procedure DoOnMouseWheel(Shift : TShiftState;
-                             Delta, XPos, YPos : SmallInt);
-      dynamic;
+    {DM - START CHANGE}
+    // removed procedure DoOnMouseWheel
+    {DM - END CHANGE}
     procedure CreateWnd;
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
@@ -402,8 +405,9 @@ type
       read FAfterEnter write FAfterEnter;
     property AfterExit : TNotifyEvent
       read FAfterExit write FAfterExit;
-    property OnMouseWheel : TMouseWheelEvent
-      read FOnMouseWheel write FOnMouseWheel;
+    {DM - START CHANGE}
+    // removed property OnMouseWheel
+    {DM - END CHANGE}
     property LabelInfo : TOvcLabelInfo
       read FLabelInfo write FLabelInfo;
 
@@ -421,6 +425,8 @@ type
   published
     property About : string
       read GetAbout write SetAbout stored False;
+
+    property Touch;
   end;
   {End - TO32CustomControl}
 
@@ -431,7 +437,9 @@ type
     FAfterEnter         : TNotifyEvent;
     FAfterExit          : TNotifyEvent;
     FCollectionStreamer : TOvcCollectionStreamer;
-    FOnMouseWheel       : TMouseWheelEvent;
+    {DM - START CHANGE}
+    // removed FOnMouseWheel       : TMouseWheelEvent;
+    {DM - END CHANGE}
     FLabelInfo          : TOvcLabelInfo;
     FInternal : Boolean; {flag to suppress name generation
                           on collection items}
@@ -465,8 +473,9 @@ type
     {windows message methods}
     procedure WMKillFocus(var Msg : TWMKillFocus);
       message WM_KILLFOCUS;
-    procedure WMMouseWheel(var Msg : TMessage);
-      message WM_MOUSEWHEEL;
+    {DM - START CHANGE}
+    // removed procedure WMMouseWheel
+    {DM - END CHANGE}
     procedure WMSetFocus(var Msg : TWMSetFocus);
       message WM_SETFOCUS;
 
@@ -477,10 +486,9 @@ type
     {the top left of the control. if dlpBottomLeft, the default location and}
     {POR will be at the bottom left}
     DefaultLabelPosition : TOvcLabelPosition;
-
-    procedure DoOnMouseWheel(Shift : TShiftState;
-                             Delta, XPos, YPos : SmallInt);
-      dynamic;
+    {DM - START CHANGE}
+    // removed function DoOnMouseWheel
+    {DM - END CHANGE}
     procedure CreateWnd;
       override;
     procedure Notification(AComponent : TComponent; Operation : TOperation);
@@ -493,8 +501,9 @@ type
       read FAfterEnter write FAfterEnter;
     property AfterExit : TNotifyEvent
       read FAfterExit write FAfterExit;
-    property OnMouseWheel : TMouseWheelEvent
-      read FOnMouseWheel write FOnMouseWheel;
+    {DM - START CHANGE}
+    // removed property OnMouseWheel
+    {DM - END CHANGE}
     property LabelInfo : TOvcLabelInfo
       read FLabelInfo write FLabelInfo;
 
@@ -954,7 +963,7 @@ begin
   if Assigned(PF) then begin
     for I := 0 to Pred(PF.ComponentCount) do begin
       if PF.Components[I] = FControl then begin
-        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, NativeInt(Self));
+        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, lParam(Self));
         PostMessage(FControl.Handle, OM_RECORDLABELPOSITION, 0, 0);
         Break;
       end;
@@ -1464,7 +1473,7 @@ end;
 procedure TOvcController.DelayNotify(Sender : TObject; NotifyCode : Word);
 begin
   if Assigned(FOnDelayNotify) then
-    PostMessage(Handle, OM_DELAYNOTIFY, NotifyCode, NativeInt(Sender));
+    PostMessage(Handle, OM_DELAYNOTIFY, NotifyCode, lParam(Sender));
 end;
 
 destructor TOvcController.Destroy;
@@ -1508,7 +1517,7 @@ begin
   else
     H := 0;
 
-  PostMessage(Handle, OM_POSTEDIT, H, NativeInt(Sender));
+  PostMessage(Handle, OM_POSTEDIT, H, lParam(Sender));
 end;
 
 procedure TOvcController.DoOnPreEdit(Sender : TObject; LosingControl : TWinControl);
@@ -1520,7 +1529,7 @@ begin
   else
     H := 0;
 
-  PostMessage(Handle, OM_PREEDIT, H, NativeInt(Sender));
+  PostMessage(Handle, OM_PREEDIT, H, lParam(Sender));
 end;
 
 procedure TOvcController.DoOnTimerTrigger(Sender : TObject; Handle : Integer;
@@ -1619,7 +1628,7 @@ var
 
         {ask the controller to give the focus back to this field}
         if ChangeFocus and not ErrorPending then begin
-          PostMessage(Handle, OM_SETFOCUS, 0, NativeInt(EF));
+          PostMessage(Handle, OM_SETFOCUS, 0, lParam(EF));
           ErrorPending := True;
         end;
 
@@ -1675,7 +1684,7 @@ begin
 
         {ask the controller to give the focus back to this field}
         if not ErrorPending then begin
-          PostMessage(Handle, OM_SETFOCUS, 0, NativeInt(EF));
+          PostMessage(Handle, OM_SETFOCUS, 0, lParam(EF));
           ErrorPending := True;
         end;
 
@@ -1774,12 +1783,9 @@ begin
   inherited Destroy;
 end;
 
-procedure TO32CustomControl.DoOnMouseWheel(Shift : TShiftState;
-                                 Delta, XPos, YPos : SmallInt);
-begin
-  if Assigned(FOnMouseWheel) then
-    FOnMouseWheel(Self, Shift, Delta, XPos, YPos);
-end;
+{DM - START CHANGE}
+// removed function TO32CustomControl.DoOnMouseWheel
+{DM - END CHANGE}
 
 function TO32CustomControl.GetAttachedLabel : TOvcAttachedLabel;
 begin
@@ -1941,13 +1947,9 @@ begin
   PostMessage(Handle, OM_AFTEREXIT, 0, 0);
 end;
 
-procedure TO32CustomControl.WMMouseWheel(var Msg : TMessage);
-begin
-  with Msg do
-    DoOnMouseWheel(KeysToShiftState(LOWORD(wParam)) {fwKeys},
-                   HIWORD(wParam) {zDelta},
-                   LOWORD(lParam) {xPos},   HIWORD(lParam) {yPos});
-end;
+{DM - START CHANGE}
+// removed procedure TO32CustomControl.WMMouseWheel
+{DM - END CHANGE}
 
 procedure TO32CustomControl.WMSetFocus(var Msg : TWMSetFocus);
 begin
@@ -1997,12 +1999,9 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcCustomControl.DoOnMouseWheel(Shift : TShiftState;
-                                 Delta, XPos, YPos : SmallInt);
-begin
-  if Assigned(FOnMouseWheel) then
-    FOnMouseWheel(Self, Shift, Delta, XPos, YPos);
-end;
+{DM - START CHANGE}
+// removed function TOvcCustomControl.DoOnMouseWheel
+{DM - END CHANGE}
 
 function TOvcCustomControl.GetAttachedLabel : TOvcAttachedLabel;
 begin
@@ -2164,13 +2163,9 @@ begin
   PostMessage(Handle, OM_AFTEREXIT, 0, 0);
 end;
 
-procedure TOvcCustomControl.WMMouseWheel(var Msg : TMessage);
-begin
-  with Msg do
-    DoOnMouseWheel(KeysToShiftState(LOWORD(wParam)) {fwKeys},
-                   HIWORD(wParam) {zDelta},
-                   LOWORD(lParam) {xPos},   HIWORD(lParam) {yPos});
-end;
+{DM - START CHANGE}
+// removed procedure TOvcCustomControl.WMMouseWheel
+{DM - END CHANGE}
 
 procedure TOvcCustomControl.WMSetFocus(var Msg : TWMSetFocus);
 begin

@@ -460,7 +460,7 @@ begin
       State := [odSelected];
     if (ItemIndex = TopIndex) and Focused then
       State := State + [odFocused];
-    SendMessage(Handle, LB_GETITEMRECT, TopIndex, NativeInt(@Rect));
+    SendMessage(Handle, LB_GETITEMRECT, TopIndex, lParam(@Rect));
     DrawItem(TopIndex, Rect, State);
   end;
 end;
@@ -571,7 +571,7 @@ begin
   I := ItemAtPos(P, True);
   if I > -1 then begin
     FillChar(R, SizeOf(R), #0);
-    SendMessage(Handle, LB_GETITEMRECT, I, NativeInt(@R));
+    SendMessage(Handle, LB_GETITEMRECT, I, lParam(@R));
     if (not BoxClickOnly) or ((Msg.XPos >= R.Left) and
        (Msg.XPos <= R.Left + ItemHeight - BoxMargin div 2)) then
       inherited
@@ -744,7 +744,7 @@ procedure TOvcBasicCheckList.InvalidateItem(Index : Integer);
 var
   R : TRect;
 begin
-  SendMessage(Handle, LB_GETITEMRECT, Index, NativeInt(@R));
+  SendMessage(Handle, LB_GETITEMRECT, Index, lParam(@R));
   InvalidateRect(Handle, @R, True);
 end;
 

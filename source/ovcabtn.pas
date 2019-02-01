@@ -225,7 +225,7 @@ begin
 
     {if we get this message, we must be attached -- return self}
     if Msg = OM_ISATTACHED then
-      Result := NativeInt(Self);
+      Result := lResult(Self);
   end;
 end;
 

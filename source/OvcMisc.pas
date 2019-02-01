@@ -145,6 +145,9 @@ procedure DebugOutput(const S : string);
 function GetArrowWidth(Width, Height : Integer) : Integer; register;
   {-Get arrow width for spinner-buttons}
 
+var
+  EllipsisStr: string = '...';
+
 implementation
 
 uses
@@ -288,7 +291,7 @@ end;
 procedure GetRGB(Clr : TColor; var IR, IG, IB : Byte);
 begin
   if (Clr < 0) then begin
-    Clr := Clr + MaxLongInt + 1;
+    Clr := Clr + MaxInt + 1;
     Clr := GetSysColor(Clr);
   end;
   IR := GetRValue(Clr);
@@ -564,7 +567,7 @@ var
   ShowEllipsis : Boolean;
 begin
   {be sure that the Canvas Font is set before entering this routine}
-  EllipsisWidth := Canvas.TextWidth('...');
+  EllipsisWidth := Canvas.TextWidth(EllipsisStr);
   Len := Length(S);
   Result := S;
   Extent := Canvas.TextWidth(Result);
@@ -581,10 +584,10 @@ begin
     Extent := Canvas.TextWidth(Result);
   end;
   if ShowEllipsis then begin
-    Result := Result + '...';
-    inc(Len, 3);
+    Result := Result + EllipsisStr;
+    iDots := Length(EllipsisStr);
+    inc(Len, iDots);
     Extent := Canvas.TextWidth(Result);
-    iDots := 3;
     while (iDots > 0) and (Extent > MaxWidth) do begin
       Delete(Result, Len, 1);
       Dec(Len);

@@ -46,9 +46,9 @@ uses
   OvcDate, O32SR;
 
 const
-  BorderStyles    : array[TBorderStyle] of Integer =
+  BorderStyles    : array[TBorderStyle] of DWORD =
                     (0, WS_BORDER);
-  ScrollBarStyles : array [UITypes.TScrollStyle] of Integer =
+  ScrollBarStyles : array [UITypes.TScrollStyle] of DWORD =
                     (0, WS_HSCROLL, WS_VSCROLL, WS_HSCROLL or WS_VSCROLL);
 
 {some colors that are not defined by Delphi}
@@ -259,15 +259,15 @@ type
   PRangeType = ^TRangeType;
   TRangeType = packed record
     case Byte of                         {size}
-    00 : (rtChar : Char);             {01/02}
+    00 : (rtChar : Char);                 {01/02}
     01 : (rtByte : Byte);                 {01}
     02 : (rtSht  : ShortInt);             {01}
     03 : (rtInt  : SmallInt);             {02}
     04 : (rtWord : Word);                 {02}
-    05 : (rtLong : NativeInt);            {04}
+    05 : (rtLong : Integer);              {04}
     06 : (rtSgl  : Single);               {04}
     07 : (rtPtr  : Pointer);              {04}
-     08 : (rtReal : Real);                 {06}
+    08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
     10 : (rtComp : Comp);                 {08}
     11 : (rtExt  : Extended);             {10}
@@ -419,22 +419,22 @@ type
     Msg    : Cardinal;
     Error  : Word;
     Unused : Word;
-    lParam : Integer;
-    Result : Integer;
+    lParam : LParam;
+    Result : LRESULT;
   end;
 
   TOMSetFocus = packed record
     Msg    : Cardinal;
-    wParam : Integer;
+    wParam : WParam;
     Control: TWinControl;
-    Result : Integer;
+    Result : LRESULT;
   end;
 
   TOMShowStatus = packed record
     Msg    : Cardinal;
     Column : Integer;
     Line   : Integer;
-    Result : Integer;
+    Result : LRESULT;
   end;
 
 

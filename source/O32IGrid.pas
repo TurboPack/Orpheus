@@ -182,7 +182,9 @@ type
     procedure DropDownList(Value: Boolean);
     function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint): Boolean; override;
-    procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - START CHANGE}
+    // removed procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - END CHANGE}
     function  EditCanModify: Boolean;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyPress(var Key: Char); override;
@@ -220,7 +222,9 @@ type
     procedure DropDownList(Value: Boolean);
     function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint): Boolean; override;
-    procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - START CHANGE}
+    // removed procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - END CHANGE}
     function  EditCanModify: Boolean;
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
     procedure KeyPress(var Key: Char); override;
@@ -586,7 +590,9 @@ type
     function DoMouseWheelUp(Shift: TShiftState; MousePos: TPoint): Boolean; override;
     procedure DoOnExpand(Index: Integer);
     procedure DoOnCollapse(Index: Integer);
-    procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - START CHANGE}
+    // procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - END CHANGE}
     function GetEditText(ACol, ARow: Integer): string; dynamic;
     procedure SetEditText(ACol, ARow: Integer; const Value: string); dynamic;
     function GetEditMask(ACol, ARow: Integer): string; dynamic;
@@ -1080,7 +1086,7 @@ procedure TO32GridEdit.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, wParam(@Result.StartPos), lParam(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -1144,7 +1150,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, wParam(@Selection.StartPos), lParam(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -1184,7 +1190,7 @@ end;
 
 procedure TO32GridEdit.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, lParam($FFFFFFFF));
 end;
 {=====}
 
@@ -1254,7 +1260,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, lParam(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -1330,7 +1336,7 @@ procedure TO32GridCombo.DropDownList(Value: Boolean);
 var
   R: TRect;
 begin
-  SendMessage(Handle, CB_SHOWDROPDOWN, NativeInt(Value), 0);
+  SendMessage(Handle, CB_SHOWDROPDOWN, wParam(Value), 0);
   R := ClientRect;
   InvalidateRect(Handle, @R, True);
 end;
@@ -1417,7 +1423,7 @@ procedure TO32GridCombo.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, wParam(@Result.StartPos), lParam(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -1477,7 +1483,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, wParam(@Selection.StartPos), lParam(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -1519,7 +1525,7 @@ end;
 
 procedure TO32GridCombo.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, lParam($FFFFFFFF));
 end;
 {=====}
 
@@ -1567,7 +1573,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, lParam(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -1634,7 +1640,7 @@ procedure TO32GridColorCombo.DropDownList(Value: Boolean);
 var
   R: TRect;
 begin
-  SendMessage(Handle, CB_SHOWDROPDOWN, NativeInt(Value), 0);
+  SendMessage(Handle, CB_SHOWDROPDOWN, wParam(Value), 0);
   R := ClientRect;
   InvalidateRect(Handle, @R, True);
 end;
@@ -1720,7 +1726,7 @@ procedure TO32GridColorCombo.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, wParam(@Result.StartPos), lParam(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -1780,7 +1786,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, wParam(@Selection.StartPos), lParam(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -1820,23 +1826,14 @@ begin
 end;
 {=====}
 
-procedure TO32GridColorCombo.WMMouseWheel(var Msg : TMessage);
-var
-  Delta: integer;
-begin
-  Delta := TWMMouseWheel(Msg).WheelDelta;
-   if Delta < 0 then begin
-     if (FGrid.ActiveRow < FGrid.RowCount - 1) then
-       FGrid.FocusCell(1, FGrid.ActiveRow + 1, true);
-   end
-   else if (FGrid.ActiveRow > 0) then
-     FGrid.FocusCell(1, FGrid.ActiveRow - 1, true);
-end;
+{DM - START CHANGE}
+// removed procedure TO32GridColorCombo.WMMouseWheel(var Msg : TMessage);
+{DM - END CHANGE}
 {=====}
 
 procedure TO32GridColorCombo.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, lParam($FFFFFFFF));
 end;
 {=====}
 
@@ -1884,7 +1881,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, lParam(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -1956,7 +1953,7 @@ procedure TO32GridFontCombo.DropDownList(Value: Boolean);
 var
   R: TRect;
 begin
-  SendMessage(Handle, CB_SHOWDROPDOWN, NativeInt(Value), 0);
+  SendMessage(Handle, CB_SHOWDROPDOWN, wParam(Value), 0);
   R := ClientRect;
   InvalidateRect(Handle, @R, True);
 end;
@@ -2042,7 +2039,7 @@ procedure TO32GridFontCombo.KeyDown(var Key: Word; Shift: TShiftState);
 
   function Selection: TSelection;
   begin
-    SendMessage(Handle, EM_GETSEL, NativeInt(@Result.StartPos), NativeInt(@Result.EndPos));
+    SendMessage(Handle, EM_GETSEL, wParam(@Result.StartPos), lParam(@Result.EndPos));
   end;
 
   function RightSide: Boolean;
@@ -2102,7 +2099,7 @@ begin
     #9, #27: Key := #0;
     #13:
       begin
-        SendMessage(Handle, EM_GETSEL, NativeInt(@Selection.StartPos), NativeInt(@Selection.EndPos));
+        SendMessage(Handle, EM_GETSEL, wParam(@Selection.StartPos), lParam(@Selection.EndPos));
         if (Selection.StartPos = 0) and (Selection.EndPos = GetTextLen) then
           Deselect else
           SelectAll;
@@ -2142,23 +2139,14 @@ begin
 end;
 {=====}
 
-procedure TO32GridFontCombo.WMMouseWheel(var Msg : TMessage);
-var
-  Delta: integer;
-begin
-  Delta := TWMMouseWheel(Msg).WheelDelta;
-   if Delta < 0 then begin
-     if (FGrid.ActiveRow < FGrid.RowCount - 1) then
-       FGrid.FocusCell(1, FGrid.ActiveRow + 1, true);
-   end
-   else if (FGrid.ActiveRow > 0) then
-     FGrid.FocusCell(1, FGrid.ActiveRow - 1, true);
-end;
+{DM - START CHANGE}
+// removed procedure TO32GridFontCombo.WMMouseWheel(var Msg : TMessage);
+{DM - END CHANGE}
 {=====}
 
 procedure TO32GridFontCombo.Deselect;
 begin
-  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, NativeInt($FFFFFFFF));
+  SendMessage(Handle, EM_SETSEL, $7FFFFFFF, lParam($FFFFFFFF));
 end;
 {=====}
 
@@ -2209,7 +2197,7 @@ var
   R: TRect;
 begin
   R := Rect(2, 2, Width - 2, Height);
-  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));
+  SendMessage(Handle, EM_SETRECTNP, 0, lParam(@R));
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
 end;
 {=====}
@@ -6046,7 +6034,7 @@ end;
 
 procedure TO32CustomInspectorGrid.CMDesignHitTest(var Msg: TCMDesignHitTest);
 begin
-  Msg.Result := NativeInt(BOOL(Sizing(Msg.Pos.X, Msg.Pos.Y)));
+  Msg.Result := lResult(BOOL(Sizing(Msg.Pos.X, Msg.Pos.Y)));
 end;
 {=====}
 
@@ -6172,18 +6160,9 @@ begin
 end;
 {=====}
 
-procedure TO32CustomInspectorGrid.WMMouseWheel(var Msg : TMessage);
-var
-  Delta: integer;
-begin
-  Delta := TWMMouseWheel(Msg).WheelDelta;
-   if Delta < 0 then begin
-     if (ActiveRow < RowCount - 1) then
-       FocusCell(1, ActiveRow + 1, true);
-   end
-   else if (ActiveRow > 0) then
-     FocusCell(1, ActiveRow - 1, true);
-end;
+{DM - START CHANGE}
+// removed procedure TO32CustomInspectorGrid.WMMouseWheel(var Msg : TMessage);
+{DM - END CHANGE}
 {=====}
 
 function TO32CustomInspectorGrid.CheckColumnDrag(var Origin,

@@ -733,7 +733,7 @@ end;
 
 procedure TOvcLookOutBar.CMDesignHitTest(var Msg : TCMDesignHitTest);
 begin
-  Msg.Result := Integer(lobOverButton);
+  Msg.Result := lResult(lobOverButton);
 end;
 
 procedure TOvcLookOutBar.CMFontChanged(var Message: TMessage);
@@ -858,7 +858,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := Integer(Style) or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1047,8 +1047,7 @@ begin
 
   {see if the text can fit within the existing rect without growing}
   TestRect := Rect;
-  DrawText(Canvas.Handle, PChar(TempName), Length(TempName), TestRect,
-            DT_WORDBREAK or DT_CALCRECT);
+  DrawText(Canvas.Handle, PChar(TempName), Length(TempName), TestRect, DT_WORDBREAK or DT_CALCRECT);
   I := Pos(' ', TempName);
   if (HeightOf(TestRect) = SH) or (I < 2) then
     Result := GetDisplayString(Canvas, TempName, 1, WidthOf(Rect))
@@ -1058,43 +1057,36 @@ begin
     Temp2 := GetDisplayString(Canvas, Copy(TempName, 1, I-1), 1,
                               WidthOf(Rect));
     if CompareStr(Temp2, Copy(TempName, 1, I-1)) <> 0 then begin
-      Result := GetDisplayString(Canvas, Copy(TempName, 1, I-1), 1,
-                                 WidthOf(Rect)) +
+      Result := GetDisplayString(Canvas, Copy(TempName, 1, I-1), 1, WidthOf(Rect)) +
                 ' ' +
-                GetDisplayString(Canvas, Copy(TempName, I+1,
-                                 Length(TempName) - I), 1, WidthOf(Rect));
+                GetDisplayString(Canvas, Copy(TempName, I+1, Length(TempName) - I), 1, WidthOf(Rect));
     end else begin
       {2 or more lines, and the first line isn't getting an ellipsis}
-      if (HeightOf(TestRect) = DH) and
-         (WidthOf(TestRect) <= WidthOf(Rect)) then
+      if (HeightOf(TestRect) = DH) and (WidthOf(TestRect) <= WidthOf(Rect)) then
         {it will fit}
         Result := TempName
       else begin
         {it won't fit, but the first line wraps OK - 2nd line needs an ellipsis}
         TestRect.Right := Rect.Right + 1;
-        while (WidthOf(TestRect) > WidthOf(Rect)) or
-              (HeightOf(TestRect) > DH) do begin
+        while (WidthOf(TestRect) > WidthOf(Rect)) or (HeightOf(TestRect) > DH) do
+        begin
           if Length(TempName) > 1 then begin
             TestRect := Rect;
             Delete(TempName, Length(TempName), 1);
             TempName := Trim(TempName);
-            DrawText(Canvas.Handle, PChar(TempName + '...'), Length(TempName) + 3, TestRect, DT_WORDBREAK or DT_CALCRECT);
-            Result := TempName + '...';
+            Result := TempName + EllipsisStr;
+            DrawText(Canvas.Handle, PChar(Result), Length(Result), TestRect, DT_WORDBREAK or DT_CALCRECT);
           end else begin
-            Result := TempName + '..';
+            Result := TempName + Copy(EllipsisStr, 1, 2);
             TestRect := Rect;
-            DrawText(Canvas.Handle, PChar(Result){Buf}, Length(Result), TestRect,
-                      DT_WORDBREAK or DT_CALCRECT);
-            if (WidthOf(TestRect) <= WidthOf(Rect)) and
-              (HeightOf(TestRect) > DH) then
-                Break;
-            Result := TempName + '.';
+            DrawText(Canvas.Handle, PChar(Result){Buf}, Length(Result), TestRect, DT_WORDBREAK or DT_CALCRECT);
+            if (WidthOf(TestRect) <= WidthOf(Rect)) and (HeightOf(TestRect) > DH) then
+              Break;
+            Result := TempName + Copy(EllipsisStr, 1, 1);
             TestRect := Rect;
-            DrawText(Canvas.Handle, PChar(Result){Buf}, Length(Result), TestRect,
-                      DT_WORDBREAK or DT_CALCRECT);
-            if (WidthOf(TestRect) <= WidthOf(Rect)) and
-              (HeightOf(TestRect) > DH) then
-                Break;
+            DrawText(Canvas.Handle, PChar(Result){Buf}, Length(Result), TestRect, DT_WORDBREAK or DT_CALCRECT);
+            if (WidthOf(TestRect) <= WidthOf(Rect)) and (HeightOf(TestRect) > DH) then
+              Break;
             Result := TempName;
           end;
         end;

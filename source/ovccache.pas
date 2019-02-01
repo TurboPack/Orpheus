@@ -71,7 +71,7 @@ unit OvcCache;
 
    The number of data items held in the cache is determined by the
    MaxCacheItems property and must be at least 2 and no more than
-   MaxLongInt. The number of items you want the cache to maintain
+   MaxInt. The number of items you want the cache to maintain
    depends on where that data is coming from, whether the data is
    in a file that is shared by others, and most importantly, through
    experimentation.
@@ -147,7 +147,7 @@ unit OvcCache;
      cache. You must assign a method to this event, otherwise the
      cache has no way to obtain the requested data.
 
-     Index is a number from 0 to MaxLongInt and can represent record
+     Index is a number from 0 to MaxInt and can represent record
      numbers corresponding to records in a data file or just about
      anything you want them to. The cache assumes that you will
      request items using the same index number that was used when the
@@ -427,7 +427,7 @@ var
     Hits : Integer;
     P    : PCacheRecord;
   begin
-    Hits := MaxLongInt;
+    Hits := MaxInt;
     Result := -1;
     for I := 0 to FList.Count-1 do begin
       P := PCacheRecord(FList.Items[I]);

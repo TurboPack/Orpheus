@@ -152,7 +152,8 @@ type
       ProcessingVScrollMessage: Boolean;{Internal flag}
       FHasBorderWidth: Boolean;         {true if CellAttr.BorderWidth > 1 in any cell}
 
-
+      FDiableExceptionInStopEditing: Boolean; // dm27Oct16 - prevent exception in StopEditing
+      FPanPoint: TPoint;
     protected
       {property read routines}
       function GetAllowRedraw : boolean;
@@ -282,8 +283,9 @@ type
       procedure DoLeavingColumn(ColNum : TColNum); virtual;
       procedure DoLeavingRow(RowNum : TRowNum); virtual;
       procedure DoLockedCellClick(RowNum : TRowNum; ColNum : TColNum); virtual;
-      procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
-        override;
+      {DM - START CHANGE}
+      function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+      {DM - END CHANGE}
       procedure DoPaintUnusedArea; virtual;
       procedure DoRowsChanged(RowNum1, RowNum2 : TRowNum;
                               Action : TOvcTblActions); virtual;
@@ -295,10 +297,11 @@ type
       procedure DoTopLeftCellChanging(var RowNum : TRowNum;
                                       var ColNum : TColNum); virtual;
       procedure DoUserCommand(Cmd : word); virtual;
+      procedure DoGesture(const EventInfo: TGestureEventInfo; var Handled: Boolean); override;
 
       {row/col data retrieval}
       function tbIsColHidden(ColNum : TColNum) : boolean;
-	  function tbIsColShowRightLine(ColNum : TColNum) : boolean; //CDE
+  	  function tbIsColShowRightLine(ColNum : TColNum) : boolean; //CDE
       function tbIsRowHidden(RowNum : TRowNum) : boolean;
       procedure tbQueryColData(ColNum : TColNum;
                            var W : integer;
@@ -360,6 +363,7 @@ type
       procedure tbColorsChanged(Sender : TObject);
 
       {streaming routines}
+      function IsTouchPropertyStored(AProperty: TTouchProperty): Boolean; override;
       procedure DefineProperties(Filer : TFiler); override;
       procedure tbFinishLoadingDefaultCells;
       procedure tbReadColData(Reader : TReader);
@@ -504,6 +508,9 @@ type
 
       property TopRow : TRowNum
          read FTopRow write SetTopRow;
+
+      property DiableExceptionInStopEditing : Boolean  // dm27Oct16 - prevent exception in StopEditing
+         read FDiableExceptionInStopEditing write FDiableExceptionInStopEditing;
 
       {New events}
       property OnActiveCellChanged : TCellNotifyEvent
@@ -678,6 +685,7 @@ type
       property ActiveCol default 1;
 
       property OldRowColBehavior default false;
+      property DiableExceptionInStopEditing default false; // dm27Oct16 - prevent exception in StopEditing
 
       property Anchors;
       property Constraints;
@@ -774,6 +782,9 @@ end;
 {===== TOvcTable creation and destruction ============================}
 
 constructor TOvcCustomTable.Create(AOwner : TComponent);
+const
+  GridStyle = [csCaptureMouse, csOpaque, csDoubleClicks,
+                csPannable, csGestures];
   begin
     inherited Create(AOwner);
 
@@ -782,9 +793,9 @@ constructor TOvcCustomTable.Create(AOwner : TComponent);
     tbState := [otsNormal];
 
     if NewStyleControls then
-      ControlStyle := ControlStyle + [csOpaque, csCaptureMouse, csDoubleClicks]
+      ControlStyle := ControlStyle + GridStyle
     else
-      ControlStyle := ControlStyle + [csOpaque, csCaptureMouse, csDoubleClicks, csFramed];
+      ControlStyle := ControlStyle + GridStyle + [csFramed];
 
     Height  := tbDefHeight;
     Width   := tbDefWidth;
@@ -849,6 +860,11 @@ constructor TOvcCustomTable.Create(AOwner : TComponent);
       tbState := tbState + [otsUnfocused];
 
     tbMustFinishLoading := true;
+
+    Touch.InteractiveGestures := [igPan, igPressAndTap];
+    Touch.InteractiveGestureOptions := [igoPanInertia,
+    igoPanSingleFingerHorizontal, igoPanSingleFingerVertical,
+    igoPanGutter, igoParentPassthrough];
   end;
 {--------}
 
@@ -882,7 +898,7 @@ procedure TOvcCustomTable.CreateParams(var Params: TCreateParams);
     inherited CreateParams(Params);
 
     with Params do
-      Style := Integer(Style) or OvcData.ScrollBarStyles[FScrollBars]
+      Style := DWORD(Style) or OvcData.ScrollBarStyles[FScrollBars]
                      or OvcData.BorderStyles[FBorderStyle];
 
     if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -943,6 +959,19 @@ procedure TOvcCustomTable.Loaded;
   end;
 
 {==TOvcTable property streaming routines=============================}
+
+function TOvcCustomTable.IsTouchPropertyStored(AProperty: TTouchProperty): Boolean;
+begin
+  Result := inherited IsTouchPropertyStored(AProperty);
+  case AProperty of
+    tpInteractiveGestures:
+      Result := Touch.InteractiveGestures <> [igPan, igPressAndTap];
+    tpInteractiveGestureOptions:
+      Result := Touch.InteractiveGestureOptions <> [igoPanInertia,
+        igoPanSingleFingerHorizontal, igoPanSingleFingerVertical,
+        igoPanGutter, igoParentPassthrough];
+  end;
+end;
 
 procedure TOvcCustomTable.DefineProperties(Filer : TFiler);
   begin
@@ -1867,7 +1896,7 @@ procedure TOvcCustomTable.tbSetScrollRange(SB : TOvcScrollBar);
           tbCalcRowsOnLastPage;
         if tbHasVSBar and HandleAllocated then
           begin
-//            tbCalcRowsOnLastPage;
+            SetScrollRange(Handle, SB_Vert, 0, 0, false);
             if (tbLastTopRow < 16*1024) then
               if tbCalcRequiresVSBar then
                 SetScrollRange(Handle, SB_Vert, LockedRows, tbLastTopRow, false)
@@ -2050,7 +2079,15 @@ as suggested by him.
       R.BottomRight := ScreenToClient(R.BottomRight);
       InvalidateCellsInRect(R);
 
-      tbActCell.StopEditing(SaveValue, Data);
+      try
+        tbActCell.StopEditing(SaveValue, Data);
+      except
+        on E: Exception do begin
+          if not FDiableExceptionInStopEditing then raise; // dm27Oct16 - prevent exception in StopEditing
+          Beep;
+        end;
+      end;
+
       tbActCell := nil;
       try
         if SaveValue then
@@ -2317,10 +2354,10 @@ procedure TOvcCustomTable.tbColChanged(Sender : TObject; ColNum1, ColNum2 : TCol
       Exit;
     end;
     {make sure there's no flicker}
-    DoIt := False;
     AllowRedraw := false;
     try
       {decide whether there's anything to do to the visible display}
+      DoIt := false;
       with tbColNums^ do
         case Action of
           taGeneral : DoIt := true;
@@ -2447,10 +2484,10 @@ procedure TOvcCustomTable.tbRowChanged(Sender : TObject; RowNum1, RowNum2 : TRow
       Exit;
     end;
     {make sure there's no flicker}
-    DoIt := False;
     AllowRedraw := false;
     try
       {decide whether there's anything to do to the visible display}
+      DoIt := false;
       with tbRowNums^ do
         case Action of
           taGeneral : DoIt := true;
@@ -4503,6 +4540,11 @@ procedure TOvcCustomTable.tbDrawActiveCell;
     BrushColor   : TColor;
     DrawItFocused: boolean;
   begin
+    ActRowOfs    := 0;
+    ActRowBottom := 0;
+    ActColOfs    := 0;
+    ActColRight  := 0;
+
     {Find the cell's row on the screen, exit if not present}
     RowInx := tbFindRowInx(ActiveRow);
     if (RowInx = -1) then Exit;
@@ -4542,10 +4584,6 @@ procedure TOvcCustomTable.tbDrawActiveCell;
             Wd := tbColNums^.Ay[succ(ColInx)].Offset - ColOfs;
 
             {calculate where to draw the vertical/horizontal lines}
-            ActRowOfs := 0;
-            ActRowBottom := 0;
-            ActColOfs := 0;
-            ActColRight := 0;
             case GridPenSet.NormalGrid.Effect of
               geNone      : begin
                               ActRowOfs := RowOfs;
@@ -5374,6 +5412,56 @@ procedure TOvcCustomTable.DoEnteringRow(RowNum : TRowNum);
       end;
   end;
 {--------}
+
+procedure TOvcCustomTable.DoGesture(const EventInfo: TGestureEventInfo; var Handled: Boolean);
+const
+  ScrollFlags: array[Boolean] of TScrollCode = (scLineDown, scLineUp);
+var
+  I, LColWidth, LCols, LRowHeight, LRows, DeltaX, DeltaY: Integer;
+begin
+  if EventInfo.GestureID = igiPan then
+  begin
+    Handled := True;
+    if gfBegin in EventInfo.Flags then
+      FPanPoint := EventInfo.Location
+    else if not (gfEnd in EventInfo.Flags) then
+    begin
+      // Vertical panning
+      DeltaY := EventInfo.Location.Y - FPanPoint.Y;
+      if Abs(DeltaY) > 1 then
+      begin
+        LRowHeight := Rows.Height[TopRow];
+        LRows := Abs(DeltaY) div LRowHeight;
+        if (Abs(DeltaY) mod LRowHeight = 0) or (LRows > 0) then
+        begin
+          for I := 0 to LRows - 1 do
+            ProcessScrollBarClick(otsbVertical, ScrollFlags[DeltaY > 0]);
+          FPanPoint := EventInfo.Location;
+          Inc(FPanPoint.Y, DeltaY mod LRowHeight);
+        end;
+      end
+      else
+      begin
+        // Horizontal panning
+        DeltaX := EventInfo.Location.X - FPanPoint.X;
+        if Abs(DeltaX) > 1 then
+        begin
+          LColWidth := Columns.Width[LeftCol];
+          LCols := Abs(DeltaX) div LColWidth;
+          if (Abs(DeltaX) mod LColWidth = 0) or (LCols > 0) then
+          begin
+            for I := 0 to LCols - 1 do
+              ProcessScrollBarClick(otsbHorizontal, ScrollFlags[DeltaX > 0]);
+            FPanPoint := EventInfo.Location;
+            Inc(FPanPoint.X, DeltaX mod LColWidth);
+          end;
+        end;
+      end;
+
+    end;
+  end;
+end;
+
 procedure TOvcCustomTable.DoGetCellAttributes(RowNum : TRowNum; ColNum : TColNum;
                                           var CellAttr : TOvcCellAttributes);
   begin
@@ -5452,22 +5540,25 @@ procedure TOvcCustomTable.DoLockedCellClick(RowNum : TRowNum; ColNum : TColNum);
   end;
 {--------}
 
-procedure TOvcCustomTable.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcCustomTable.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if result then Exit;
 
   if (ssCtrl in Shift) then begin
-    if (Delta > 0) then
+    if (WheelDelta > 0) then
       tbMoveActCellPageUp
     else
       tbMoveActCellPageDown;
   end else begin
-    if Delta < 0 then
+    if WheelDelta < 0 then
       MoveActiveCell(ccDown)
     else
       MoveActiveCell(ccUp);
   end;
 end;
+{DM - END CHANGE}
 
 procedure TOvcCustomTable.DoPaintUnusedArea;
   begin
@@ -5556,7 +5647,7 @@ procedure TOvcCustomTable.CMDesignHitTest(var Msg : TCMDesignHitTest);
         if OnGridLine then
           Msg.Result := 1
         else
-          Msg.Result := NativeInt(tbIsInMoveArea(Msg.Pos.X, Msg.Pos.Y, IsColMove));
+          Msg.Result := lResult(tbIsInMoveArea(Msg.Pos.X, Msg.Pos.Y, IsColMove));
       end;
   end;
 {--------}
@@ -5570,37 +5661,37 @@ procedure TOvcCustomTable.CMFontChanged(var Msg : TMessage);
 {--------}
 procedure TOvcCustomTable.ctimQueryOptions(var Msg : TMessage);
   begin
-    Msg.Result := NativeInt(word(FOptions));
+    Msg.Result := lResult(word(FOptions));
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryColor(var Msg : TMessage);
   begin
-    Msg.Result := NativeInt(Color);
+    Msg.Result := lResult(Color);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryFont(var Msg : TMessage);
   begin
-    Msg.Result := NativeInt(Font);
+    Msg.Result := lResult(Font);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryLockedCols(var Msg : TMessage);
   begin
-    Msg.Result := NativeInt(LockedCols);
+    Msg.Result := lResult(LockedCols);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryLockedRows(var Msg : TMessage);
   begin
-    Msg.Result := NativeInt(LockedRows);
+    Msg.Result := lResult(LockedRows);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryActiveCol(var Msg : TMessage);
   begin
-    Msg.Result := NativeInt(ActiveCol);
+    Msg.Result := lResult(ActiveCol);
   end;
 {--------}
 procedure TOvcCustomTable.ctimQueryActiveRow(var Msg : TMessage);
   begin
-    Msg.Result := Integer(ActiveRow);
+    Msg.Result := lResult(ActiveRow);
   end;
 {--------}
 procedure TOvcCustomTable.ctimRemoveCell(var Msg : TMessage);
@@ -5628,7 +5719,7 @@ procedure TOvcCustomTable.ctimStartEditMouse(var Msg : TWMMouse);
           Windows.SetFocus(tbActCell.EditHandle);
           PostMessage(tbActCell.EditHandle,
                       WM_LBUTTONDOWN,
-                      Msg.Keys, Integer(Msg.Pos))
+                      Msg.Keys, MakeLParam(Msg.Pos.x,Msg.Pos.y));
         end;
     Msg.Result := 1;
   end;
@@ -5777,8 +5868,8 @@ procedure TOvcCustomTable.WMKeyDown(var Msg : TWMKey);
       if (Cmd = ccTableEdit) or
          ((Cmd > ccLastCmd) and (Cmd < ccUserFirst) and
           ((Msg.CharCode = VK_SPACE) or
-           ((VK_0 <= Msg.CharCode) and (Msg.CharCode <= VK_DIVIDE)) or
-            (Msg.CharCode >= $BA))) then
+           ((VK_0 <= Msg.CharCode) and (Msg.CharCode <= VK_DIVIDE) and (Msg.CharCode <> VK_LWIN) and (Msg.CharCode <> VK_RWIN) and (Msg.CharCode <> VK_APPS) and (Msg.CharCode <> VK_SLEEP)) or
+            (Msg.CharCode >= VK_OEM_1))) then
         begin
           PostMessage(Handle, ctim_StartEdit, 0, 0);
           if (Cmd <> ccTableEdit) then
@@ -5867,8 +5958,8 @@ procedure TOvcCustomTable.WMLButtonDblClk(var Msg : TWMMouse);
             if FActiveRow <> Row then
               ActiveRow := Row;
 //Ende
-            PostMessage(Handle, ctim_StartEdit, Msg.Keys, Integer(Msg.Pos));
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+            PostMessage(Handle, ctim_StartEdit, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
           end;
       end;
   end;
@@ -5998,7 +6089,7 @@ procedure TOvcCustomTable.WMLButtonDown(var Msg : TWMMouse);
                           begin
                             PostMessage(Handle, ctim_StartEdit, 0, 0);
                             PostMessage(Handle, ctim_StartEditMouse,
-                                        Msg.Keys, Integer(Msg.Pos));
+                                        Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
                             AllowDrag := false;
                           end;
                       end;
@@ -6094,7 +6185,7 @@ procedure TOvcCustomTable.WMLButtonDown(var Msg : TWMMouse);
                   if (not (otoAlwaysEditing in Options)) and (ActiveRow = Row) and (ActiveCol = Col) and (not WasUnfocused) then
                   begin
                     PostMessage(Handle, ctim_StartEdit, 0, 0);
-                    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+                    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, MakeLParam(Msg.Pos.x, Msg.Pos.y));
                   end;
 
                   tbSetActiveCellPrim(Row, Col);

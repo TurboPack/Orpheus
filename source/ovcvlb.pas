@@ -62,7 +62,7 @@ const
   vlDefIntegralHeight  = True;
   vlDefItemIndex       = -1;
   vlDefMultiSelect     = False;
-  vlDefNumItems        = MaxLongInt;
+  vlDefNumItems        = MaxInt;
   vlDefOwnerDraw       = False;
   vlDefParentColor     = False;
   vlDefParentCtl3D     = True;
@@ -349,8 +349,9 @@ type
     function DoOnIsSelected(Index : Integer) : Boolean;
       virtual;
       {-call the OnIsSelected event, if assigned}
-    procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
-      override;
+    {DM - START CHANGE}
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+    {DM - END CHANGE}
     procedure DoOnSelect(Index : Integer; Selected : Boolean);
       dynamic;
       {-call the OnSelect event, if assigned}
@@ -786,20 +787,23 @@ begin
   end;
 end;
 
-procedure TOvcCustomVirtualListBox.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcCustomVirtualListBox.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 var
   I : Integer;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if result then Exit;
 
-  if Delta < 0 then begin
+  if WheelDelta < 0 then begin
     for I := 1 to {vlb}WheelDelta do
       Perform(WM_VSCROLL, MAKELONG(SB_LINEDOWN, 0), 0);
-  end else if Delta > 0 then begin
+  end else if WheelDelta > 0 then begin
     for I := 1 to {vlb}WheelDelta do
       Perform(WM_VSCROLL, MAKELONG(SB_LINEUP, 0), 0);
   end;
 end;
+{DM - END CHANGE}
 
 procedure TOvcCustomVirtualListBox.DoOnSelect(Index : Integer; Selected : Boolean);
   {-notify of selection change}
@@ -1439,7 +1443,7 @@ var
 begin
   if Value <> FNumItems then begin
     if (Value < 0) then
-      Value := MaxLongInt;
+      Value := MaxInt;
 
     OldNumItems := FNumItems;
     {set new item index}

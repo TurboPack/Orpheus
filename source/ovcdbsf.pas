@@ -618,7 +618,7 @@ end;
 
 procedure TOvcDbSimpleField.sfdbSetFieldValue;
 var
-  S  : string[MaxEditLen];
+  S  : array[0..MaxEditLen] of Char;
   I  : SmallInt absolute S;
   L  : Integer absolute S;
   W  : Word absolute S;
@@ -629,13 +629,15 @@ var
   SE : Integer;
   M  : Boolean;
   EM : Boolean;
-  F  : array[0..255] of Byte; {used to compare old and new value}
+  F  : array[0..MaxEditLen] of Char; {used to compare old and new value}
   sNewValue: string;
   sOldValue: string;
+  bUseString: boolean;
 begin
   if efdbBusy then
     Exit;
 
+  bUseString := false;
   {clear to insure match before transfer}
   FillChar(S, SizeOf(S), 0);
   FillChar(F, SizeOf(F), 0);
@@ -643,7 +645,7 @@ begin
   if Field <> nil then begin
     case FFieldType of
       ftString, ftWideString
-                   : sNewValue := Field.AsString;
+                   : begin bUseString := true; sNewValue := Field.AsString; end;
       ftSmallInt   : I := Field.AsInteger;
       ftInteger    : L := Field.AsInteger;
       ftWord       : W := Field.AsInteger;
@@ -651,8 +653,10 @@ begin
       ftFloat      : E := Field.AsFloat;
       ftCurrency   : E := Field.AsFloat;
       ftBCD        : E := Field.AsFloat;
-    else
-      sNewValue := Field.AsString;
+    else begin
+        bUseString := true;
+        sNewValue := Field.AsString;
+      end;
     end;
     P := efHPos;
 
@@ -660,7 +664,7 @@ begin
     efdbBusy := True;
     try
       {get copy of current field value}
-      if FFieldType in [ftString, ftWideString] then
+      if bUseString then
         GetValue(sOldValue)
       else
         Self.GetValue(F);
@@ -681,8 +685,12 @@ begin
         ftFloat,
         ftCurrency,
         ftBCD        : SetValue(S);
-        else
-          SetValue(sNewValue);
+        else begin
+          if bUseString then
+            SetValue(sNewValue)
+          else
+            SetValue(S);
+        end;
       end;
 
       {restore modified states}
@@ -695,7 +703,7 @@ begin
     end;
 
     {if field value changed, call DoOnChange}
-    if FFieldType in [ftString, ftWideString] then
+    if bUseString then
     begin
       if sOldValue <> sNewValue then
         inherited DoOnChange;

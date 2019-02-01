@@ -167,7 +167,7 @@ procedure RefreshFixedFontNames;
     FixedFontNames.Clear;
     DC := GetDC(0);
     try
-      EnumFontFamilies(DC, nil, @EnumFixedFontsProc, integer(FixedFontNames));
+      EnumFontFamilies(DC, nil, @EnumFixedFontsProc, NativeInt(FixedFontNames));
     finally
       ReleaseDC(0, DC);
     end;

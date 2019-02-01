@@ -5071,7 +5071,7 @@ end;
 
 procedure TOvcCustomReportView.MakeGroupVisible(GRef : TOvcRvIndexGroup);
 begin
-  PostMessage(Handle, OM_MakeGroupVisible, 0, Integer(GRef));
+  PostMessage(Handle, OM_MakeGroupVisible, 0, lParam(GRef));
 end;
 
 procedure TOvcCustomReportView.WMMakeGroupVisible(var Msg : TMessage);

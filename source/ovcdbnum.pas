@@ -247,7 +247,7 @@ end;
 
 procedure TOvcCustomDbNumberEdit.CMGetDataLink(var Message : TMessage);
 begin
-  Message.Result := Integer(FDataLink);
+  Message.Result := lResult(FDataLink);
 end;
 
 constructor TOvcCustomDbNumberEdit.Create(AOwner : TComponent);

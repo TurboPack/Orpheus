@@ -193,8 +193,9 @@ type
       override;
 
     {virtual methods}
-    procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
-      override;
+    {DM - START CHANGE}
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+    {DM - END CHANGE}
     procedure DoOnShowStatus(LineNum : Integer; ColNum : integer);
       dynamic;
       {-call the OnShowStatus method, if assigned}
@@ -1031,7 +1032,7 @@ begin
         Move(S[Col], Buf^, (ActLen - Col) * SizeOf(Char));
         inc(Buf, ActLen - Col);
         Move(CRLF, Buf^, sizeof(CRLF));
-        inc(Buf, 2); // not 'sizeof(CRLF)'!
+        inc(Buf, Length(CRLF)); // not 'sizeof(CRLF)'!
         inc(LineNum);
         Col := 0;
       end;
@@ -1112,7 +1113,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := Integer(Style) or ScrollBarStyles[FScrollBars]
+    Style := DWORD(Style) or ScrollBarStyles[FScrollBars]
                    or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
@@ -1160,15 +1161,17 @@ begin
   inherited Destroy;
 end;
 
-procedure TOvcBaseViewer.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcBaseViewer.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
 
-  if Delta < 0 then
+  if WheelDelta < 0 then
     vwScrollPrimVert(+1)
   else
     vwScrollPrimVert(-1);
 end;
+{DM - END CHANGE}
 
 procedure TOvcBaseViewer.DoOnShowStatus(LineNum : Integer; ColNum : integer);
 begin
@@ -2136,7 +2139,7 @@ begin
     if (VDelta < 0) then
       FCaretPos.Line := 0
     else
-      FCaretPos.Line := MaxLongInt
+      FCaretPos.Line := MaxInt
   else if (FCaretPos.Line >= FLineCount) then begin
     FCaretPos.Line := Pred(FLineCount);
     if (SaveCurPos.Line = Pred(FLineCount)) and (HDelta = 0) then
@@ -2705,7 +2708,6 @@ var
   NewRange   : TOvcViewerRange;
   LeftBtn    : Byte;
   P          : TPoint;
-  SP         : TSmallPoint;
 begin
   {call our ancestor - this'll set mouse capture on}
   inherited;
@@ -2755,9 +2757,7 @@ begin
     {post ourselves fake WM_MOUSEMOVE messages}
     GetCursorPos(P);
     P := ScreenToClient(P);
-    SP.X := P.X;
-    SP.Y := P.Y;
-    PostMessage(Handle, WM_MOUSEMOVE, 0, Integer(SP));
+    PostMessage(Handle, WM_MOUSEMOVE, 0, MakeLParam(P.x, P.y));
     Application.ProcessMessages;
   until GetAsyncKeyState(LeftBtn) >= 0;
 end;
@@ -3068,7 +3068,7 @@ begin
   else begin
     DistBegin := N;
     if slLastN < 0 then
-      DistLast := MaxLongInt
+      DistLast := MaxInt
     else
       DistLast := Abs(N - slLastN);
     DistEnd := Pred(slCount - N);
@@ -3216,7 +3216,7 @@ begin
       fvLines := TVwrStringList.Create;
 
       {open the file}
-      AssignVwrTFDD(F, Filename);
+      AssignFile(F, Filename); // AssignVwrTFDD does not work with Delphi 10.2
       Reset(F);
 
       {get buffer for text file - no problem if we can't}
@@ -3595,7 +3595,7 @@ begin
     if (fvLastLine >= 0) then
       Delta4 := Abs(fvLastLine-Line) {distance from last line in file}
     else
-      Delta4 := MaxLongInt;
+      Delta4 := MaxInt;
     Delta5 := Abs(Line-fvCurLine);   {distance from current line}
 
     {is Delta5 the smallest value?}
@@ -4193,7 +4193,7 @@ begin
 
     if HandleAllocated then
       if (fvLastLine < 0) then
-        LineCount := MaxLongInt
+        LineCount := MaxInt
       else
         LineCount := Succ(fvLastLine);
   end;
@@ -4258,7 +4258,7 @@ begin
 
       {reset the line count}
       if (fvLastLine < 0) then
-        LineCount := MaxLongInt
+        LineCount := MaxInt
       else
         LineCount := Succ(fvLastLine);
 

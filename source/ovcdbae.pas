@@ -1001,13 +1001,13 @@ end;
 
 procedure TOvcBaseDbArrayEditor.CreateParams(var Params: TCreateParams);
 const
-  ScrollBar : array[Boolean] of Integer = (0, WS_VSCROLL);
+  ScrollBar : array[Boolean] of DWORD = (0, WS_VSCROLL);
 begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := Integer(Style) or
-      ScrollBar[FUseScrollBar] or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or
+      DWORD(ScrollBar[FUseScrollBar]) or DWORD(BorderStyles[FBorderStyle]);
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;

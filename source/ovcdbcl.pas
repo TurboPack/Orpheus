@@ -647,7 +647,7 @@ end;
 
 procedure TOvcDbColumnList.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := Integer(FDataLink);
+  Msg.Result := lResult(FDataLink);
 end;
 
 constructor TOvcDbColumnList.Create(AOwner : TComponent);
@@ -721,8 +721,8 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := Integer(Style) or ScrollBarStyles[FScrollBars]
-                   or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or DWORD(ScrollBarStyles[FScrollBars])
+                   or DWORD(BorderStyles[FBorderStyle]);
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;

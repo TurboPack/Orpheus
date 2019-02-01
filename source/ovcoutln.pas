@@ -288,8 +288,8 @@ type
     procedure Click; override;
     procedure DblClick; override;
     function CalcMaxWidth: Integer;
-    function CompareNodesGlobal(Key : Integer; I1,I2 : Pointer) : Integer;
-    function CompareNodesLocal(Key : Integer; I1,I2 : Pointer) : Integer;
+    function CompareNodesGlobal(Key : NativeInt; I1,I2 : Pointer) : Integer;
+    function CompareNodesLocal(Key : NativeInt; I1,I2 : Pointer) : Integer;
     procedure DoActiveChange(OldNode, NewNode: TOvcOutlineNode); virtual;
     function DoDrawCheck(Canvas : TCanvas; Node: TOvcOutlineNode;
               Rect : TRect; Style : TOvcOlNodeStyle; Checked : Boolean) : Boolean; virtual;
@@ -1308,8 +1308,7 @@ asm
   sub eax, edx
 end;
 
-function TOvcCustomOutline.CompareNodesGlobal(Key: Integer; I1,
-  I2: Pointer): Integer;
+function TOvcCustomOutline.CompareNodesGlobal(Key: NativeInt; I1, I2: Pointer): Integer;
 begin
   Result := 0;
 
@@ -1329,8 +1328,7 @@ begin
 
 end;
 
-function TOvcCustomOutline.CompareNodesLocal(Key: Integer; I1,
-  I2: Pointer): Integer;
+function TOvcCustomOutline.CompareNodesLocal(Key: NativeInt; I1, I2: Pointer): Integer;
 begin
   Result := 0;
 

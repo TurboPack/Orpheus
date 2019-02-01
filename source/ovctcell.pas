@@ -707,7 +707,7 @@ procedure TOvcBaseTableCell.SetTable(T : TOvcTableAncestor);
       if (not Assigned(T)) or (T is TOvcTableAncestor) then
         begin
           if Assigned(FTable) and FTable.HandleAllocated then
-            SendMessage(FTable.Handle, ctim_RemoveCell, 0, NativeInt(Self));
+            SendMessage(FTable.Handle, ctim_RemoveCell, 0, lParam(Self));
           FTable := T;
           FOnCfgChanged := nil;
           FReferences := 0;

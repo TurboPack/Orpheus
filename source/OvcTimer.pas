@@ -321,8 +321,8 @@ begin
         ER^.erLastTrigger := TC;
 
         {check if total elapsed time for trigger >= MaxLongInt}
-        if ((MaxLongInt - ER^.erElapsed) < ET) then
-          ER^.erElapsed := MaxLongInt
+        if ((MaxInt - ER^.erElapsed) < ET) then
+          ER^.erElapsed := MaxInt
         else
           ER^.erElapsed := ER^.erElapsed + ET;
 
@@ -554,7 +554,7 @@ begin
       {is this interval greater than the remaining time on any existing triggers}
       TR := 0;
       if (TC < ER^.erLastTrigger) then
-        TR := TR + MaxLongInt
+        TR := TR + MaxInt
       else
         TR := TC - ER^.erLastTrigger;
       if Integer(tpInterval) > (Integer(ER^.erInterval) - TR) then

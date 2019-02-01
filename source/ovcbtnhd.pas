@@ -477,11 +477,11 @@ end;
 
 procedure TOvcButtonHeader.CreateParams(var Params : TCreateParams);
 const
-  BorderStyles: array[TBorderStyle] of Integer = (0, WS_BORDER);
+  BorderStyles: array[TBorderStyle] of DWORD = (0, WS_BORDER);
 begin
   inherited CreateParams(Params);
 
-  Params.Style := Integer(Params.Style) or BorderStyles[FBorderStyle];
+  Params.Style := DWORD(Params.Style) or BorderStyles[FBorderStyle];
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
     Params.ExStyle := Params.ExStyle or WS_EX_CLIENTEDGE;

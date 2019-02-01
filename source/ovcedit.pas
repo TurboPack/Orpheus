@@ -433,8 +433,9 @@ type
     procedure DoOnError(ErrorCode : Word);
       dynamic;
       {-call the OnError method, if assigned, otherwise raise exception}
-    procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
-      override;
+    {DM - START CHANGE}
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+    {DM - END CHANGE}
     procedure DoOnShowStatus(LineNum : Integer; ColNum : Word);
       dynamic;
       {-call the OnShowStatus mehtod, if assigned}
@@ -766,7 +767,7 @@ type
     property NewStyleIndent default False;
     property Borders;
     property BorderStyle default bsSingle;
-    property ByteLimit default MaxLongInt;
+    property ByteLimit default MaxInt;
     property CaretIns;
     property CaretOvr;
     property FixedFont;
@@ -778,7 +779,7 @@ type
     property MarginColor default clWindow;
     property MarginOptions;
     property ParaLengthLimit default High(SmallInt);
-    property ParaLimit default MaxLongInt;
+    property ParaLimit default MaxInt;
     property ReadOnly default False;
     property RightMargin;
     property RuleColor default clNavy;
@@ -928,7 +929,7 @@ end;
     property AutoIndent;
     property NewStyleIndent default False;
     property BorderStyle default bsSingle;
-    property ByteLimit default MaxLongInt;
+    property ByteLimit default MaxInt;
     property CaretIns;
     property CaretOvr;
     property FixedFont;
@@ -940,7 +941,7 @@ end;
     property MarginColor default clWindow;
     property MarginOptions;
     property ParaLengthLimit default High(SmallInt);
-    property ParaLimit default MaxLongInt;
+    property ParaLimit default MaxInt;
     property ReadOnly default False;
     property RightMargin;
     property RuleColor default clNavy;
@@ -1521,7 +1522,7 @@ begin
   FAutoIndent         := False;
   FNewStyleIndent     := False;
   FBorderStyle        := bsSingle;
-  FByteLimit          := MaxLongInt;
+  FByteLimit          := MaxInt;
   FClipboardChars     := [#10..#32];
   FHideSelection      := True;
   FInsertMode         := True;
@@ -1533,7 +1534,7 @@ begin
   FRuleColor          := clNavy;
 
   FParaLengthLimit    := MaxSmallInt;
-  FParaLimit          := MaxLongInt;
+  FParaLimit          := MaxInt;
   FReadOnly           := False;
   FScrollBars         := ssBoth;
   FScrollBarsAlways   := False;
@@ -1618,7 +1619,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do begin
-    Style := Integer(Style) or ScrollBarStyles[FScrollBars]
+    Style := DWORD(Style) or ScrollBarStyles[FScrollBars]
                    or BorderStyles[FBorderStyle];
   end;
 
@@ -1836,15 +1837,18 @@ begin
   end;
 end;
 
-procedure TOvcCustomEditor.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcCustomEditor.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if result then Exit;
 
-  if Delta < 0 then
+  if WheelDelta < 0 then
     ProcessCommand(ccScrollDown, 0)
   else
     ProcessCommand(ccScrollUp, 0);
 end;
+{DM - END CHANGE}
 
 procedure TOvcCustomEditor.DoOnShowStatus(LineNum : Integer; ColNum : Word);
   {-call the OnShowStatus mehtod, if assigned}
@@ -2534,7 +2538,7 @@ begin
   if Res = 0 then begin
     SaveCL := edCurLine;
     edRefreshLines(edParas.FLine, edParas.LLine);
-    if edParas.LLine = MaxLongInt then
+    if edParas.LLine = MaxInt then
       edSetVScrollRange;
     edMoveCaretToPP(edCurPara, edLinePos+edCurCol+1, False);
     if edCurLine > SaveCL then
@@ -4404,10 +4408,10 @@ begin
       Inc(Buffer, I);
 
       {add crlf}
-      if I+2 <= BufSize then begin
-        Move(CRLF, Buffer^, 2 * SizeOf(Char));
-        Inc(Buffer, 2);
-        Inc(I, 2);
+      if I+Length(CRLF) <= BufSize then begin
+        Move(CRLF, Buffer^, Length(CRLF) * SizeOf(Char));
+        Inc(Buffer, Length(CRLF));
+        Inc(I, Length(CRLF));
       end;
 
       {get text from all except last para}
@@ -4415,15 +4419,15 @@ begin
         P := GetPara(N, Len);
 
         {is there room for the para and the crlf}
-        if Len+2 > BufSize-I then
+        if Len+Length(CRLF) > BufSize-I then
           Len := BufSize-I;
         Move(P^, Buffer^, Len * SizeOf(Char));
         Inc(Buffer, Len);
         Inc(I, Len);
-        if I+2 <= BufSize then begin
-          Move(CRLF, Buffer^, 2 * SizeOf(Char));
-          Inc(Buffer, 2);
-          Inc(I, 2);
+        if I+Length(CRLF) <= BufSize then begin
+          Move(CRLF, Buffer^, Length(CRLF) * SizeOf(Char));
+          Inc(Buffer, Length(CRLF));
+          Inc(I, Length(CRLF));
         end;
         if I >= BufSize then
           Break;
@@ -4438,10 +4442,10 @@ begin
         Move(P^, Buffer^, Len * SizeOf(Char));
         Inc(Buffer, Len);
         Inc(I, Len);
-        if I+2 <= BufSize then begin
-          Move(CRLF, Buffer^, 2 * SizeOf(Char));
-          Inc(Buffer, 2);
-          Inc(I, 2);
+        if I+Length(CRLF) <= BufSize then begin
+          Move(CRLF, Buffer^, Length(CRLF) * SizeOf(Char));
+          Inc(Buffer, Length(CRLF));
+          Inc(I, Length(CRLF));
         end;
       end;
 
@@ -4534,24 +4538,24 @@ begin
   repeat
     Inc(N);
     S := GetPara(N, Len);
-    if I+Len+2 > Size then
+    if I+Len+Length(CRLF) > Size then
       Len := Size-I;
     Move(S^, P^, Len * SizeOf(Char));
     Inc(P, Len);
     Inc(I, Len);
-    if I+2 <= Size then begin
-      Move(CRLF, P^, 2 * SizeOf(Char));
-      Inc(P, 2);
+    if I+Length(CRLF) <= Size then begin
+      Move(CRLF, P^, Length(CRLF) * SizeOf(Char));
+      Inc(P, Length(CRLF));
     end;
-    Inc(I, 2);
+    Inc(I, Length(CRLF));
   until (N = edParas.ParaCount) or (I >= Size);
   P^ := #0;
 
   {return bytes moved plus one for the null char}
-  if I+1 > Size then
+  if I+SizeOf(Char) > Size then
     Result := Size
   else
-    Result := I+1;
+    Result := I+SizeOf(Char);
 end;
 
 function TOvcCustomEditor.GetTextBuf(Buffer : PChar; BufSize : Integer) : Integer;
@@ -4568,8 +4572,8 @@ var
   buf: PChar;
 begin
   result := '';
-  { GetText will return an extra #13#10, so we need a little extra space. }
-  size := TextLength + 3;
+  { GetText will return an extra #13#10#0, so we need a little extra space. }
+  size := TextLength + Length(CRLF) + 1;
   if size>3 then begin
     GetMem(buf, size*SizeOf(Char));
     try
@@ -5429,7 +5433,7 @@ end;
 procedure TOvcCustomEditor.SelectAll(CaretAtEnd : Boolean);
   {-select all text in the editor}
 begin
-  SetSelection(1, 1, MaxLongInt, MaxSmallInt, CaretAtEnd);
+  SetSelection(1, 1, MaxInt, MaxSmallInt, CaretAtEnd);
 end;
 
 procedure TOvcCustomEditor.SetBorderStyle(const Value : TBorderStyle);

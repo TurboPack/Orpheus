@@ -113,8 +113,9 @@ type
     {dynamic event wrappers}
     procedure DoOnChange;
       virtual;
-    procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
-      override;
+    {DM - START CHANGE}
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+    {DM - END CHANGE}
 
 
     {properties}
@@ -282,12 +283,12 @@ end;
 
 procedure TOvcCustomSlider.CreateParams(var Params : TCreateParams);
 const
-  BorderStyles : array[TBorderStyle] of Integer = (0, WS_BORDER);
+  BorderStyles : array[TBorderStyle] of DWORD = (0, WS_BORDER);
 begin
   inherited CreateParams(Params);
 
   with Params do begin
-    Style := Integer(Style) or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or BorderStyles[FBorderStyle];
     if slPopup then begin
       Style := WS_POPUP or WS_BORDER;
       WindowClass.Style := WindowClass.Style or CS_SAVEBITS;
@@ -318,13 +319,15 @@ begin
     FOnChange(Self);
 end;
 
-procedure TOvcCustomSlider.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcCustomSlider.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 var
   Key : Word;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if result then Exit;
 
-  if Delta < 0 then
+  if WheelDelta < 0 then
     if (FOrientation = soHorizontal) then
       Key := VK_LEFT
     else
@@ -337,6 +340,7 @@ begin
 
   KeyDown(Key, []);
 end;
+{DM - END CHANGE}
 
 procedure TOvcCustomSlider.KeyDown(var Key : Word; Shift : TShiftState);
 begin

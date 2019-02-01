@@ -670,7 +670,7 @@ begin
   SendMessage(Handle, SB_SETBKCOLOR, 0, ColorToRGB(Color));
   UpdatePanels(True, False);
   if FSimpleText <> '' then
-    SendMessage(Handle, SB_SETTEXT, 255, Integer(PChar(FSimpleText)));
+    SendMessage(Handle, SB_SETTEXT, 255, lParam(PChar(FSimpleText)));
   if FSimplePanel then
     SendMessage(Handle, SB_SIMPLE, 1, 0);
 end;
@@ -767,12 +767,12 @@ end;
 
 procedure TO32CustomStatusBar.UpdateSimpleText;
 const
-  RTLReading: array[Boolean] of Integer = (0, SBT_RTLREADING);
+  RTLReading: array[Boolean] of DWORD = (0, SBT_RTLREADING);
 begin
   DoRightToLeftAlignment(FSimpleText, taLeftJustify, UseRightToLeftAlignment);
   if HandleAllocated then
     SendMessage(Handle, SB_SETTEXT, 255 or RTLREADING[UseRightToLeftReading],
-      Integer(PChar(FSimpleText)));
+      lParam(PChar(FSimpleText)));
 end;
 {=====}
 
@@ -885,7 +885,7 @@ begin
 
       if Style = spsContainer then begin
         FUpdateNeeded := True;
-        SendMessage(Handle, SB_GETRECT, Index, Integer(@PanelRect));
+        SendMessage(Handle, SB_GETRECT, Index, lParam(@PanelRect));
         Panels[Index].Container.Color := Color;;
         with Panels[Index].Container do begin
           Visible := true;
@@ -906,7 +906,7 @@ begin
       else begin
         if not Repaint then begin
           FUpdateNeeded := True;
-          SendMessage(Handle, SB_GETRECT, Index, Integer(@PanelRect));
+          SendMessage(Handle, SB_GETRECT, Index, lParam(@PanelRect));
           InvalidateRect(Handle, @PanelRect, True);
           Exit;
         end else
@@ -940,7 +940,7 @@ begin
               Insert(#9#9, S, 1);
           end;
 
-        SendMessage(Handle, SB_SETTEXT, Index or Flags, Integer(PChar(S)));
+        SendMessage(Handle, SB_SETTEXT, Index or Flags, lParam(PChar(S)));
 
       end; {Panel.Style = spsContainer - else}
     end; {Panels[index]}
@@ -964,8 +964,8 @@ begin
       if Count = 0 then
       begin
         PanelEdges[0] := -1;
-        SendMessage(Handle, SB_SETPARTS, 1, Integer(@PanelEdges));
-        SendMessage(Handle, SB_SETTEXT, 0, Integer(PChar('')));
+        SendMessage(Handle, SB_SETPARTS, 1, lParam(@PanelEdges));
+        SendMessage(Handle, SB_SETTEXT, 0, lParam(PChar('')));
       end else
       begin
         PanelPos := 0;
@@ -975,7 +975,7 @@ begin
           PanelEdges[I] := PanelPos;
         end;
         PanelEdges[Count - 1] := -1;
-        SendMessage(Handle, SB_SETPARTS, Count, Integer(@PanelEdges));
+        SendMessage(Handle, SB_SETPARTS, Count, lParam(@PanelEdges));
       end;
     end;
     for I := 0 to Count - 1 do begin

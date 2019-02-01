@@ -841,7 +841,10 @@ begin
     end;
     if FAutoRepeat then begin
       if sbRepeatTimer = nil then
+      begin
         sbRepeatTimer := TTimer.Create(Self);
+        sbRepeatTimer.Enabled  := False;
+      end;
       sbRepeatTimer.Interval := FRepeatDelay;
       sbRepeatTimer.OnTimer := TimerExpired;
       sbRepeatTimer.Enabled  := True;

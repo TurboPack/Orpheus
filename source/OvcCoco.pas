@@ -522,7 +522,8 @@ begin
   inc(pos, SizeOf(Char));
   while not CharInSet(ch, LineEnds) do
   begin
-    SetLength(line, length(Line) + 1);
+    if Length(line) < i then
+      SetLength(line, i + 20);
     line[i] := ch;
     inc(i);
     ch := Scanner.CharAt(pos);

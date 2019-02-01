@@ -395,7 +395,7 @@ begin
   inherited CreateParams(Params);
 
   with Params do
-    Style := Integer(Style) or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;

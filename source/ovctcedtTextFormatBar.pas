@@ -386,7 +386,7 @@ procedure TFormSubClasser.RevertParentWindowProc;
 begin
   if FForm <> nil then
   begin
-    if not RemoveWindowSubclass(FForm.Handle, SubClassWindowProc, NativeUInt(Self)) then
+    if not RemoveWindowSubclass(FForm.Handle, SubClassWindowProc, lParam(Self)) then
       RaiseLastOSError;
     FForm := nil;
   end;

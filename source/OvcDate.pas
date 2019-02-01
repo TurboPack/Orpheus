@@ -56,7 +56,7 @@ type
     {In STDATE, dates are stored in long integer format as the number of days
     since January 1, 1600}
 
-  TDateArray = array[0..(MaxLongInt div SizeOf(TStDate))-1] of TStDate;
+  TDateArray = array[0..(MaxInt div SizeOf(TStDate))-1] of TStDate;
     {Type for StDate open array}
 
   TStDayType = (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday);
@@ -410,7 +410,7 @@ var
   GC   : Boolean;
 
 begin
-  Result := -MaxLongInt;
+  Result := -MaxInt;
   if (not (Month in [1..12])) or (Date < 1)  then
     Exit
   else if (Month in [1, 3, 5, 7, 8, 10, 12]) and (Date > 31) then

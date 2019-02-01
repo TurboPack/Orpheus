@@ -834,8 +834,8 @@ var
 
   procedure IncDecValueLongInt;
   var
-    L : NativeInt;
-    S    : TEditString;
+    L : Integer;
+    S : TEditString;
   begin
     pbStripPicture(S, efEditSt);
 
@@ -1082,17 +1082,17 @@ var
     if TransferFlag = otf_GetData then begin
       pbStripPicture(S, efEditSt);
 
-      if not efStr2Long(S, NativeInt(DataPtr^)) then
-        NativeInt(DataPtr^) := 0;
+      if not efStr2Long(S, Integer(DataPtr^)) then
+        Integer(DataPtr^) := 0;
     end else begin
-      efLong2Str(S, NativeInt(DataPtr^));
+      efLong2Str(S, Integer(DataPtr^));
       pbMergePicture(efEditSt, S);
     end;
   end;
 
   procedure TransferWord;
   var
-    L      : NativeInt;
+    L      : Integer;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1110,7 +1110,7 @@ var
 
   procedure TransferInteger;
   var
-    L      : NativeInt;
+    L      : Integer;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1128,7 +1128,7 @@ var
 
   procedure TransferByte;
   var
-    L      : NativeInt;
+    L      : Integer;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1146,7 +1146,7 @@ var
 
   procedure TransferShortInt;
   var
-    L      : NativeInt;
+    L      : Integer;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -1348,7 +1348,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateLongInt;
   var
-    L : NativeInt;
+    L    : Integer;
     S    : TEditString;
   begin
     pbStripPicture(S, efEditSt);
@@ -1368,7 +1368,7 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateWord;
   var
-    L : NativeInt;
+    L : Integer;
     W : Word;
     S    : TEditString;
   begin
@@ -1390,8 +1390,8 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateInteger;
   var
-    L : NativeInt;
-    I : Integer;
+    L    : Integer;
+    I    : Integer;
     S    : TEditString;
   begin
     pbStripPicture(S, efEditSt);
@@ -1412,8 +1412,8 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateByte;
   var
-    L : NativeInt;
-    B : Byte;
+    L    : Integer;
+    B    : Byte;
     S    : TEditString;
   begin
     pbStripPicture(S, efEditSt);
@@ -1434,8 +1434,8 @@ function TOvcCustomNumericField.efValidateField : Word;
 
   procedure ValidateShortInt;
   var
-    L  : NativeInt;
-    Si : Byte;
+    L    : Integer;
+    Si   : Byte;
     S    : TEditString;
   begin
     pbStripPicture(S, efEditSt);

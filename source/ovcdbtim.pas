@@ -241,7 +241,7 @@ end;
 
 procedure TOvcCustomDbTimeEdit.CMGetDataLink(var Message : TMessage);
 begin
-  Message.Result := Integer(FDataLink);
+  Message.Result := lResult(FDataLink);
 end;
 
 constructor TOvcCustomDbTimeEdit.Create(AOwner : TComponent);

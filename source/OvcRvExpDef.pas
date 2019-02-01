@@ -116,9 +116,9 @@ type
     procedure MatchType(ExpectedType: TOvcDRDataType);
   public
     procedure Assign(const Source: TOvcRvExpNode); override;
+    function AsBoolean(const ATestValue: Variant): Boolean;
     property UnaryNot: Boolean read FUnaryNot write FUnaryNot;
     property IsOp : TOvcRvExpIsOp read FIsOp write FIsOp;
-    function AsBoolean(const TestValue: Variant): Boolean;
   end;
 
   TOvcRvExpBetweenClause = class(TOvcRvExpNode)
@@ -2163,24 +2163,22 @@ end;
 
 { TOvcRvExpIsTest }
 
-function TOvcRvExpIsTest.AsBoolean(const TestValue: Variant): Boolean;
+function TOvcRvExpIsTest.AsBoolean(const ATestValue: Variant): Boolean;
 begin
   case IsOp of
-  ioNull :
-    Result := VarIsNull(TestValue) xor UnaryNot;
-  ioTrue :
-    if UnaryNot then
-      Result := not TestValue
+    ioNull :
+      Result := VarIsNull(ATestValue) xor FUnaryNot;
+    ioTrue : begin
+      Result := ATestValue;
+      if FUnaryNot then Result := not Result;
+    end;
+    ioFalse : begin
+      Result := not ATestValue;
+      if FUnaryNot then Result := not Result;
+    end;
     else
-      Result := TestValue;
-  ioFalse :
-    if UnaryNot then
-      Result := TestValue
-    else
-      Result := not TestValue;
-  else
-  //ioUnknown :
-    Result := VarIsNull(TestValue) xor UnaryNot;
+    //ioUnknown :
+      Result := VarIsNull(ATestValue) xor FUnaryNot;
   end;
 end;
 

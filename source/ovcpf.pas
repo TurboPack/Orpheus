@@ -1517,7 +1517,7 @@ var
 
   procedure IncDecValueLongInt;
   var
-    L : NativeInt;
+    L : Integer;
   begin
     pbStripPicture(S, efEditSt);
 
@@ -2020,7 +2020,7 @@ var
     if TransferFlag = otf_GetData then begin
       pbStripPicture(S, efEditSt);
 
-      if not efStr2Long(S, NativeInt(DataPtr^)) then
+      if not efStr2Long(S, Integer(DataPtr^)) then
         Integer(DataPtr^) := 0;
     end else begin
       efLong2Str(S, Integer(DataPtr^));
@@ -2031,7 +2031,7 @@ var
   procedure TransferWord;
     {-transfer data to or from Word fields}
   var
-    L : NativeInt;
+    L : Integer;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2050,7 +2050,7 @@ var
   procedure TransferInteger;
     {-transfer data to or from Integer fields}
   var
-    L : NativeInt;
+    L : Integer;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2069,7 +2069,7 @@ var
   procedure TransferByte;
     {-transfer data to or from Byte fields}
   var
-    L : NativeInt;
+    L : Integer;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2088,7 +2088,7 @@ var
   procedure TransferShortInt;
     {-transfer data to or from ShortInt fields}
   var
-    L : NativeInt;
+    L : Integer;
     S : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
@@ -2425,7 +2425,7 @@ var
 
   procedure ValidateLongInt;
   var
-    L : NativeInt;
+    L : Integer;
   begin
     pbStripPicture(S, efEditSt);
 
@@ -2444,7 +2444,7 @@ var
 
   procedure ValidateWord;
   var
-    L : NativeInt;
+    L : Integer;
     W : Word;
   begin
     pbStripPicture(S, efEditSt);
@@ -2465,7 +2465,7 @@ var
 
   procedure ValidateInteger;
   var
-    L : NativeInt;
+    L : Integer;
     I : Integer;
   begin
     pbStripPicture(S, efEditSt);
@@ -2486,7 +2486,7 @@ var
 
   procedure ValidateByte;
   var
-    L : NativeInt;
+    L : Integer;
     B : Byte;
   begin
     pbStripPicture(S, efEditSt);
@@ -2507,7 +2507,7 @@ var
 
   procedure ValidateShortInt;
   var
-    L  : NativeInt;
+    L  : Integer;
     Si : ShortInt;
   begin
     pbStripPicture(S, efEditSt);

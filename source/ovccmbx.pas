@@ -115,7 +115,9 @@ type
     {event variables}
     FAfterEnter   : TNotifyEvent;
     FAfterExit    : TNotifyEvent;
-    FOnMouseWheel : TMouseWheelEvent;
+    {DM - START CHANGE}
+    // removed FOnMouseWheel : TMouseWheelEvent;
+    {DM - END CHANGE}
     FOnSelChange  : TNotifyEvent;        {called when the selection changes}
 
     {internal variables}
@@ -190,8 +192,9 @@ type
       message WM_KILLFOCUS;
     procedure WMMeasureItem(var Message : TMessage);
       message WM_MEASUREITEM;
-    procedure WMMouseWheel(var Msg : TMessage);
-      message WM_MOUSEWHEEL;
+    {DM - START CHANGE}
+    // removed procedure WMMouseWheel(var Msg : TMessage); message WM_MOUSEWHEEL;
+    {DM - END CHANGE}
     procedure WMSetFocus(var Msg : TWMSetFocus);
       message WM_SETFOCUS;
 
@@ -217,8 +220,9 @@ type
     procedure CreateParams(var Params: TCreateParams); override;
     procedure CreateWnd; override;
     procedure DestroyWnd; override;
-    procedure DoOnMouseWheel(Shift: TShiftState;
-      Delta, XPos, YPos: SmallInt); dynamic;
+    {DM - START CHANGE}
+    // removed function DoOnMouseWheel
+    {DM - END CHANGE}
     procedure DoExit; override;
     procedure DrawItem(Index: Integer; ItemRect: TRect;
       State: TOwnerDrawState); override;
@@ -270,8 +274,9 @@ type
     {events}
     property AfterEnter: TNotifyEvent read FAfterEnter write FAfterEnter;
     property AfterExit: TNotifyEvent read FAfterExit write FAfterExit;
-    property OnMouseWheel: TMouseWheelEvent read FOnMouseWheel
-      write FOnMouseWheel;
+    {DM - START CHANGE}
+    // removed property OnMouseWheel: TMouseWheelEvent read FOnMouseWheel write FOnMouseWheel;
+    {DM - END CHANGE}
     property OnSelectionChange: TNotifyEvent read FOnSelChange
       write FOnSelChange;
   public
@@ -310,6 +315,7 @@ type
   TOvcComboBox = class(TOvcBaseComboBox)
   published
     {properties}
+    property Align;
     property Anchors;
     property Constraints;
     property DragKind;
@@ -695,7 +701,7 @@ begin
     ItemIndex := SendMessage(Handle,
                              CB_FINDSTRINGEXACT,
                              FMRUList.Items.Count - 1,
-                             Integer(SrchText));
+                             LPARAM(SrchText));
   finally
     StrDispose(SrchText); // FreeMem(SrchText, L);
   end;
@@ -892,12 +898,9 @@ begin
   inherited DoExit;
 end;
 
-procedure TOvcBaseComboBox.DoOnMouseWheel(Shift : TShiftState;
-                                   Delta, XPos, YPos : SmallInt);
-begin
-  if Assigned(FOnMouseWheel) then
-    FOnMouseWheel(Self, Shift, Delta, XPos, YPos);
-end;
+{DM - START CHANGE}
+// removed function TOvcBaseComboBox.DoOnMouseWheel
+{DM - END CHANGE}
 
 procedure TOvcBaseComboBox.DrawItem(Index : Integer; ItemRect: TRect;
                                      State : TOwnerDrawState);
@@ -1015,7 +1018,7 @@ begin
           {this will search for the first matching item}
           Index := SendMessage(Handle, CB_FINDSTRING,
                                FMRUList.Items.Count - 1,
-                                 NativeInt(SrchText));
+                                 lParam(SrchText));
         finally
           StrDispose(SrchText); //FreeMem(SrchText, length(Text) + 1);
         end;
@@ -1392,7 +1395,7 @@ begin
       ItemIndex := SendMessage(Handle,
                                CB_FINDSTRINGEXACT,
                                0,
-                               NativeInt(SrchText));
+                               lParam(SrchText));
     finally
       StrDispose(SrchText); // FreeMem(SrchText, L);
     end;
@@ -1552,15 +1555,9 @@ begin
   end;
 end;
 
-procedure TOvcBaseComboBox.WMMouseWheel(var Msg : TMessage);
-begin
-  inherited;
-
-  with Msg do
-    DoOnMouseWheel(KeysToShiftState(LOWORD(wParam)) {fwKeys},
-                   HIWORD(wParam) {zDelta},
-                   LOWORD(lParam) {xPos},   HIWORD(lParam) {yPos});
-end;
+{DM - START CHANGE}
+// removed procedure TOvcBaseComboBox.WMMouseWheel(var Msg : TMessage);
+{DM - END CHANGE}
 
 procedure TOvcBaseComboBox.WMSetFocus(var Msg : TWMSetFocus);
 begin

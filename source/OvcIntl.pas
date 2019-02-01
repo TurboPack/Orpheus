@@ -1340,7 +1340,7 @@ var
     {copy substring into Dest, replace substring with SubChar}
     L := 0;
     while wLongDate[I] <> '''' do
-      if L < SizeOf(wldSub1) then begin
+      if L < Length(wldSub1) then begin
         Dest[L] := wLongDate[I];
         Inc(L);
         wLongDate[I] := SubChar;

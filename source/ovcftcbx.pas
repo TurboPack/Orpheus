@@ -414,7 +414,7 @@ begin
     VK_DOWN, VK_UP:
       begin
         { Update the preview control's font AFTER the selection has been updated }
-        PostMessage(Handle, OM_FONTUPDATEPREVIEW, 0, NativeInt(Self));
+        PostMessage(Handle, OM_FONTUPDATEPREVIEW, 0, lParam(Self));
       end;
   end;
 
@@ -455,10 +455,10 @@ begin
   DC := GetDC(0);
   TempList := TStringList.Create;
   try
-    EnumFontFamilies(DC, nil, @EnumFontFamProc, Integer(Self));      //SZ FIXME EnumFontFamilies is 16-bit compatibility function
+    EnumFontFamilies(DC, nil, @EnumFontFamProc, lParam(Self));      //SZ FIXME EnumFontFamilies is 16-bit compatibility function
     if (Printer.Printers.Count > 0) and (Printer.Handle > 0) then
       EnumFontFamilies(Printer.Handle, nil, @EnumPrinterFontFamProc,
-        Integer(Self));
+        NativeInt(Self));
     TempList.Assign(Items);
     TempList.Sort;
     Items.Assign(TempList);

@@ -143,31 +143,25 @@ uses
   ovcStr;
 
 function GetVolume(DriveChar: Char): string;
-const
-  MaxVolSize = 260;
 var
   Path : array [0..3] of Char;
   NU, VolSize : DWord;
-  Vol : PChar;
+  Vol : array[0..MAX_PATH] of Char;
 begin
   Path[0] := DriveChar;
   Path[1] := ':';
   Path[2] := #0;
-  VolSize := MaxVolSize;
-  GetMem(Vol, MaxVolSize * SizeOf(Char));
   Vol[0] := #0;
   Result := '';
-  try
-    if WNetGetConnection(Path, Vol, VolSize) = WN_SUCCESS then
-      Result := StrPas(Vol)
-    else begin
-      if GetVolumeInformation(PChar(DriveChar + ':\'),
-        Vol, MAX_PATH, nil, NU, NU, nil, 0) then
-        Result := Vol;
-      Result := Format('[%s]',[Result]);
-    end;
-  finally
-    FreeMem(Vol, MaxVolSize);
+  VolSize := Length(Vol);
+  if WNetGetConnection(Path, Vol, VolSize) = WN_SUCCESS then
+    Result := StrPas(Vol)
+  else begin
+    VolSize := Length(Vol);
+    if GetVolumeInformation(PChar(DriveChar + ':\'),
+      Vol, VolSize, nil, NU, NU, nil, 0) then
+      Result := Vol;
+    Result := Format('[%s]',[Result]);
   end;
 end;
 
@@ -222,7 +216,7 @@ begin
   ClearItems;
   SavedErrorMode := SetErrorMode(SEM_FAILCRITICALERRORS);
   try
-    SendMessage(Handle, CB_DIR, DDL_Drives + DDL_Exclusive, NativeInt(PChar('*.*')));
+    SendMessage(Handle, CB_DIR, DDL_Drives + DDL_Exclusive, lParam(PChar('*.*')));
     if Items.Count > 0 then
       for I := 0 to Pred(Items.Count) do begin
         DriveChar := UpCase(Items[I][3]);

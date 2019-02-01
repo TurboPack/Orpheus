@@ -27,6 +27,7 @@ object frmViewEd: TfrmViewEd
     BorderStyle = sbsSunken
     Caption = ' Unused Fields:'
     TabOrder = 0
+    ExplicitWidth = 77
   end
   object Panel1: TScrollBox
     Left = 0
@@ -81,6 +82,7 @@ object frmViewEd: TfrmViewEd
     BorderStyle = sbsSunken
     Caption = ' Grouping:'
     TabOrder = 4
+    ExplicitWidth = 54
   end
   object StaticText3: TStaticText
     Left = 0
@@ -91,6 +93,7 @@ object frmViewEd: TfrmViewEd
     BorderStyle = sbsSunken
     Caption = ' Columns:'
     TabOrder = 5
+    ExplicitWidth = 51
   end
   object Button1: TButton
     Left = 344
@@ -173,6 +176,7 @@ object frmViewEd: TfrmViewEd
     BorderStyle = sbsSunken
     Caption = ' Filter expression:'
     TabOrder = 10
+    ExplicitWidth = 90
   end
   object Panel6: TPanel
     Left = 0

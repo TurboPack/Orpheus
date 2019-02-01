@@ -112,9 +112,9 @@ begin
   if Len = 0 then
     Exit;
   SetLength(Buf, Len * SizeOf(Char)); // returned size is in TChars!
-  Len := GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_FONTSIGNATURE, PChar(Buf), Length(Buf));
+  Len := GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_FONTSIGNATURE, PChar(Buf), Len);
 
-  Move(PByte(Buf)^, LocaleSig, Min(Len, SizeOf(LocaleSig)));
+  Move(PByte(Buf)^, LocaleSig, Min(Len * SizeOf(Char), SizeOf(LocaleSig)));
 
   Result := LocaleSig.lsUsb[3] and $08000000 <> 0;
 end;

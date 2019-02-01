@@ -604,7 +604,7 @@ end;
 
 procedure TOvcDbPictureField.pfdbSetFieldValue;
 var
-  S  : string[MaxEditLen];
+  S  : array[0..MaxEditLen] of Char;
   I  : SmallInt absolute S;
   L  : Integer absolute S;
   W  : Word absolute S;
@@ -616,16 +616,17 @@ var
   SE : Integer;
   M  : Boolean;
   EM : Boolean;
-  F  : array[0..255] of Char; {used to compare old and new value}
+  F  : array[0..MaxEditLen] of Char; {used to compare old and new value}
   Pt : TPoint;
   TL : Integer;
-  iCount: Integer;
   sOldValue: string;
   sNewValue: string;
+  bUseString: boolean;
 begin
   if efdbBusy then
     Exit;
 
+  bUseString := false;
   Pt := efCaret.Position;
 
   {clear to insure match before transfer}
@@ -634,13 +635,11 @@ begin
   if Field <> nil then begin
     case FFieldType of
       ftString, ftWideString: begin
+                     bUseString := true;
                      sNewValue := Field.AsString;
                      if (sNewValue = '') and not (efoStripLiterals in Options) then begin
                        {new or empty field. create display string w/ literals}
-                       //R.K. FillChar doesn't work under Unicode
-                       SetLength(sNewValue, MaxLength);
-                       for iCount := 1 to Length(sNewValue) do
-                         sNewValue := ' ';
+                       sNewValue := StringOfChar(' ', MaxLength);
                        pbInitPictureFlags;
                        if sNewValue <> '' then
                        begin
@@ -648,9 +647,9 @@ begin
                          sNewValue := F;
                        end;
                      end else if not (efoTrimBlanks in Options) and
-                                 not (efoStripLiterals in Options) then
-                       while Length(sNewValue) < MaxLength do
-                         sNewValue := sNewValue + ' ';
+                                 not (efoStripLiterals in Options) and
+                                 (Length(sNewValue) < MaxLength) then
+                         sNewValue := sNewValue + StringOfChar(' ', MaxLength - Length(sNewValue));
                    end;
       ftSmallInt : I := Field.AsInteger;
       ftInteger  : L := Field.AsInteger;
@@ -667,23 +666,22 @@ begin
       ftDateTime, ftTimeStamp:
         if (Field.IsNull) then DT := BadDate
         else DT := Field.AsDateTime;
-    else
-      S := AnsiString(Field.AsString);
+    else begin
+        bUseString := true;
+        sNewValue := Field.AsString;
+      end;
     end;
     P := efHPos;
 
     {clear to insure match before transfer}
-    //R.K. FillChar doesn't work under Unicode
-    for iCount := Low(F) to High(F) do
-      F[iCount] := #0;
-//    FillChar(F, SizeOf(F), 0);
+    FillChar(F, SizeOf(F), 0);
 
     Include(sefOptions, sefNoUserValidate);
     efdbBusy := True;
     try
       {get copy of current field value}
 
-      if Field.DataType in [ftString, ftWideString] then
+      if bUseString then
         Self.GetValue(sOldValue)
       else
         Self.GetValue(F);
@@ -702,8 +700,12 @@ begin
         ftDateTime : Self.AsDateTime := DT;
         ftString, ftWideString:
           Self.SetValue(sNewValue);
-        else
-          Self.SetValue(S);
+        else begin
+          if bUseString then
+            Self.SetValue(sNewValue)
+          else
+            Self.SetValue(S);
+        end;
       end;
 
       {restore modified states}
@@ -716,7 +718,7 @@ begin
     end;
 
     {if field value changed, call DoOnChange}
-    if Field.DataType in [ftString, ftWideString] then
+    if bUseString then
     begin
       if sNewValue <> sOldValue then
         inherited DoOnChange;

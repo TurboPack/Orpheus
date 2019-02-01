@@ -218,6 +218,7 @@ begin
         urlFontColor := Font.Color;
       Font.Color := FHighlightColor;
       urlTimer := TTimer.Create(Self);
+      urlTimer.Enabled := False;
       urlTimer.Interval := 100;
       urlTimer.OnTimer := TimerEvent;
       urlTimer.Enabled := True;

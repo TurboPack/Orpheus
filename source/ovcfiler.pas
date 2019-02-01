@@ -323,7 +323,7 @@ begin
         if (Items[K]^.PI.PropType^.Kind = tkClass) and
            (CompareText(string(Items[K]^.PI.PropType^.Name), TOvcCollection.ClassName) = 0) then begin
           {get the collection instance}
-          C := TOvcCollection(GetOrdProp(AObject, PPropInfo(Items[K])));
+          C := TOvcCollection(GetInt64Prop(AObject, PPropInfo(Items[K])));
           for I := 0 to C.Count-1 do begin
             Props := TOvcPropertyList.Create(C.Item[I], tkProperties, string(Items[K]^.PI.Name)
               + '[' + IntToStr(I) + ']');
@@ -514,7 +514,7 @@ var
   PropS : TOvcPropertyList;
 begin
   Result := '';
-  Obj := TObject(GetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo)));
+  Obj := TObject(GetInt64Prop(PropInfo^.AObject, PPropInfo(PropInfo)));
 
   if (Obj <> nil) and (Obj is TComponent) then exit;
 
@@ -568,13 +568,13 @@ begin
 end;
 
 type
-  TCardinalSet = set of 0..SizeOf(Cardinal) * 8 - 1;
+  TCardinalSet = set of 0..(SizeOf(Cardinal) * 8 - 1);
 
 function TOvcDataFiler.GetSetProperty(PropInfo : PExPropInfo) : string;
 var
   TypeInfo : PTypeInfo;
   W        : Cardinal;
-  I        : Integer;
+  I        : Cardinal;
 begin
   Result := '[';
   W := GetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo));
@@ -610,7 +610,7 @@ var
   SectName : string;
 begin
   Result := '';
-  List := TObject(GetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo)));
+  List := TObject(GetInt64Prop(PropInfo^.AObject, PPropInfo(PropInfo)));
   SectName := Format('%s.%s', [Section, GetItemName(string(PropInfo^.PI.Name))]);
   EraseSection(SectName);
   if (List is TStrings) and (TStrings(List).Count > 0) then begin
@@ -741,7 +741,7 @@ begin
     C := S[1]
   else
     C := #0;
-  SetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo), Integer(C));
+  SetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo), Ord(C));
 end;
 
 procedure TOvcDataFiler.SetClassProperty({const S : string; }PropInfo : PExPropInfo);
@@ -751,7 +751,7 @@ var
   I      : Integer;
   Obj    : TObject;
 begin
-  Obj := TObject(GetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo)));
+  Obj := TObject(GetInt64Prop(PropInfo^.AObject, PPropInfo(PropInfo)));
   if (Obj <> nil) and (Obj is TStrings) then
     SetStringsProperty({S, }PropInfo);
   Loader := CreateDataFiler;
@@ -808,8 +808,8 @@ const
 var
   TypeInfo : PTypeInfo;
   W        : Cardinal;
-  I, N     : Integer;
-  Count    : Integer;
+  N        : Cardinal;
+  I, Count : Integer;
   EnumName : string;
 begin
   W := 0;
@@ -850,7 +850,7 @@ var
   I, Cnt   : Integer;
   SectName : string;
 begin
-  List := TObject(GetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo)));
+  List := TObject(GetInt64Prop(PropInfo^.AObject, PPropInfo(PropInfo)));
   if (List is TStrings) then begin
     SectName := Format('%s.%s', [Section, GetItemName(string(PropInfo^.PI.Name))]);
     Cnt := StrToIntDef(Trim(ReadString(SectName, 'Count', '0')), 0);
@@ -874,7 +874,7 @@ end;
 
 procedure TOvcDataFiler.SetWCharProperty(const S : string; PropInfo : PExPropInfo);
 begin
-  SetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo), NativeInt(S[1]));
+  SetOrdProp(PropInfo^.AObject, PPropInfo(PropInfo), Ord(S[1]));
 end;
 
 procedure TOvcDataFiler.StoreAllProperties(AObject : TObject);

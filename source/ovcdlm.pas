@@ -44,7 +44,7 @@ uses
 
 {.$DEFINE OvcDlmDebug}
 const
-  dlmMaxKeys = 64;
+  dlmMaxKeys = MaxByte;
 
 { TOvcPoolManager }
 
@@ -198,7 +198,7 @@ type
 
 { TOvcSortedList }
 type
-  TOvcMultiCompareFunc = function(Key : Integer; I1,I2 : Pointer) : Integer of object;
+  TOvcMultiCompareFunc = function(Key : NativeInt; I1,I2 : Pointer) : Integer of object;
   TOvcSortedList = class(TOvcList)
   protected
     FCompareFunc : TOvcMultiCompareFunc;
@@ -439,10 +439,9 @@ begin
   Result := Pool.NewItem;
 end;
 
-function TOvcList.Compare(Sender: TOvcPageTree; UserData, Key1,
-  Key2: Pointer): Integer;
+function TOvcList.Compare(Sender: TOvcPageTree; UserData, Key1, Key2: Pointer): Integer;
 begin
-  Result := NativeUInt(POvcListNode(Key1)^.Item) - NativeUInt(POvcListNode(Key2)^.Item);
+  Result := Integer(NativeUInt(POvcListNode(Key1)^.Item) - NativeUInt(POvcListNode(Key2)^.Item));
 end;
 
 function TOvcList.First(var Node: PovcListNode): Boolean;
@@ -580,12 +579,12 @@ begin
   if Key1 = Key2 then
     Result := 0
   else begin
-    Result := FCompareFunc(Integer(UserData) - 1, POvcListNode(Key1).Item, POvcListNode(Key2).Item);
+    Result := FCompareFunc(NativeInt(UserData) - 1, POvcListNode(Key1).Item, POvcListNode(Key2).Item);
     if Result = 0 then
       if Key1 = Key2 then
         raise Exception.Create('Internal error')
       else
-        Result := NativeUInt(Key1) - NativeUInt(Key2);
+        Result := Integer(NativeUInt(Key1) - NativeUInt(Key2));
   end;
 end;
 
@@ -596,7 +595,7 @@ var
   i: Integer;
 begin
   for i := Count - 1 downto 0 do
-    POvcListNode(DataArray[i]).IndexPages[Integer(UserData)] := NewPage;
+    POvcListNode(DataArray[i]).IndexPages[Byte(UserData)] := NewPage;
 end;
 
 procedure TOvcSortedList.SetCurrentKey(Value: Integer);
@@ -766,7 +765,7 @@ var
   i,NewSlot : Integer;
 begin
   if CacheCount >= FCacheSize then begin
-    Old := MaxLongInt;
+    Old := MaxInt;
     NewSlot := -1;
     for i := 0 to pred(CacheCount) do
       if TimeStamp[i] < Old then begin

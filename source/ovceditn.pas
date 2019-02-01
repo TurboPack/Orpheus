@@ -66,8 +66,8 @@ type
   TUndoRec = packed record
     PNum     : Integer;    {paragraph number}
     PPos     : Integer;    {position in paragraph}
-    DSize    : Word;       {data size in characters (unicode: not bytes)}
-    PrevSize : Word;       {size of previous record}
+    DSize    : Cardinal;   {data size in characters (unicode: not bytes)}
+    PrevSize : Cardinal;   {size of previous record}
     Flags    : Byte;       {contains undo type and flags}
     LinkNum  : Byte;       {link number}
     Data     : record end; {data-dynamically allocated}
@@ -115,14 +115,14 @@ type
 
   TParaNode = class(TObject)
   public
-    BufSize   : Word;       {size of buffer}
+    BufSize   : Cardinal;   {size of buffer}
     LineCount : Integer;    {number of lines in this paragraph}
     Map       : PLineMap;   {pointer to line map}
     MapSize   : Word;       {number of elements in line map}
     Next      : TParaNode;  {next paragraph in list}
     Prev      : TParaNode;  {previous paragraph in list}
-    S         : PChar;  {text of paragraph; nil if empty}
-    SLen      : Word;       {current length}
+    S         : PChar;      {text of paragraph; nil if empty}
+    SLen      : Integer;    {current length}
 
     constructor Init(P       : PChar;
                      WrapCol : Integer;
@@ -397,10 +397,11 @@ constructor TParaNode.InitLen(P : PChar; Len : Word;
                               WrapCol, TabSize : Integer);
   {-Create paragraph with Len characters from P^}
 var
-  Size : Word;
+  Size : Cardinal;
 begin
   inherited Create;
 
+  S := nil;
   Map := nil;
   Next := nil;
   Prev := nil;
@@ -409,7 +410,6 @@ begin
 
   {make copy of line}
   if Size = 1 then begin
-    S := nil;
     BufSize := 0;
   end else begin
     BufSize := (Size+7) and $FFF8;

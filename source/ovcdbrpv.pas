@@ -488,7 +488,7 @@ procedure TOvcDbReportView.MoveDataPointer(P : Pointer);
 begin
   inc(InMove);
   try
-    FDataLink.ActiveRecord := Integer(P) - 1;
+    FDataLink.ActiveRecord := NativeInt(P) - 1;
   finally
     dec(InMove);
   end;
@@ -596,6 +596,7 @@ var
   F1,F2 : double;
   ActiveRecord: Integer;
 begin
+  result := 0;
   ActiveRecord := FDataLink.ActiveRecord;
   try
     case TField(FieldList[FieldIndex]).DataType of

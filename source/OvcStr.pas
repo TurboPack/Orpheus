@@ -108,7 +108,7 @@ function StrStInsertPrim(Dest, S : PChar; Pos : Cardinal) : PChar;
     primitive version modifies the source directly}
 function StrStPos(P, S : PChar; var Pos : Cardinal) : Boolean;
   {-Sets Pos to position of the S in P, returns True if found}
-function StrToLongPChar(S : PChar; var I : NativeInt) : Boolean;
+function StrToLongPChar(S : PChar; var I : Integer) : Boolean;
   {-Convert a PChar string to a long integer}
 procedure TrimAllSpacesPChar(P : PChar);
   {-Trim leading and trailing blanks from P}
@@ -407,7 +407,7 @@ end;
 function HexLPChar(Dest : PChar; L : Integer) : PChar;
   {-Return the hex string for a long integer}
 var
-  T2 : Array[0..4] of Char;
+  T2 : Array[0..SizeOf(Integer)] of Char;
 begin
   Result := StrCat(HexWPChar(Dest, HIWORD(L)), HexWPChar(T2, LOWORD(L)));
 end;
@@ -416,10 +416,27 @@ end;
 function HexPtrPChar(Dest : PChar; P : Pointer) : PChar;
   {-Return hex string for pointer}
 var
-  T2 : Array[0..4] of Char;
+  T2 : Array[0..SizeOf(Pointer)] of Char;
+  N  : Int64;
+  L  : Cardinal;
 begin
-  StrCat(HexWPChar(Dest, HIWORD(Integer(P))), ':');
-  Result := StrCat(Dest, HexWPChar(T2, LOWORD(NativeInt(P))));
+  N := Int64(P);
+  if SizeOf(Pointer) = 8 then
+  begin
+    L := Int64Rec(N).Hi;
+    StrCat(HexWPChar(Dest, HIWORD(L)), ':');
+    StrCat(Dest, HexWPChar(T2, LOWORD(L)));
+    StrCat(Dest, ':');
+    L := Int64Rec(N).Lo;
+  end
+  else
+  begin
+    L := Cardinal(N);
+    Dest^ := #0;
+  end;
+  StrCat(Dest, HexWPChar(T2, HIWORD(L)));
+  StrCat(Dest, ':');
+  Result := StrCat(Dest, HexWPChar(T2, LOWORD(L)));
 end;
 
 
@@ -633,14 +650,14 @@ begin
   end;
 end;
 
-function StrToLongPChar(S : PChar; var I : NativeInt) : Boolean;
+function StrToLongPChar(S : PChar; var I : Integer) : Boolean;
   {-Convert a string to a Integer, returning true if successful}
 //SZ Unicode verified 27.01.2010
 var
   Code : Cardinal;
   P    : array[0..255] of Char;
 begin
-  if StrLen(S)+1 > SizeOf(P) then begin
+  if StrLen(S)+1 > Cardinal(Length(P)) then begin
     Result := False;
     I := -1;
     Exit;

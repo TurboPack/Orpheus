@@ -95,7 +95,7 @@ type
       { New property to access the new Field 'FEllipsisReadonly' together with 'FShowEllipsis'
         without changing 'ShowEllipsis' }
       property EllipsisMode: TEllipsisMode
-         read GetEllipsisMode write SetEllipsisMode default em_show_readonly;
+         read GetEllipsisMode write SetEllipsisMode default em_dont_show;
 
       property ShowEllipsis: Boolean read FShowEllipsis write FShowEllipsis;
 
@@ -116,7 +116,7 @@ implementation
 constructor TOvcTCBaseString.Create(AOwner : TComponent);
 begin
   inherited Create(AOwner);
-  FShowEllipsis := True;
+  FShowEllipsis := False;
   FEllipsisReadonly := True;
   FDataStringType := tstString;
   FIgnoreCR := True;
@@ -325,15 +325,16 @@ procedure TOvcTCBaseString.SetUseWordWrap(WW : boolean);
 
 function TOvcTCBaseString.ReadASCIIZStrings: boolean;
 begin
-  result := DataStringType = tstString;
+  result := DataStringType = tstPChar;
 end;
 
 procedure TOvcTCBaseString.SetUseASCIIZStrings(const Value: boolean);
 begin
   if Value then
-    DataStringType := tstString
-  else if FDataStringType=tstString then
-    DataStringType := tstShortString;
+    DataStringType := tstPChar
+  else
+  if DataStringType <> tstShortString then 
+    DataStringType := tstString;
 end;
 
 

@@ -354,7 +354,7 @@ type
       {-beep if pefBeepOnError option is active}
     procedure efCopyPrim;
       {-Primitive clipboard copy method}
-    function efBinStr2Long(St : PChar; var L : NativeInt) : Boolean;
+    function efBinStr2Long(St : PChar; var L : Integer) : Boolean;
       {-convert a binary string to a Integer}
     function efCalcDataSize(St : PChar; MaxLen : Word) : Word;
       {-calculate data size of a string field with literal stripping option on}
@@ -401,7 +401,7 @@ type
       {-give previous field the focus}
     function  efNthMaskChar(N : Word) : Char;
       {-return the N'th character in the picture mask. N is 0-based}
-    function efOctStr2Long(St : PChar; var L : NativeInt) : Boolean;
+    function efOctStr2Long(St : PChar; var L : Integer) : Boolean;
       {-convert an octal string to a Integer}
 
 { - Hdc changed to TOvcHdc for BCB Compatibility }
@@ -428,7 +428,7 @@ type
       {-set the default range for the given field type}
     procedure efSetInitialValue;
       {-set the initial value of the field}
-    function efStr2Long(P : PChar; var L : NativeInt) : Boolean;
+    function efStr2Long(P : PChar; var L : Integer) : Boolean;
       {-convert a string to a Integer}
     function efTransfer(DataPtr : Pointer; TransferFlag : Word) : Word;
       virtual;
@@ -936,7 +936,7 @@ procedure TOvcBaseEntryField.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
 
-  Params.Style := Integer(Params.Style) or BorderStyles[FBorderStyle];
+  Params.Style := DWORD(Params.Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -1172,7 +1172,7 @@ begin
     FAutoSize := True;
 end;
 
-function TOvcBaseEntryField.efBinStr2Long(St : PChar; var L : NativeInt) : Boolean;
+function TOvcBaseEntryField.efBinStr2Long(St : PChar; var L : Integer) : Boolean;
   {-convert a binary string to a Integer}
 var
   BitNum  : Word;
@@ -1815,7 +1815,7 @@ end;
 procedure TOvcBaseEntryField.efMoveFocus(C : TWinControl);
   {-ask the controller to move the focus to the specified control}
 begin
-  PostMessage(Controller.Handle, om_SetFocus, 0, NativeInt(C));
+  PostMessage(Controller.Handle, om_SetFocus, 0, lParam(C));
 end;
 
 procedure TOvcBaseEntryField.efMoveFocusToNextField;
@@ -1851,7 +1851,7 @@ begin
     Result := efPicture[N];
 end;
 
-function TOvcBaseEntryField.efOctStr2Long(St : PChar; var L : NativeInt) : Boolean;
+function TOvcBaseEntryField.efOctStr2Long(St : PChar; var L : Integer) : Boolean;
   {-convert an octal string to a Integer}
 var
   I  : Word;
@@ -2309,7 +2309,7 @@ begin
     R := Rect(0, 0, RightBdr + 1, ClientHeight);
   end;
 
-  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));   //SZ: According to the Windows SDK, this is only processed by multi line edits. Why do we need it here? It was introduced with the IME changes
+  SendMessage(Handle, EM_SETRECTNP, 0, lParam(@R));   //SZ: According to the Windows SDK, this is only processed by multi line edits. Why do we need it here? It was introduced with the IME changes
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
   if SysLocale.FarEast {and (IMEMode <> imDisable)} then
     SetImeCompositionWindow(Font, efCaret.Position.X,efCaret.Position.Y);
@@ -2700,7 +2700,7 @@ begin
   end;
 end;
 
-function TOvcBaseEntryField.efStr2Long(P : PChar; var L : NativeInt) : Boolean;
+function TOvcBaseEntryField.efStr2Long(P : PChar; var L : Integer) : Boolean;
   {-convert a string to a long integer}
 var
   S : TEditString;
@@ -2827,12 +2827,34 @@ procedure TOvcBaseEntryField.efReadRangeHi(Stream : TStream);
   {-called to read the high range from the stream}
 begin
   Stream.Read(efRangeHi, SizeOf(TRangeType));
+  {$IFDEF WIN64}
+  case (efDataType mod fcpDivisor) of
+    fsubExtended,
+    fsubDouble,
+    fsubSingle,
+    fsubComp:
+    begin
+      efRangeHi.rtExt := Extended(PExtended80Rec(@efRangeHi.rt10)^);
+    end;
+  end;
+  {$ENDIF}
 end;
 
 procedure TOvcBaseEntryField.efReadRangeLo(Stream : TStream);
   {-called to read the low range from the stream}
 begin
   Stream.Read(efRangeLo, SizeOf(TRangeType));
+  {$IFDEF WIN64}
+  case (efDataType mod fcpDivisor) of
+    fsubExtended,
+    fsubDouble,
+    fsubSingle,
+    fsubComp:
+    begin
+      efRangeLo.rtExt := Extended(PExtended80Rec(@efRangeLo.rt10)^);
+    end;
+  end;
+  {$ENDIF}
 end;
 
 function TOvcBaseEntryField.efTransfer(DataPtr : Pointer; TransferFlag : Word) : Word;
@@ -3181,7 +3203,7 @@ end;
 function TOvcBaseEntryField.GetAsInteger : Integer;
   {-returns the field value as a Integer Value}
 var
-  Li  : NativeInt;
+  Li  : Integer;
   Wo  : Word absolute Li;
   It  : SmallInt absolute Li;
   By  : Byte absolute Li;
@@ -3438,7 +3460,7 @@ begin
       fsubChar     : efTransfer(@Char(Data),     otf_GetData);
       fsubBoolean  : efTransfer(@Boolean(Data),  otf_GetData);
       fsubYesNo    : efTransfer(@Boolean(Data),  otf_GetData);
-      fsubLongInt  : efTransfer(@NativeInt(Data),otf_GetData);
+      fsubLongInt  : efTransfer(@Integer(Data),  otf_GetData);
       fsubWord     : efTransfer(@Word(Data),     otf_GetData);
       fsubInteger  : efTransfer(@SmallInt(Data), otf_GetData);
       fsubByte     : efTransfer(@Byte(Data),     otf_GetData);
@@ -4286,7 +4308,7 @@ var
   Buf : array[0..MaxEditLen] of Char;
 begin
   StrPLCopy(Buf, Value, Length(Buf) - 1);
-  Msg.lParam := NativeInt(@Buf);
+  Msg.lParam := lParam(@Buf);
   efPerformEdit(Msg, ccPaste);
 end;
 
@@ -4333,7 +4355,7 @@ begin
       fsubChar     : efTransfer(@AnsiChar(Data), otf_SetData);
       fsubBoolean  : efTransfer(@Boolean(Data),  otf_SetData);
       fsubYesNo    : efTransfer(@Boolean(Data),  otf_SetData);
-      fsubLongInt  : efTransfer(@NativeInt(Data),otf_SetData);
+      fsubLongInt  : efTransfer(@Integer(Data),  otf_SetData);
       fsubWord     : efTransfer(@Word(Data),     otf_SetData);
       fsubInteger  : efTransfer(@SmallInt(Data), otf_SetData);
       fsubByte     : efTransfer(@Byte(Data),     otf_SetData);
@@ -4657,7 +4679,7 @@ var
 begin
   H := Clipboard.GetAsHandle(CF_UNICODETEXT);
   if H <> 0 then begin
-    TMessage(Msg).lParam := Integer(GlobalLock(H));
+    TMessage(Msg).lParam := lParam(GlobalLock(H));
     efPerformEdit(TMessage(Msg), ccPaste);
     GlobalUnlock(H);
   end;

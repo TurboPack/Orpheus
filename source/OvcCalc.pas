@@ -2301,12 +2301,12 @@ end;
 
 procedure TOvcCustomCalculator.CreateParams(var Params : TCreateParams);
 const
-  BorderStyles : array[TBorderStyle] of Integer = (0, WS_BORDER);
+  BorderStyles : array[TBorderStyle] of DWORD = (0, WS_BORDER);
 begin
   inherited CreateParams(Params);
 
   with Params do begin
-    Style := Integer(Style) or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or BorderStyles[FBorderStyle];
     if cPopup then begin
       Style := WS_POPUP or WS_BORDER;
       WindowClass.Style := WindowClass.Style or CS_SAVEBITS;

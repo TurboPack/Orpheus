@@ -242,8 +242,9 @@ type
       dynamic;
     function DoOnGetDateEnabled(ADate : TDateTime) : Boolean;
       dynamic;
-    procedure DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
-      override;
+    {DM - START CHANGE}
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean; override;
+    {DM - END CHANGE}
     function IsReadOnly : Boolean;
       dynamic;
       {-return true if the calendar is in read-only mode}
@@ -872,12 +873,12 @@ end;
 
 procedure TOvcCustomCalendar.CreateParams(var Params : TCreateParams);
 const
-  BorderStyles : array[TBorderStyle] of Integer = (0, WS_BORDER);
+  BorderStyles : array[TBorderStyle] of DWORD = (0, WS_BORDER);
 begin
   inherited CreateParams(Params);
 
   with Params do begin
-    Style := Integer(Style) or BorderStyles[FBorderStyle];
+    Style := DWORD(Style) or BorderStyles[FBorderStyle];
     if clPopup then begin
       Style := WS_POPUP or WS_BORDER;
       WindowClass.Style := WindowClass.Style or CS_SAVEBITS;
@@ -950,35 +951,38 @@ begin
     FOnGetDateEnabled(Self, ADate, Result);
 end;
 
-procedure TOvcCustomCalendar.DoOnMouseWheel(Shift : TShiftState; Delta, XPos, YPos : SmallInt);
+{DM - START CHANGE}
+function TOvcCustomCalendar.DoMouseWheel(Shift: TShiftState; WheelDelta: integer; MousePos: TPoint): boolean;
 var
   Key : Word;
 begin
-  inherited DoOnMouseWheel(Shift, Delta, XPos, YPos);
+  result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if result then Exit;
 
-  if Abs(Delta) = WHEEL_DELTA then begin
+  if Abs(WheelDelta) = WHEEL_DELTA then begin
     {inc/dec month}
-    if Delta < 0 then
+    if WheelDelta < 0 then
       Key := VK_NEXT
     else
       Key := VK_PRIOR;
     KeyDown(Key, []);
-  end else if Abs(Delta) > WHEEL_DELTA then begin
+  end else if Abs(WheelDelta) > WHEEL_DELTA then begin
     {inc/dec year}
-    if Delta < 0 then
+    if WheelDelta < 0 then
       Key := VK_NEXT
     else
       Key := VK_PRIOR;
     KeyDown(Key, [ssCtrl]);
-  end else if Abs(Delta) < WHEEL_DELTA then begin
+  end else if Abs(WheelDelta) < WHEEL_DELTA then begin
     {inc/dec Week}
-    if Delta < 0 then
+    if WheelDelta < 0 then
       Key := VK_DOWN
     else
       Key := VK_UP;
     KeyDown(Key, []);
   end;
 end;
+{DM - END CHANGE}
 
 function TOvcCustomCalendar.GetAsDateTime : TDateTime;
 begin

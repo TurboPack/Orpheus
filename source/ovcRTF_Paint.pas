@@ -119,7 +119,7 @@ begin
   Cookie.dwCount := 0;
   Cookie.dwSize := Length(RTF);
   Cookie.Text := PChar(RTF);
-  Stream.dwCookie := Integer(@Cookie);
+  Stream.dwCookie := NativeInt(@Cookie);
   Stream.dwError := 0;
   Stream.pfnCallback := EditStreamInCallback;
   OleCheck(Services.TxSendMessage(em_StreamIn, sf_RTF or sff_PlainRTF, lParam(@Stream), res));
