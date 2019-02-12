@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcfiler.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcfiler.pas' rev: 33.00 (Windows)
 
 #ifndef OvcfilerHPP
 #define OvcfilerHPP
@@ -39,12 +39,12 @@ class PASCALIMPLEMENTATION TOvcAbstractStore : public Ovcbase::TOvcComponent
 	
 protected:
 	int RefCount;
-	virtual void __fastcall DoOpen(void) = 0 ;
-	virtual void __fastcall DoClose(void) = 0 ;
+	virtual void __fastcall DoOpen() = 0 ;
+	virtual void __fastcall DoClose() = 0 ;
 	
 public:
-	void __fastcall Open(void);
-	void __fastcall Close(void);
+	void __fastcall Open();
+	void __fastcall Close();
 	virtual System::UnicodeString __fastcall ReadString(const System::UnicodeString Section, const System::UnicodeString Item, const System::UnicodeString DefaultValue) = 0 ;
 	virtual void __fastcall WriteString(const System::UnicodeString Section, const System::UnicodeString Item, const System::UnicodeString Value) = 0 ;
 	virtual void __fastcall EraseSection(const System::UnicodeString Section);
@@ -54,7 +54,7 @@ public:
 	void __fastcall WriteInteger(const System::UnicodeString Section, const System::UnicodeString Item, int Value);
 public:
 	/* TOvcComponent.Create */ inline __fastcall virtual TOvcAbstractStore(System::Classes::TComponent* AOwner) : Ovcbase::TOvcComponent(AOwner) { }
-	/* TOvcComponent.Destroy */ inline __fastcall virtual ~TOvcAbstractStore(void) { }
+	/* TOvcComponent.Destroy */ inline __fastcall virtual ~TOvcAbstractStore() { }
 	
 };
 
@@ -82,11 +82,11 @@ public:
 protected:
 	System::Classes::TList* FList;
 	PExPropInfo __fastcall Get(int Index);
-	int __fastcall GetCount(void);
+	int __fastcall GetCount();
 	
 public:
 	__fastcall TOvcPropertyList(System::TObject* AObject, System::Typinfo::TTypeKinds Filter, const System::UnicodeString Prefix);
-	__fastcall virtual ~TOvcPropertyList(void);
+	__fastcall virtual ~TOvcPropertyList();
 	bool __fastcall Contains(PExPropInfo P);
 	PExPropInfo __fastcall Find(const System::UnicodeString AName);
 	void __fastcall Delete(int Index);
@@ -134,7 +134,7 @@ protected:
 	void __fastcall SetStringsProperty(PExPropInfo PropInfo);
 	void __fastcall SetVariantProperty(const System::UnicodeString S, PExPropInfo PropInfo);
 	void __fastcall SetWCharProperty(const System::UnicodeString S, PExPropInfo PropInfo);
-	virtual TOvcDataFiler* __fastcall CreateDataFiler(void);
+	virtual TOvcDataFiler* __fastcall CreateDataFiler();
 	virtual void __fastcall EraseSection(const System::UnicodeString ASection);
 	virtual System::UnicodeString __fastcall GetItemName(const System::UnicodeString APropName);
 	virtual System::UnicodeString __fastcall ReadString(const System::UnicodeString ASection, const System::UnicodeString Item, const System::UnicodeString Default);
@@ -151,8 +151,8 @@ public:
 	__property System::UnicodeString Section = {read=FSection, write=FSection};
 	__property TOvcAbstractStore* Storage = {read=FStorage, write=FStorage};
 public:
-	/* TObject.Create */ inline __fastcall TOvcDataFiler(void) : System::TObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TOvcDataFiler(void) { }
+	/* TObject.Create */ inline __fastcall TOvcDataFiler() : System::TObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TOvcDataFiler() { }
 	
 };
 

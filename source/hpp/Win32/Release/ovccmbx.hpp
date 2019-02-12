@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccmbx.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccmbx.pas' rev: 33.00 (Windows)
 
 #ifndef OvccmbxHPP
 #define OvccmbxHPP
@@ -55,11 +55,11 @@ protected:
 	void __fastcall SetMaxItems(int Value);
 	
 public:
-	void __fastcall Clear(void);
-	__fastcall TOvcMRUList(void);
-	__fastcall virtual ~TOvcMRUList(void);
+	void __fastcall Clear();
+	__fastcall TOvcMRUList();
+	__fastcall virtual ~TOvcMRUList();
 	void __fastcall NewItem(const System::UnicodeString Item, System::TObject* Obj);
-	void __fastcall Shrink(void);
+	void __fastcall Shrink();
 	bool __fastcall RemoveItem(const System::UnicodeString Item);
 	__property System::Classes::TStrings* Items = {read=FList};
 	__property int MaxItems = {read=FMaxItems, write=SetMaxItems, nodefault};
@@ -79,13 +79,13 @@ protected:
 	System::Uitypes::TColor FShadow;
 	
 public:
-	__fastcall virtual TOvcHTColors(void);
+	__fastcall virtual TOvcHTColors();
 	
 __published:
 	__property System::Uitypes::TColor Highlight = {read=FHighlight, write=FHighlight, default=-16777196};
 	__property System::Uitypes::TColor Shadow = {read=FShadow, write=FShadow, default=-16777200};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcHTColors(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcHTColors() { }
 	
 };
 
@@ -135,25 +135,25 @@ protected:
 	void __fastcall SetDroppedWidth(int Value);
 	void __fastcall SetHotTrack(bool Value);
 	HIDESBASE void __fastcall SetItemHeight(int Value);
-	int __fastcall GetListIndex(void);
+	int __fastcall GetListIndex();
 	void __fastcall SetListIndex(int Value);
-	System::Classes::TStrings* __fastcall GetList(void);
-	System::Classes::TStrings* __fastcall GetMRUList(void);
+	System::Classes::TStrings* __fastcall GetList();
+	System::Classes::TStrings* __fastcall GetMRUList();
 	void __fastcall SetKeyDelay(int Value);
 	void __fastcall SetMRUListCount(int Value);
 	void __fastcall SetOcbStyle(TOvcComboStyle Value);
 	void __fastcall SetStandardHomeEnd(bool Value);
 	void __fastcall AddItemToMRUList(int Index);
 	void __fastcall CheckHot(HWND HotWnd);
-	Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel(void);
-	System::UnicodeString __fastcall GetAbout(void);
+	Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel();
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall LabelAttach(System::TObject* Sender, bool Value);
 	void __fastcall LabelChange(System::TObject* Sender);
-	void __fastcall PositionLabel(void);
-	void __fastcall RecalcHeight(void);
-	void __fastcall SetHot(void);
-	void __fastcall UpdateMRUList(void);
-	void __fastcall UpdateMRUListModified(void);
+	void __fastcall PositionLabel();
+	void __fastcall RecalcHeight();
+	void __fastcall SetHot();
+	void __fastcall UpdateMRUList();
+	void __fastcall UpdateMRUListModified();
 	void __fastcall MRUListUpdate(int Count);
 	MESSAGE void __fastcall OMAssignLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMPositionLabel(Winapi::Messages::TMessage &Msg);
@@ -173,30 +173,30 @@ protected:
 	Ovcbase::TOvcLabelPosition DefaultLabelPosition;
 	virtual void __fastcall ComboWndProc(Winapi::Messages::TMessage &Message, HWND ComboWnd, void * ComboProc);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
-	virtual void __fastcall DestroyWnd(void);
+	virtual void __fastcall CreateWnd();
+	virtual void __fastcall DestroyWnd();
 	DYNAMIC void __fastcall DoOnMouseWheel(System::Classes::TShiftState Shift, short Delta, short XPos, short YPos);
-	DYNAMIC void __fastcall DoExit(void);
+	DYNAMIC void __fastcall DoExit();
 	virtual void __fastcall DrawItem(int Index, const System::Types::TRect &ItemRect, Winapi::Windows::TOwnerDrawState State);
 	DYNAMIC void __fastcall KeyDown(System::Word &Key, System::Classes::TShiftState Shift);
-	virtual void __fastcall Loaded(void);
+	virtual void __fastcall Loaded();
 	virtual void __fastcall MeasureItem(int Index, int &IHeight);
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
 	virtual void __fastcall WndProc(Winapi::Messages::TMessage &Message);
-	virtual void __fastcall SelectionChanged(void);
-	DYNAMIC void __fastcall Select(void);
+	virtual void __fastcall SelectionChanged();
+	DYNAMIC void __fastcall Select();
 	virtual void __fastcall SetItemIndex(const int Value)/* overload */;
 	void __fastcall BorderChanged(System::TObject* ABorder);
-	void __fastcall Paint(void);
-	void __fastcall PaintBorders(void);
+	void __fastcall Paint();
+	void __fastcall PaintBorders();
 	virtual void __fastcall PaintWindow(HDC DC);
 	HIDESBASE MESSAGE void __fastcall WMPaint(Winapi::Messages::TWMPaint &Msg);
 	void __fastcall SetHTBorder(bool Value);
 	void __fastcall SetHTColors(TOvcHTColors* Value);
-	bool __fastcall UseRuntimeThemes(void);
+	bool __fastcall UseRuntimeThemes();
 	void __fastcall PaintState(HDC DC, unsigned State);
 	void __fastcall StartAnimation(unsigned NewState);
-	DYNAMIC void __fastcall CloseUp(void);
+	DYNAMIC void __fastcall CloseUp();
 	MESSAGE void __fastcall CNCtlcoloredit(Winapi::Messages::TMessage &Message);
 	HIDESBASE MESSAGE void __fastcall WMSize(Winapi::Messages::TMessage &Message);
 	HIDESBASE MESSAGE void __fastcall CMEnabledchanged(Winapi::Messages::TMessage &Message);
@@ -216,15 +216,15 @@ protected:
 	
 public:
 	__fastcall virtual TOvcBaseComboBox(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBaseComboBox(void);
+	__fastcall virtual ~TOvcBaseComboBox();
 	__property bool DrawingEdit = {read=FDrawingEdit, nodefault};
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	HIDESBASE int __fastcall AddItem(const System::UnicodeString Item, System::TObject* AObject);
 	void __fastcall AssignItems(System::Classes::TPersistent* Source);
-	void __fastcall ClearItems(void);
+	void __fastcall ClearItems();
 	void __fastcall InsertItem(int Index, const System::UnicodeString Item, System::TObject* AObject);
 	void __fastcall RemoveItem(const System::UnicodeString Item);
-	void __fastcall ClearMRUList(void);
+	void __fastcall ClearMRUList();
 	void __fastcall ForceItemsToMRUList(int Value);
 	__property Ovcbase::TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};
 	__property int DroppedWidth = {read=FDroppedWidth, write=SetDroppedWidth, default=-1};
@@ -305,7 +305,7 @@ __published:
 	__property OnMouseWheel;
 public:
 	/* TOvcBaseComboBox.Create */ inline __fastcall virtual TOvcComboBox(System::Classes::TComponent* AOwner) : TOvcBaseComboBox(AOwner) { }
-	/* TOvcBaseComboBox.Destroy */ inline __fastcall virtual ~TOvcComboBox(void) { }
+	/* TOvcBaseComboBox.Destroy */ inline __fastcall virtual ~TOvcComboBox() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcComboBox(HWND ParentWindow) : TOvcBaseComboBox(ParentWindow) { }

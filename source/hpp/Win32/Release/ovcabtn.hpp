@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcabtn.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcabtn.pas' rev: 33.00 (Windows)
 
 #ifndef OvcabtnHPP
 #define OvcabtnHPP
@@ -51,24 +51,24 @@ protected:
 	void *abNewWndProc;
 	void *abPrevWndProc;
 	bool abSizing;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall SetAttachedControl(Vcl::Controls::TWinControl* Value);
 	void __fastcall SetAttachTwoWay(bool Value);
 	void __fastcall SetPosition(TOvcButtonPosition Value);
 	void __fastcall SetSeparation(int Value);
-	void __fastcall abHookControl(void);
+	void __fastcall abHookControl();
 	void __fastcall abSetButtonBounds(const System::Types::TRect &CR);
-	void __fastcall abSetControlBounds(void);
-	void __fastcall abUnHookControl(void);
+	void __fastcall abSetControlBounds();
+	void __fastcall abUnHookControl();
 	void __fastcall abWndProc(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMRecreateWnd(Winapi::Messages::TMessage &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
 	
 public:
 	__fastcall virtual TOvcAttachedButton(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcAttachedButton(void);
+	__fastcall virtual ~TOvcAttachedButton();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	
 __published:

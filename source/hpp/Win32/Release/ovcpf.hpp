@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcpf.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcpf.pas' rev: 33.00 (Windows)
 
 #ifndef OvcpfHPP
 #define OvcpfHPP
@@ -59,9 +59,9 @@ protected:
 	void __fastcall SetInitDateTime(bool Value);
 	System::Byte __fastcall pfGetDataType(TPictureDataType Value);
 	void __fastcall pfResetFieldProperties(TPictureDataType FT);
-	void __fastcall pfSetDefaultRanges(void);
+	void __fastcall pfSetDefaultRanges();
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall efEdit(Winapi::Messages::TMessage &Msg, System::Word Cmd);
 	DYNAMIC void __fastcall efIncDecValue(bool Wrap, double Delta);
 	virtual System::Word __fastcall efTransfer(void * DataPtr, System::Word TransferFlag);
@@ -72,13 +72,13 @@ protected:
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	__fastcall virtual TOvcCustomPictureField(System::Classes::TComponent* AOwner);
-	virtual System::Word __fastcall efValidateField(void);
+	virtual System::Word __fastcall efValidateField();
 	__property TPictureDataType DataType = {read=FPictureDataType, write=pfSetDataType, nodefault};
 	__property bool InitDateTime = {read=FInitDateTime, write=SetInitDateTime, nodefault};
 	__property System::UnicodeString PictureMask = {read=FPictureMask, write=pfSetPictureMask};
 	__property short FloatScale = {read=FFloatScale, write=FFloatScale, nodefault};
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcCustomPictureField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcCustomPictureField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomPictureField(HWND ParentWindow) : Ovcpb::TOvcPictureBase(ParentWindow) { }
@@ -161,7 +161,7 @@ public:
 	/* TOvcCustomPictureField.Create */ inline __fastcall virtual TOvcPictureField(System::Classes::TComponent* AOwner) : TOvcCustomPictureField(AOwner) { }
 	
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcPictureField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcPictureField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcPictureField(HWND ParentWindow) : TOvcCustomPictureField(ParentWindow) { }

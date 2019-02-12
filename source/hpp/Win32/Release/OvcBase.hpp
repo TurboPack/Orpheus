@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcbase.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcbase.pas' rev: 33.00 (Windows)
 
 #ifndef OvcbaseHPP
 #define OvcbaseHPP
@@ -65,8 +65,8 @@ class PASCALIMPLEMENTATION TOvcAttachedLabel : public Vcl::Stdctrls::TLabel
 	
 protected:
 	Vcl::Controls::TWinControl* FControl;
-	void __fastcall SavePosition(void);
-	virtual void __fastcall Loaded(void);
+	void __fastcall SavePosition();
+	virtual void __fastcall Loaded();
 	
 public:
 	__fastcall virtual TOvcAttachedLabel(System::Classes::TComponent* AOwner);
@@ -76,7 +76,7 @@ public:
 __published:
 	__property Vcl::Controls::TWinControl* Control = {read=FControl, write=FControl};
 public:
-	/* TGraphicControl.Destroy */ inline __fastcall virtual ~TOvcAttachedLabel(void) { }
+	/* TGraphicControl.Destroy */ inline __fastcall virtual ~TOvcAttachedLabel() { }
 	
 };
 
@@ -89,7 +89,7 @@ class PASCALIMPLEMENTATION TO32ContainerList : public System::Classes::TList
 public:
 	System::Classes::TComponent* FOwner;
 	__fastcall virtual TO32ContainerList(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TO32ContainerList(void);
+	__fastcall virtual ~TO32ContainerList();
 };
 
 #pragma pack(pop)
@@ -103,9 +103,9 @@ protected:
 	int FOffsetY;
 	System::Classes::TNotifyEvent FOnChange;
 	TOvcAttachEvent FOnAttach;
-	void __fastcall DoOnAttach(void);
-	void __fastcall DoOnChange(void);
-	bool __fastcall IsVisible(void);
+	void __fastcall DoOnAttach();
+	void __fastcall DoOnChange();
+	bool __fastcall IsVisible();
 	void __fastcall SetOffsetX(int Value);
 	void __fastcall SetOffsetY(int Value);
 	void __fastcall SetVisible(bool Value);
@@ -122,10 +122,10 @@ __published:
 	__property int OffsetY = {read=FOffsetY, write=SetOffsetY, stored=IsVisible, nodefault};
 	__property bool Visible = {read=FVisible, write=SetVisible, default=0};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcLabelInfo(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcLabelInfo() { }
 	
 public:
-	/* TObject.Create */ inline __fastcall TOvcLabelInfo(void) : System::Classes::TPersistent() { }
+	/* TObject.Create */ inline __fastcall TOvcLabelInfo() : System::Classes::TPersistent() { }
 	
 };
 
@@ -155,15 +155,15 @@ class PASCALIMPLEMENTATION TOvcComponent : public System::Classes::TComponent
 protected:
 	TOvcCollectionStreamer* FCollectionStreamer;
 	bool FInternal;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	DYNAMIC void __fastcall GetChildren(System::Classes::TGetChildProc Proc, System::Classes::TComponent* Root);
-	DYNAMIC System::Classes::TComponent* __fastcall GetChildOwner(void);
-	virtual void __fastcall Loaded(void);
+	DYNAMIC System::Classes::TComponent* __fastcall GetChildOwner();
+	virtual void __fastcall Loaded();
 	
 public:
 	__fastcall virtual TOvcComponent(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcComponent(void);
+	__fastcall virtual ~TOvcComponent();
 	__property TOvcCollectionStreamer* CollectionStreamer = {read=FCollectionStreamer, write=FCollectionStreamer};
 	__property bool Internal = {read=FInternal, write=FInternal, nodefault};
 	
@@ -178,7 +178,7 @@ class PASCALIMPLEMENTATION TO32Component : public System::Classes::TComponent
 	
 protected:
 	bool FInternal;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	
 public:
@@ -188,7 +188,7 @@ public:
 __published:
 	__property System::UnicodeString About = {read=GetAbout, write=SetAbout, stored=false};
 public:
-	/* TComponent.Destroy */ inline __fastcall virtual ~TO32Component(void) { }
+	/* TComponent.Destroy */ inline __fastcall virtual ~TO32Component() { }
 	
 };
 
@@ -213,15 +213,15 @@ protected:
 	TPostEditEvent FOnPostEdit;
 	TPreEditEvent FOnPreEdit;
 	Ovctimer::TTriggerEvent FOnTimerTrigger;
-	int __fastcall GetEpoch(void);
-	HWND __fastcall GetHandle(void);
+	int __fastcall GetEpoch();
+	HWND __fastcall GetHandle();
 	void __fastcall SetEpoch(int Value);
 	void __fastcall cWndProc(Winapi::Messages::TMessage &Msg);
 	
 public:
 	__fastcall virtual TOvcController(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcController(void);
-	void __fastcall DestroyHandle(void);
+	__fastcall virtual ~TOvcController();
+	void __fastcall DestroyHandle();
 	void __fastcall DoOnPostEdit(System::TObject* Sender, Vcl::Controls::TWinControl* GainingControl);
 	void __fastcall DoOnPreEdit(System::TObject* Sender, Vcl::Controls::TWinControl* LosingControl);
 	void __fastcall DoOnTimerTrigger(System::TObject* Sender, int Handle, unsigned Interval, int ElapsedTime);
@@ -229,7 +229,7 @@ public:
 	void __fastcall DoOnError(System::TObject* Sender, System::Word ErrorCode, const System::UnicodeString ErrorMsg);
 	DYNAMIC bool __fastcall IsSpecialButton(HWND H);
 	void __fastcall MarkAsUninitialized(bool Uninitialized);
-	System::Classes::TComponent* __fastcall ValidateEntryFields(void);
+	System::Classes::TComponent* __fastcall ValidateEntryFields();
 	System::Classes::TComponent* __fastcall ValidateEntryFieldsEx(bool ReportError, bool ChangeFocus);
 	System::Classes::TComponent* __fastcall ValidateTheseEntryFields(System::Classes::TComponent* const *Fields, const int Fields_High);
 	__property bool ErrorPending = {read=FErrorPending, write=FErrorPending, nodefault};
@@ -258,15 +258,15 @@ class PASCALIMPLEMENTATION TOvcGraphicControl : public Vcl::Controls::TGraphicCo
 	
 protected:
 	TOvcCollectionStreamer* FCollectionStreamer;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	DYNAMIC void __fastcall GetChildren(System::Classes::TGetChildProc Proc, System::Classes::TComponent* Root);
-	DYNAMIC System::Classes::TComponent* __fastcall GetChildOwner(void);
-	virtual void __fastcall Loaded(void);
+	DYNAMIC System::Classes::TComponent* __fastcall GetChildOwner();
+	virtual void __fastcall Loaded();
 	
 public:
 	__fastcall virtual TOvcGraphicControl(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcGraphicControl(void);
+	__fastcall virtual ~TOvcGraphicControl();
 	__property TOvcCollectionStreamer* CollectionStreamer = {read=FCollectionStreamer, write=FCollectionStreamer};
 	
 __published:
@@ -284,12 +284,12 @@ protected:
 	TMouseWheelEvent FOnMouseWheel;
 	TOvcLabelInfo* FLabelInfo;
 	bool FInternal;
-	TOvcAttachedLabel* __fastcall GetAttachedLabel(void);
-	System::UnicodeString __fastcall GetAbout(void);
+	TOvcAttachedLabel* __fastcall GetAttachedLabel();
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall LabelAttach(System::TObject* Sender, bool Value);
 	void __fastcall LabelChange(System::TObject* Sender);
-	void __fastcall PositionLabel(void);
+	void __fastcall PositionLabel();
 	MESSAGE void __fastcall OMAssignLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMPositionLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMRecordLabelPosition(Winapi::Messages::TMessage &Msg);
@@ -301,7 +301,7 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
 	TOvcLabelPosition DefaultLabelPosition;
 	DYNAMIC void __fastcall DoOnMouseWheel(System::Classes::TShiftState Shift, short Delta, short XPos, short YPos);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
 	__property System::Classes::TNotifyEvent AfterEnter = {read=FAfterEnter, write=FAfterEnter};
 	__property System::Classes::TNotifyEvent AfterExit = {read=FAfterExit, write=FAfterExit};
@@ -311,7 +311,7 @@ protected:
 public:
 	__property bool Internal = {read=FInternal, write=FInternal, nodefault};
 	__fastcall virtual TO32CustomControl(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TO32CustomControl(void);
+	__fastcall virtual ~TO32CustomControl();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	__property TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};
 	
@@ -334,12 +334,12 @@ protected:
 	TMouseWheelEvent FOnMouseWheel;
 	TOvcLabelInfo* FLabelInfo;
 	bool FInternal;
-	TOvcAttachedLabel* __fastcall GetAttachedLabel(void);
-	System::UnicodeString __fastcall GetAbout(void);
+	TOvcAttachedLabel* __fastcall GetAttachedLabel();
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall LabelAttach(System::TObject* Sender, bool Value);
 	void __fastcall LabelChange(System::TObject* Sender);
-	void __fastcall PositionLabel(void);
+	void __fastcall PositionLabel();
 	MESSAGE void __fastcall OMAssignLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMPositionLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OMRecordLabelPosition(Winapi::Messages::TMessage &Msg);
@@ -351,10 +351,10 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
 	TOvcLabelPosition DefaultLabelPosition;
 	DYNAMIC void __fastcall DoOnMouseWheel(System::Classes::TShiftState Shift, short Delta, short XPos, short YPos);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
-	DYNAMIC System::Classes::TComponent* __fastcall GetChildOwner(void);
-	virtual void __fastcall Loaded(void);
+	DYNAMIC System::Classes::TComponent* __fastcall GetChildOwner();
+	virtual void __fastcall Loaded();
 	__property System::Classes::TNotifyEvent AfterEnter = {read=FAfterEnter, write=FAfterEnter};
 	__property System::Classes::TNotifyEvent AfterExit = {read=FAfterExit, write=FAfterExit};
 	__property TMouseWheelEvent OnMouseWheel = {read=FOnMouseWheel, write=FOnMouseWheel};
@@ -363,7 +363,7 @@ protected:
 public:
 	DYNAMIC void __fastcall GetChildren(System::Classes::TGetChildProc Proc, System::Classes::TComponent* Root);
 	__fastcall virtual TOvcCustomControl(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCustomControl(void);
+	__fastcall virtual ~TOvcCustomControl();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	__property TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};
 	__property TOvcCollectionStreamer* CollectionStreamer = {read=FCollectionStreamer, write=FCollectionStreamer};
@@ -384,18 +384,18 @@ class PASCALIMPLEMENTATION TOvcCollectible : public TOvcComponent
 protected:
 	TOvcCollection* FCollection;
 	bool InChanged;
-	int __fastcall GetIndex(void);
+	int __fastcall GetIndex();
 	void __fastcall SetCollection(TOvcCollection* Value);
 	virtual void __fastcall SetIndex(int Value);
-	DYNAMIC void __fastcall Changed(void);
-	DYNAMIC System::UnicodeString __fastcall GenerateName(void);
-	DYNAMIC System::UnicodeString __fastcall GetBaseName(void);
-	virtual System::UnicodeString __fastcall GetDisplayText(void);
+	DYNAMIC void __fastcall Changed();
+	DYNAMIC System::UnicodeString __fastcall GenerateName();
+	DYNAMIC System::UnicodeString __fastcall GetBaseName();
+	virtual System::UnicodeString __fastcall GetDisplayText();
 	virtual void __fastcall SetName(const System::Classes::TComponentName NewName);
 	
 public:
 	__fastcall virtual TOvcCollectible(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCollectible(void);
+	__fastcall virtual ~TOvcCollectible();
 	__property TOvcCollection* Collection = {read=FCollection};
 	__property System::UnicodeString DisplayText = {read=GetDisplayText};
 	__property int Index = {read=GetIndex, write=SetIndex, nodefault};
@@ -411,7 +411,7 @@ class PASCALIMPLEMENTATION TO32CollectionItem : public System::Classes::TCollect
 protected:
 	System::UnicodeString FName;
 	System::UnicodeString FDisplayText;
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	virtual void __fastcall SetName(System::UnicodeString Value);
 	
@@ -423,7 +423,7 @@ __published:
 	__property System::UnicodeString About = {read=GetAbout, write=SetAbout};
 public:
 	/* TCollectionItem.Create */ inline __fastcall virtual TO32CollectionItem(System::Classes::TCollection* Collection) : System::Classes::TCollectionItem(Collection) { }
-	/* TCollectionItem.Destroy */ inline __fastcall virtual ~TO32CollectionItem(void) { }
+	/* TCollectionItem.Destroy */ inline __fastcall virtual ~TO32CollectionItem() { }
 	
 };
 
@@ -437,18 +437,18 @@ protected:
 	TOvcCollection* FCollection;
 	bool FInternal;
 	bool InChanged;
-	int __fastcall GetIndex(void);
+	int __fastcall GetIndex();
 	void __fastcall SetCollection(TOvcCollection* Value);
 	void __fastcall SetIndex(int Value);
-	HIDESBASEDYNAMIC void __fastcall Changed(void);
-	DYNAMIC System::UnicodeString __fastcall GenerateName(void);
-	DYNAMIC System::UnicodeString __fastcall GetBaseName(void);
-	virtual System::UnicodeString __fastcall GetDisplayText(void);
+	HIDESBASEDYNAMIC void __fastcall Changed();
+	DYNAMIC System::UnicodeString __fastcall GenerateName();
+	DYNAMIC System::UnicodeString __fastcall GetBaseName();
+	virtual System::UnicodeString __fastcall GetDisplayText();
 	virtual void __fastcall SetName(const System::Classes::TComponentName NewName);
 	
 public:
 	__fastcall virtual TOvcCollectibleControl(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCollectibleControl(void);
+	__fastcall virtual ~TOvcCollectibleControl();
 	__property bool Internal = {read=FInternal, write=FInternal, nodefault};
 	__property TOvcCollection* Collection = {read=FCollection};
 	__property System::UnicodeString DisplayText = {read=GetDisplayText};
@@ -491,24 +491,24 @@ protected:
 	bool InLoaded;
 	bool IsLoaded;
 	bool InChanged;
-	int __fastcall GetCount(void);
+	int __fastcall GetCount();
 	System::Classes::TComponent* __fastcall GetItem(int Index);
 	void __fastcall SetItem(int Index, System::Classes::TComponent* Value);
-	virtual void __fastcall Changed(void);
-	void __fastcall Loaded(void);
+	virtual void __fastcall Changed();
+	void __fastcall Loaded();
 	
 public:
 	__fastcall TOvcCollection(System::Classes::TComponent* AOwner, TOvcCollectibleClass ItemClass);
-	__fastcall virtual ~TOvcCollection(void);
+	__fastcall virtual ~TOvcCollection();
 	__property Vcl::Forms::TForm* ItemEditor = {read=FItemEditor, write=FItemEditor};
-	System::Classes::TComponent* __fastcall Add(void);
-	virtual void __fastcall Clear(void);
+	System::Classes::TComponent* __fastcall Add();
+	virtual void __fastcall Clear();
 	void __fastcall Delete(int Index);
 	void __fastcall DoOnItemSelected(int Index);
-	System::UnicodeString __fastcall GetEditorCaption(void);
+	System::UnicodeString __fastcall GetEditorCaption();
 	System::Classes::TComponent* __fastcall ItemByName(const System::UnicodeString Name);
 	System::Classes::TComponent* __fastcall Insert(int Index);
-	Vcl::Forms::TForm* __fastcall ParentForm(void);
+	Vcl::Forms::TForm* __fastcall ParentForm();
 	__property int Count = {read=GetCount, nodefault};
 	__property TOvcCollectibleClass ItemClass = {read=FItemClass};
 	__property System::Classes::TComponent* Item[int Index] = {read=GetItem, write=SetItem/*, default*/};
@@ -538,21 +538,21 @@ protected:
 	bool InLoaded;
 	bool IsLoaded;
 	bool InChanged;
-	HIDESBASE int __fastcall GetCount(void);
-	void __fastcall Loaded(void);
+	HIDESBASE int __fastcall GetCount();
+	void __fastcall Loaded();
 	
 public:
 	__fastcall virtual TO32Collection(System::Classes::TPersistent* AOwner, System::Classes::TCollectionItemClass ItemClass);
-	__fastcall virtual ~TO32Collection(void);
+	__fastcall virtual ~TO32Collection();
 	__property Vcl::Forms::TForm* ItemEditor = {read=FItemEditor, write=FItemEditor};
-	HIDESBASEDYNAMIC TO32CollectionItem* __fastcall Add(void);
+	HIDESBASEDYNAMIC TO32CollectionItem* __fastcall Add();
 	HIDESBASE TO32CollectionItem* __fastcall GetItem(int Index);
-	DYNAMIC System::Classes::TPersistent* __fastcall GetOwner(void);
+	DYNAMIC System::Classes::TPersistent* __fastcall GetOwner();
 	HIDESBASE void __fastcall SetItem(int Index, TO32CollectionItem* Value);
 	void __fastcall DoOnItemSelected(int Index);
-	System::UnicodeString __fastcall GetEditorCaption(void);
+	System::UnicodeString __fastcall GetEditorCaption();
 	TO32CollectionItem* __fastcall ItemByName(const System::UnicodeString Name);
-	Vcl::Forms::TForm* __fastcall ParentForm(void);
+	Vcl::Forms::TForm* __fastcall ParentForm();
 	__property int Count = {read=GetCount, nodefault};
 	__property TO32CollectionItem* Item[int Index] = {read=GetItem, write=SetItem/*, default*/};
 	__property TO32GetEditorCaption OnGetEditorCaption = {read=FOnGetEditorCaption, write=FOnGetEditorCaption};
@@ -570,13 +570,13 @@ class PASCALIMPLEMENTATION TOvcCollectionStreamer : public System::TObject
 protected:
 	System::Classes::TList* FCollectionList;
 	System::Classes::TComponent* FOwner;
-	void __fastcall Loaded(void);
+	void __fastcall Loaded();
 	void __fastcall GetChildren(System::Classes::TGetChildProc Proc, System::Classes::TComponent* Root);
 	
 public:
 	__fastcall TOvcCollectionStreamer(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCollectionStreamer(void);
-	void __fastcall Clear(void);
+	__fastcall virtual ~TOvcCollectionStreamer();
+	void __fastcall Clear();
 	TOvcCollection* __fastcall CollectionFromType(System::Classes::TComponent* Component);
 	__property System::Classes::TComponent* Owner = {read=FOwner};
 };
@@ -589,17 +589,17 @@ class PASCALIMPLEMENTATION TOvcCustomControlEx : public TOvcCustomControl
 	
 protected:
 	TOvcController* FController;
-	bool __fastcall ControllerAssigned(void);
-	TOvcController* __fastcall GetController(void);
+	bool __fastcall ControllerAssigned();
+	TOvcController* __fastcall GetController();
 	virtual void __fastcall SetController(TOvcController* Value);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
 	
 public:
 	__property TOvcController* Controller = {read=GetController, write=SetController};
 public:
 	/* TOvcCustomControl.Create */ inline __fastcall virtual TOvcCustomControlEx(System::Classes::TComponent* AOwner) : TOvcCustomControl(AOwner) { }
-	/* TOvcCustomControl.Destroy */ inline __fastcall virtual ~TOvcCustomControlEx(void) { }
+	/* TOvcCustomControl.Destroy */ inline __fastcall virtual ~TOvcCustomControlEx() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomControlEx(HWND ParentWindow) : TOvcCustomControl(ParentWindow) { }
@@ -620,8 +620,8 @@ private:
 	HIDESBASE void __fastcall SetBorderStyle(const Vcl::Forms::TBorderStyle Value);
 	
 protected:
-	DYNAMIC void __fastcall Deactivate(void);
-	DYNAMIC void __fastcall InitializeNewForm(void);
+	DYNAMIC void __fastcall Deactivate();
+	DYNAMIC void __fastcall InitializeNewForm();
 	DYNAMIC void __fastcall DoClose(System::Uitypes::TCloseAction &Action);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
 	
@@ -640,7 +640,7 @@ __published:
 	__property Visible = {default=0};
 public:
 	/* TCustomForm.CreateNew */ inline __fastcall virtual TOvcPopupWindow(System::Classes::TComponent* AOwner, int Dummy) : Vcl::Forms::TCustomForm(AOwner, Dummy) { }
-	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcPopupWindow(void) { }
+	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcPopupWindow() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcPopupWindow(HWND ParentWindow) : Vcl::Forms::TCustomForm(ParentWindow) { }
@@ -652,7 +652,7 @@ public:
 extern DELPHI_PACKAGE TOvcController* __fastcall FindController(Vcl::Controls::TWinControl* Form);
 extern DELPHI_PACKAGE Vcl::Controls::TWinControl* __fastcall GetImmediateParentForm(Vcl::Controls::TControl* Control);
 extern DELPHI_PACKAGE void __fastcall ResolveController(Vcl::Controls::TWinControl* AForm, TOvcController* &AController);
-extern DELPHI_PACKAGE TOvcController* __fastcall DefaultController(void);
+extern DELPHI_PACKAGE TOvcController* __fastcall DefaultController();
 }	/* namespace Ovcbase */
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE) && !defined(NO_USING_NAMESPACE_OVCBASE)
 using namespace Ovcbase;

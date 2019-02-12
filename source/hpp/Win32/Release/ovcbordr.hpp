@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcbordr.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcbordr.pas' rev: 33.00 (Windows)
 
 #ifndef OvcbordrHPP
 #define OvcbordrHPP
@@ -49,10 +49,10 @@ class PASCALIMPLEMENTATION TOvcBorderEdButton : public Vcl::Buttons::TBitBtn
 	typedef Vcl::Buttons::TBitBtn inherited;
 	
 public:
-	DYNAMIC void __fastcall Click(void);
+	DYNAMIC void __fastcall Click();
 public:
 	/* TBitBtn.Create */ inline __fastcall virtual TOvcBorderEdButton(System::Classes::TComponent* AOwner) : Vcl::Buttons::TBitBtn(AOwner) { }
-	/* TBitBtn.Destroy */ inline __fastcall virtual ~TOvcBorderEdButton(void) { }
+	/* TBitBtn.Destroy */ inline __fastcall virtual ~TOvcBorderEdButton() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcBorderEdButton(HWND ParentWindow) : Vcl::Buttons::TBitBtn(ParentWindow) { }
@@ -71,8 +71,8 @@ protected:
 	Vcl::Graphics::TPenStyle FPenStyle;
 	int FPenWidth;
 	System::Classes::TNotifyEvent FOnChange;
-	void __fastcall DoOnChange(void);
-	void __fastcall SetDefaults(void);
+	void __fastcall DoOnChange();
+	void __fastcall SetDefaults();
 	void __fastcall SetEnabled(bool Value);
 	void __fastcall SetBorderStyle(TOvcBorderStyle Value);
 	void __fastcall SetPenColor(System::Uitypes::TColor Value);
@@ -81,7 +81,7 @@ protected:
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Value);
-	__fastcall TOvcBorder(void);
+	__fastcall TOvcBorder();
 	
 __published:
 	__property TOvcBorderStyle BorderStyle = {read=FBorderStyle, write=SetBorderStyle, stored=FEnabled, default=0};
@@ -91,7 +91,7 @@ __published:
 	__property Vcl::Graphics::TPenStyle PenStyle = {read=FPenStyle, write=SetPenStyle, stored=FEnabled, default=0};
 	__property int PenWidth = {read=FPenWidth, write=SetPenWidth, stored=FEnabled, default=2};
 public:
-	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcBorder(void) { }
+	/* TPersistent.Destroy */ inline __fastcall virtual ~TOvcBorder() { }
 	
 };
 
@@ -109,8 +109,8 @@ protected:
 	
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	__fastcall TOvcBorders(void);
-	__fastcall virtual ~TOvcBorders(void);
+	__fastcall TOvcBorders();
+	__fastcall virtual ~TOvcBorders();
 	
 __published:
 	__property TOvcBorder* BottomBorder = {read=FBottomBorder, write=FBottomBorder};
@@ -133,26 +133,26 @@ protected:
 	Ovcbase::TOvcLabelPosition DefaultLabelPosition;
 	bool DoingBorders;
 	void __fastcall BorderChanged(System::TObject* ABorder);
-	HIDESBASE Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel(void);
-	virtual void __fastcall Paint(void);
-	virtual void __fastcall PaintBorders(void);
+	HIDESBASE Ovcbase::TOvcAttachedLabel* __fastcall GetAttachedLabel();
+	virtual void __fastcall Paint();
+	virtual void __fastcall PaintBorders();
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
 	HIDESBASE void __fastcall LabelChange(System::TObject* Sender);
 	HIDESBASE void __fastcall LabelAttach(System::TObject* Sender, bool Value);
-	HIDESBASE void __fastcall PositionLabel(void);
+	HIDESBASE void __fastcall PositionLabel();
 	HIDESBASE MESSAGE void __fastcall CMVisibleChanged(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OrAssignLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OrPositionLabel(Winapi::Messages::TMessage &Msg);
 	MESSAGE void __fastcall OrRecordLabelPosition(Winapi::Messages::TMessage &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall Notification(System::Classes::TComponent* AComponent, System::Classes::TOperation Operation);
 	
 public:
 	int ButtonWidth;
 	bool DoShowButton;
 	__fastcall virtual TOvcBorderParent(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBorderParent(void);
+	__fastcall virtual ~TOvcBorderParent();
 	virtual void __fastcall SetBounds(int ALeft, int ATop, int AWidth, int AHeight);
 	virtual void __fastcall SetEditControl(Ovceditf::TOvcCustomEdit* EC);
 	__property Ovcbase::TOvcAttachedLabel* AttachedLabel = {read=GetAttachedLabel};

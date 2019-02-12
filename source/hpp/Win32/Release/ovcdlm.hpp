@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdlm.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdlm.pas' rev: 33.00 (Windows)
 
 #ifndef OvcdlmHPP
 #define OvcdlmHPP
@@ -63,13 +63,13 @@ protected:
 	int ItemsPerPage;
 	void *DeletedList;
 	unsigned OwnerThread;
-	void __fastcall NewPage(void);
+	void __fastcall NewPage();
 	
 public:
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	__fastcall TOvcPoolManager(int ItemSize);
-	__fastcall virtual ~TOvcPoolManager(void);
-	void * __fastcall NewItem(void);
+	__fastcall virtual ~TOvcPoolManager();
+	void * __fastcall NewItem();
 	void __fastcall DeleteItem(void * Item);
 };
 
@@ -116,18 +116,18 @@ protected:
 	void __fastcall DeletePage(POvcPTDataPage Page);
 	TOvcPTSearchResult __fastcall BinarySearchData(POvcPTDataPage Root, void * Key, POvcPTDataPage &Page, int &Index);
 	TOvcPTSearchResult __fastcall BinarySearchIndex(POvcPTDataPage Root, void * Key, POvcPTDataPage &Page, int &Index);
-	void __fastcall Clear(void);
-	void __fastcall Init(void);
+	void __fastcall Clear();
+	void __fastcall Init();
 	TOvcPTDataPage *Root;
 	TOvcPoolManager* Pool;
 	void *FUserData;
 	void __fastcall NotifyPageChange(POvcPTDataPage Page);
-	void __fastcall RecalcEdges(void);
+	void __fastcall RecalcEdges();
 	void __fastcall ClearPosition(POvcPTDataPage Page);
 	
 public:
 	__fastcall TOvcPageTree(void * UserData);
-	__fastcall virtual ~TOvcPageTree(void);
+	__fastcall virtual ~TOvcPageTree();
 	bool __fastcall Add(void * Key);
 	bool __fastcall AddEx(void * Key, void * &DataPage);
 	bool __fastcall GEQ(void * Key, void * &Data);
@@ -139,8 +139,8 @@ public:
 	bool __fastcall GLEQ(void * Key, void * &Data);
 	bool __fastcall Delete(void * Key);
 	bool __fastcall DeleteEx(void * Key, void * IndexPage, bool AllowCompare);
-	void __fastcall PushPosition(void);
-	bool __fastcall PopPosition(void);
+	void __fastcall PushPosition();
+	bool __fastcall PopPosition();
 	__property TOvcPTCompareFunc OnCompare = {read=FCompare, write=FCompare};
 	__property TOvcPTPageChangeProc OnPageChange = {read=FPageChange, write=FPageChange};
 };
@@ -177,22 +177,22 @@ protected:
 	int FCount;
 	void * __fastcall GetUserData(POvcListNode Node);
 	void __fastcall SetUserData(POvcListNode Node, void * Value);
-	POvcListNode __fastcall NewNode(void);
+	POvcListNode __fastcall NewNode();
 	void __fastcall FreeNode(POvcListNode P);
 	int __fastcall Compare(TOvcPageTree* Sender, void * UserData, void * Key1, void * Key2);
 	void __fastcall PageChange(TOvcPageTree* Sender, void * UserData, int Count, POvcPTDataArray DataArray, void * NewPage);
 	
 public:
-	__fastcall TOvcList(void);
-	__fastcall virtual ~TOvcList(void);
+	__fastcall TOvcList();
+	__fastcall virtual ~TOvcList();
 	virtual void __fastcall DeleteNode(POvcListNode Node);
 	virtual POvcListNode __fastcall Add(void * Item);
 	bool __fastcall ItemExists(void * Item);
 	void __fastcall AddIfUnique(void * Item);
 	virtual POvcListNode __fastcall AddObject(void * Item, void * UserData);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	virtual void __fastcall Delete(void * Item);
-	bool __fastcall Empty(void);
+	bool __fastcall Empty();
 	POvcListNode __fastcall FindNode(void * Item);
 	void __fastcall SetAllUserData(void * Value);
 	__property void * UserData[POvcListNode Node] = {read=GetUserData, write=SetUserData};
@@ -201,8 +201,8 @@ public:
 	bool __fastcall Last(POvcListNode &Node);
 	bool __fastcall Prev(POvcListNode &Node);
 	__property int Count = {read=FCount, nodefault};
-	void __fastcall PushIndexPosition(void);
-	void __fastcall PopIndexPosition(void);
+	void __fastcall PushIndexPosition();
+	void __fastcall PopIndexPosition();
 };
 
 #pragma pack(pop)
@@ -219,22 +219,22 @@ protected:
 	int KeyCount;
 	System::StaticArray<TOvcPageTree*, 64> Indexes;
 	int FCount;
-	int __fastcall GetCount(void);
+	int __fastcall GetCount();
 	void __fastcall SetCurrentKey(int Value);
 	int __fastcall CompareM(TOvcPageTree* Sender, void * UserData, void * Key1, void * Key2);
 	void __fastcall PageChangeM(TOvcPageTree* Sender, void * UserData, int Count, POvcPTDataArray DataArray, void * NewPage);
-	int __fastcall ComputeCount(void);
+	int __fastcall ComputeCount();
 	
 public:
 	virtual POvcListNode __fastcall Add(void * Item);
 	virtual POvcListNode __fastcall AddObject(void * Item, void * UserData);
 	__fastcall TOvcSortedList(int NumKeys, TOvcMultiCompareFunc CompareFunc);
-	HIDESBASE void __fastcall Clear(void);
+	HIDESBASE void __fastcall Clear();
 	__property int CurrentKey = {read=FCurrentKey, write=SetCurrentKey, nodefault};
 	virtual void __fastcall Delete(void * Item);
-	__fastcall virtual ~TOvcSortedList(void);
-	void * __fastcall FirstItem(void);
-	void * __fastcall LastItem(void);
+	__fastcall virtual ~TOvcSortedList();
+	void * __fastcall FirstItem();
+	void * __fastcall LastItem();
 	HIDESBASE bool __fastcall First(void * &Item);
 	HIDESBASE bool __fastcall Next(void * &Item);
 	HIDESBASE bool __fastcall Last(void * &Item);
@@ -243,8 +243,8 @@ public:
 	bool __fastcall GGEQ(void * SearchItem, void * &Item);
 	bool __fastcall GLEQ(void * SearchItem, void * &Item);
 	virtual void __fastcall DeleteNode(POvcListNode Node);
-	void __fastcall PushIndex(void);
-	void __fastcall PopIndex(void);
+	void __fastcall PushIndex();
+	void __fastcall PopIndex();
 };
 
 
@@ -270,9 +270,9 @@ protected:
 	
 public:
 	void __fastcall AddValue(void * Key, const void *Value);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	__fastcall TOvcLiteCache(int ValueSize, int CacheSize);
-	__fastcall virtual ~TOvcLiteCache(void);
+	__fastcall virtual ~TOvcLiteCache();
 	bool __fastcall GetValue(void * Key, void *Value);
 	__property TOvcFCRemoveNotifier RemoveNotifier = {read=FRemoveNotifier, write=FRemoveNotifier};
 	void __fastcall RemoveValue(void * Key);
@@ -290,9 +290,9 @@ protected:
 	
 public:
 	void __fastcall AddValue(void * Key, const System::UnicodeString Value);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	__fastcall TOvcLiteStringCache(int CacheSize);
-	__fastcall virtual ~TOvcLiteStringCache(void);
+	__fastcall virtual ~TOvcLiteStringCache();
 	bool __fastcall GetValue(void * Key, System::UnicodeString &Value);
 	void __fastcall RemoveValue(void * Key);
 };
@@ -312,7 +312,7 @@ protected:
 	int FCount;
 	int FCapacity;
 	void * __fastcall Get(int Index);
-	void __fastcall Grow(void);
+	void __fastcall Grow();
 	void __fastcall Put(int Index, void * Item);
 	void __fastcall SetCapacity(int NewCapacity);
 	void __fastcall SetCount(int NewCount);
@@ -321,16 +321,16 @@ protected:
 	__classmethod void __fastcall CountError(int Data);
 	
 public:
-	__fastcall virtual ~TOvcFastList(void);
+	__fastcall virtual ~TOvcFastList();
 	int __fastcall Add(void * Item);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	void __fastcall Delete(int Index);
 	int __fastcall IndexOf(void * Item);
 	__property int Count = {read=FCount, write=SetCount, nodefault};
 	__property void * Items[int Index] = {read=Get, write=Put/*, default*/};
 	__property System::Classes::PPointerList List = {read=FList};
 public:
-	/* TObject.Create */ inline __fastcall TOvcFastList(void) : System::TObject() { }
+	/* TObject.Create */ inline __fastcall TOvcFastList() : System::TObject() { }
 	
 };
 

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccaldg.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccaldg.pas' rev: 33.00 (Windows)
 
 #ifndef OvccaldgHPP
 #define OvccaldgHPP
@@ -51,7 +51,7 @@ __published:
 public:
 	/* TCustomForm.Create */ inline __fastcall virtual TOvcfrmCalendarDlg(System::Classes::TComponent* AOwner) : Vcl::Forms::TForm(AOwner) { }
 	/* TCustomForm.CreateNew */ inline __fastcall virtual TOvcfrmCalendarDlg(System::Classes::TComponent* AOwner, int Dummy) : Vcl::Forms::TForm(AOwner, Dummy) { }
-	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcfrmCalendarDlg(void) { }
+	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcfrmCalendarDlg() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcfrmCalendarDlg(HWND ParentWindow) : Vcl::Forms::TForm(ParentWindow) { }
@@ -68,8 +68,8 @@ protected:
 	
 public:
 	__fastcall virtual TOvcCalendarDialog(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCalendarDialog(void);
-	virtual bool __fastcall Execute(void);
+	__fastcall virtual ~TOvcCalendarDialog();
+	virtual bool __fastcall Execute();
 	__property Ovccal::TOvcCalendar* Calendar = {read=FCalendar};
 	
 __published:

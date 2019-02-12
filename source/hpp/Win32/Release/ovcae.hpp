@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcae.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcae.pas' rev: 33.00 (Windows)
 
 #ifndef OvcaeHPP
 #define OvcaeHPP
@@ -90,8 +90,8 @@ protected:
 	int aeVSHigh;
 	System::Byte aeDecimalPlaces;
 	System::Word aeMaxLength;
-	System::UnicodeString __fastcall GetRangeHi(void);
-	System::UnicodeString __fastcall GetRangeLo(void);
+	System::UnicodeString __fastcall GetRangeHi();
+	System::UnicodeString __fastcall GetRangeLo();
 	void __fastcall SetBorderStyle(const Vcl::Forms::TBorderStyle Value);
 	void __fastcall SetLineColor(System::Uitypes::TColor Value);
 	void __fastcall SetNumItems(int Value);
@@ -102,16 +102,16 @@ protected:
 	void __fastcall SetRowHeight(int Value);
 	void __fastcall SetTextMargin(int Value);
 	void __fastcall SetUseScrollBar(bool Value);
-	void __fastcall aeAdjustIntegralHeight(void);
+	void __fastcall aeAdjustIntegralHeight();
 	void __fastcall aeColorChanged(System::TObject* AColor);
 	bool __fastcall aeMakeItemVisible(int Index);
-	void __fastcall aePreFocusProcess(void);
+	void __fastcall aePreFocusProcess();
 	void __fastcall aeReadRangeHi(System::Classes::TStream* Stream);
 	void __fastcall aeReadRangeLo(System::Classes::TStream* Stream);
 	short __fastcall aeScaleDown(int N);
 	int __fastcall aeScaleUp(short N);
-	void __fastcall aeSetVScrollPos(void);
-	void __fastcall aeSetVScrollRange(void);
+	void __fastcall aeSetVScrollPos();
+	void __fastcall aeSetVScrollRange();
 	void __fastcall aeUpdateDisplay(bool Scrolled, int OldItem, int NewItem);
 	void __fastcall aeWriteRangeHi(System::Classes::TStream* Stream);
 	void __fastcall aeWriteRangeLo(System::Classes::TStream* Stream);
@@ -128,23 +128,23 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMVScroll(Winapi::Messages::TWMScroll &Msg);
 	DYNAMIC void __fastcall ChangeScale(int M, int D)/* overload */;
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
-	virtual void __fastcall Paint(void);
-	DYNAMIC void __fastcall aeCreateEditCell(void) = 0 ;
-	DYNAMIC System::WideChar * __fastcall aeGetEditString(void) = 0 ;
+	virtual void __fastcall Paint();
+	DYNAMIC void __fastcall aeCreateEditCell() = 0 ;
+	DYNAMIC System::WideChar * __fastcall aeGetEditString() = 0 ;
 	DYNAMIC void __fastcall aeGetSampleDisplayData(System::WideChar * P) = 0 ;
 	virtual void __fastcall DoGetCellValue(int Index) = 0 ;
 	virtual void __fastcall DoGetItemColor(int Index, System::Uitypes::TColor &FG, System::Uitypes::TColor &BG);
-	DYNAMIC int __fastcall DoPutCellValue(void) = 0 ;
+	DYNAMIC int __fastcall DoPutCellValue() = 0 ;
 	DYNAMIC void __fastcall DoOnSelect(int NewIndex);
 	virtual void __fastcall SetActiveIndex(int Value) = 0 ;
 	
 public:
 	__fastcall virtual TOvcBaseArrayEditor(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcBaseArrayEditor(void);
-	virtual void __fastcall SetFocus(void);
-	int __fastcall WriteCellValue(void);
+	__fastcall virtual ~TOvcBaseArrayEditor();
+	virtual void __fastcall SetFocus();
+	int __fastcall WriteCellValue();
 	__property int ItemIndex = {read=FActiveIndex, write=SetActiveIndex, stored=false, nodefault};
 	
 __published:
@@ -225,16 +225,16 @@ protected:
 	void __fastcall SetDecimalPlaces(System::Byte Value);
 	void __fastcall SetMaxLength(System::Word Value);
 	void __fastcall SetPictureMask(System::WideChar Value);
-	DYNAMIC void __fastcall aeCreateEditCell(void);
-	DYNAMIC System::WideChar * __fastcall aeGetEditString(void);
+	DYNAMIC void __fastcall aeCreateEditCell();
+	DYNAMIC System::WideChar * __fastcall aeGetEditString();
 	DYNAMIC void __fastcall aeGetSampleDisplayData(System::WideChar * P);
 	virtual void __fastcall DoGetCellValue(int Index);
-	DYNAMIC int __fastcall DoPutCellValue(void);
+	DYNAMIC int __fastcall DoPutCellValue();
 	virtual void __fastcall SetActiveIndex(int Value);
 	
 public:
 	__fastcall virtual TOvcSimpleArrayEditor(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcSimpleArrayEditor(void);
+	__fastcall virtual ~TOvcSimpleArrayEditor();
 	
 __published:
 	__property Ovcsf::TSimpleDataType DataType = {read=aeDataType, write=SetArrayDataType, nodefault};
@@ -255,12 +255,12 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMKeyDown(Winapi::Messages::TWMKey &Msg);
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	
 public:
 	__fastcall virtual TSimpleCellField(System::Classes::TComponent* AOwner);
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TSimpleCellField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TSimpleCellField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TSimpleCellField(HWND ParentWindow) : Ovcsf::TOvcSimpleField(ParentWindow) { }
@@ -281,16 +281,16 @@ protected:
 	void __fastcall SetEpoch(int Value);
 	void __fastcall SetMaxLength(System::Word Value);
 	void __fastcall SetPictureMask(const System::UnicodeString Value);
-	DYNAMIC void __fastcall aeCreateEditCell(void);
-	DYNAMIC System::WideChar * __fastcall aeGetEditString(void);
+	DYNAMIC void __fastcall aeCreateEditCell();
+	DYNAMIC System::WideChar * __fastcall aeGetEditString();
 	DYNAMIC void __fastcall aeGetSampleDisplayData(System::WideChar * P);
 	virtual void __fastcall DoGetCellValue(int Index);
-	DYNAMIC int __fastcall DoPutCellValue(void);
+	DYNAMIC int __fastcall DoPutCellValue();
 	virtual void __fastcall SetActiveIndex(int Value);
 	
 public:
 	__fastcall virtual TOvcPictureArrayEditor(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcPictureArrayEditor(void);
+	__fastcall virtual ~TOvcPictureArrayEditor();
 	
 __published:
 	__property Ovcpf::TPictureDataType DataType = {read=aeDataType, write=SetArrayDataType, nodefault};
@@ -312,12 +312,12 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMKeyDown(Winapi::Messages::TWMKey &Msg);
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	
 public:
 	__fastcall virtual TPictureCellField(System::Classes::TComponent* AOwner);
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TPictureCellField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TPictureCellField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TPictureCellField(HWND ParentWindow) : Ovcpf::TOvcPictureField(ParentWindow) { }
@@ -334,16 +334,16 @@ protected:
 	System::UnicodeString aePictureMask;
 	void __fastcall SetArrayDataType(Ovcnf::TNumericDataType Value);
 	void __fastcall SetPictureMask(const System::UnicodeString Value);
-	DYNAMIC void __fastcall aeCreateEditCell(void);
-	DYNAMIC System::WideChar * __fastcall aeGetEditString(void);
+	DYNAMIC void __fastcall aeCreateEditCell();
+	DYNAMIC System::WideChar * __fastcall aeGetEditString();
 	DYNAMIC void __fastcall aeGetSampleDisplayData(System::WideChar * P);
 	virtual void __fastcall DoGetCellValue(int Index);
-	DYNAMIC int __fastcall DoPutCellValue(void);
+	DYNAMIC int __fastcall DoPutCellValue();
 	virtual void __fastcall SetActiveIndex(int Value);
 	
 public:
 	__fastcall virtual TOvcNumericArrayEditor(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcNumericArrayEditor(void);
+	__fastcall virtual ~TOvcNumericArrayEditor();
 	
 __published:
 	__property Ovcnf::TNumericDataType DataType = {read=aeDataType, write=SetArrayDataType, nodefault};
@@ -362,12 +362,12 @@ protected:
 	HIDESBASE MESSAGE void __fastcall WMKeyDown(Winapi::Messages::TWMKey &Msg);
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	
 public:
 	__fastcall virtual TNumericCellField(System::Classes::TComponent* AOwner);
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TNumericCellField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TNumericCellField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TNumericCellField(HWND ParentWindow) : Ovcnf::TOvcNumericField(ParentWindow) { }

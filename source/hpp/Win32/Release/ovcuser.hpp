@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcuser.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcuser.pas' rev: 33.00 (Windows)
 
 #ifndef OvcuserHPP
 #define OvcuserHPP
@@ -41,12 +41,12 @@ protected:
 	void __fastcall SetUserCharSet(Ovcdata::TUserSetRange Index, const Ovcdata::TCharSet &US);
 	
 public:
-	__fastcall TOvcUserData(void);
+	__fastcall TOvcUserData();
 	__property Ovcdata::TCaseChange ForceCase[Ovcdata::TForceCaseRange Index] = {read=GetForceCase, write=SetForceCase};
 	__property System::WideChar SubstChars[Ovcdata::TSubstCharRange Index] = {read=GetSubstChar, write=SetSubstChar};
 	__property Ovcdata::TCharSet UserCharSet[Ovcdata::TUserSetRange Index] = {read=GetUserCharSet, write=SetUserCharSet};
 public:
-	/* TObject.Destroy */ inline __fastcall virtual ~TOvcUserData(void) { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TOvcUserData() { }
 	
 };
 

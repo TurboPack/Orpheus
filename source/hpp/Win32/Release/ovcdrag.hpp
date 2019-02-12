@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdrag.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdrag.pas' rev: 33.00 (Windows)
 
 #ifndef OvcdragHPP
 #define OvcdragHPP
@@ -53,16 +53,16 @@ protected:
 	int DeltaY;
 	bool dDragging;
 	bool dHaveOriginal;
-	void __fastcall ilDragDraw(void);
-	void __fastcall ilRestoreOriginal(void);
-	void __fastcall ilSaveOriginal(void);
+	void __fastcall ilDragDraw();
+	void __fastcall ilRestoreOriginal();
+	void __fastcall ilSaveOriginal();
 	
 public:
 	__fastcall TOvcDragShow(int X, int Y, const System::Types::TRect &SourceRect, System::Uitypes::TColor TransColor);
-	__fastcall virtual ~TOvcDragShow(void);
+	__fastcall virtual ~TOvcDragShow();
 	void __fastcall DragMove(int X, int Y);
-	void __fastcall HideDragImage(void);
-	void __fastcall ShowDragImage(void);
+	void __fastcall HideDragImage();
+	void __fastcall ShowDragImage();
 };
 
 #pragma pack(pop)

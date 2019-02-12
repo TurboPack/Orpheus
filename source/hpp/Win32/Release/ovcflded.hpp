@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcflded.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcflded.pas' rev: 33.00 (Windows)
 
 #ifndef OvcfldedHPP
 #define OvcfldedHPP
@@ -88,13 +88,13 @@ private:
 	
 public:
 	Ovcrptvw::TOvcCustomReportView* EditReportView;
-	void __fastcall PopulateList(void);
-	void __fastcall PopulateFieldCombo(void);
+	void __fastcall PopulateList();
+	void __fastcall PopulateFieldCombo();
 	__property Ovcrptvw::TOvcRvField* EditField = {read=FEditField, write=SetEditField};
 public:
 	/* TCustomForm.Create */ inline __fastcall virtual TfrmOvcRvFldEd(System::Classes::TComponent* AOwner) : Vcl::Forms::TForm(AOwner) { }
 	/* TCustomForm.CreateNew */ inline __fastcall virtual TfrmOvcRvFldEd(System::Classes::TComponent* AOwner, int Dummy) : Vcl::Forms::TForm(AOwner, Dummy) { }
-	/* TCustomForm.Destroy */ inline __fastcall virtual ~TfrmOvcRvFldEd(void) { }
+	/* TCustomForm.Destroy */ inline __fastcall virtual ~TfrmOvcRvFldEd() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TfrmOvcRvFldEd(HWND ParentWindow) : Vcl::Forms::TForm(ParentWindow) { }

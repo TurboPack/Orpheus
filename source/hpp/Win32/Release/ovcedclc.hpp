@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcedclc.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcedclc.pas' rev: 33.00 (Windows)
 
 #ifndef OvcedclcHPP
 #define OvcedclcHPP
@@ -50,15 +50,15 @@ protected:
 	bool PopupClosing;
 	System::Uitypes::TCursor HoldCursor;
 	bool WasAutoScroll;
-	double __fastcall GetAsFloat(void);
-	int __fastcall GetAsInteger(void);
-	System::UnicodeString __fastcall GetAsString(void);
-	Ovccalc::TOvcCalcColors* __fastcall GetPopupColors(void);
-	int __fastcall GetPopupDecimals(void);
-	Vcl::Graphics::TFont* __fastcall GetPopupFont(void);
-	int __fastcall GetPopupHeight(void);
-	int __fastcall GetPopupWidth(void);
-	HIDESBASE bool __fastcall GetReadOnly(void);
+	double __fastcall GetAsFloat();
+	int __fastcall GetAsInteger();
+	System::UnicodeString __fastcall GetAsString();
+	Ovccalc::TOvcCalcColors* __fastcall GetPopupColors();
+	int __fastcall GetPopupDecimals();
+	Vcl::Graphics::TFont* __fastcall GetPopupFont();
+	int __fastcall GetPopupHeight();
+	int __fastcall GetPopupWidth();
+	HIDESBASE bool __fastcall GetReadOnly();
 	void __fastcall SetAsFloat(double Value);
 	void __fastcall SetAsInteger(int Value);
 	void __fastcall SetAsString(const System::UnicodeString Value);
@@ -72,8 +72,8 @@ protected:
 	void __fastcall PopupKeyDown(System::TObject* Sender, System::Word &Key, System::Classes::TShiftState Shift);
 	void __fastcall PopupKeyPress(System::TObject* Sender, System::WideChar &Key);
 	void __fastcall PopupMouseDown(System::TObject* Sender, System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
-	DYNAMIC void __fastcall DoExit(void);
-	DYNAMIC void __fastcall GlyphChanged(void);
+	DYNAMIC void __fastcall DoExit();
+	DYNAMIC void __fastcall GlyphChanged();
 	DYNAMIC void __fastcall KeyDown(System::Word &Key, System::Classes::TShiftState Shift);
 	DYNAMIC void __fastcall KeyPress(System::WideChar &Key);
 	__property bool AllowIncDec = {read=FAllowIncDec, write=FAllowIncDec, nodefault};
@@ -87,13 +87,13 @@ protected:
 public:
 	__fastcall virtual TOvcCustomNumberEdit(System::Classes::TComponent* AOwner);
 	DYNAMIC void __fastcall PopupClose(System::TObject* Sender);
-	DYNAMIC void __fastcall PopupOpen(void);
+	DYNAMIC void __fastcall PopupOpen();
 	__property int AsInteger = {read=GetAsInteger, write=SetAsInteger, nodefault};
 	__property Ovccalc::TOvcCalculator* Calculator = {read=FCalculator};
 	__property double AsFloat = {read=GetAsFloat, write=SetAsFloat};
 	__property System::UnicodeString AsString = {read=GetAsString, write=SetAsString};
 public:
-	/* TOvcEdPopup.Destroy */ inline __fastcall virtual ~TOvcCustomNumberEdit(void) { }
+	/* TOvcEdPopup.Destroy */ inline __fastcall virtual ~TOvcCustomNumberEdit() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomNumberEdit(HWND ParentWindow) : Ovcedpop::TOvcEdPopup(ParentWindow) { }
@@ -162,7 +162,7 @@ public:
 	/* TOvcCustomNumberEdit.Create */ inline __fastcall virtual TOvcNumberEdit(System::Classes::TComponent* AOwner) : TOvcCustomNumberEdit(AOwner) { }
 	
 public:
-	/* TOvcEdPopup.Destroy */ inline __fastcall virtual ~TOvcNumberEdit(void) { }
+	/* TOvcEdPopup.Destroy */ inline __fastcall virtual ~TOvcNumberEdit() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcNumberEdit(HWND ParentWindow) : TOvcCustomNumberEdit(ParentWindow) { }

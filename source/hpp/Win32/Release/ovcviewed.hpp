@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcviewed.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcviewed.pas' rev: 33.00 (Windows)
 
 #ifndef OvcviewedHPP
 #define OvcviewedHPP
@@ -106,7 +106,7 @@ __published:
 private:
 	Ovcrptvw::TOvcRvViewField* PopupColumn;
 	MESSAGE void __fastcall WMRebuild(Winapi::Messages::TMessage &Message);
-	void __fastcall ClearLists(void);
+	void __fastcall ClearLists();
 	void __fastcall OvcReportView1SortingChanged(System::TObject* Sender);
 	
 public:
@@ -139,14 +139,14 @@ public:
 	void __fastcall CPaintBoxMouseDown(System::TObject* Sender, System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
 	void __fastcall CPaintBoxMouseUp(System::TObject* Sender, System::Uitypes::TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
 	void __fastcall CPaintBoxMouseMove(System::TObject* Sender, System::Classes::TShiftState Shift, int X, int Y);
-	void __fastcall BuildFieldList(void);
-	void __fastcall BuildGroupColumnList(void);
-	void __fastcall BuildColumnList(void);
-	void __fastcall CalcDragRects(void);
+	void __fastcall BuildFieldList();
+	void __fastcall BuildGroupColumnList();
+	void __fastcall BuildColumnList();
+	void __fastcall CalcDragRects();
 public:
 	/* TCustomForm.Create */ inline __fastcall virtual TfrmViewEd(System::Classes::TComponent* AOwner) : Vcl::Forms::TForm(AOwner) { }
 	/* TCustomForm.CreateNew */ inline __fastcall virtual TfrmViewEd(System::Classes::TComponent* AOwner, int Dummy) : Vcl::Forms::TForm(AOwner, Dummy) { }
-	/* TCustomForm.Destroy */ inline __fastcall virtual ~TfrmViewEd(void) { }
+	/* TCustomForm.Destroy */ inline __fastcall virtual ~TfrmViewEd() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TfrmViewEd(HWND ParentWindow) : Vcl::Forms::TForm(ParentWindow) { }

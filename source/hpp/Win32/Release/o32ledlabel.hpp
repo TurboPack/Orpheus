@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'o32ledlabel.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'o32ledlabel.pas' rev: 33.00 (Windows)
 
 #ifndef O32ledlabelHPP
 #define O32ledlabelHPP
@@ -53,7 +53,7 @@ protected:
 	void __fastcall ProcessCaption(System::Types::TPoint *Points, const int Points_High);
 	void __fastcall PaintSegment(int Segment, System::Uitypes::TColor Color, System::Types::TPoint *Points, const int Points_High, int OffsetX, int OffsetY);
 	void __fastcall ResizeControl(int Row, int Col, int Size);
-	System::UnicodeString __fastcall GetAbout(void);
+	System::UnicodeString __fastcall GetAbout();
 	void __fastcall SetAbout(const System::UnicodeString Value);
 	void __fastcall SetSize(TSegmentSize Value);
 	void __fastcall SetOnColor(System::Uitypes::TColor Value);
@@ -62,11 +62,11 @@ protected:
 	void __fastcall SetColumns(int Value);
 	void __fastcall SetbgColor(System::Uitypes::TColor Value);
 	void __fastcall SelectSegments(System::Word Segment, System::Types::TPoint *Points, const int Points_High, int OffsetX, int OffsetY);
-	virtual void __fastcall Paint(void);
+	virtual void __fastcall Paint();
 	
 public:
 	__fastcall virtual TO32CustomLEDLabel(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TO32CustomLEDLabel(void);
+	__fastcall virtual ~TO32CustomLEDLabel();
 	__property System::UnicodeString About = {read=GetAbout, write=SetAbout, stored=false};
 	__property int Columns = {read=FColumns, write=SetColumns, default=10};
 	__property int Rows = {read=FRows, write=SetRows, default=1};
@@ -117,7 +117,7 @@ __published:
 	__property Visible = {default=1};
 public:
 	/* TO32CustomLEDLabel.Create */ inline __fastcall virtual TO32LEDLabel(System::Classes::TComponent* AOwner) : TO32CustomLEDLabel(AOwner) { }
-	/* TO32CustomLEDLabel.Destroy */ inline __fastcall virtual ~TO32LEDLabel(void) { }
+	/* TO32CustomLEDLabel.Destroy */ inline __fastcall virtual ~TO32LEDLabel() { }
 	
 };
 

@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcflcbx.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcflcbx.pas' rev: 33.00 (Windows)
 
 #ifndef OvcflcbxHPP
 #define OvcflcbxHPP
@@ -52,11 +52,11 @@ protected:
 	void __fastcall SetFileMask(const System::UnicodeString Value);
 	void __fastcall SetShowIcons(bool Value);
 	virtual void __fastcall DrawItem(int Index, const System::Types::TRect &ItemRect, Winapi::Windows::TOwnerDrawState State);
-	virtual void __fastcall Loaded(void);
+	virtual void __fastcall Loaded();
 	
 public:
 	__fastcall virtual TOvcFileComboBox(System::Classes::TComponent* AOwner);
-	void __fastcall Populate(void);
+	void __fastcall Populate();
 	
 __published:
 	__property TOvcCbxFileAttributes Attributes = {read=FAttributes, write=SetAttributes, default=16};
@@ -113,7 +113,7 @@ __published:
 	__property OnStartDrag;
 	__property OnMouseWheel;
 public:
-	/* TOvcBaseComboBox.Destroy */ inline __fastcall virtual ~TOvcFileComboBox(void) { }
+	/* TOvcBaseComboBox.Destroy */ inline __fastcall virtual ~TOvcFileComboBox() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcFileComboBox(HWND ParentWindow) : Ovccmbx::TOvcBaseComboBox(ParentWindow) { }

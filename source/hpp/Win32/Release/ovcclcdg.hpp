@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcclcdg.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcclcdg.pas' rev: 33.00 (Windows)
 
 #ifndef OvcclcdgHPP
 #define OvcclcdgHPP
@@ -54,7 +54,7 @@ public:
 public:
 	/* TCustomForm.Create */ inline __fastcall virtual TOvcfrmCalculatorDlg(System::Classes::TComponent* AOwner) : Vcl::Forms::TForm(AOwner) { }
 	/* TCustomForm.CreateNew */ inline __fastcall virtual TOvcfrmCalculatorDlg(System::Classes::TComponent* AOwner, int Dummy) : Vcl::Forms::TForm(AOwner, Dummy) { }
-	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcfrmCalculatorDlg(void) { }
+	/* TCustomForm.Destroy */ inline __fastcall virtual ~TOvcfrmCalculatorDlg() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcfrmCalculatorDlg(HWND ParentWindow) : Vcl::Forms::TForm(ParentWindow) { }
@@ -72,8 +72,8 @@ protected:
 	
 public:
 	__fastcall virtual TOvcCalculatorDialog(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcCalculatorDialog(void);
-	virtual bool __fastcall Execute(void);
+	__fastcall virtual ~TOvcCalculatorDialog();
+	virtual bool __fastcall Execute();
 	__property Ovccalc::TOvcCalculator* Calculator = {read=FCalculator};
 	
 __published:

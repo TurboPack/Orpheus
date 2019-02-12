@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcsf.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcsf.pas' rev: 33.00 (Windows)
 
 #ifndef OvcsfHPP
 #define OvcsfHPP
@@ -56,9 +56,9 @@ protected:
 	System::WideChar FPictureMask;
 	System::Byte __fastcall sfGetDataType(TSimpleDataType Value);
 	void __fastcall sfResetFieldProperties(TSimpleDataType FT);
-	void __fastcall sfSetDefaultRanges(void);
+	void __fastcall sfSetDefaultRanges();
 	MESSAGE void __fastcall WMImeComposition(Winapi::Messages::TMessage &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual void __fastcall efEdit(Winapi::Messages::TMessage &Msg, System::Word Cmd);
 	virtual System::WideChar * __fastcall efGetDisplayString(System::WideChar * Dest, System::Word Size);
 	DYNAMIC void __fastcall efIncDecValue(bool Wrap, double Delta);
@@ -69,11 +69,11 @@ protected:
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	__fastcall virtual TOvcCustomSimpleField(System::Classes::TComponent* AOwner);
-	virtual System::Word __fastcall efValidateField(void);
+	virtual System::Word __fastcall efValidateField();
 	__property TSimpleDataType DataType = {read=FSimpleDataType, write=sfSetDataType, nodefault};
 	__property System::WideChar PictureMask = {read=FPictureMask, write=sfSetPictureMask, nodefault};
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcCustomSimpleField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcCustomSimpleField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomSimpleField(HWND ParentWindow) : Ovcef::TOvcBaseEntryField(ParentWindow) { }
@@ -152,7 +152,7 @@ public:
 	/* TOvcCustomSimpleField.Create */ inline __fastcall virtual TOvcSimpleField(System::Classes::TComponent* AOwner) : TOvcCustomSimpleField(AOwner) { }
 	
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcSimpleField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcSimpleField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcSimpleField(HWND ParentWindow) : TOvcCustomSimpleField(ParentWindow) { }

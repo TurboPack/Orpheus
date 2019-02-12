@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccmd.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccmd.pas' rev: 33.00 (Windows)
 
 #ifndef OvccmdHPP
 #define OvccmdHPP
@@ -50,7 +50,7 @@ protected:
 	System::Classes::TList* FCommandList;
 	System::UnicodeString FTableName;
 	Ovcdata::TOvcCmdRec __fastcall GetCmdRec(int Index);
-	int __fastcall GetCount(void);
+	int __fastcall GetCount();
 	void __fastcall PutCmdRec(int Index, const Ovcdata::TOvcCmdRec &CmdRec);
 	void __fastcall ctDisposeCommandEntry(Ovcdata::POvcCmdRec P);
 	Ovcdata::POvcCmdRec __fastcall ctNewCommandEntry(const Ovcdata::TOvcCmdRec &CmdRec);
@@ -59,10 +59,10 @@ protected:
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
 	
 public:
-	__fastcall TOvcCommandTable(void);
-	__fastcall virtual ~TOvcCommandTable(void);
+	__fastcall TOvcCommandTable();
+	__fastcall virtual ~TOvcCommandTable();
 	int __fastcall AddRec(const Ovcdata::TOvcCmdRec &CmdRec);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	void __fastcall Delete(int Index);
 	void __fastcall Exchange(int Index1, int Index2);
 	int __fastcall IndexOf(const Ovcdata::TOvcCmdRec &CmdRec);
@@ -91,7 +91,7 @@ protected:
 	TOvcProcessorState cpState;
 	System::Byte cpSaveKey;
 	System::Byte cpSaveSS;
-	int __fastcall GetCount(void);
+	int __fastcall GetCount();
 	TOvcCommandTable* __fastcall GetTable(int Index);
 	void __fastcall SetTable(int Index, TOvcCommandTable* CT);
 	Ovcdata::TOvcCmdRec __fastcall cpFillCommandRec(System::Byte Key1, System::Byte ShiftState1, System::Byte Key2, System::Byte ShiftState2, System::Word Command);
@@ -101,13 +101,13 @@ protected:
 	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
 	
 public:
-	__fastcall TOvcCommandProcessor(void);
-	__fastcall virtual ~TOvcCommandProcessor(void);
+	__fastcall TOvcCommandProcessor();
+	__fastcall virtual ~TOvcCommandProcessor();
 	void __fastcall Add(TOvcCommandTable* CT);
 	void __fastcall AddCommand(const System::UnicodeString TableName, System::Byte Key1, System::Byte ShiftState1, System::Byte Key2, System::Byte ShiftState2, System::Word Command);
 	void __fastcall AddCommandRec(const System::UnicodeString TableName, const Ovcdata::TOvcCmdRec &CmdRec);
 	void __fastcall ChangeTableName(const System::UnicodeString OldName, const System::UnicodeString NewName);
-	void __fastcall Clear(void);
+	void __fastcall Clear();
 	int __fastcall CreateCommandTable(const System::UnicodeString TableName, bool Active);
 	void __fastcall Delete(int Index);
 	void __fastcall DeleteCommand(const System::UnicodeString TableName, System::Byte Key1, System::Byte ShiftState1, System::Byte Key2, System::Byte ShiftState2);
@@ -118,7 +118,7 @@ public:
 	void __fastcall GetState(TOvcProcessorState &State, System::Byte &Key, System::Byte &Shift);
 	int __fastcall GetCommandTableIndex(const System::UnicodeString TableName);
 	virtual int __fastcall LoadCommandTable(const System::UnicodeString FileName);
-	void __fastcall ResetCommandProcessor(void);
+	void __fastcall ResetCommandProcessor();
 	virtual void __fastcall SaveCommandTable(const System::UnicodeString TableName, const System::UnicodeString FileName);
 	void __fastcall SetScanPriority(const System::UnicodeString *Names, const int Names_High);
 	void __fastcall SetState(TOvcProcessorState State, System::Byte Key, System::Byte Shift);

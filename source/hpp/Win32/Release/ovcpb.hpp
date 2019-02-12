@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcpb.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcpb.pas' rev: 33.00 (Windows)
 
 #ifndef OvcpbHPP
 #define OvcpbHPP
@@ -43,40 +43,40 @@ protected:
 	int pfSelPos;
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
-	virtual void __fastcall CreateWnd(void);
+	virtual void __fastcall CreateWnd();
 	virtual bool __fastcall efCanClose(bool DoValidation);
-	virtual void __fastcall efCaretToEnd(void);
-	virtual void __fastcall efCaretToStart(void);
+	virtual void __fastcall efCaretToEnd();
+	virtual void __fastcall efCaretToStart();
 	DYNAMIC void __fastcall efChangeMask(System::WideChar * Mask);
-	virtual System::Word __fastcall efEditBegin(void);
-	System::Word __fastcall efEditEnd(void);
-	virtual bool __fastcall efFieldIsEmpty(void);
+	virtual System::Word __fastcall efEditBegin();
+	System::Word __fastcall efEditEnd();
+	virtual bool __fastcall efFieldIsEmpty();
 	virtual System::WideChar * __fastcall efGetDisplayString(System::WideChar * Dest, System::Word Size);
-	virtual void __fastcall efRemoveBadOptions(void);
+	virtual void __fastcall efRemoveBadOptions();
 	virtual void __fastcall efSetCaretPos(int Value);
-	System::Word __fastcall pbCalcLength(void);
+	System::Word __fastcall pbCalcLength();
 	void __fastcall pbCalcWidthAndPlaces(System::Word &Width, System::Word &Places);
 	void __fastcall pbFixDecimalPoint(System::WideChar * P);
 	void __fastcall pbFixNumber(int DotPos, int StBgn, int StEnd, bool FirstHalf, bool SecondHalf);
 	bool __fastcall pbIsLiteral(System::Word N);
-	void __fastcall pbInitPictureFlags(void);
-	bool __fastcall pbIsNumber(void);
+	void __fastcall pbInitPictureFlags();
+	bool __fastcall pbIsNumber();
 	bool __fastcall pbIsSemiLiteral(System::Word N);
 	void __fastcall pbMergePicture(const System::WideChar * Dest, const System::WideChar * Src);
-	void __fastcall pbOptimizeInitPictureFlags(void);
-	virtual void __fastcall pbRemoveSemiLits(void);
-	void __fastcall pbRestoreSemiLits(void);
+	void __fastcall pbOptimizeInitPictureFlags();
+	virtual void __fastcall pbRemoveSemiLits();
+	void __fastcall pbRestoreSemiLits();
 	void __fastcall pbStripLiterals(System::WideChar * Dest, System::WideChar * Src);
 	void __fastcall pbStripPicture(const System::WideChar * Dest, const System::WideChar * Src);
 	
 public:
 	void __fastcall pbGetPictureFlags(Ovcdata::TPictureFlags &Flags);
-	DYNAMIC System::UnicodeString __fastcall GetStrippedEditString(void);
+	DYNAMIC System::UnicodeString __fastcall GetStrippedEditString();
 	DYNAMIC void __fastcall MergeWithPicture(const System::UnicodeString S);
 	DYNAMIC System::Word __fastcall ValidateContents(bool ReportError);
 public:
 	/* TOvcBaseEntryField.Create */ inline __fastcall virtual TOvcPictureBase(System::Classes::TComponent* AOwner) : Ovcef::TOvcBaseEntryField(AOwner) { }
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcPictureBase(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcPictureBase() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcPictureBase(HWND ParentWindow) : Ovcef::TOvcBaseEntryField(ParentWindow) { }

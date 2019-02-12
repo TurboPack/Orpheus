@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovccaret.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovccaret.pas' rev: 33.00 (Windows)
 
 #ifndef OvccaretHPP
 #define OvccaretHPP
@@ -59,13 +59,13 @@ protected:
 	void __fastcall SetCaretWidth(int CW);
 	void __fastcall SetIsGray(bool IG);
 	void __fastcall SetShape(TOvcCaretShape S);
-	void __fastcall NotifyChange(void);
+	void __fastcall NotifyChange();
 	
 public:
-	__fastcall TOvcCaret(void);
-	__fastcall virtual ~TOvcCaret(void);
-	void __fastcall Register(void);
-	void __fastcall Deregister(void);
+	__fastcall TOvcCaret();
+	__fastcall virtual ~TOvcCaret();
+	void __fastcall Register();
+	void __fastcall Deregister();
 	__property System::Classes::TNotifyEvent OnChange = {read=FOnChange, write=FOnChange};
 	
 __published:
@@ -103,13 +103,13 @@ protected:
 	void __fastcall SetLinked(bool L);
 	void __fastcall SetPos(const System::Types::TPoint &P);
 	void __fastcall SetVisible(bool V);
-	void __fastcall MakeShape(void);
-	void __fastcall Reinit(void);
-	void __fastcall ResetPos(void);
+	void __fastcall MakeShape();
+	void __fastcall Reinit();
+	void __fastcall ResetPos();
 	
 public:
 	__fastcall TOvcSingleCaret(Vcl::Controls::TWinControl* AOwner);
-	__fastcall virtual ~TOvcSingleCaret(void);
+	__fastcall virtual ~TOvcSingleCaret();
 	void __fastcall CaretTypeHasChanged(System::TObject* Sender);
 	__property TOvcCaret* CaretType = {read=FCaretType, write=SetCaretType};
 	__property int CellHeight = {read=FHeight, write=SetCellHeight, nodefault};
@@ -136,7 +136,7 @@ protected:
 	
 public:
 	__fastcall TOvcCaretPair(Vcl::Controls::TWinControl* AOwner);
-	__fastcall virtual ~TOvcCaretPair(void);
+	__fastcall virtual ~TOvcCaretPair();
 	__property bool InsertMode = {read=FInsMode, write=SetInsMode, nodefault};
 	__property TOvcCaret* InsCaretType = {read=FInsCaretType, write=SetInsCaretType};
 	__property TOvcCaret* OvrCaretType = {read=FOvrCaretType, write=SetOvrCaretType};

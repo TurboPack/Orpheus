@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcnf.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcnf.pas' rev: 33.00 (Windows)
 
 #ifndef OvcnfHPP
 #define OvcnfHPP
@@ -60,23 +60,23 @@ protected:
 	bool nfMinus;
 	Ovcdata::TEditString nfTmp;
 	System::Byte __fastcall nfGetDataType(TNumericDataType Value);
-	void __fastcall nfReloadTmp(void);
+	void __fastcall nfReloadTmp();
 	void __fastcall nfResetFieldProperties(TNumericDataType FT);
-	void __fastcall nfSetDefaultRanges(void);
+	void __fastcall nfSetDefaultRanges();
 	void __fastcall nfSetMaxLength(System::WideChar * Mask);
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus &Msg);
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus &Msg);
 	MESSAGE void __fastcall WMImeComposition(Winapi::Messages::TMessage &Msg);
 	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params);
-	virtual void __fastcall CreateWnd(void);
-	virtual void __fastcall efCaretToEnd(void);
-	virtual void __fastcall efCaretToStart(void);
+	virtual void __fastcall CreateWnd();
+	virtual void __fastcall efCaretToEnd();
+	virtual void __fastcall efCaretToStart();
 	DYNAMIC void __fastcall efChangeMask(System::WideChar * Mask);
 	virtual void __fastcall efEdit(Winapi::Messages::TMessage &Msg, System::Word Cmd);
 	virtual System::WideChar * __fastcall efGetDisplayString(System::WideChar * Dest, System::Word Size);
 	DYNAMIC void __fastcall efIncDecValue(bool Wrap, double Delta);
 	virtual System::Word __fastcall efTransfer(void * DataPtr, System::Word TransferFlag);
-	virtual void __fastcall pbRemoveSemiLits(void);
+	virtual void __fastcall pbRemoveSemiLits();
 	virtual void __fastcall efSetCaretPos(int Value);
 	virtual void __fastcall nfSetDataType(TNumericDataType Value);
 	virtual void __fastcall nfSetPictureMask(const System::UnicodeString Value);
@@ -84,11 +84,11 @@ protected:
 public:
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	__fastcall virtual TOvcCustomNumericField(System::Classes::TComponent* AOwner);
-	virtual System::Word __fastcall efValidateField(void);
+	virtual System::Word __fastcall efValidateField();
 	__property TNumericDataType DataType = {read=FNumericDataType, write=nfSetDataType, nodefault};
 	__property System::UnicodeString PictureMask = {read=FPictureMask, write=nfSetPictureMask};
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcCustomNumericField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcCustomNumericField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcCustomNumericField(HWND ParentWindow) : Ovcpb::TOvcPictureBase(ParentWindow) { }
@@ -163,7 +163,7 @@ public:
 	/* TOvcCustomNumericField.Create */ inline __fastcall virtual TOvcNumericField(System::Classes::TComponent* AOwner) : TOvcCustomNumericField(AOwner) { }
 	
 public:
-	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcNumericField(void) { }
+	/* TOvcBaseEntryField.Destroy */ inline __fastcall virtual ~TOvcNumericField() { }
 	
 public:
 	/* TWinControl.CreateParented */ inline __fastcall TOvcNumericField(HWND ParentWindow) : TOvcCustomNumericField(ParentWindow) { }

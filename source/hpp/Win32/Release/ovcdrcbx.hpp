@@ -1,8 +1,8 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2016 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'ovcdrcbx.pas' rev: 32.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'ovcdrcbx.pas' rev: 33.00 (Windows)
 
 #ifndef OvcdrcbxHPP
 #define OvcdrcbxHPP
@@ -52,14 +52,14 @@ protected:
 	void __fastcall SetDrive(const System::WideChar Value);
 	void __fastcall SetMask(const System::UnicodeString Value);
 	virtual void __fastcall DrawItem(int Index, const System::Types::TRect &ItemRect, Winapi::Windows::TOwnerDrawState State);
-	virtual void __fastcall Loaded(void);
+	virtual void __fastcall Loaded();
 	virtual void __fastcall Notification(System::Classes::TComponent* Component, System::Classes::TOperation Operation);
 	
 public:
 	__fastcall virtual TOvcDirectoryComboBox(System::Classes::TComponent* AOwner);
-	__fastcall virtual ~TOvcDirectoryComboBox(void);
-	void __fastcall Populate(void);
-	virtual void __fastcall SelectionChanged(void);
+	__fastcall virtual ~TOvcDirectoryComboBox();
+	void __fastcall Populate();
+	virtual void __fastcall SelectionChanged();
 	
 __published:
 	__property System::UnicodeString Directory = {read=FDirectory, write=SetDirectory};
