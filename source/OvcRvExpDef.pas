@@ -2170,9 +2170,9 @@ begin
     Result := VarIsNull(TestValue) xor UnaryNot;
   ioTrue :
     if UnaryNot then
-      Result := not TestValue
+      Result := not (TestValue = True)
     else
-      Result := TestValue;
+      Result := (TestValue = True);
   ioFalse :
     if UnaryNot then
       Result := TestValue
