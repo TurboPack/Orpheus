@@ -24,13 +24,13 @@ designtime and runtime packages for Delphi and CBuilder and supports Win32 and W
 
 TurboPack Orpheus package names have the following form:
 
-## Delphi 
+### Delphi 
 * OrpheusDR.bpl (Delphi Runtime)
 * OrpheusDD.bpl (Delphi Designtime)
 * OrpheusDBDR.bpl (Delphi data aware Runtime)
 * OrpheusDBDD.bpl (Delphi data aware Designtime)
 
-## C++Builder
+### C++Builder
 * OrpheusCR.bpl (C++Builder Runtime)
 * OrpheusCD.bpl (C++Builder Designtime)
 * OrpheusDBCR.bpl (C++Builder data aware Runtime)
