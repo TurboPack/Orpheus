@@ -36,3 +36,5 @@ __history
 *.so
 *.tds
 *.vlb
+
+source/hpp/*/*/*.hpp
