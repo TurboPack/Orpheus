@@ -5627,29 +5627,20 @@ end;
 
 function TOvcCustomReportView.CalcHPages(const SelectedOnly : Boolean; const LinesPerPage: Integer): Integer;
 var
-  DoneSectionHeader, DoneSectionFooter: Boolean;
   j, LinesLeft: Integer;
 begin
   Result := 0;
   LinesLeft := 0;
-  DoneSectionHeader := False;
-  DoneSectionFooter := False;
   for j := 0 to pred(Lines) do
     if not SelectedOnly or IsSelected[j] then begin
       while LinesLeft <= 0 do begin
         inc(LinesLeft, (LinesPerPage - PrinterProperties.PrintHeaderLines - PrinterProperties.PrintFooterLines));
         inc(Result);
       end;
-      if not DoneSectionHeader then begin
         if CurrentView.ShowHeader then
           dec(LinesLeft, 2);
-        DoneSectionHeader := True;
-      end;
-      if not DoneSectionFooter then begin
         if CurrentView.ShowFooter then
           dec(LinesLeft, 2);
-        DoneSectionFooter := True;
-      end;
       dec(LinesLeft);
       if PrintDetailView <> nil then begin
         DoDetail(ItemData[j]);
