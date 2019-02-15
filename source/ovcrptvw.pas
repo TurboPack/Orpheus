@@ -5632,11 +5632,11 @@ var
 begin
   Result := 0;
   LinesLeft := 0;
-  DoneSectionHeader := False;
-  DoneSectionFooter := False;
   for j := 0 to pred(Lines) do
     if not SelectedOnly or IsSelected[j] then begin
       while LinesLeft <= 0 do begin
+        DoneSectionHeader := False;
+        DoneSectionFooter := False;      
         inc(LinesLeft, (LinesPerPage - PrinterProperties.PrintHeaderLines - PrinterProperties.PrintFooterLines));
         inc(Result);
       end;
