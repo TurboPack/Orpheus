@@ -33,7 +33,7 @@ PACKAGE OrpheusDR;
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS OFF}
+{$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
 {$OPTIMIZATION ON}
@@ -47,10 +47,10 @@ PACKAGE OrpheusDR;
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE RELEASE}
+{$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'TurboPack Orpheus Delphi runtime package'}
-{$LIBSUFFIX '240'}
+{$LIBSUFFIX '260'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -207,16 +207,14 @@ contains
   o32WideCharSet in '..\..\source\o32WideCharSet.pas',
   ovcBidi in '..\..\source\ovcBidi.pas',
   ovcThemes in '..\..\source\ovcThemes.pas',
-  OvcTCHeaderExtended in '..\..\source\OvcTCHeaderExtended.pas'
-{$IFDEF CPUX86},
+  OvcTCHeaderExtended in '..\..\source\OvcTCHeaderExtended.pas' {$IFDEF CPUX86},
   ovctcedtHTMLText in '..\..\source\ovctcedtHTMLText.pas',
   ovctcedtTextFormatBar in '..\..\source\ovctcedtTextFormatBar.pas' {ovcTextFormatBar},
   ovcRTF_TOM in '..\..\source\ovcRTF_TOM.pas',
   ovcRTF_Paint in '..\..\source\ovcRTF_Paint.pas',
   ovcRTF_IText in '..\..\source\ovcRTF_IText.pas',
   ovcRTF_RichOle in '..\..\source\ovcRTF_RichOle.pas',
-  ovctccheckcbx in '..\..\source\ovctccheckcbx.pas'
-{$ENDIF};
+  ovctccheckcbx in '..\..\source\ovctccheckcbx.pas' {$ENDIF};
 
 end.
 

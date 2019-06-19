@@ -600,7 +600,7 @@ end;
 
 function TOvcDataFiler.GetUStringProperty(PropInfo : PExPropInfo) : string;
 begin
-  Result := GetUnicodeStrProp(PropInfo^.AObject, PPropInfo(PropInfo));
+  Result := GetStrProp(PropInfo^.AObject, PPropInfo(PropInfo));
 end;
 
 function TOvcDataFiler.GetStringsProperty(PropInfo : PExPropInfo) : string;
@@ -840,7 +840,7 @@ end;
 
 procedure TOvcDataFiler.SetUStringProperty(const S : string; PropInfo : PExPropInfo);
 begin
-  SetUnicodeStrProp(PropInfo^.AObject, PPropInfo(PropInfo), S);
+  SetStrProp(PropInfo^.AObject, PPropInfo(PropInfo), S);
 end;
 
 procedure TOvcDataFiler.SetStringsProperty({const S : string; }PropInfo : PExPropInfo);

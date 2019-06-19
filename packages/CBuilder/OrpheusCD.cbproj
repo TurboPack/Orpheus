@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{B76816FE-94A0-42B9-A97C-DEA886F7E83E}</ProjectGuid>
         <MainSource>OrpheusCD.cpp</MainSource>
-        <ProjectVersion>18.1</ProjectVersion>
+        <ProjectVersion>18.6</ProjectVersion>
         <Config Condition="'$(Config)'==''">Release</Config>
         <Base>True</Base>
         <AppType>Library</AppType>
@@ -41,7 +41,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <DllSuffix>240</DllSuffix>
+        <DllSuffix>260</DllSuffix>
         <DCC_UNSUPPORTED_CONSTRUCT>false</DCC_UNSUPPORTED_CONSTRUCT>
         <DCC_HppOutput>..\..\source\hpp\$(Platform)\$(Config)</DCC_HppOutput>
         <SanitizedProjectName>OrpheusCD</SanitizedProjectName>
@@ -50,7 +50,6 @@
         <ILINK_DelayLoadDll>Uxtheme.dll;riched20.dll;$(ILINK_DelayLoadDll)</ILINK_DelayLoadDll>
         <DCC_UnitSearchPath>..\..\source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <ILINK_LibraryPath>..\CBuilder\;..\..\source\;$(BDS)\lib;$(BDS)\source\ToolsAPI;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Keys>CompanyName=;FileDescription=Orpheus Non-visual Components;FileVersion=5.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Orpheus;ProductVersion=5.0.0.0;Comments=</VerInfo_Keys>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
@@ -74,7 +73,7 @@
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=5.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -95,11 +94,9 @@
         <BCC_SourceDebuggingOn>true</BCC_SourceDebuggingOn>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_MajorVer>5</VerInfo_MajorVer>
         <Defines>_DEBUG;$(Defines)</Defines>
-        <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=5.1.0.0;InternalName=;LegalCopyright=Copyright (c) Orpheus Group 2012;LegalTrademarks=;OriginalFilename=;ProductName=Orpheus;ProductVersion=5.1;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=5.1.0.0;InternalName=;LegalCopyright=Copyright (c) Orpheus Group 2012;LegalTrademarks=;OriginalFilename=;ProductName=Orpheus;ProductVersion=5.1;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName)</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <IntermediateOutputDir>Release</IntermediateOutputDir>
@@ -107,7 +104,7 @@
         <TASM_Debugging>None</TASM_Debugging>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=5.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=5.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=5.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=5.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <Defines>NDEBUG;$(Defines)</Defines>
     </PropertyGroup>
     <ItemGroup>
@@ -303,32 +300,32 @@
             <BuildOrder>34</BuildOrder>
         </DelphiCompile>
         <FormResources Include="..\..\source\ovclkou1.dfm"/>
-        <FormResources Include="..\..\source\ovcoutle.dfm"/>
         <FormResources Include="..\..\source\ovcnfpe.dfm"/>
+        <FormResources Include="..\..\source\ovcoutle.dfm"/>
         <FormResources Include="..\..\source\ovcefpe.dfm"/>
-        <FormResources Include="..\..\source\ovclbl1.dfm"/>
         <FormResources Include="..\..\source\ovclbl0.dfm"/>
-        <FormResources Include="..\..\source\ovctbpe2.dfm"/>
+        <FormResources Include="..\..\source\ovclbl1.dfm"/>
         <FormResources Include="..\..\source\ovctbpe1.dfm"/>
+        <FormResources Include="..\..\source\ovctbpe2.dfm"/>
         <FormResources Include="..\..\source\ovctcpe.dfm"/>
         <FormResources Include="..\..\source\ovcxfrc1.dfm"/>
         <FormResources Include="..\..\source\ovcstat0.dfm"/>
         <FormResources Include="..\..\source\ovcpfpe.dfm"/>
         <FormResources Include="..\..\source\ovcrvced.dfm"/>
-        <FormResources Include="..\..\source\ovcsfpe.dfm"/>
         <FormResources Include="..\..\source\ovcrvped.dfm"/>
+        <FormResources Include="..\..\source\ovcsfpe.dfm"/>
         <FormResources Include="..\..\source\ovcdrpve.dfm"/>
-        <FormResources Include="..\..\source\O32IGridEditor1.dfm"/>
         <FormResources Include="..\..\source\O32ColEd.dfm"/>
-        <FormResources Include="..\..\source\ovccmdp1.dfm"/>
+        <FormResources Include="..\..\source\O32IGridEditor1.dfm"/>
         <FormResources Include="..\..\source\ovccmdp0.dfm"/>
+        <FormResources Include="..\..\source\ovccmdp1.dfm"/>
         <FormResources Include="..\..\source\ovccole0.dfm"/>
         <FormResources Include="..\..\source\ovcdock0.dfm"/>
-        <FormResources Include="..\..\source\O32LobEd.dfm"/>
         <FormResources Include="..\..\source\O32IGridItemEd.dfm"/>
+        <FormResources Include="..\..\source\O32LobEd.dfm"/>
         <FormResources Include="..\..\source\o32vldpe.dfm"/>
-        <FormResources Include="..\..\source\ovcaepe.dfm"/>
         <FormResources Include="..\..\source\Ovcabot0.dfm"/>
+        <FormResources Include="..\..\source\ovcaepe.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -419,11 +416,11 @@
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclIntraweb_140_240.bpl">IntraWeb 14.0 Design Package for RAD Studio XE6</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k240.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp240.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k240.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp240.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k260.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp260.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\DataExplorerDBXPluginEnt260.bpl">DBExpress Enterprise Data Explorer Integration</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </CPlusPlusBuilder.Personality>
             <Platforms>

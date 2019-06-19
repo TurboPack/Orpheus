@@ -451,10 +451,6 @@ procedure TOvcSingleCaret.Reinit;
     if (not Assigned(FCaretType)) then
       Exit;
 
-    {inits}
-    NewXOfs := 0;
-    NewYOfs := 0;
-
     with FCaretType do
       begin
         {stop recursion}
@@ -483,6 +479,8 @@ procedure TOvcSingleCaret.Reinit;
         OnChange := CaretTypeHasChanged;
 
         {recalc the X and Y offsets}
+        NewXOfs := 0;
+        NewYOfs := 0;
         case Align of
           caLeft   : begin
                        NewXOfs := 0;

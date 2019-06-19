@@ -3909,11 +3909,6 @@ begin
       Exit;
 
     {draw the box round the cell}
-    ActRowOfs    := 0;
-    ActRowBottom := 0;
-    ActColOfs    := 0;
-    ActColRight  := 0;
-
     with Canvas do begin
       {get the correct grid pen}
       if (otsFocused in tbState) then begin
@@ -3933,6 +3928,10 @@ begin
       Wd := VisibleColumns[Idx].Width;
 
       {calculate where to draw the vertical/horizontal lines}
+      ActRowOfs := 0;
+      ActRowBottom := 0;
+      ActColOfs := 0;
+      ActColRight := 0;
       case GridPenSet.NormalGrid.Effect of
         geNone      : begin
                         ActRowOfs := RowOfs;
