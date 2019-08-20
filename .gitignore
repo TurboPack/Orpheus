@@ -38,3 +38,4 @@ __history
 *.vlb
 
 source/hpp/*/*/*.hpp
+*.hpp
