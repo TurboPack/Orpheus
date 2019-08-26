@@ -39,3 +39,4 @@ __history
 
 source/hpp/*/*/*.hpp
 *.hpp
+*.tvsconfig
