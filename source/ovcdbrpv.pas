@@ -596,6 +596,10 @@ var
   F1,F2 : double;
   ActiveRecord: Integer;
 begin
+{$IF COMPILERVERSION < 32}
+  Result := 0;
+{$ENDIF}
+
   ActiveRecord := FDataLink.ActiveRecord;
   try
     case TField(FieldList[FieldIndex]).DataType of
