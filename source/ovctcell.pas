@@ -422,7 +422,7 @@ function TOvcBaseTableCell.CanStopEditing(SaveValue : boolean) : boolean;
 {--------}
 procedure TOvcBaseTableCell.tcChangeScale(M, D : integer);
   begin
-    if (M <> D) and (not TableFont) then
+    if (M <> D) and (not TableFont) and (DefFontData.Height <> FFont.Height) then
       FFont.Size := MulDiv(FFont.Size, M, D);
   end;
 {--------}

@@ -242,7 +242,7 @@ type
 
       procedure tbFinishLoadingCellList;
       procedure tbReadCellData(Reader : TReader);
-      procedure tbWriteCellData(Writer : TWriter);
+      procedure tbWriteCellData(AWriter: TWriter);
 
       procedure tbCellChanged(Sender : TObject); virtual; abstract;
 
@@ -736,28 +736,35 @@ procedure TOvcTableAncestor.tbReadCellData(Reader : TReader);
       end;
   end;
 {--------}
-procedure TOvcTableAncestor.tbWriteCellData(Writer : TWriter);
-  var
-    i : integer;
-    Cell : TOvcTableCellAncestor;
-    S : string;
-  begin
-    with Writer do
-      begin
-        WriteListBegin;
-        for i := 0 to pred(taCellList.Count) do
-          begin
-            Cell := TOvcTableCellAncestor(taCellList[i]);
-            S := Cell.Owner.Name;
-            if (S <> '') then
-              S := S + '.' + Cell.Name
-            else
-              S := Cell.Name;
-            WriteString(S);
-          end;
-        WriteListEnd;
-      end;
+procedure TOvcTableAncestor.tbWriteCellData(AWriter: TWriter);
+var
+  lCount: Integer;
+  lCell: TOvcTableCellAncestor;
+  lBuf: string;
+  lList: TStringList;
+begin
+  lList := TStringList.Create;
+  try
+    lList.Sorted := True;
+    for lCount := 0 to taCellList.Count - 1 do
+    begin
+      lCell := TOvcTableCellAncestor(taCellList[lCount]);
+      lBuf := lCell.Owner.Name;
+      if lBuf <> '' then
+        lBuf := lBuf + '.' + lCell.Name
+      else
+        lBuf := lCell.Name;
+      lList.Add(lBuf);
+    end;
+
+    AWriter.WriteListBegin;
+    for lBuf in lList do
+      AWriter.WriteString(lBuf);
+    AWriter.WriteListEnd;
+  finally
+    lList.Free;
   end;
+end;
 {====================================================================}
 
 end.

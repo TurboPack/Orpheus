@@ -3,7 +3,7 @@
         <Base>True</Base>
         <AppType>Package</AppType>
         <Basis>True</Basis>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <FrameworkType>None</FrameworkType>
         <MainSource>OrpheusDBDR.dpk</MainSource>
