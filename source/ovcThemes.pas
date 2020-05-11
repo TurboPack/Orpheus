@@ -47,7 +47,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils {$IF COMPILERVERSION >= 34}, Vcl.Controls{$IFEND};
 
 function ThemesEnabled: Boolean; inline;
 begin
