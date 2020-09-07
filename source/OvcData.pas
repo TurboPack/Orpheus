@@ -256,10 +256,11 @@ type
 
   {Each entry field maintains two data structures of this type, one to store
    the lower limit of a field's value, and another to store the upper limit}
+{$EXTENDEDCOMPATIBILITY ON}
   PRangeType = ^TRangeType;
   TRangeType = packed record
-    case Byte of                         {size}
-    00 : (rtChar : Char);             {01/02}
+    case Byte of                          {size}
+    00 : (rtChar : Char);                 {01/02}
     01 : (rtByte : Byte);                 {01}
     02 : (rtSht  : ShortInt);             {01}
     03 : (rtInt  : SmallInt);             {02}
@@ -267,7 +268,7 @@ type
     05 : (rtLong : NativeInt);            {04}
     06 : (rtSgl  : Single);               {04}
     07 : (rtPtr  : Pointer);              {04}
-     08 : (rtReal : Real);                 {06}
+    08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
     10 : (rtComp : Comp);                 {08}
     11 : (rtExt  : Extended);             {10}
@@ -275,6 +276,7 @@ type
     13 : (rtTime : Integer);              {04}
     14 : (rt10   : array[1..10] of Byte); {10} {forces structure to size of 10 bytes}
   end;
+{$EXTENDEDCOMPATIBILITY OFF}
 
 const
   BlankRange : TRangeType = (rt10 : (0, 0, 0, 0, 0, 0, 0, 0, 0, 0));

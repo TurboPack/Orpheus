@@ -641,7 +641,7 @@ type
 implementation
 
 uses
-  Types;
+  Types, Math;
 
 {*** TOvcEfColors ***}
 
@@ -2601,7 +2601,11 @@ begin
         efRangeHi.rtExt := +1.1e+4932;
       end;
 {$ELSE}
-    fsubExtended,
+    fsubExtended :
+      begin
+        efRangeLo.rtExt := -1.7e+308;
+        efRangeHi.rtExt := +1.7e+308;
+      end;
 {$ENDIF}
     fsubDouble :
       begin
@@ -2827,12 +2831,34 @@ procedure TOvcBaseEntryField.efReadRangeHi(Stream : TStream);
   {-called to read the high range from the stream}
 begin
   Stream.Read(efRangeHi, SizeOf(TRangeType));
+{$IFDEF WIN64}
+  if (efDataType mod fcpDivisor) = fsubExtended then
+  begin
+    try
+      efRangeHi.rtExt := Min(efRangeHi.rtExt, +1.7e+308);
+    except
+      on E: EOverflow do
+        efRangeHi.rtExt := +1.7e+308;
+    end;
+  end;
+{$ENDIF}
 end;
 
 procedure TOvcBaseEntryField.efReadRangeLo(Stream : TStream);
   {-called to read the low range from the stream}
 begin
   Stream.Read(efRangeLo, SizeOf(TRangeType));
+{$IFDEF WIN64}
+  if (efDataType mod fcpDivisor) = fsubExtended then
+  begin
+    try
+      efRangeHi.rtExt := Max(efRangeLo.rtExt, -1.7e+308);
+    except
+      on E: EOverflow do
+        efRangeLo.rtExt := -1.7e+308;
+    end;
+  end;
+{$ENDIF}
 end;
 
 function TOvcBaseEntryField.efTransfer(DataPtr : Pointer; TransferFlag : Word) : Word;
