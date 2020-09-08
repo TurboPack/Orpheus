@@ -2852,7 +2852,7 @@ begin
   if (efDataType mod fcpDivisor) = fsubExtended then
   begin
     try
-      efRangeHi.rtExt := Max(efRangeLo.rtExt, -1.7e+308);
+      efRangeLo.rtExt := Max(efRangeLo.rtExt, -1.7e+308);
     except
       on E: EOverflow do
         efRangeLo.rtExt := -1.7e+308;
