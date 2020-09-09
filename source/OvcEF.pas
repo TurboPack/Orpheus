@@ -1274,7 +1274,7 @@ begin
 
         {report the error}
         if not Controller.ErrorPending then
-          PostMessage(Handle, om_ReportError, FLastError, 0);
+          PostMessage(Handle, OM_REPORTERROR, WPARAM(FLastError), 0);
 
         {set controller's error pending flag}
         Controller.ErrorPending := True;
@@ -4432,7 +4432,7 @@ begin
   end;
 
   if ReportError and (FLastError <> 0) then
-    PostMessage(Handle, om_ReportError, FLastError, 0);
+    PostMessage(Handle, OM_REPORTERROR, WPARAM(FLastError), 0);
 
   {update invalid flag}
   if FLastError = 0 then

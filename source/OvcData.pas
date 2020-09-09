@@ -419,10 +419,10 @@ const
 type
   TOMReportError = packed record
     Msg    : Cardinal;
-    Error  : Word;
-    Unused : Word;
-    lParam : Integer;
-    Result : Integer;
+    Unused : TDWordFiller;
+    Error  : WPARAM;
+    lParam : LPARAM;
+    Result : LRESULT;
   end;
 
   TOMSetFocus = packed record

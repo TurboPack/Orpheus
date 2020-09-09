@@ -1322,7 +1322,7 @@ begin
       {put value of cell field into user var}
       Err := DoPutCellValue;
       if Err <> 0 then begin
-        PostMessage(aeCell.Handle, om_ReportError, Err, 0);
+        PostMessage(aeCell.Handle, OM_REPORTERROR, WPARAM(Err), 0);
         Exit;
       end;
     end;
@@ -1589,7 +1589,7 @@ begin
       {put value of cell field into user var}
       Err := DoPutCellValue;
       if Err <> 0 then begin
-        PostMessage(aeCell.Handle, om_ReportError, Err, 0);
+        PostMessage(aeCell.Handle, OM_REPORTERROR, WPARAM(Err), 0);
         Exit;
       end;
     end;
@@ -1869,7 +1869,7 @@ begin
       {put value of cell field into user var}
       Err := DoPutCellValue;
       if Err <> 0 then begin
-        PostMessage(aeCell.Handle, om_ReportError, Err, 0);
+        PostMessage(aeCell.Handle, OM_REPORTERROR, WPARAM(Err), 0);
         Exit;
       end;
     end;
