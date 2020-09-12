@@ -2840,7 +2840,9 @@ begin
       on E: EOverflow do
         efRangeHi.rtExt := +1.7e+308;
     end;
-  end;
+  end
+  else if (efDataType mod fcpDivisor) = fsubLongInt then
+    efRangeHi.rtLong := efRangeHi.rtDate;
 {$ENDIF}
 end;
 
@@ -2856,8 +2858,10 @@ begin
     except
       on E: EOverflow do
         efRangeLo.rtExt := -1.7e+308;
-    end;
-  end;
+    end
+  end
+  else if (efDataType mod fcpDivisor) = fsubLongInt then
+    efRangeLo.rtLong := efRangeLo.rtDate;
 {$ENDIF}
 end;
 

@@ -265,9 +265,9 @@ type
     02 : (rtSht  : ShortInt);             {01}
     03 : (rtInt  : SmallInt);             {02}
     04 : (rtWord : Word);                 {02}
-    05 : (rtLong : NativeInt);            {04}
+    05 : (rtLong : NativeInt);            {04/08}
     06 : (rtSgl  : Single);               {04}
-    07 : (rtPtr  : Pointer);              {04}
+    07 : (rtPtr  : Pointer);              {04/08}
     08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
     10 : (rtComp : Comp);                 {08}
