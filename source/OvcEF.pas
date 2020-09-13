@@ -2841,6 +2841,8 @@ begin
         efRangeHi.rtExt := +1.7e+308;
     end;
   end
+  else if (efDataType mod fcpDivisor) in [fsubInteger, fsubShortInt] then
+      efRangeHi.rtLong := efRangeHi.rtInt
   else if (efDataType mod fcpDivisor) = fsubLongInt then
     efRangeHi.rtLong := efRangeHi.rtDate;
 {$ENDIF}
@@ -2860,6 +2862,8 @@ begin
         efRangeLo.rtExt := -1.7e+308;
     end
   end
+  else if (efDataType mod fcpDivisor) in [fsubInteger, fsubShortInt] then
+      efRangeLo.rtLong := efRangeLo.rtInt
   else if (efDataType mod fcpDivisor) = fsubLongInt then
     efRangeLo.rtLong := efRangeLo.rtDate;
 {$ENDIF}
