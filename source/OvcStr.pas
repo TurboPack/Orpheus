@@ -438,7 +438,7 @@ begin
 end;
 
 
-function LoCaseChar(C: Char) : Char; register;
+function LoCaseChar(C: Char) : Char;
   {-Convert C to lower case
 
    Changes:
@@ -446,11 +446,7 @@ function LoCaseChar(C: Char) : Char; register;
                   Bugfix: function returned an uppercase character }
 
 begin
-  { CharLower is defined as function CharLower(P:PChar): PChar.
-    However, this Windows-function will transform a character C to
-    lowercase if the character ist passed to the function - in this
-    case, the new charater will be returned. }
-  result := Char(CharLower(PChar(C)));
+  Result := C.ToLower;
 end;
 
 function OctalLPChar(Dest : PChar; L : Integer) : PChar;
