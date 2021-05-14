@@ -1933,7 +1933,7 @@ begin
     ValidateRect(Handle, @CR);
 
     {validate area occupied by combobox list}
-    SendMessage(tbActiveCell.EditHandle, CB_GETDROPPEDCONTROLRECT, 0, NativeInt(@CR));
+    SendMessage(tbActiveCell.EditHandle, CB_GETDROPPEDCONTROLRECT, 0, LPARAM(@CR));
     CR.TopLeft := ScreenToClient(CR.TopLeft);
     CR.BottomRight := ScreenToClient(CR.BottomRight);
     ValidateRect(Handle, @CR);
@@ -5334,7 +5334,7 @@ begin
           R.BottomRight := ScreenToClient(R.BottomRight);
           ValidateRect(Handle, @R);
 
-          SendMessage(Msg.lParam, CB_GETDROPPEDCONTROLRECT, 0, NativeInt(@R));
+          SendMessage(Msg.lParam, CB_GETDROPPEDCONTROLRECT, 0, LPARAM(@R));
           {validate area occupied by combobox list}
           R.TopLeft := ScreenToClient(R.TopLeft);
           R.BottomRight := ScreenToClient(R.BottomRight);

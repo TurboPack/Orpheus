@@ -2309,7 +2309,7 @@ begin
     R := Rect(0, 0, RightBdr + 1, ClientHeight);
   end;
 
-  SendMessage(Handle, EM_SETRECTNP, 0, NativeInt(@R));   //SZ: According to the Windows SDK, this is only processed by multi line edits. Why do we need it here? It was introduced with the IME changes
+  SendMessage(Handle, EM_SETRECTNP, 0, LPARAM(@R));   //SZ: According to the Windows SDK, this is only processed by multi line edits. Why do we need it here? It was introduced with the IME changes
   SendMessage(Handle, EM_SCROLLCARET, 0, 0);
   if SysLocale.FarEast {and (IMEMode <> imDisable)} then
     SetImeCompositionWindow(Font, efCaret.Position.X,efCaret.Position.Y);

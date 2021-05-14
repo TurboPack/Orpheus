@@ -954,7 +954,7 @@ begin
   if Assigned(PF) then begin
     for I := 0 to Pred(PF.ComponentCount) do begin
       if PF.Components[I] = FControl then begin
-        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, NativeInt(Self));
+        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, LPARAM(Self));
         PostMessage(FControl.Handle, OM_RECORDLABELPOSITION, 0, 0);
         Break;
       end;
