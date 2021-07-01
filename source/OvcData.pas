@@ -256,7 +256,9 @@ type
 
   {Each entry field maintains two data structures of this type, one to store
    the lower limit of a field's value, and another to store the upper limit}
+{$IFDEF DELPHI}
 {$EXTENDEDCOMPATIBILITY ON}
+{$ENDIF}
   PRangeType = ^TRangeType;
   TRangeType = packed record
     case Byte of                          {size}
@@ -276,7 +278,9 @@ type
     13 : (rtTime : Integer);              {04}
     14 : (rt10   : array[1..10] of Byte); {10} {forces structure to size of 10 bytes}
   end;
+{$IFDEF DELPHI}
 {$EXTENDEDCOMPATIBILITY OFF}
+{$ENDIF}
 
 const
   BlankRange : TRangeType = (rt10 : (0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
