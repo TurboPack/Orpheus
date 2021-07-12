@@ -132,9 +132,9 @@ var
       fsubShortInt : ShortInt(Data) := TRangeType(Data).rtLong;
       fsubReal     : {no change needed};
       fsubExtended : {no change needed};
-      fsubDouble   : Double(Data) := TRangeType(Data).rtExt;
-      fsubSingle   : Single(Data) := TRangeType(Data).rtExt;
-      fsubComp     : Comp(Data) := TRangeType(Data).rtExt;
+      fsubDouble   : Double(Data) := TRangeType(Data).Ext;
+      fsubSingle   : Single(Data) := TRangeType(Data).Ext;
+      fsubComp     : Comp(Data) := TRangeType(Data).Ext;
       fsubDate     : {no change needed};
       fsubTime     : {no change needed};
     end;
@@ -152,9 +152,9 @@ var
       fsubShortInt : TRangeType(Data).rtLong := ShortInt(Data);
       fsubReal     : {no change needed};
       fsubExtended : {no change needed};
-      fsubDouble   : TRangeType(Data).rtExt := Double(Data);
-      fsubSingle   : TRangeType(Data).rtExt := Single(Data);
-      fsubComp     : TRangeType(Data).rtExt := Comp(Data);
+      fsubDouble   : TRangeType(Data).Ext := Double(Data);
+      fsubSingle   : TRangeType(Data).Ext := Single(Data);
+      fsubComp     : TRangeType(Data).Ext := Comp(Data);
       fsubDate     : {no change needed};
       fsubTime     : {no change needed};
     end;

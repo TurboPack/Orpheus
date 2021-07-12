@@ -256,11 +256,11 @@ type
 
   {Each entry field maintains two data structures of this type, one to store
    the lower limit of a field's value, and another to store the upper limit}
-{$IFDEF DELPHI}
-{$EXTENDEDCOMPATIBILITY ON}
-{$ENDIF}
   PRangeType = ^TRangeType;
   TRangeType = packed record
+    function get_Ext: Extended; inline;
+    procedure set_Ext(const AValue: Extended); inline;
+    property Ext: Extended read get_Ext write set_Ext;
     case Byte of                          {size}
     00 : (rtChar : Char);                 {01/02}
     01 : (rtByte : Byte);                 {01}
@@ -273,14 +273,11 @@ type
     08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
     10 : (rtComp : Comp);                 {08}
-    11 : (rtExt  : Extended);             {10}
+    11 : (rtExt  : TExtended80Rec);       {10}
     12 : (rtDate : Integer);              {04}
     13 : (rtTime : Integer);              {04}
     14 : (rt10   : array[1..10] of Byte); {10} {forces structure to size of 10 bytes}
   end;
-{$IFDEF DELPHI}
-{$EXTENDEDCOMPATIBILITY OFF}
-{$ENDIF}
 
 const
   BlankRange : TRangeType = (rt10 : (0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
@@ -579,6 +576,16 @@ function GetOrphStr(Index : Word) : string;
   {-return a string from our RCDATA string resource}
 
 implementation
+
+function TRangeType.get_Ext: Extended;
+begin
+  Result := Extended(rtExt);
+end;
+
+procedure TRangeType.set_Ext(const AValue: Extended);
+begin
+  rtExt := TExtended80Rec(AValue);
+end;
 
 function GetOrphStr(Index : Word) : string;
 begin
