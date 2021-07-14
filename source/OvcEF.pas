@@ -2603,8 +2603,8 @@ begin
 {$ELSE}
     fsubExtended :
       begin
-        efRangeLo.rtExt := -1.7e+308;
-        efRangeHi.rtExt := +1.7e+308;
+        efRangeLo.Ext := -1.7e+308;
+        efRangeHi.Ext := +1.7e+308;
       end;
 {$ENDIF}
     fsubDouble :
@@ -2839,10 +2839,10 @@ begin
   if (efDataType mod fcpDivisor) = fsubExtended then
   begin
     try
-      efRangeHi.rtExt := Min(efRangeHi.rtExt, +1.7e+308);
+      efRangeHi.Ext := Min(efRangeHi.Ext, +1.7e+308);
     except
       on E: EOverflow do
-        efRangeHi.rtExt := +1.7e+308;
+        efRangeHi.Ext := +1.7e+308;
     end;
   end
   else if (efDataType mod fcpDivisor) in [fsubInteger, fsubShortInt] then
@@ -2860,10 +2860,10 @@ begin
   if (efDataType mod fcpDivisor) = fsubExtended then
   begin
     try
-      efRangeLo.rtExt := Max(efRangeLo.rtExt, -1.7e+308);
+      efRangeLo.Ext := Max(efRangeLo.Ext, -1.7e+308);
     except
       on E: EOverflow do
-        efRangeLo.rtExt := -1.7e+308;
+        efRangeLo.Ext := -1.7e+308;
     end
   end
   else if (efDataType mod fcpDivisor) in [fsubInteger, fsubShortInt] then
