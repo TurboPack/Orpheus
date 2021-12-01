@@ -1081,22 +1081,22 @@ var
     FixRealPrim(S, IntlSupport.DecimalChar);
     Val(S, Ex, Code);
     if Code = 0 then begin
-      if (Delta < 0) and (Ex <= efRangeLo.rtExt) then
+      if (Delta < 0) and (Ex <= efRangeLo.Ext) then
         if Wrap then
-          Ex := efRangeHi.rtExt
+          Ex := efRangeHi.Ext
         else Exit
-      else if (Delta > 0) and (Ex >= efRangeHi.rtExt) then
+      else if (Delta > 0) and (Ex >= efRangeHi.Ext) then
         if Wrap then
-          Ex := efRangeLo.rtExt
+          Ex := efRangeLo.Ext
         else Exit
       else
         Ex := Ex + Delta;
 
       {insure valid value}
-      if Ex < efRangeLo.rtExt then
-        Ex := efRangeLo.rtExt;
-      if Ex > efRangeHi.rtExt then
-        Ex := efRangeHi.rtExt;
+      if Ex < efRangeLo.Ext then
+        Ex := efRangeLo.Ext;
+      if Ex > efRangeHi.Ext then
+        Ex := efRangeHi.Ext;
 
       efTransfer(@Ex, otf_SetData);
       efPerformRepaint(True);
@@ -1113,22 +1113,22 @@ var
     FixRealPrim(S, IntlSupport.DecimalChar);
     Val(S, Db, Code);
     if Code = 0 then begin
-      if (Delta < 0) and (Db <= efRangeLo.rtExt) then
+      if (Delta < 0) and (Db <= efRangeLo.Ext) then
         if Wrap then
-          Db := efRangeHi.rtExt
+          Db := efRangeHi.Ext
         else Exit
-      else if (Delta > 0) and (Db >= efRangeHi.rtExt) then
+      else if (Delta > 0) and (Db >= efRangeHi.Ext) then
         if Wrap then
-          Db := efRangeLo.rtExt
+          Db := efRangeLo.Ext
         else Exit
       else
         Db := Db + Delta;
 
       {insure valid value}
-      if Db < efRangeLo.rtExt then
-        Db := efRangeLo.rtExt;
-      if Db > efRangeHi.rtExt then
-        Db := efRangeHi.rtExt;
+      if Db < efRangeLo.Ext then
+        Db := efRangeLo.Ext;
+      if Db > efRangeHi.Ext then
+        Db := efRangeHi.Ext;
 
       efTransfer(@Db, otf_SetData);
       efPerformRepaint(True);
@@ -1145,22 +1145,22 @@ var
     FixRealPrim(S, IntlSupport.DecimalChar);
     Val(S, Si, Code);
     if Code = 0 then begin
-      if (Delta < 0) and (Si <= efRangeLo.rtExt) then
+      if (Delta < 0) and (Si <= efRangeLo.Ext) then
         if Wrap then
-          Si := efRangeHi.rtExt
+          Si := efRangeHi.Ext
         else Exit
-      else if (Delta > 0) and (Si >= efRangeHi.rtExt) then
+      else if (Delta > 0) and (Si >= efRangeHi.Ext) then
         if Wrap then
-          Si := efRangeLo.rtExt
+          Si := efRangeLo.Ext
         else Exit
       else
         Si := Si + Delta;
 
       {insure valid value}
-      if Si < efRangeLo.rtExt then
-        Si := efRangeLo.rtExt;
-      if Si > efRangeHi.rtExt then
-        Si := efRangeHi.rtExt;
+      if Si < efRangeLo.Ext then
+        Si := efRangeLo.Ext;
+      if Si > efRangeHi.Ext then
+        Si := efRangeHi.Ext;
 
       efTransfer(@Si, otf_SetData);
       efPerformRepaint(True);
@@ -1177,22 +1177,22 @@ var
     FixRealPrim(S, IntlSupport.DecimalChar);
     Val(S, Co, Code);
     if Code = 0 then begin
-      if (Delta < 0) and (Co <= efRangeLo.rtExt) then
+      if (Delta < 0) and (Co <= efRangeLo.Ext) then
         if Wrap then
-          Co := efRangeHi.rtExt
+          Co := efRangeHi.Ext
         else Exit
-      else if (Delta > 0) and (Co >= efRangeHi.rtExt) then
+      else if (Delta > 0) and (Co >= efRangeHi.Ext) then
         if Wrap then
-          Co := efRangeLo.rtExt
+          Co := efRangeLo.Ext
         else Exit
       else
         Co := Co + Delta;
 
       {insure valid value}
-      if Co < efRangeLo.rtExt then
-        Co := efRangeLo.rtExt;
-      if Co > efRangeHi.rtExt then
-        Co := efRangeHi.rtExt;
+      if Co < efRangeLo.Ext then
+        Co := efRangeLo.Ext;
+      if Co > efRangeHi.Ext then
+        Co := efRangeHi.Ext;
 
       efTransfer(@Co, otf_SetData);
       efPerformRepaint(True);
@@ -1817,7 +1817,7 @@ var
     Val(S, E, Code);
     if Code <> 0 then
       Result := oeInvalidNumber
-    else if (E < efRangeLo.rtExt) or (E > efRangeHi.rtExt) then
+    else if (E < efRangeLo.Ext) or (E > efRangeHi.Ext) then
       Result := oeRangeError
     else begin
       if sefHaveFocus in sefOptions then
@@ -1840,7 +1840,7 @@ var
     Val(S, E, Code);
     if Code <> 0 then
       Result := oeInvalidNumber
-    else if (E < efRangeLo.rtExt) or (E > efRangeHi.rtExt) then
+    else if (E < efRangeLo.Ext) or (E > efRangeHi.Ext) then
       Result := oeRangeError
     else begin
       if sefHaveFocus in sefOptions then
@@ -1864,7 +1864,7 @@ var
     Val(S, E, Code);
     if Code <> 0 then
       Result := oeInvalidNumber
-    else if (E < efRangeLo.rtExt) or (E > efRangeHi.rtExt) then
+    else if (E < efRangeLo.Ext) or (E > efRangeHi.Ext) then
       Result := oeRangeError
     else begin
       if sefHaveFocus in sefOptions then
@@ -1889,7 +1889,7 @@ var
     E := C;
     if Code <> 0 then
       Result := oeInvalidNumber
-    else if (E < efRangeLo.rtExt) or (E > efRangeHi.rtExt) then
+    else if (E < efRangeLo.Ext) or (E > efRangeHi.Ext) then
       Result := oeRangeError
     else begin
       if sefHaveFocus in sefOptions then
@@ -2040,7 +2040,7 @@ begin
       if efRangeLo.rtReal = efRangeHi.rtReal then
         efSetDefaultRange(efDataType);
     sftExtended, sftDouble, sftSingle, sftComp :
-      if efRangeLo.rtExt = efRangeHi.rtExt then
+      if efRangeLo.Ext = efRangeHi.Ext then
         efSetDefaultRange(efDataType);
   else
     efSetDefaultRange(efDataType);

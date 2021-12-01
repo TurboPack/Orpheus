@@ -422,7 +422,7 @@ function TOvcBaseTableCell.CanStopEditing(SaveValue : boolean) : boolean;
 {--------}
 procedure TOvcBaseTableCell.tcChangeScale(M, D : integer);
   begin
-    if (M <> D) and (not TableFont) then
+    if (M <> D) and (not TableFont) and (DefFontData.Height <> FFont.Height) then
       FFont.Size := MulDiv(FFont.Size, M, D);
   end;
 {--------}
@@ -707,7 +707,7 @@ procedure TOvcBaseTableCell.SetTable(T : TOvcTableAncestor);
       if (not Assigned(T)) or (T is TOvcTableAncestor) then
         begin
           if Assigned(FTable) and FTable.HandleAllocated then
-            SendMessage(FTable.Handle, ctim_RemoveCell, 0, NativeInt(Self));
+            SendMessage(FTable.Handle, ctim_RemoveCell, 0, LPARAM(Self));
           FTable := T;
           FOnCfgChanged := nil;
           FReferences := 0;

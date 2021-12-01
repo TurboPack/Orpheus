@@ -136,7 +136,7 @@ function ovc32StringIsCurrentCodePage(const S: PWideChar; CP:Cardinal=0): Boolea
 implementation
 
 uses
-  Windows;
+  Character, Windows;
 
 const
   Digits : array[0..$F] of Char = '0123456789ABCDEF';
@@ -438,7 +438,7 @@ begin
 end;
 
 
-function LoCaseChar(C: Char) : Char; register;
+function LoCaseChar(C: Char) : Char;
   {-Convert C to lower case
 
    Changes:
@@ -446,11 +446,7 @@ function LoCaseChar(C: Char) : Char; register;
                   Bugfix: function returned an uppercase character }
 
 begin
-  { CharLower is defined as function CharLower(P:PChar): PChar.
-    However, this Windows-function will transform a character C to
-    lowercase if the character ist passed to the function - in this
-    case, the new charater will be returned. }
-  result := Char(CharLower(PChar(C)));
+  Result := C.ToLower;
 end;
 
 function OctalLPChar(Dest : PChar; L : Integer) : PChar;
@@ -842,17 +838,9 @@ begin
 end;
 
 
-function UpCaseChar(C: Char) : Char; register;
-  {-Convert C to upper case
-
-   Changes:
-     03/2011, AB: PUREPASCAL-version added }
+function UpCaseChar(C: Char) : Char;
 begin
-  { CharUpper is defined as function CharUpper(P:PChar): PChar.
-    However, this Windows-function will transform a character C to
-    uppercase if the character ist passed to the function - in this
-    case, the new charater will be returned. }
-  result := Char(CharUpper(PChar(C)));
+  Result := C.ToUpper;
 end;
 
 function ovc32StringIsCurrentCodePage(const S: string): Boolean;

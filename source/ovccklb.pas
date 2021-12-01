@@ -605,7 +605,7 @@ procedure TOvcCheckList.InvalidateItem(Index : Integer);
 var
   R : TRect;
 begin
-  SendMessage(Handle, LB_GETITEMRECT, Index, NativeInt(@R));
+  SendMessage(Handle, LB_GETITEMRECT, WPARAM(Index), LPARAM(@R));
   InvalidateRect(Handle, @R, True);
 end;
 
@@ -802,7 +802,7 @@ begin
   I := ItemAtPos(P, True);
   FillChar(R, SizeOf(R), 0);
   if I > -1 then
-    SendMessage(Handle, LB_GETITEMRECT, I, NativeInt(@R));
+    SendMessage(Handle, LB_GETITEMRECT, WPARAM(I), LPARAM(@R));
 
   {eat click if clicking on the check box}
   if (Msg.XPos > R.Left + ItemHeight - BoxMargin div 2) then begin

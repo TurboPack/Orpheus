@@ -473,7 +473,7 @@ begin
   begin
     SendMessage(FlexEdit.Handle, EM_SETSEL, SelStart, SelStart +
       SendMessage(FlexEdit.Handle, EM_LINELENGTH, SelStart, 0));
-    SendMessage(FlexEdit.Handle, EM_REPLACESEL, 0, NativeInt(PChar(S)));
+    SendMessage(FlexEdit.Handle, EM_REPLACESEL, 0, LPARAM(PChar(S)));
   end;
 end;
 {=====}
@@ -498,7 +498,7 @@ begin
       Line := #13#10 + s;
     end;
     SendMessage(FlexEdit.Handle, EM_SETSEL, SelStart, SelStart);
-    SendMessage(FlexEdit.Handle, EM_REPLACESEL, 0, NativeInt(PChar(Line)));
+    SendMessage(FlexEdit.Handle, EM_REPLACESEL, 0, LPARAM(PChar(Line)));
   end;
 end;
 {=====}
@@ -516,7 +516,7 @@ begin
     if SelEnd < 0 then SelEnd := SelStart +
       SendMessage(FlexEdit.Handle, EM_LINELENGTH, SelStart, 0);
     SendMessage(FlexEdit.Handle, EM_SETSEL, SelStart, SelEnd);
-    SendMessage(FlexEdit.Handle, EM_REPLACESEL, 0, NativeInt(Empty));
+    SendMessage(FlexEdit.Handle, EM_REPLACESEL, 0, LPARAM(Empty));
   end;
 end;
 {=====}
@@ -1106,7 +1106,7 @@ begin
   cures this and does not seem to affect the operation in D6 or D7.
   TNX to John Cooper - neutronwrangler - for providing the fix.
 }
-      SendMessage(WindowHandle, WM_SETTEXT, 0, NativeInt(Params.Caption));
+      SendMessage(WindowHandle, WM_SETTEXT, 0, LPARAM(Params.Caption));
     end;
   end;
 end;

@@ -606,7 +606,7 @@ begin
       else
         WinState := wsNormal;
       end;
-      if (WinState = wsMinimized) and (Form = Application.MainForm) then begin
+      if (WinState = wsMinimized) and (Application.MainForm = nil) then begin
         PostMessage(Application.Handle, WM_SYSCOMMAND, SC_MINIMIZE, 0);
         Exit;
       end;

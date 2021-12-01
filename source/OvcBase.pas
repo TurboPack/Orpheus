@@ -954,7 +954,7 @@ begin
   if Assigned(PF) then begin
     for I := 0 to Pred(PF.ComponentCount) do begin
       if PF.Components[I] = FControl then begin
-        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, NativeInt(Self));
+        SendMessage(FControl.Handle, OM_ASSIGNLABEL, 0, LPARAM(Self));
         PostMessage(FControl.Handle, OM_RECORDLABELPOSITION, 0, 0);
         Break;
       end;
@@ -1615,7 +1615,7 @@ var
 
         {tell the entry field to report the error}
         if ReportError and not ErrorPending then
-          PostMessage(EF.Handle, OM_REPORTERROR, EF.LastError, 0);
+          PostMessage(EF.Handle, OM_REPORTERROR, WPARAM(EF.LastError), 0);
 
         {ask the controller to give the focus back to this field}
         if ChangeFocus and not ErrorPending then begin
@@ -1671,11 +1671,11 @@ begin
 
         {tell the entry field to report the error}
         if not ErrorPending then
-          PostMessage(EF.Handle, OM_REPORTERROR, EF.LastError, 0);
+          PostMessage(EF.Handle, OM_REPORTERROR, WPARAM(EF.LastError), 0);
 
         {ask the controller to give the focus back to this field}
         if not ErrorPending then begin
-          PostMessage(Handle, OM_SETFOCUS, 0, NativeInt(EF));
+          PostMessage(Handle, OM_SETFOCUS, 0, LPARAM(EF));
           ErrorPending := True;
         end;
 

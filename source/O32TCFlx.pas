@@ -658,6 +658,8 @@ end;
 procedure TO32TCCustomFlexEdit.StopEditing(SaveValue : boolean; Data : pointer);
   {-Changes:
     04/2011, AB: Use DataStringType to determine what kind of pointer is provided }
+var
+  lEdit: TO32TCFlexEditEditor;
 begin
   try
     if SaveValue and Assigned(Data) then
@@ -667,8 +669,9 @@ begin
         tstString:      PString(Data)^ := FEdit.Text;
       end;
   finally
-    FEdit.Free;
+    lEdit := FEdit;
     FEdit := nil;
+    lEdit.Free;
   end;
 end;
 

@@ -257,17 +257,23 @@ type
   {Each entry field maintains two data structures of this type, one to store
    the lower limit of a field's value, and another to store the upper limit}
   PRangeType = ^TRangeType;
+{$IFDEF DELPHI}
+{$EXTENDEDCOMPATIBILITY ON}
+  PRangeType = ^TRangeType;
   TRangeType = packed record
-    case Byte of                         {size}
-    00 : (rtChar : Char);             {01/02}
+    function get_Ext: Extended; inline;
+    procedure set_Ext(const AValue: Extended); inline;
+    property Ext: Extended read get_Ext write set_Ext;
+    case Byte of                          {size}
+    00 : (rtChar : Char);                 {01/02}
     01 : (rtByte : Byte);                 {01}
     02 : (rtSht  : ShortInt);             {01}
     03 : (rtInt  : SmallInt);             {02}
     04 : (rtWord : Word);                 {02}
-    05 : (rtLong : NativeInt);            {04}
+    05 : (rtLong : NativeInt);            {04/08}
     06 : (rtSgl  : Single);               {04}
-    07 : (rtPtr  : Pointer);              {04}
-     08 : (rtReal : Real);                 {06}
+    07 : (rtPtr  : Pointer);              {04/08}
+    08 : (rtReal : Real);                 {06}
     09 : (rtDbl  : Double);               {08}
     10 : (rtComp : Comp);                 {08}
     11 : (rtExt  : Extended);             {10}
@@ -275,6 +281,30 @@ type
     13 : (rtTime : Integer);              {04}
     14 : (rt10   : array[1..10] of Byte); {10} {forces structure to size of 10 bytes}
   end;
+{$EXTENDEDCOMPATIBILITY OFF}
+{$ELSE}
+  TRangeType = packed record
+    function get_Ext: Extended; inline;
+    procedure set_Ext(const AValue: Extended); inline;
+    property Ext: Extended read get_Ext write set_Ext;
+    case Byte of                          {size}
+    00 : (rtChar : Char);                 {01/02}
+    01 : (rtByte : Byte);                 {01}
+    02 : (rtSht  : ShortInt);             {01}
+    03 : (rtInt  : SmallInt);             {02}
+    04 : (rtWord : Word);                 {02}
+    05 : (rtLong : NativeInt);            {04/08}
+    06 : (rtSgl  : Single);               {04}
+    07 : (rtPtr  : Pointer);              {04/08}
+    08 : (rtReal : Real);                 {06}
+    09 : (rtDbl  : Double);               {08}
+    10 : (rtComp : Comp);                 {08}
+    11 : (rtExt  : TExtended80Rec);       {10}
+    12 : (rtDate : Integer);              {04}
+    13 : (rtTime : Integer);              {04}
+    14 : (rt10   : array[1..10] of Byte); {10} {forces structure to size of 10 bytes}
+  end;
+{$ENDIF}
 
 const
   BlankRange : TRangeType = (rt10 : (0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
@@ -417,10 +447,10 @@ const
 type
   TOMReportError = packed record
     Msg    : Cardinal;
-    Error  : Word;
-    Unused : Word;
-    lParam : Integer;
-    Result : Integer;
+    Unused : TDWordFiller;
+    Error  : WPARAM;
+    lParam : LPARAM;
+    Result : LRESULT;
   end;
 
   TOMSetFocus = packed record
@@ -573,6 +603,24 @@ function GetOrphStr(Index : Word) : string;
   {-return a string from our RCDATA string resource}
 
 implementation
+
+function TRangeType.get_Ext: Extended;
+begin
+{$IFDEF DELPHI}
+  Result := rtExt;
+{$ELSE}
+  Result := Extended(rtExt);
+{$ENDIF}
+end;
+
+procedure TRangeType.set_Ext(const AValue: Extended);
+begin
+{$IFDEF DELPHI}
+  rtExt := AValue;
+{$ELSE}
+  rtExt := TExtended80Rec(AValue);
+{$ENDIF}
+end;
 
 function GetOrphStr(Index : Word) : string;
 begin
