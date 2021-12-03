@@ -585,6 +585,7 @@ const
   fidPictureComp     = fcpPicture+fsubComp;
   fidPictureDate     = fcpPicture+fsubDate;
   fidPictureTime     = fcpPicture+fsubTime;
+  fidPictureDateTime = fcpPicture+fsubDateTime;
 
   {Field type IDs for numeric fields}
   fidNumericLongInt  = fcpNumeric+fsubLongInt;

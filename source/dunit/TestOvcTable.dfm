@@ -2,15 +2,14 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
   Left = 0
   Top = 0
   Caption = 'Test'
-  ClientHeight = 341
-  ClientWidth = 908
+  ClientHeight = 500
+  ClientWidth = 916
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -40,13 +39,13 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
     TabOrder = 0
     OnGetCellData = OvcTableGetCellData
     CellData = (
-      'frmTestOvcPictureField.O32TCFlexEdit1'
-      'frmTestOvcPictureField.OvcTCMemo1'
-      'frmTestOvcPictureField.OvcTCSimpleField1'
-      'frmTestOvcPictureField.OvcTCNumericField1'
-      'frmTestOvcPictureField.OvcTCPictureField2'
+      'frmTestOvcPictureField.OvcTCString1'
       'frmTestOvcPictureField.OvcTCPictureField1'
-      'frmTestOvcPictureField.OvcTCString1')
+      'frmTestOvcPictureField.OvcTCPictureField2'
+      'frmTestOvcPictureField.OvcTCNumericField1'
+      'frmTestOvcPictureField.OvcTCSimpleField1'
+      'frmTestOvcPictureField.OvcTCMemo1'
+      'frmTestOvcPictureField.O32TCFlexEdit1')
     RowData = (
       30)
     ColData = (
@@ -106,12 +105,12 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
     TabOrder = 1
     OnGetCellData = OvcTableGetCellData
     CellData = (
-      'frmTestOvcPictureField.OvcTCSimpleField1_SS'
-      'frmTestOvcPictureField.OvcTCPictureField1_SS'
-      'frmTestOvcPictureField.OvcTCCheckBox1'
-      'frmTestOvcPictureField.O32TCFlexEdit1_SS'
+      'frmTestOvcPictureField.OvcTCString1_SS'
       'frmTestOvcPictureField.OvcTCMemo1_SS'
-      'frmTestOvcPictureField.OvcTCString1_SS')
+      'frmTestOvcPictureField.O32TCFlexEdit1_SS'
+      'frmTestOvcPictureField.OvcTCCheckBox1'
+      'frmTestOvcPictureField.OvcTCPictureField1_SS'
+      'frmTestOvcPictureField.OvcTCSimpleField1_SS')
     RowData = (
       30)
     ColData = (
@@ -166,11 +165,12 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
     TabOrder = 2
     OnGetCellData = OvcTableGetCellData
     CellData = (
-      'frmTestOvcPictureField.OvcTCString1_PChar'
-      'frmTestOvcPictureField.OvcTCPictureField1_PChar'
-      'frmTestOvcPictureField.OvcTCSimpleField1_PChar'
+      'frmTestOvcPictureField.O32TCFlexEdit1_PChar'
       'frmTestOvcPictureField.OvcTCMemo1_PChar'
-      'frmTestOvcPictureField.O32TCFlexEdit1_PChar')
+      'frmTestOvcPictureField.OvcTCSimpleField1_PChar'
+      'frmTestOvcPictureField.OvcTCPictureField1_PChar'
+      'frmTestOvcPictureField.OvcTCString1_PChar'
+      'frmTestOvcPictureField.OvcTCPictureField_DateTime')
     RowData = (
       30)
     ColData = (
@@ -193,7 +193,11 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
       120
       False
       True
-      'frmTestOvcPictureField.O32TCFlexEdit1_PChar')
+      'frmTestOvcPictureField.O32TCFlexEdit1_PChar'
+      150
+      False
+      True
+      'frmTestOvcPictureField.OvcTCPictureField_DateTime')
   end
   object OvcTCString1: TOvcTCString
     MaxLength = 50
@@ -210,7 +214,6 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
     EFColors.Error.TextColor = clBlack
     EFColors.Highlight.BackColor = clHighlight
     EFColors.Highlight.TextColor = clHighlightText
-    Options = [efoCaretToEnd, efoTrimBlanks]
     Table = OvcTable1
     Left = 186
     Top = 20
@@ -242,7 +245,6 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
     EFColors.Error.TextColor = clBlack
     EFColors.Highlight.BackColor = clHighlight
     EFColors.Highlight.TextColor = clHighlightText
-    Options = [efoCaretToEnd]
     PictureMask = '#,###.##'
     Table = OvcTable1
     Left = 426
@@ -439,5 +441,22 @@ object frmTestOvcPictureField: TfrmTestOvcPictureField
     Validation.ValidationType = vtNone
     Left = 546
     Top = 214
+  end
+  object OvcTCPictureField_DateTime: TOvcTCPictureField
+    DataType = pftDateTime
+    PictureMask = 'dd/mm/yyyy hh:mm'
+    MaxLength = 16
+    CaretOvr.Shape = csBlock
+    EFColors.Disabled.BackColor = clWindow
+    EFColors.Disabled.TextColor = clGrayText
+    EFColors.Error.BackColor = clRed
+    EFColors.Error.TextColor = clBlack
+    EFColors.Highlight.BackColor = clHighlight
+    EFColors.Highlight.TextColor = clHighlightText
+    Table = OvcTable3
+    Left = 656
+    Top = 232
+    RangeHigh = {000000008052E4400000}
+    RangeLow = {00000000000000000000}
   end
 end

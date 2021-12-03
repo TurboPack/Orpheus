@@ -165,6 +165,9 @@ type
       Pack : Boolean) : PChar;
 
       {-convert Julian to a string of the form indicated by Picture}
+    function DateTimeToDate(Picture : String;
+      DT : TDateTime; Pack : Boolean) : String;
+
     function DateTimeToDatePChar(Dest : PChar; Picture : PChar;
       DT : TDateTime; Pack : Boolean) : PChar;
 
@@ -510,6 +513,17 @@ begin
     Result := DMYtoDatePChar(Dest, Picture, Day, Month, Year, Pack, 0);
   end;
 end;
+
+function TOvcIntlSup.DateTimeToDate(Picture : String;
+      DT : TDateTime; Pack : Boolean) : String;
+var
+  Buf1 : array[0..255] of Char;
+  Buf2 : array[0..255] of Char;
+begin
+  StrPLCopy(Buf1, Picture, Length(Buf1) - 1);
+  Result := StrPas(DateTimeToDatePChar(Buf2, Buf1, DT, Pack));
+end;
+
 
 function TOvcIntlSup.DateTimeToDatePChar(Dest : PChar; Picture : PChar;
          DT : TDateTime; Pack : Boolean) : PChar;

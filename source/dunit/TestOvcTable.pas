@@ -7,7 +7,7 @@ uses
   Dialogs, ovctcbef, ovctcpic, ovctcmmn, ovctcell, ovctcstr, ovctcedt, ovcbase, ovcef,
   StdCtrls,
   ovcsf, ovctable, TestFramework, ovctcnum, ovctcsim, ovctccustomedt, o32tcflx, ovctcbmp,
-  ovctcgly, ovctcbox;
+  ovctcgly, ovctcbox, ovcpf;
 
 type
   TfrmTestOvcPictureField = class(TForm)
@@ -32,6 +32,7 @@ type
     OvcTCSimpleField1_PChar: TOvcTCSimpleField;
     OvcTCMemo1_PChar: TOvcTCMemo;
     O32TCFlexEdit1_PChar: TO32TCFlexEdit;
+    OvcTCPictureField_DateTime: TOvcTCPictureField;
     procedure FormCreate(Sender: TObject);
     procedure OvcTableGetCellData(Sender: TObject; RowNum, ColNum: Integer; var Data: Pointer;
       Purpose: TOvcCellDataPurpose);
@@ -77,6 +78,7 @@ type
     Data_Overflow_OvcTCMemo1_PChar: Integer;
     Data_O32TCFlexEdit1_PChar: array[0..10] of Char;
     Data_Overflow_O32TCFlexEdit1_PChar: Integer;
+    Data_OvcTCPictureField_DateTime: TDateTime;
   end;
 
   TTestOvcTable = class(TTestCase)
@@ -108,6 +110,7 @@ type
     procedure TestOvcTCSimpleField_PChar;
     procedure TestOvcTCMemo_PChar;
     procedure TestO32TCFlexEdit_PChar;
+    procedure TestOvcTCPictureField_TDateTime;
   end;
 
 implementation
@@ -165,6 +168,9 @@ begin
   Data_Overflow_OvcTCMemo1_PChar         := -1;
   Data_O32TCFlexEdit1_PChar              := '';
   Data_Overflow_O32TCFlexEdit1_PChar     := -1;
+  Data_OvcTCPictureField_DateTime        := now;
+
+
 end;
 
 procedure TfrmTestOvcPictureField.OvcTableGetCellData(Sender: TObject; RowNum, ColNum: Integer;
@@ -201,6 +207,7 @@ begin
         2: Data := @Data_OvcTCsimpleField1_PChar;
         3: Data := @Data_OvcTCMemo1_PChar;
         4: Data := @Data_O32TCFlexEdit1_PChar;
+        5: Data := @Data_OvcTCPictureField_DateTime;
         else
           Data := nil;
       end;
@@ -452,6 +459,23 @@ begin
   CheckEquals(-1, FForm.Data_Overflow_OvcTCPictureField1_SS, 'Data overflow for OvcTCPictureField1_SS');
 end;
 
+
+procedure TTestOvcTable.TestOvcTCPictureField_TDateTime;
+  {- test OvcTCPictureField with TDateTime for storing the data }
+begin
+  CheckTrue(FForm.OvcTCPictureField_DateTime.DataType=pftDateTime);
+  FForm.OvcTCPictureField_DateTime.RangeHi := '12.12.2023 00:00';
+  CheckEquals('12.12.2023 00:00', FForm.OvcTCPictureField_DateTime.RangeHi);
+
+  { Test typing data }
+  FForm.OvcTable3.SetFocus;
+  FForm.OvcTable3.SetActiveCell(0,5);
+  FForm.OvcTable3.StartEditingState;
+  TypeText(TPOvcBaseEntryField(TPOvcTCPictureField(FForm.OvcTCPictureField_DateTime).FEdit), '12.12.2021');
+  FForm.OvcTable3.StopEditingState(True);
+  CheckEquals('12.12.2021', FormatDateTime('dd/mm/yyyy', FForm.Data_OvcTCPictureField_DateTime));
+
+end;
 
 procedure TTestOvcTable.TestOvcTCSimpleField_SS;
   {- test OvcTCSimpleField with ShortString for storing the data }

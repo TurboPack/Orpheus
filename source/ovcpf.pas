@@ -2706,6 +2706,41 @@ var
     end;
   end;
 
+  procedure ValidateDateTime;
+  var
+    D: TStDate;
+    T: TStTime;
+    dd: TDateTime;
+    H   : Integer;
+    M   : Integer;
+    Sec : Integer;
+  begin
+    if IntlSupport.DatePCharIsBlank(efPicture, efEditSt) then
+      Exit;
+
+    if not IntlSupport.TimePCharToHMS(efPicture, efEditSt, H, M, Sec) then
+      if (H = -1) and (M = -1) and ((Sec = -1) or (Sec = 0)) then
+        Exit;
+
+    D := IntlSupport.DatePCharToDate(efPicture, efEditSt, GetEpoch);
+    T := IntlSupport.TimePCharToTime(efPicture, efEditSt);
+    if (D = BadDate) then
+      Result := oeInvalidDate
+    else if T = BadTime then
+      Result := oeInvalidTime
+    else if (efRangeHi.rtDbl <> MinDate) and
+            ((D < efRangeLo.rtDbl) or (D > efRangeHi.rtDbl)) then
+      Result := oeRangeError
+    else begin
+      if sefHaveFocus in sefOptions then
+        if not (sefGettingValue in sefOptions) then begin
+          dd := OvcDate.StDateToDateTime(D) + OvcDate.StTimeToDateTime(T);
+          efTransfer(@dd, otf_SetData);
+          Invalidate;
+        end;
+    end;
+  end;
+
 begin
   Result := 0;
   case FPictureDataType of
@@ -2724,7 +2759,7 @@ begin
     pftSingle   : ValidateSingle;
     pftComp     : ValidateComp;
     pftDate     : ValidateDate;
-    pftDateTime : ValidateDouble;
+    pftDateTime : ValidateDateTime;
     pftTime     : ValidateTime;
   end;
 
@@ -2759,7 +2794,7 @@ begin
     pftSingle    : Result := fidPictureSingle;
     pftComp      : Result := fidPictureComp;
     pftDate      : Result := fidPictureDate;
-    pftDateTime  : Result := fidPictureDouble; //fidPictureDate;
+    pftDateTime  : Result := fidPictureDateTime;
     pftTime      : Result := fidPictureTime;
   else
     raise EOvcException.Create(GetOrphStr(SCInvalidParamValue));
