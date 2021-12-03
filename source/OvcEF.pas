@@ -1720,6 +1720,7 @@ begin
     fsubComp     : efDataSize := SizeOf(Comp);
     fsubDate     : efDataSize := SizeOf(TStDate);
     fsubTime     : efDataSize := SizeOf(TStTime);
+    fsubDateTime : efDataSize := SizeOf(TDateTime);
   else
     efDataSize := 0;
   end;
@@ -2436,6 +2437,16 @@ begin
         else
           Result := OvcIntlSup.TimeToTimeString(TimeMask, Value.rtTime, False);
       end;
+    fsubDateTime :
+      begin
+        DateMask  := IntlSupport.InternationalDate(True)
+                     + ' '
+                     + IntlSupport.InternationalTime(False);
+        if Value.rtDbl = 0 then
+          Result := ''
+        else
+          Result := IntlSupport.DateTimeToDate(DateMask, Value.rtDbl, False);
+      end;
   end;
 end;
 
@@ -2488,7 +2499,7 @@ begin
             Exclude(FOptions, efoTrimBlanks);
             Exclude(FOptions, efoStripLiterals);
           end;
-        fsubDate, fsubTime :
+        fsubDate, fsubTime, fSubDateTime :
           begin
             Exclude(FOptions, efoTrimBlanks);
             Exclude(FOptions, efoRightJustify);
@@ -2632,6 +2643,11 @@ begin
         efRangeLo.rtTime := MinTime;
         efRangeHi.rtTime := MaxTime;
       end;
+    fsubDateTime :
+      begin
+        efRangeLo.rtDbl := 0;
+        efRangeHi.rtDbl := 0;
+      end;
   end;
 end;
 
@@ -2668,6 +2684,7 @@ begin
         end;
     fsubDate : R.rtDate := BadDate;
     fsubTime : R.rtTime := BadTime;
+    fsubDateTime : R.rtDbl := 0;
   end;
   efTransfer(@R, otf_SetData);
 end;
@@ -2746,6 +2763,8 @@ var
   DateMask : string;
   TimeMask : string;
   Buffer   : Extended;
+  D        : TStDate;
+  T        : TStTime;
 begin
   Code := 0;  {assume success}
   R := BlankRange;
@@ -2826,6 +2845,22 @@ begin
           R.rtTime := OvcIntlSup.TimeStringToTime(TimeMask, Value);
         if R.rtTime = BadTime then
           Code := 1;
+      end;
+    fsubDateTime :
+      begin
+        DateMask  := IntlSupport.InternationalDate(True)
+                     + ' '
+                     + IntlSupport.InternationalTime(False);
+        if Length(Value) <> Length(DateMask) then
+          Code := 1
+        else begin
+          D := IntlSupport.DateStringToDate(DateMask, Value, GetEpoch);
+          T := IntlSupport.TimeStringToTime(DateMask, Value);
+          if (D = BadDate) or (T = BadTime) then
+             Code := 1
+          else
+             R.rtDbl := OvcDate.StDateToDateTime(D) + OvcDate.StTimeToDateTime(T);
+        end;
       end;
   end;
   Result := Code = 0;
@@ -3041,7 +3076,7 @@ begin
         else
           Result := StTimeToDateTime(T);
       end;
-    fsubDouble : { TDateTime }
+    fsubDateTime :
       begin
         FLastError := GetValue(DT);
         if FLastError <> 0 then
@@ -3488,6 +3523,7 @@ begin
       fsubComp     : efTransfer(@Comp(Data),     otf_GetData);
       fsubDate     : efTransfer(@TStDate(Data),  otf_GetData);
       fsubTime     : efTransfer(@TStTime(Data),  otf_GetData);
+      fsubDateTime : efTransfer(@TDateTime(Data),otf_GetData);
     else
       raise EOvcException.Create(GetOrphStr(SCInvalidParamValue));
     end;
@@ -3815,7 +3851,7 @@ begin
           T := BadTime;
         SetValue(T);
       end;
-    fsubDouble : { = TDateTime }
+    fsubDateTime :
       begin
         SetValue(Value);
       end;
@@ -4383,6 +4419,7 @@ begin
       fsubComp     : efTransfer(@Comp(Data),     otf_SetData);
       fsubDate     : efTransfer(@TStDate(Data),  otf_SetData);
       fsubTime     : efTransfer(@TStTime(Data),  otf_SetData);
+      fsubdateTime : efTransfer(@TDateTime(Data),otf_SetData);
     else
       raise EOvcException.Create(GetOrphStr(SCInvalidParamValue));
     end;

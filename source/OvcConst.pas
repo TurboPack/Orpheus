@@ -408,6 +408,7 @@ const
   fsubComp                 = 13;
   fsubDate                 = 14;
   fsubTime                 = 15;
+  fsubDateTime             = 16;
 
 
 {constants for simple, picture, and numeric picture}
