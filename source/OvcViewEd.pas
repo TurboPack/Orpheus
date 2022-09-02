@@ -313,7 +313,7 @@ begin
         P.OnMouseDown := FPaintBoxMouseDown;
         P.OnMouseUp := FPaintBoxMouseUp;
         P.OnMouseMove := FPaintBoxMouseMove;
-        P.Tag := Integer(F);
+        P.Tag := NativeInt(F);
         inc(X, P.Width);
         PaintList.Add(P);
       end;
@@ -358,7 +358,7 @@ begin
       P.OnMouseUp := GPaintBoxMouseUp;
       P.OnMouseMove := GPaintBoxMouseMove;
       P.PopupMenu := ViewFieldPopup;
-      P.Tag := Integer(V);
+      P.Tag := NativeInt(V);
       inc(X, P.Width{ - 20});
       GPaintList.Add(P);
       inc(Y, 8);
@@ -413,7 +413,7 @@ begin
       P.OnMouseUp := CPaintBoxMouseUp;
       P.OnMouseMove := CPaintBoxMouseMove;
       P.PopupMenu := ViewFieldPopup;
-      P.Tag := Integer(V);
+      P.Tag := NativeInt(V);
       inc(X, P.Width);
       CPaintList.Add(P);
     end;
