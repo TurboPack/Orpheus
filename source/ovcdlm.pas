@@ -580,7 +580,7 @@ begin
   if Key1 = Key2 then
     Result := 0
   else begin
-    Result := FCompareFunc(Integer(UserData) - 1, POvcListNode(Key1).Item, POvcListNode(Key2).Item);
+    Result := FCompareFunc(NativeInt(UserData) - 1, POvcListNode(Key1).Item, POvcListNode(Key2).Item);
     if Result = 0 then
       if Key1 = Key2 then
         raise Exception.Create('Internal error')
@@ -596,7 +596,7 @@ var
   i: Integer;
 begin
   for i := Count - 1 downto 0 do
-    POvcListNode(DataArray[i]).IndexPages[Integer(UserData)] := NewPage;
+    POvcListNode(DataArray[i]).IndexPages[NativeInt(UserData)] := NewPage;
 end;
 
 procedure TOvcSortedList.SetCurrentKey(Value: Integer);

@@ -650,7 +650,7 @@ end;
 
 procedure TOvcDataReportView.CountSelection2(Sender : TObject; Data : TOvcDataRvItem; var Stop : Boolean; UserData : Pointer);
 begin
-  inc(Integer(UserData^));
+  inc(NativeInt(UserData^));
 end;
 
 function TOvcDataReportView.GetSelectionCount: Integer;
