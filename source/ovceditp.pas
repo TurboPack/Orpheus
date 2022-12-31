@@ -1871,7 +1871,7 @@ function TOvcUndoBuffer.NthRec(N : Integer) : PUndoRec; register;
 begin
   result := PUndoRec(self.Buffer);
   while N>1 do begin
-    result := PUndoRec(Cardinal(result) + UndoRecSize + result^.DSize*SizeOf(Char));
+    result := PUndoRec(NativeUInt(result) + UndoRecSize + result^.DSize*SizeOf(Char));
     Dec(N);
   end;
 end;
