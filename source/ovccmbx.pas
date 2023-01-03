@@ -695,7 +695,7 @@ begin
     ItemIndex := SendMessage(Handle,
                              CB_FINDSTRINGEXACT,
                              FMRUList.Items.Count - 1,
-                             Integer(SrchText));
+                             LPARAM(SrchText));
   finally
     StrDispose(SrchText); // FreeMem(SrchText, L);
   end;
@@ -1015,7 +1015,7 @@ begin
           {this will search for the first matching item}
           Index := SendMessage(Handle, CB_FINDSTRING,
                                FMRUList.Items.Count - 1,
-                                 NativeInt(SrchText));
+                                 LPARAM(SrchText));
         finally
           StrDispose(SrchText); //FreeMem(SrchText, length(Text) + 1);
         end;
@@ -1392,7 +1392,7 @@ begin
       ItemIndex := SendMessage(Handle,
                                CB_FINDSTRINGEXACT,
                                0,
-                               NativeInt(SrchText));
+                               LPARAM(SrchText));
     finally
       StrDispose(SrchText); // FreeMem(SrchText, L);
     end;
