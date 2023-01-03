@@ -772,7 +772,7 @@ begin
   DoRightToLeftAlignment(FSimpleText, taLeftJustify, UseRightToLeftAlignment);
   if HandleAllocated then
     SendMessage(Handle, SB_SETTEXT, 255 or RTLREADING[UseRightToLeftReading],
-      Integer(PChar(FSimpleText)));
+      LPARAM(PChar(FSimpleText)));
 end;
 {=====}
 
