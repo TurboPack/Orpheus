@@ -3511,7 +3511,7 @@ begin
       fsubChar     : efTransfer(@Char(Data),     otf_GetData);
       fsubBoolean  : efTransfer(@Boolean(Data),  otf_GetData);
       fsubYesNo    : efTransfer(@Boolean(Data),  otf_GetData);
-      fsubLongInt  : efTransfer(@NativeInt(Data),otf_GetData);
+      fsubLongInt  : efTransfer(@Integer(Data),  otf_GetData);
       fsubWord     : efTransfer(@Word(Data),     otf_GetData);
       fsubInteger  : efTransfer(@SmallInt(Data), otf_GetData);
       fsubByte     : efTransfer(@Byte(Data),     otf_GetData);
