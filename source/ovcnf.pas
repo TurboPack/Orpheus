@@ -1077,15 +1077,18 @@ var
 
   procedure TransferLongInt;
   var
+    L      : NativeInt;
     S      : TEditString;
   begin
     if TransferFlag = otf_GetData then begin
       pbStripPicture(S, efEditSt);
 
-      if not efStr2Long(S, NativeInt(DataPtr^)) then
-        NativeInt(DataPtr^) := 0;
+      if efStr2Long(S, L) then
+        Integer(DataPtr^) := L
+      else
+        Integer(DataPtr^) := 0;
     end else begin
-      efLong2Str(S, NativeInt(DataPtr^));
+      efLong2Str(S, Integer(DataPtr^));
       pbMergePicture(efEditSt, S);
     end;
   end;
