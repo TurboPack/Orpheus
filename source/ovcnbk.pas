@@ -284,6 +284,8 @@ type
       message WM_SETCURSOR;
     procedure WMSetFocus(var Msg : TWMSetFocus);
       message WM_SETFOCUS;
+    procedure WMSize(var Msg : TWMSize);
+      message WM_SIZE;
 
   protected
     procedure AncestorNotFound(Reader: TReader; const ComponentName: string;
@@ -3749,6 +3751,16 @@ begin
 
   {force repaint of tab and drawing of focus rect}
   InvalidateTab(PageIndex);
+end;
+
+procedure TOvcNotebook.WMSize(var Msg: TWMSize);
+begin
+  if HandleAllocated and (csLoading in ComponentState) then
+  begin
+    tabCalcTabInfo;
+    tabAdjustPageSize;
+  end;
+  inherited;
 end;
 
 procedure TOvcNotebook.AncestorNotFound(Reader: TReader; const ComponentName: string;
