@@ -4291,17 +4291,16 @@ begin
         PCellComboBoxInfo(Data)^.Index := AField.AsInteger;
         PCellComboBoxInfo(Data)^.St := '';
       end else begin
-        PString(Data)^ := AField.Text;
-        if PString(Data)^ = '' then
+        if AField.Text = '' then
           Idx := -1
         else
-          Idx := TOvcTCComboBox(ACell).Items.IndexOf(PString(Data)^);
+          Idx := TOvcTCComboBox(ACell).Items.IndexOf(AField.Text);
 
         PCellComboBoxInfo(Data)^.Index := Idx;
 
         if Idx = -1 then
           if TOvcTCComboBox(ACell).Style in [csDropDown, csSimple] then
-            PCellComboBoxInfo(Data)^.St := PString(Data)^ //S;
+            PCellComboBoxInfo(Data)^.St := AField.Text;
       end;
 
       Exit;
