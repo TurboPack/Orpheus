@@ -1180,6 +1180,7 @@ begin
     end;
   end;
   tabCalcTabInfo;
+  tabAdjustPageSize;
 end;
 
 procedure TOvcNotebook.MouseDown(Button : TMouseButton; Shift : TShiftState; X, Y : Integer);
