@@ -2923,7 +2923,11 @@ begin
     Result := GetLastError
   else begin
     Result := 0;
+{$IF CompilerVersion > 35}
+    F.Handle := THandle(INVALID_HANDLE_VALUE);
+{$ELSE}
     F.Handle := NativeInt(INVALID_HANDLE_VALUE);
+{$ENDIF}
     F.Mode := fmClosed;
   end;
 end;
@@ -2952,7 +2956,11 @@ function VwrTFDD_Open(var F : TTextRec) : Integer; far;
 begin
   F.Handle := CreateFile(F.Name, GENERIC_READ, FILE_SHARE_READ,
                  nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+{$IF CompilerVersion > 35}
+  if F.Handle = THandle(INVALID_HANDLE_VALUE) then begin
+{$ELSE}
   if F.Handle = NativeInt(INVALID_HANDLE_VALUE) then begin
+{$ENDIF}
     F.Mode := fmClosed;
     Result := GetLastError;
   end else begin
@@ -2967,7 +2975,11 @@ end;
 procedure AssignVwrTFDD(var F : Text; FileName : string);
 begin
   with TTextRec(F) do begin
+{$IF CompilerVersion > 35}
+    Handle   := THandle(INVALID_HANDLE_VALUE);
+{$ELSE}
     Handle   := NativeInt(INVALID_HANDLE_VALUE);
+{$ENDIF}
     Mode     := fmClosed;
     BufSize  := SizeOf(Buffer);
     BufPtr   := @Buffer;
