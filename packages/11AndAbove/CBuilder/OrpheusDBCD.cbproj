@@ -159,9 +159,6 @@
         <PackageImport Include="vcldb.bpi">
             <BuildOrder>26</BuildOrder>
         </PackageImport>
-        <PackageImport Include="vcldbx.bpi">
-            <BuildOrder>27</BuildOrder>
-        </PackageImport>
         <PackageImport Include="vclx.bpi">
             <BuildOrder>40</BuildOrder>
         </PackageImport>
@@ -402,6 +399,12 @@
                 </DeployFile>
                 <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\15.0\BPL\OrpheusDBCD.bpl" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\20.0\BPL\OrpheusDBCD260.bpl" Configuration="Release" Class="ProjectOutput"/>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\22.0\BPL\OrpheusDBCD280.bpl" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>OrpheusDBCD.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="OSX32">
                         <Operation>1</Operation>
