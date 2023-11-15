@@ -936,7 +936,7 @@ procedure TOvcBaseEntryField.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
 
-  Params.Style := DWORD(Params.Style) or BorderStyles[FBorderStyle];
+  Params.Style := DWORD(Params.Style) or DWORD(BorderStyles[FBorderStyle]);
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
