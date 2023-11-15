@@ -936,7 +936,7 @@ procedure TOvcBaseEntryField.CreateParams(var Params : TCreateParams);
 begin
   inherited CreateParams(Params);
 
-  Params.Style := Integer(Params.Style) or BorderStyles[FBorderStyle];
+  Params.Style := DWORD(Params.Style) or BorderStyles[FBorderStyle];
 
   if NewStyleControls and Ctl3D and (FBorderStyle = bsSingle) then begin
     Params.Style := Params.Style and not WS_BORDER;
@@ -2747,7 +2747,7 @@ begin
 
     {check for special value the Val() doesn't handle correctly}
     if StrComp(S, '-2147483648') = 0 then
-      L := Integer($80000000)
+      L := NativeInt($80000000)
     else
       Result := StrToLongPChar(S, L);
   end;
@@ -3766,7 +3766,7 @@ procedure TOvcBaseEntryField.SelectAll;
   {-selects the entire contents of the edit field}
 begin
   if HandleAllocated then
-    Perform(EM_SETSEL, 1, Integer($FFFF0000));
+    Perform(EM_SETSEL, 1, LPARAM($FFFF0000));
 end;
 
 procedure TOvcBaseEntryField.SetAsBoolean(Value : Boolean);
@@ -4732,7 +4732,7 @@ var
 begin
   H := Clipboard.GetAsHandle(CF_UNICODETEXT);
   if H <> 0 then begin
-    TMessage(Msg).lParam := Integer(GlobalLock(H));
+    TMessage(Msg).lParam := LPARAM(GlobalLock(H));
     efPerformEdit(TMessage(Msg), ccPaste);
     GlobalUnlock(H);
   end;
