@@ -2616,6 +2616,7 @@ procedure TOvcCustomCalculator.PressButton(Button : TOvcCalculatorButton);
         end;
         FDisplayStr := Copy(FDisplayStr, 1, Length(FDisplayStr)-1);
         LastOperand := StrToFloat(FDisplayStr);
+        DisplayValue := LastOperand;
         cSetDisplayString(FDisplayStr);
       end else begin
         LastOperand := 0;
