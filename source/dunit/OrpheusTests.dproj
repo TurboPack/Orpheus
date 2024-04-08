@@ -7,9 +7,10 @@
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <FrameworkType>VCL</FrameworkType>
         <MainSource>OrpheusTests.dpr</MainSource>
-        <Platform>Win32</Platform>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform>Win32</Platform>
         <ProjectGuid>{81987D03-471A-4B63-9F29-340594B9385A}</ProjectGuid>
+        <ProjectName Condition="'$(ProjectName)'==''">OrpheusTests</ProjectName>
         <ProjectVersion>20.1</ProjectVersion>
         <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
