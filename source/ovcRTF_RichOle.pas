@@ -32,12 +32,11 @@
 
 unit ovcRTF_RichOle;
 
-{$WEAKPACKAGEUNIT}
-{$MINENUMSIZE 4}
-
 interface
 
 {$IFDEF WIN32}
+{$WEAKPACKAGEUNIT}
+{$MINENUMSIZE 4}
 
 uses
   Windows, ActiveX, RichEdit;
