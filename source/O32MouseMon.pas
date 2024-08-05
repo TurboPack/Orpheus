@@ -58,36 +58,36 @@ var
   ghhk: HHook = 0;
   mhhk: HHook = 0;
 
-function MessageHookProc(nCode: Integer; wParam, lParam: Integer): Integer; stdcall;
+function MessageHookProc(ACode: Integer; AWParam: WPARAM; ALParam: LPARAM): LRESULT; stdcall;
 var
   i: Integer;
 begin
-  if nCode = 0 then begin
-    if (nCode = HC_ACTION) and (PMsg(lParam).message = WM_MOUSEWHEEL) then
+  if ACode = 0 then begin
+    if (ACode = HC_ACTION) and (PMsg(ALParam).message = WM_MOUSEWHEEL) then
       for i := 0 to MouseMonList.Count - 1 do
         TMouseMonEntry(MouseMonList[i]).Handler(
-          PMsg(lParam).message,
-          PMsg(lParam).wParam,
-          PMsg(lParam).lParam,
-          PMsg(lParam).pt,
-          PMsg(lParam).hwnd);
+          PMsg(ALParam).message,
+          PMsg(ALParam).wParam,
+          PMsg(ALParam).lParam,
+          PMsg(ALParam).pt,
+          PMsg(ALParam).hwnd);
   end;
-  Result := CallNextHookEx(ghhk, nCode, wParam, lParam);
+  Result := CallNextHookEx(ghhk, ACode, AWParam, ALParam);
 end;
 
-function MouseHookProc(nCode: Integer; wParam, lParam: Integer): Integer; stdcall;
+function MouseHookProc(ACode: Integer; AWParam: WPARAM; ALParam: LPARAM): LRESULT; stdcall;
 var
   i: Integer;
 begin
-  if (nCode = HC_ACTION) and (wParam <> WM_MOUSEWHEEL) then
+  if (ACode = HC_ACTION) and (AWParam <> WM_MOUSEWHEEL) then
     for i := 0 to MouseMonList.Count - 1 do
       TMouseMonEntry(MouseMonList[i]).Handler(
-        wParam,
+        AWParam,
         0,
         0,
-        PMouseHookStruct(lParam).pt,
-        PMouseHookStruct(lParam).hwnd);
-  Result := CallNextHookEx(mhhk, nCode, wParam, lParam);
+        PMouseHookStruct(ALParam).pt,
+        PMouseHookStruct(ALParam).hwnd);
+  Result := CallNextHookEx(mhhk, ACode, AWParam, ALParam);
 end;
 
 procedure InstallHook;
