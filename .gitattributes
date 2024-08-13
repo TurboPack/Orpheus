@@ -9,6 +9,7 @@
 *.txt text
 *.java text
 *.cs text
+*.cpp text
 *.dpk -text
 *.dproj -text
 *.groupproj -text
