@@ -455,10 +455,10 @@ begin
   DC := GetDC(0);
   TempList := TStringList.Create;
   try
-    EnumFontFamilies(DC, nil, @EnumFontFamProc, Integer(Self));      //SZ FIXME EnumFontFamilies is 16-bit compatibility function
+    EnumFontFamilies(DC, nil, @EnumFontFamProc, LPARAM(Self));      //SZ FIXME EnumFontFamilies is 16-bit compatibility function
     if (Printer.Printers.Count > 0) and (Printer.Handle > 0) then
       EnumFontFamilies(Printer.Handle, nil, @EnumPrinterFontFamProc,
-        Integer(Self));
+        LPARAM(Self));
     TempList.Assign(Items);
     TempList.Sort;
     Items.Assign(TempList);

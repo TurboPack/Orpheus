@@ -156,7 +156,7 @@ implementation
 
 procedure TOvcDbPictureLabel.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := Integer(FDataLink);
+  Msg.Result := LRESULT(FDataLink);
 end;
 
 constructor TOvcDbPictureLabel.Create(AOwner : TComponent);

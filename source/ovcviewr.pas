@@ -2757,7 +2757,7 @@ begin
     P := ScreenToClient(P);
     SP.X := P.X;
     SP.Y := P.Y;
-    PostMessage(Handle, WM_MOUSEMOVE, 0, Integer(SP));
+    PostMessage(Handle, WM_MOUSEMOVE, 0, LPARAM(SP));
     Application.ProcessMessages;
   until GetAsyncKeyState(LeftBtn) >= 0;
 end;

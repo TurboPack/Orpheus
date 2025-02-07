@@ -142,7 +142,7 @@ implementation
 
 procedure TOvcDbDisplayLabel.CMGetDataLink(var Msg : TMessage);
 begin
-  Msg.Result := Integer(FDataLink);
+  Msg.Result := LRESULT(FDataLink);
 end;
 
 constructor TOvcDbDisplayLabel.Create(AOwner : TComponent);

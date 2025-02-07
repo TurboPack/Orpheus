@@ -438,7 +438,7 @@ const
   OM_ISATTACHED          = OM_FIRST + 17;
     {sent to other controls to see if they are attached. Used by attached
      button components and components that use an internal validator.
-     Result is Integer(Self) if true}
+     Result is NativeInt(Self) if true}
   OM_VALIDATE            = OM_FIRST + 18;
     {Sent to the FlexEdit as a call for it to Validate Itself}
 

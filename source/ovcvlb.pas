@@ -1130,7 +1130,7 @@ end;
 
 procedure TOvcCustomVirtualListBox.LBSetTopIndex(var Msg : TMessage);
 begin
-  if (Integer(Msg.wParam) >= 0) and (Integer(Msg.wParam) <= lHighIndex) then begin
+  if (NativeInt(Msg.wParam) >= 0) and (NativeInt(Msg.wParam) <= lHighIndex) then begin
     SetTopIndex(Msg.wParam);
     Msg.Result := 0;
   end else

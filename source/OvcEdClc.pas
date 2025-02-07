@@ -406,7 +406,7 @@ begin
       begin
         if Shift = [ssShift] then begin
           PopupClose(Sender);
-          PostMessage(Handle, WM_KeyDown, VK_TAB, Integer(ssShift));
+          PostMessage(Handle, WM_KeyDown, VK_TAB, LPARAM(ssShift));
         end else if Shift = [] then begin
           PopupClose(Sender);
           PostMessage(Handle, WM_KeyDown, VK_TAB, 0);

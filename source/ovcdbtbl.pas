@@ -1235,10 +1235,10 @@ begin
       tbSetFocus(tbActiveCell.EditHandle);
 
       if not (tbActiveCell is TOvcTCComboBox) then
-        PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, Integer(Msg.Pos))
+        PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, LPARAM(Msg.Pos))
       else if (tbActiveCell is TOvcTCComboBox) then begin
         if TOvcTCComboBox(tbActiveCell).Style <> csDropDownList then
-          PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, Integer(Msg.Pos));
+          PostMessage(tbActiveCell.EditHandle, WM_LBUTTONDOWN, Msg.Keys, LPARAM(Msg.Pos));
       end;
 
     end;
@@ -5544,7 +5544,7 @@ begin
   if Region = (otrInMain) then begin
     SetActiveCell(Row, Col);
     PostMessage(Handle, ctim_StartEdit, 0, 0);
-    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+    PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, LPARAM(Msg.Pos));
   end;
 
   inherited;
@@ -5640,10 +5640,10 @@ begin
           if not (dtoAlwaysEditing in Options) and (ActiveRow = Row) and
              (ActiveColumn = Col) and WasFocused then begin
             PostMessage(Handle, ctim_StartEdit, 0, 0);
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, LPARAM(Msg.Pos));
           end else if (dtoAlwaysEditing in Options) then begin
             PostMessage(Handle, ctim_StartEdit, 0, 0);
-            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, Integer(Msg.Pos));
+            PostMessage(Handle, ctim_StartEditMouse, Msg.Keys, LPARAM(Msg.Pos));
           end;
 
           SetActiveCell(Row, Col);
