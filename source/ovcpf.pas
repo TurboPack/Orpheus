@@ -311,7 +311,7 @@ begin
   if efSaveData then
   begin
     if efDataType mod fcpDivisor = fsubString then    //SZ
-      efTransfer(@S, otf_GetData)           //SZ
+      efTransfer(@S, otf_SetData)           //SZ
     else
       efTransfer(@P, otf_SetData);
   end;
