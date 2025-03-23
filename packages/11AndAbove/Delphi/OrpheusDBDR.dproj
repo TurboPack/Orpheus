@@ -10,7 +10,7 @@
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{BA59A88B-97E3-435F-A04A-1510502C1E47}</ProjectGuid>
         <ProjectName Condition="'$(ProjectName)'==''">OrpheusDBDR</ProjectName>
-        <ProjectVersion>20.2</ProjectVersion>
+        <ProjectVersion>20.3</ProjectVersion>
         <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">

@@ -34,7 +34,6 @@ unit ovcRTF_RichOle;
 
 interface
 
-{$IFDEF WIN32}
 {$WEAKPACKAGEUNIT}
 {$MINENUMSIZE 4}
 
@@ -221,11 +220,7 @@ function RichEdit_SetOleCallback(Wnd: HWND;
 {$IFDEF CPPBUILDER}{$EXTERNALSYM RichEdit_GetOleInterface}{$ENDIF}
 function RichEdit_GetOleInterface(Wnd: HWND; out Intf: IRichEditOle): Boolean;
 
-{$ENDIF}
-
 implementation
-
-{$IFDEF WIN32}
 
 function RichEdit_SetOleCallback(Wnd: HWND;
   const Intf: IRichEditOleCallback): Boolean;
@@ -237,7 +232,5 @@ function RichEdit_GetOleInterface(Wnd: HWND; out Intf: IRichEditOle): Boolean;
 begin
   Result := SendMessage(Wnd, EM_GETOLEINTERFACE, 0, LPARAM(@Intf)) <> 0;
 end;
-
-{$ENDIF}
 
 end.

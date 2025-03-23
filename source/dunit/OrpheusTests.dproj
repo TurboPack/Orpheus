@@ -11,7 +11,7 @@
         <Platform>Win32</Platform>
         <ProjectGuid>{81987D03-471A-4B63-9F29-340594B9385A}</ProjectGuid>
         <ProjectName Condition="'$(ProjectName)'==''">OrpheusTests</ProjectName>
-        <ProjectVersion>20.2</ProjectVersion>
+        <ProjectVersion>20.3</ProjectVersion>
         <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">

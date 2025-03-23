@@ -207,14 +207,14 @@ contains
   o32WideCharSet in '..\..\..\source\o32WideCharSet.pas',
   ovcBidi in '..\..\..\source\ovcBidi.pas',
   ovcThemes in '..\..\..\source\ovcThemes.pas',
-  OvcTCHeaderExtended in '..\..\..\source\OvcTCHeaderExtended.pas' {$IFDEF CPUX86},
+  OvcTCHeaderExtended in '..\..\..\source\OvcTCHeaderExtended.pas',
   ovctcedtHTMLText in '..\..\..\source\ovctcedtHTMLText.pas',
   ovctcedtTextFormatBar in '..\..\..\source\ovctcedtTextFormatBar.pas' {ovcTextFormatBar},
   ovcRTF_TOM in '..\..\..\source\ovcRTF_TOM.pas',
   ovcRTF_Paint in '..\..\..\source\ovcRTF_Paint.pas',
   ovcRTF_IText in '..\..\..\source\ovcRTF_IText.pas',
   ovcRTF_RichOle in '..\..\..\source\ovcRTF_RichOle.pas',
-  ovctccheckcbx in '..\..\..\source\ovctccheckcbx.pas' {$ENDIF};
+  ovctccheckcbx in '..\..\..\source\ovctccheckcbx.pas';
 
 end.
 

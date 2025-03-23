@@ -10,7 +10,7 @@
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{97ECEF13-FB31-4F7E-A2FA-21CEE6F4D30F}</ProjectGuid>
         <ProjectName Condition="'$(ProjectName)'==''">OrpheusDR</ProjectName>
-        <ProjectVersion>20.2</ProjectVersion>
+        <ProjectVersion>20.3</ProjectVersion>
         <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -286,9 +286,7 @@
         <DCCReference Include="..\..\..\source\o32WideCharSet.pas"/>
         <DCCReference Include="..\..\..\source\ovcBidi.pas"/>
         <DCCReference Include="..\..\..\source\ovcThemes.pas"/>
-        <DCCReference Include="..\..\..\source\OvcTCHeaderExtended.pas">
-            <Form>$IFDEF CPUX86</Form>
-        </DCCReference>
+        <DCCReference Include="..\..\..\source\OvcTCHeaderExtended.pas"/>
         <DCCReference Include="..\..\..\source\ovctcedtHTMLText.pas"/>
         <DCCReference Include="..\..\..\source\ovctcedtTextFormatBar.pas">
             <Form>ovcTextFormatBar</Form>
@@ -297,9 +295,7 @@
         <DCCReference Include="..\..\..\source\ovcRTF_Paint.pas"/>
         <DCCReference Include="..\..\..\source\ovcRTF_IText.pas"/>
         <DCCReference Include="..\..\..\source\ovcRTF_RichOle.pas"/>
-        <DCCReference Include="..\..\..\source\ovctccheckcbx.pas">
-            <Form>$ENDIF</Form>
-        </DCCReference>
+        <DCCReference Include="..\..\..\source\ovctccheckcbx.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

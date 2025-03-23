@@ -40,8 +40,6 @@ unit ovctcedtHTMLText;
 
 interface
 
-{$IFDEF WIN32}
-
 uses
   Windows, SysUtils, Messages, Classes, Controls, Forms, StdCtrls,
   ComCtrls,
@@ -272,11 +270,7 @@ type
 
 function StyleΔToHTML(Old, New: TFontStyles): string;
 
-{$ENDIF}
-
 implementation
-
-{$IFDEF WIN32}
 
 uses
   Types, Variants, RichEdit, ovcRTF_RichOle, ActiveX, ClipBrd,
@@ -333,9 +327,9 @@ procedure TOvcTCHtmlTextEdit.WMGetDlgCode(var Msg : TMessage);
   end;
 {--------}
 procedure TOvcTCHtmlTextEdit.WMKeyDown(var Msg : TWMKey);
-  procedure GetSelection(var S, E : word);
+  procedure GetSelection(var S, E : Integer);
     type
-      LH = packed record L, H : word; end;
+      LH = packed record L, H : {$IFDEF CPUX86}word{$ELSE}DWord{$ENDIF}; end;
     var
       GetSel : NativeInt;
     begin
@@ -346,7 +340,7 @@ procedure TOvcTCHtmlTextEdit.WMKeyDown(var Msg : TWMKey);
   var
     GridReply : TOvcTblKeyNeeds;
     GridUsedIt : boolean;
-    SStart, SEnd : word;
+    SStart, SEnd : Integer;
   begin
     GridUsedIt := false;
     GridReply := otkDontCare;
@@ -1033,7 +1027,5 @@ begin
   FFormatBar.AttachedControl := Self;
   FFormatBar.UpdatePosition;
 end;
-
-{$ENDIF}
 
 end.
