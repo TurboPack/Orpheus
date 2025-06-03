@@ -274,31 +274,75 @@ type
 // called via an interface reference, usually by the operating system.
 
 type
+{$IFDEF CPUX86}
+  TAddRef = TProcedure;
+  TDraw = TProcedure;
+  TGetBaselinePos = TProcedure;
+  TGetCachedSize = TProcedure;
+  TGetCurTargetX = TProcedure;
+  TGetDropTarget = TProcedure;
+  TGetHScroll = TProcedure;
+  TGetNaturalSize = TProcedure;
+  TGetText = TProcedure;
+  TGetVScroll = TProcedure;
+  TOnInPlaceActivate = TProcedure;
+  TOnInPlaceDeactivate = TProcedure;
+  TOnPropertyBitsChange = TProcedure;
+  TOnSetCursor = TProcedure;
+  TOnTxUIDeactivate = TProcedure;
+  TOnUIActivate = TProcedure;
+  TQueryHitPoint = TProcedure;
+  TRelease = TProcedure;
+  TSendMessage = TProcedure;
+  TSetText = TProcedure;
+{$ELSE}
+  TAddRef = function(const ASelf: IInterface): Integer; stdcall;
+  TDraw = function(const ASelf: Pointer; dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
+  TGetBaselinePos = function(const ASelf: Pointer; out pBaselinePos: Integer): HResult; stdcall;
+  TGetCachedSize = function(const ASelf: Pointer; out pdwWidth, pdwHeight: DWord): HResult; stdcall;
+  TGetCurTargetX = function(const ASelf: Pointer; out px: Integer): HResult; stdcall;
+  TGetDropTarget = function(const ASelf: Pointer; out ppDropTarget: IDropTarget): HResult; stdcall;
+  TGetHScroll = function(const ASelf: Pointer; out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
+  TGetNaturalSize = function(const ASelf: Pointer; dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: Integer): HResult; stdcall;
+  TGetText = function(const ASelf: Pointer; out pbstrText: TBStr): HResult; stdcall;
+  TGetVScroll = function(const ASelf: Pointer; out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
+  TOnInPlaceActivate = function(const ASelf: Pointer; const prcClient: TRect): HResult; stdcall;
+  TOnInPlaceDeactivate = function(const ASelf: Pointer): HResult; stdcall;
+  TOnPropertyBitsChange = function(const ASelf: Pointer; dwMask, dwBits: DWord): HResult; stdcall;
+  TOnSetCursor = function(const ASelf: Pointer; dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
+  TOnTxUIDeactivate = function(const ASelf: Pointer): HResult; stdcall;
+  TOnUIActivate = function(const ASelf: Pointer): HResult; stdcall;
+  TQueryHitPoint = function(const ASelf: Pointer; dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
+  TRelease = function(const ASelf: IInterface): Integer; stdcall;
+  TSendMessage = function(const ASelf: Pointer; msg: UInt; wParam: wParam; lParam: lParam; out plresult: lResult): HResult; stdcall;
+  TSetText = function(const ASelf: Pointer; pszText: PWideChar): HResult; stdcall;
+{$ENDIF}
+
   PITextServicesMT = ^TITextServicesMT;
   TITextServicesMT = packed record
     // IUnknown
     QueryInterface: TQueryInterface;
-    _AddRef,
-    _Release: TProcedure;
+    _AddRef: TAddRef;
+    _Release: TRelease;
     // ITextServices
-    TxSendMessage,
-    TxDraw,
-    TxGetHScroll,
-    TxGetVScroll,
-    OnTxSetCursor,
-    TxQueryHitPoint,
-    OnTxInPlaceActivate,
-    OnTxInPlaceDeactivate,
-    OnTxUIActivate,
-    OnTxUIDeactivate,
-    TxGetText,
-    TxSetText,
-    TxGetCurTargetX,
-    TxGetBaselinePos,
-    TxGetNaturalSize,
-    TxGetDropTarget,
-    OnTxPropertyBitsChange,
-    TxGetCachedSize: TProcedure;
+    TxSendMessage: TSendMessage;
+    TxDraw: TDraw;
+    TxGetHScroll: TGetHScroll;
+    TxGetVScroll: TGetVScroll;
+    OnTxSetCursor: TOnSetCursor;
+    TxQueryHitPoint: TQueryHitPoint;
+    OnTxInPlaceActivate: TOnInPlaceActivate;
+    OnTxInPlaceDeactivate: TOnInPlaceDeactivate;
+    OnTxUIActivate: TOnUIActivate;
+    OnTxUIDeactivate: TOnTxUIDeactivate;
+    TxGetText: TGetText;
+    TxSetText: TSetText;
+    TxGetCurTargetX: TGetCurTargetX;
+    TxGetBaselinePos: TGetBaselinePos;
+    TxGetNaturalSize: TGetNaturalSize;
+    TxGetDropTarget: TGetDropTarget;
+    OnTxPropertyBitsChange: TOnPropertyBitsChange;
+    TxGetCachedSize: TGetCachedSize;
   end;
 
   PITextServices = ^TITextServices;
@@ -312,24 +356,22 @@ begin
   Result := PITextServices(This).Impl.QueryInterface(riid, ppvObj);
 end;
 
+{$IFDEF CPUX86}
 procedure TextServices_AddRef; // (const This: IUnknown): ULong; stdcall;
 asm
-{$IFDEF CPUX86}
   mov eax, [esp + 4]
   mov eax, [eax].TITextServices.Impl
   mov [esp + 4], eax
 
   mov eax, [eax]
   jmp dword ptr [eax].TITextServicesMT._AddRef
-{$ELSE}
-  mov rax, [rsp + 8]
-  mov rax, [rax].TITextServices.Impl
-  mov [rsp + 8], rax
-
-  mov rax, [rax]
-  jmp qword ptr [rax].TITextServicesMT._AddRef
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_AddRef(const ASelf: IInterface): Integer; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl._AddRef;
+end;
+{$ENDIF}
 
 procedure ReleaseTextServices(const Services: PITextServices);
 // This procedure is not in assembler because Dispose requires compiler
@@ -339,12 +381,12 @@ begin
   Dispose(Services);
 end;
 
+{$IFDEF CPUX86}
 procedure TextServices_Release; // (const This: IUnknown): ULong; stdcall;
 {begin
   Result := PITextServices(This).Impl._Release;
   if Result = 0 then ReleaseTextServices(PTextServices(This));}
 asm
-{$IFDEF CPUX86}
   mov eax, [esp + 4]
   mov eax, [eax].TITextServices.Impl
   push eax
@@ -357,21 +399,15 @@ asm
   xor eax, eax
 @@exit:
   ret 4
-{$ELSE}
-  mov rax, [rsp + 8]
-  mov rax, [rax].TITextServices.Impl
-  push rax
-  mov rax, [rax]
-  call qword ptr [rax].TITextServicesMT._Release
-  test rax, rax
-  jnz @@exit
-  mov rax, [rsp + 8]
-  call ReleaseTextServices
-  xor rax, rax
-@@exit:
-  ret 8
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_Release(const ASelf: IInterface): Integer; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl._Release;
+  if Result = 0 then
+    ReleaseTextServices(PITextServices(ASelf));
+end;
+{$ENDIF}
 
 // These stubs get called as stdcall methods. They translate the stack into
 // a thiscall method. First, there is a breakpoint, which can be set or
@@ -386,347 +422,311 @@ end;
 // implementor's VMT, so we add an offset to that pointer and jump to the
 // address stored there.
 
+{$IFDEF CPUX86}
 procedure TextServices_TxSendMessage; // (msg: UInt; wParam: wParam; lParam: lParam; out plresult: lResult): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxSendMessage
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxSendMessage
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxSendMessage(const ASelf: Pointer; msg: UInt; wParam: wParam; lParam: lParam; out plresult: lResult): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxSendMessage(msg, wParam, lParam, plresult);
+end;
+{$ENDIF}
 
-procedure TextServices_TxDraw; // (dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxDraw;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxDraw
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxDraw
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxDraw(const ASelf: Pointer; dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcBounds, lprcWBounds: TRectL; const lprcUpdate: TRect; pfnContinue: TTxDrawCallback; dwContinue: DWord; lViewID: TTxtView): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxDraw(dwDrawAspect, lindex, pvAspect, ptd, hdcDraw, hicTargetDev, lprcBounds, lprcWBounds, lprcUpdate, pfnContinue, dwContinue, lViewID);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextServices_TxGetHScroll; // (out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetHScroll
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetHScroll
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetHScroll(const ASelf: Pointer; out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetHScroll(plMin, plMax, plPos, plPage, pfEnabled);
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetVScroll; // (out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetVScroll;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetVScroll
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetVScroll
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetVScroll(const ASelf: Pointer; out plMin, plMax, plPos, plPage: Integer; out pfEnabled: Bool): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetVScroll(plMin, plMax, plPos, plPage, pfEnabled);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextServices_OnTxSetCursor; // (dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.OnTxSetCursor
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.OnTxSetCursor
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_OnTxSetCursor(const ASelf: Pointer; dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.OnTxSetCursor(dwDrawAspect, lindex, pvAspect, ptd, hdcDraw, hicTargetDev, lprcClient, x, y);
+end;
+{$ENDIF}
 
-procedure TextServices_TxQueryHitPoint; // (dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxQueryHitPoint;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxQueryHitPoint
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxQueryHitPoint
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxQueryHitPoint(const ASelf: Pointer; dwDrawAspect: DWord; lindex: Integer; pvAspect: Pointer; ptd: PDVTargetDevice; hdcDraw, hicTargetDev: HDC; const lprcClient: TRect; x, y: Integer; out pHitResult: DWord): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxQueryHitPoint(dwDrawAspect, lindex, pvAspect, ptd, hdcDraw, hicTargetDev, lprcClient, x, y, pHitResult);
+end;
+{$ENDIF}
 
-procedure TextServices_OnTxInPlaceActivate; // (const prcClient: TRect): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_OnTxInPlaceActivate;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.OnTxInPlaceActivate
+ end;
 {$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.OnTxInPlaceActivate
-{$ENDIF}
+function TextServices_OnTxInPlaceActivate(const ASelf: Pointer; const prcClient: TRect): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.OnTxInPlaceActivate(prcClient);
 end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextServices_OnTxInPlaceDeactivate; // : HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.OnTxInPlaceDeactivate
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.OnTxInPlaceDeactivate
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_OnTxInPlaceDeactivate(const ASelf: Pointer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.OnTxInPlaceDeactivate;
+end;
+{$ENDIF}
 
-procedure TextServices_OnTxUIActivate; // : HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_OnTxUIActivate;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.OnTxUIActivate
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.OnTxUIActivate
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_OnTxUIActivate(const ASelf: Pointer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.OnTxUIActivate;
+end;
+{$ENDIF}
 
-procedure TextServices_OnTxUIDeactivate; // : HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_OnTxUIDeactivate;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.OnTxUIDeactivate
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.OnTxUIDeactivate
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_OnTxUIDeactivate(const ASelf: Pointer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.OnTxUIDeactivate;
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetText; // (out pbstrText: TBStr): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetText;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetText
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetText
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetText(const ASelf: Pointer; out pbstrText: TBStr): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetText(pbstrText);
+end;
+{$ENDIF}
 
-procedure TextServices_TxSetText; // (pszText: PWideChar): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxSetText;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxSetText
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxSetText
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxSetText(const ASelf: Pointer; pszText: PWideChar): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxSetText(pszText);
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetCurTargetX; // (out px: Integer): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetCurTargetX;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetCurTargetX
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetCurTargetX
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetCurTargetX(const ASelf: Pointer; out px: Integer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetCurTargetX(px);
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetBaselinePos; // (out pBaselinePos: Integer): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetBaselinePos;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetBaselinePos
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetBaselinePos
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetBaselinePos(const ASelf: Pointer; out pBaselinePos: Integer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetBaselinePos(pBaselinePos);
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetNaturalSize; // (dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: Integer): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetNaturalSize;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetNaturalSize
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetNaturalSize
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetNaturalSize(const ASelf: Pointer; dwAspect: DWord; hdcDraw, hicTargetDev: HDC; ptd: PDVTargetDevice; dwMode: DWord; const psizelExtent: TSizeL; var pwidth, pheight: Integer): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetNaturalSize(dwAspect, hdcDraw, hicTargetDev, ptd, dwMode, psizelExtent, pwidth, pheight);
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetDropTarget; // (out ppDropTarget: IDropTarget): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetDropTarget;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetDropTarget
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetDropTarget
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetDropTarget(const ASelf: Pointer; out ppDropTarget: IDropTarget): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetDropTarget(ppDropTarget);
+end;
+{$ENDIF}
 
-procedure TextServices_OnTxPropertyBitsChange; // (dwMask, dwBits: DWord): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_OnTxPropertyBitsChange;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.OnTxPropertyBitsChange
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.OnTxPropertyBitsChange
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_OnTxPropertyBitsChange(const ASelf: Pointer; dwMask, dwBits: DWord): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.OnTxPropertyBitsChange(dwMask, dwBits);
+end;
+{$ENDIF}
 
-procedure TextServices_TxGetCachedSize; // (out pdwWidth, pdwHeight: DWord): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextServices_TxGetCachedSize;
+asm
   pop edx // return address
   pop eax
   mov ecx, [eax].TITextServices.Impl
   push edx // return address
   mov eax, [ecx]
   jmp dword ptr [eax].TITextServicesMT.TxGetCachedSize
-{$ELSE}
-  pop rdx // return address
-  pop rax
-  mov rcx, [rax].TITextServices.Impl
-  push rdx // return address
-  mov rax, [rcx]
-  jmp qword ptr [rax].TITextServicesMT.TxGetCachedSize
-{$ENDIF}
 end;
+{$ELSE}
+function TextServices_TxGetCachedSize(const ASelf: Pointer; out pdwWidth, pdwHeight: DWord): HResult; stdcall;
+begin
+  Result := PITextServices(ASelf).Impl.TxGetCachedSize(pdwWidth, pdwHeight);
+end;
+{$ENDIF}
 
 var
   TextServicesMethodTable: TITextServicesMT = (
@@ -756,58 +756,141 @@ var
   );
 
 type
+{$IFDEF CPUX86}
+  TActivate = TProcedure;
+  TAddRefRelease = TProcedure;
+  TCharFormatChange = TProcedure;
+  TClientToScreen = TProcedure;
+  TCreateCaret = TProcedure;
+  TDeactivate = TProcedure;
+  TEnableScrollBar = TProcedure;
+  TGetAcceleratorPos = TProcedure;
+  TGetBackStyle = TProcedure;
+  TGetCharFormat = TProcedure;
+  TGetClientRect = TProcedure;
+  TGetContext = TProcedure;
+  TGetDC = TProcedure;
+  TGetExtent = TProcedure;
+  TGetMaxLength = TProcedure;
+  TGetParaFormat = TProcedure;
+  TGetPasswordChar = TProcedure;
+  TGetPropertyBits = TProcedure;
+  TGetScrollBars = TProcedure;
+  TGetSelectionBarWidth = TProcedure;
+  TGetSysColor = TProcedure;
+  TGetViewInset = TProcedure;
+  TInvalidateRect = TProcedure;
+  TKillTimer = TProcedure;
+  TNotify = TProcedure;
+  TParaFormatChange = TProcedure;
+  TReleaseContext = TProcedure;
+  TReleaseDC = TProcedure;
+  TScreenToClient = TProcedure;
+  TScrollWindowEx = TProcedure;
+  TSetCapture = TProcedure;
+  TSetCaretPos = TProcedure;
+  TSetCursor = TProcedure;
+  TSetFocus = TProcedure;
+  TSetScrollBar = TProcedure;
+  TSetScrollPos = TProcedure;
+  TSetTimer = TProcedure;
+  TShowCaret = TProcedure;
+  TShowScrollBar = TProcedure;
+  TViewChange = TProcedure;
+{$ELSE}
+  TActivate = function(const ASelf: Pointer; out lpOldState: Integer): HResult; stdcall;
+  TAddRefRelease = function(const ASelf: Pointer): Integer; stdcall;
+  TCharFormatChange = function(const ASelf: Pointer; const pcf: TMyCharFormatW): HResult; stdcall;
+  TClientToScreen = function(const ASelf: Pointer; var lppt: TPoint): Bool; stdcall;
+  TCreateCaret = function(const ASelf: Pointer; hbmp: hBitmap; xWidth, yHeight: Integer): Bool; stdcall;
+  TDeactivate = function(const ASelf: Pointer; lNewState: Integer): HResult; stdcall;
+  TEnableScrollBar = function(const ASelf: Pointer; fuSBFlags, fuArrowFlags: Integer): Bool; stdcall;
+  TGetAcceleratorPos = function(const ASelf: Pointer; out pcp: Integer): HResult; stdcall;
+  TGetBackStyle = function(const ASelf: Pointer; out pstyle: TTxtBackStyle): HResult; stdcall;
+  TGetCharFormat = function(const ASelf: Pointer; out ppCF: PCharFormatW): HResult; stdcall;
+  TGetClientRect = function(const ASelf: Pointer; out prc: TRect): HResult; stdcall;
+  TGetContext = function(const ASelf: Pointer): hIMC; stdcall;
+  TGetDC = function(const ASelf: Pointer): HDC; stdcall;
+  TGetExtent = function(const ASelf: Pointer; out lpExtent: TSizeL): HResult; stdcall;
+  TGetMaxLength = function(const ASelf: Pointer; out pLength: DWord): HResult; stdcall;
+  TGetParaFormat = function(const ASelf: Pointer; out ppPF: PParaFormat): HResult; stdcall;
+  TGetPasswordChar = function(const ASelf: Pointer; out pch: Char): HResult; stdcall;
+  TGetPropertyBits = function(const ASelf: Pointer; dwMask: DWord; out pdwBits: DWord): HResult; stdcall;
+  TGetScrollBars = function(const ASelf: Pointer; out pdwScrollBar: DWord): HResult; stdcall;
+  TGetSelectionBarWidth = function(const ASelf: Pointer; out lSelBarWidth: Integer): HResult; stdcall;
+  TGetSysColor = function(const ASelf: Pointer; nIndex: Integer): TColorRef; stdcall;
+  TGetViewInset = function(const ASelf: Pointer; out prc: TRect): HResult; stdcall;
+  TInvalidateRect = procedure(const ASelf: Pointer; const prc: TRect; fMode: Bool); stdcall;
+  TKillTimer = procedure(const ASelf: Pointer; idTimer: UInt); stdcall;
+  TNotify = function(const ASelf: Pointer; iNotify: DWord; pv: Pointer): HResult; stdcall;
+  TParaFormatChange = function(const ASelf: Pointer; const ppf: TParaFormat): HResult; stdcall;
+  TReleaseContext = procedure(const ASelf: Pointer; himc: hIMC); stdcall;
+  TReleaseDC = function(const ASelf: Pointer; AHDC: HDC): Integer; stdcall;
+  TScreenToClient = function(const ASelf: Pointer; var lppt: TPoint): Bool; stdcall;
+  TScrollWindowEx = procedure(const ASelf: Pointer; dx, dy: Integer; const lprcScroll, lprcClip: TRect; hrgnUpdate: HRgn; fuScroll: UInt); stdcall;
+  TSetCapture = procedure(const ASelf: Pointer; fCapture: Bool); stdcall;
+  TSetCaretPos = function(const ASelf: Pointer; x, y: Integer): Bool; stdcall;
+  TSetCursor = procedure(const ASelf: Pointer; hcur: hCursor; fText: Bool); stdcall;
+  TSetFocus = procedure(const ASelf: Pointer); stdcall;
+  TSetScrollBar = function(const ASelf: Pointer; fnBar: Integer; nMinPos: Integer; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
+  TSetScrollPos = function(const ASelf: Pointer; fnBar, nPos: Integer; fRedraw: Bool): Bool; stdcall;
+  TSetTimer = function(const ASelf: Pointer; idTimer, uTimeout: UInt): Bool; stdcall;
+  TShowCaret = function(const ASelf: Pointer; fShow: Bool): Bool; stdcall;
+  TShowScrollBar = function(const ASelf: Pointer; fnBar: Integer; fShow: Bool): Bool; stdcall;
+  TViewChange = procedure(const ASelf: Pointer; fUpdate: Bool); stdcall;
+{$ENDIF}
   PITextHostMT = ^TITextHostMT;
   TITextHostMT = packed record
     // IUnknown
     QueryInterface: TQueryInterface;
-    _AddRef,
-    _Release: TProcedure;
+    _AddRef: TAddRefRelease;
+    _Release: TAddRefRelease;
     // ITextHost
-    TxGetDC,
-    TxReleaseDC,
-    TxShowScrollBar,
-    TxEnableScrollBar,
-    TxSetScrollRange,
-    TxSetScrollPos,
-    TxInvalidateRect,
-    TxViewChange,
-    TxCreateCaret,
-    TxShowCaret,
-    TxSetCaretPos,
-    TxSetTimer,
-    TxKillTimer,
-    TxScrollWindowEx,
-    TxSetCapture,
-    TxSetFocus,
-    TxSetCursor,
-    TxScreenToClient,
-    TxClientToScreen,
-    TxActivate,
-    TxDeactivate,
-    TxGetClientRect,
-    TxGetViewInset,
-    TxGetCharFormat,
-    TxGetParaFormat,
-    TxGetSysColor,
-    TxGetBackStyle,
-    TxGetMaxLength,
-    TxGetScrollBars,
-    TxGetPasswordChar,
-    TxGetAcceleratorPos,
-    TxGetExtent,
-    OnTxCharFormatChange,
-    OnTxParaFormatChange,
-    TxGetPropertyBits,
-    TxNotify,
-    TxImmGetContext,
-    TxImmReleaseContext,
-    TxGetSelectionBarWidth: TProcedure;
+    TxGetDC: TGetDC;
+    TxReleaseDC: TReleaseDC;
+    TxShowScrollBar: TShowScrollBar;
+    TxEnableScrollBar: TEnableScrollBar;
+    TxSetScrollRange: TSetScrollBar;
+    TxSetScrollPos: TSetScrollPos;
+    TxInvalidateRect: TInvalidateRect;
+    TxViewChange: TViewChange;
+    TxCreateCaret: TCreateCaret;
+    TxShowCaret: TShowCaret;
+    TxSetCaretPos: TSetCaretPos;
+    TxSetTimer: TSetTimer;
+    TxKillTimer: TKillTimer;
+    TxScrollWindowEx: TScrollWindowEx;
+    TxSetCapture: TSetCapture;
+    TxSetFocus: TSetFocus;
+    TxSetCursor: TSetCursor;
+    TxScreenToClient: TScreenToClient;
+    TxClientToScreen: TClientToScreen;
+    TxActivate: TActivate;
+    TxDeactivate: TDeactivate;
+    TxGetClientRect: TGetClientRect;
+    TxGetViewInset: TGetViewInset;
+    TxGetCharFormat: TGetCharFormat;
+    TxGetParaFormat: TGetParaFormat;
+    TxGetSysColor: TGetSysColor;
+    TxGetBackStyle: TGetBackStyle;
+    TxGetMaxLength: TGetMaxLength;
+    TxGetScrollBars: TGetScrollBars;
+    TxGetPasswordChar: TGetPasswordChar;
+    TxGetAcceleratorPos: TGetAcceleratorPos;
+    TxGetExtent: TGetExtent;
+    OnTxCharFormatChange: TCharFormatChange;
+    OnTxParaFormatChange: TParaFormatChange;
+    TxGetPropertyBits: TGetPropertyBits;
+    TxNotify: TNotify;
+    TxImmGetContext: TGetContext;
+    TxImmReleaseContext: TReleaseContext;
+    TxGetSelectionBarWidth: TGetSelectionBarWidth;
   end;
 
   PITextHost = ^TITextHost;
   TITextHost = record
     MethodTable: PITextHostMT;
-    RefCount: Cardinal;
+    RefCount: Integer;
     Impl: TTextHostImpl;
   end;
 
@@ -823,37 +906,31 @@ begin
   end;
 end;
 
-procedure TextHost_AddRef; // (const This: IUnknown): ULong; stdcall;
-{begin
-  Result := InterlockedIncrement(PITextHost(This).RefCount);}
-asm
 {$IFDEF CPUX86}
+procedure TextHost_AddRef;
+asm
   mov eax, [esp + 4]
   lea eax, [eax].TITextHost.RefCount
   push eax
   call InterlockedIncrement
   ret 4 // return from stdcall function
+end;
 {$ELSE}
-  mov rax, [rsp + 8]
-  lea rax, [rax].TITextHost.RefCount
-  push rax
-  call InterlockedIncrement
-  ret 8 // return from stdcall function
-{$ENDIF}
-end;
-
-procedure ReleaseTextHost(const Host: PITextHost);
+function TextHost_AddRef(const ASelf: Pointer): Integer; stdcall;
 begin
-  Host.Impl.Free;
-  Dispose(Host);
+  Result := InterlockedIncrement(PITextHost(ASelf).RefCount);
+end;
+{$ENDIF}
+
+procedure ReleaseTextHost(const AHost: PITextHost);
+begin
+  AHost.Impl.Free;
+  Dispose(AHost);
 end;
 
-procedure TextHost_Release; // (const This: IUnknown): ULong; stdcall;
-{begin
-  Result := InterlockedDecrement(PITextHost(This).RefCount);
-  if Result = 0 then ReleaseTextHost(PITextHost(This));}
-asm
 {$IFDEF CPUX86}
+procedure TextHost_Release;
+asm
   mov eax, [esp + 4]
   lea eax, [eax].TITextHost.RefCount
   push eax
@@ -867,22 +944,15 @@ asm
 
 @@exit:
   ret 4 // return from stdcall function
-{$ELSE}
-  mov rax, [rsp + 8]
-  lea rax, [rax].TITextHost.RefCount
-  push rax
-  call InterlockedDecrement
-  test rax, rax
-  jnz @@exit
-
-  mov rax, [rsp + 8]
-  call ReleaseTextHost
-  xor rax, rax
-
-@@exit:
-  ret 8 // return from stdcall function
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_Release(const ASelf: Pointer): Integer; stdcall;
+begin
+  Result := InterlockedDecrement(PITextHost(ASelf).RefCount);
+  if Result = 0 then
+    ReleaseTextHost(PITextHost(ASelf));
+end;
+{$ENDIF}
 
 // When these stubs get called, it is as thiscall methods. We translate it
 // to a stdcall method and then jump to the Delphi object method that's
@@ -894,746 +964,668 @@ end;
 // address. Then we fetch the address of the method being wrapped from the
 // TTextHostImpl's VMT and jump to that method.
 
-procedure TextHost_TxGetDC; // : HDC; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetDC;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetDC]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetDC]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetDC(const ASelf: Pointer): HDC; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetDC;
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxReleaseDC; // (hdc: HDC): Integer; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxReleaseDC]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxReleaseDC]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxReleaseDC(const ASelf: Pointer; AHDC: HDC): Integer; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxReleaseDC(AHDC)
+end;
+{$ENDIF}
 
-procedure TextHost_TxShowScrollBar; // (fnBar: Integer; fShow: Bool): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxShowScrollBar;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxShowScrollBar]
+ end;
 {$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxShowScrollBar]
-{$ENDIF}
+function TextHost_TxShowScrollBar(const ASelf: Pointer; fnBar: Integer; fShow: Bool): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxShowScrollBar(fnBar, fShow);
 end;
+{$ENDIF}
 
-procedure TextHost_TxEnableScrollBar; // (fuSBFlags, fuArrowFlags: Integer): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxEnableScrollBar;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxEnableScrollBar]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxEnableScrollBar]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxEnableScrollBar(const ASelf: Pointer; fuSBFlags, fuArrowFlags: Integer): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxEnableScrollBar(fuSBFlags, fuArrowFlags);
+end;
+{$ENDIF}
 
-procedure TextHost_TxSetScrollRange; // (fnBar: Integer; nMinPos: Integer; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxSetScrollRange;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetScrollRange]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetScrollRange]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxSetScrollRange(const ASelf: Pointer; fnBar: Integer; nMinPos: Integer; nMaxPos: Integer; fRedraw: Bool): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxSetScrollRange(fnBar, nMinPos, nMaxPos, fRedraw);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxSetScrollPos; // (fnBar, nPos: Integer; fRedraw: Bool): Bool; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetScrollPos]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetScrollPos]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxSetScrollPos(const ASelf: Pointer; fnBar, nPos: Integer; fRedraw: Bool): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxSetScrollPos(fnBar, nPos, fRedraw);
+end;
+{$ENDIF}
 
-procedure TextHost_TxInvalidateRect; // (const prc: TRect; fMode: Bool); stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxInvalidateRect;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxInvalidateRect]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxInvalidateRect]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxInvalidateRect(const ASelf: Pointer; const prc: TRect; fMode: Bool); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxInvalidateRect(prc, fMode);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxViewChange; // (fUpdate: Bool); stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxViewChange]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxViewChange]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxViewChange(const ASelf: Pointer; fUpdate: Bool); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxViewChange(fUpdate);
+end;
+{$ENDIF}
 
-procedure TextHost_TxCreateCaret; // (hbmp: hBitmap; xWidth, yHeight: Integer): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxCreateCaret;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxCreateCaret]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxCreateCaret]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxCreateCaret(const ASelf: Pointer; hbmp: hBitmap; xWidth, yHeight: Integer): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxCreateCaret(hbmp, xWidth, yHeight);
+end;
+{$ENDIF}
 
-procedure TextHost_TxShowCaret; // (fShow: Bool): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxShowCaret;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxShowCaret]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxShowCaret]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxShowCaret(const ASelf: Pointer; fShow: Bool): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxShowCaret(fShow);
+end;
+{$ENDIF}
 
-procedure TextHost_TxSetCaretPos; // (x, y: Integer): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxSetCaretPos;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetCaretPos]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetCaretPos]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxSetCaretPos(const ASelf: Pointer; x, y: Integer): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxSetCaretPos(x, y);
+end;
+{$ENDIF}
 
-procedure TextHost_TxSetTimer; // (idTimer, uTimeout: UInt): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxSetTimer;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetTimer]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetTimer]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxSetTimer(const ASelf: Pointer; idTimer, uTimeout: UInt): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxSetTimer(idTimer, uTimeout);
+end;
+{$ENDIF}
 
-procedure TextHost_TxKillTimer; // (idTimer: UInt); stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxKillTimer;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxKillTimer]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxKillTimer]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxKillTimer(const ASelf: Pointer; idTimer: UInt); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxKillTimer(idTimer);
+end;
+{$ENDIF}
 
-procedure TextHost_TxScrollWindowEx; // (dx, dy: Integer; const lprcScroll, lprcClip: TRect; hrgnUpdate: HRgn; fuScroll: UInt); stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxScrollWindowEx;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxScrollWindowEx]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxScrollWindowEx]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxScrollWindowEx(const ASelf: Pointer; dx, dy: Integer; const lprcScroll, lprcClip: TRect; hrgnUpdate: HRgn; fuScroll: UInt); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxScrollWindowEx(dx, dy, lprcScroll, lprcClip, hrgnUpdate, fuScroll);
+end;
+{$ENDIF}
 
-procedure TextHost_TxSetCapture; // (fCapture: Bool); stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxSetCapture;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetCapture]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetCapture]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxSetCapture(const ASelf: Pointer; fCapture: Bool); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxSetCapture(fCapture);
+end;
+{$ENDIF}
 
-procedure TextHost_TxSetFocus; // ; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxSetFocus;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetFocus]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetFocus]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxSetFocus(const ASelf: Pointer); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxSetFocus;
+end;
+{$ENDIF}
 
-procedure TextHost_TxSetCursor; // (hcur: hCursor; fText: Bool); stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxSetCursor;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxSetCursor]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxSetCursor]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxSetCursor(const ASelf: Pointer; hcur: hCursor; fText: Bool); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxSetCursor(hcur, fText);
+end;
+{$ENDIF}
 
-procedure TextHost_TxScreenToClient; // (var lppt: TPoint): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxScreenToClient;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxScreenToClient]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxScreenToClient]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxScreenToClient(const ASelf: Pointer; var lppt: TPoint): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxScreenToClient(lppt);
+end;
+{$ENDIF}
 
-procedure TextHost_TxClientToScreen; // (var lppt: TPoint): Bool; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxClientToScreen;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxClientToScreen]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxClientToScreen]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxClientToScreen(const ASelf: Pointer; var lppt: TPoint): Bool; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxClientToScreen(lppt);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxActivate; // (out lpOldState: Integer): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxActivate]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxActivate]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxActivate(const ASelf: Pointer; out lpOldState: Integer): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxActivate(lpOldState);
+end;
+{$ENDIF}
 
-procedure TextHost_TxDeactivate; // (lNewState: Integer): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxDeactivate;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxDeactivate]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxDeactivate]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxDeactivate(const ASelf: Pointer; lNewState: Integer): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxDeactivate(lNewState);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetClientRect; // (out prc: TRect): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetClientRect;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetClientRect]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetClientRect]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetClientRect(const ASelf: Pointer; out prc: TRect): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetClientRect(prc);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxGetViewInset; // (out prc: TRect): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetViewInset]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetViewInset]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetViewInset(const ASelf: Pointer; out prc: TRect): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetViewInset(prc);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetCharFormat; // (out ppCF: PCharFormatW): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetCharFormat;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetCharFormat]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetCharFormat]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetCharFormat(const ASelf: Pointer; out ppCF: PCharFormatW): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetCharFormat(ppCF);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetParaFormat; // (out ppPF: PParaFormat): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetParaFormat;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetParaFormat]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetParaFormat]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetParaFormat(const ASelf: Pointer; out ppPF: PParaFormat): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetParaFormat(ppPF);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetSysColor; // (nIndex: Integer): TColorRef; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetSysColor;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetSysColor]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetSysColor]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetSysColor(const ASelf: Pointer; nIndex: Integer): TColorRef; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetSysColor(nIndex);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxGetBackStyle; // (out pstyle: TTxtBackStyle): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetBackStyle]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetBackStyle]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetBackStyle(const ASelf: Pointer; out pstyle: TTxtBackStyle): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetBackStyle(pstyle);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetMaxLength; // (out pLength: DWord): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetMaxLength;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetMaxLength]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetMaxLength]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetMaxLength(const ASelf: Pointer; out pLength: DWord): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetMaxLength(pLength);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetScrollBars; // (out pdwScrollBar: DWord): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetScrollBars;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetScrollBars]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetScrollBars]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetScrollBars(const ASelf: Pointer; out pdwScrollBar: DWord): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetScrollBars(pdwScrollBar);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetPasswordChar; // (out pch: {Wide}Char): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetPasswordChar;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetPasswordChar]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetPasswordChar]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetPasswordChar(const ASelf: Pointer; out pch: Char): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetPasswordChar(pch);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetAcceleratorPos; // (out pcp: Integer): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetAcceleratorPos;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetAcceleratorPos]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetAcceleratorPos]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetAcceleratorPos(const ASelf: Pointer; out pcp: Integer): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetAcceleratorPos(pcp);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetExtent; // (out lpExtent: TSizeL): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetExtent;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetExtent]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetExtent]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetExtent(const ASelf: Pointer; out lpExtent: TSizeL): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetExtent(lpExtent);
+end;
+{$ENDIF}
 
-procedure TextHost_OnTxCharFormatChange; // (const pcf: TCharFormatW): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_OnTxCharFormatChange;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.OnTxCharFormatChange]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.OnTxCharFormatChange]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_OnTxCharFormatChange(const ASelf: Pointer; const pcf: TMyCharFormatW): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.OnTxCharFormatChange(pcf);
+end;
+{$ENDIF}
 
-procedure TextHost_OnTxParaFormatChange; // (const ppf: TParaFormat): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_OnTxParaFormatChange;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.OnTxParaFormatChange]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.OnTxParaFormatChange]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_OnTxParaFormatChange(const ASelf: Pointer; const ppf: TParaFormat): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.OnTxParaFormatChange(ppf);
+end;
+{$ENDIF}
 
-procedure TextHost_TxGetPropertyBits; // (dwMask: DWord; out pdwBits: DWord): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxGetPropertyBits;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetPropertyBits]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetPropertyBits]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetPropertyBits(const ASelf: Pointer; dwMask: DWord; out pdwBits: DWord): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetPropertyBits(dwMask, pdwBits);
+end;
+{$ENDIF}
 
-procedure TextHost_TxNotify; // (iNotify: DWord; pv: Pointer): HResult; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxNotify;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxNotify]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxNotify]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxNotify(const ASelf: Pointer; iNotify: DWord; pv: Pointer): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxNotify(iNotify, pv);
+end;
+{$ENDIF}
 
-procedure TextHost_TxImmGetContext; // : hIMC; stdcall;
-asm
 {$IFDEF CPUX86}
+procedure TextHost_TxImmGetContext;
+asm
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxImmGetContext]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxImmGetContext]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxImmGetContext(const ASelf: Pointer): hIMC; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxImmGetContext;
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxImmReleaseContext; // (himc: hIMC); stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxImmReleaseContext]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxImmReleaseContext]
-{$ENDIF}
 end;
+{$ELSE}
+procedure TextHost_TxImmReleaseContext(const ASelf: Pointer; himc: hIMC); stdcall;
+begin
+  PITextHost(ASelf).Impl.TxImmReleaseContext(himc);
+end;
+{$ENDIF}
 
+{$IFDEF CPUX86}
 procedure TextHost_TxGetSelectionBarWidth; // (out lSelBarWidth: Integer): HResult; stdcall;
 asm
-{$IFDEF CPUX86}
   pop edx // return address
   mov eax, [ecx].TITextHost.Impl
   push eax
   push edx // return address
   mov eax, [eax]
   jmp dword ptr [eax + vmtoffset TTextHostImpl.TxGetSelectionBarWidth]
-{$ELSE}
-  pop rdx // return address
-  mov rax, [rcx].TITextHost.Impl
-  push rax
-  push rdx // return address
-  mov rax, [rax]
-  jmp qword ptr [rax + vmtoffset TTextHostImpl.TxGetSelectionBarWidth]
-{$ENDIF}
 end;
+{$ELSE}
+function TextHost_TxGetSelectionBarWidth(const ASelf: Pointer; out lSelBarWidth: Integer): HResult; stdcall;
+begin
+  Result := PITextHost(ASelf).Impl.TxGetSelectionBarWidth(lSelBarWidth);
+end;
+{$ENDIF}
 
 var
   TextHostMethodTable: TITextHostMT = (
