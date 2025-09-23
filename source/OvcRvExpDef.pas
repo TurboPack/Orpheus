@@ -3326,7 +3326,6 @@ end;
 
 function TOvcRvExpLiteral.GetType: TOvcDRDataType;
 begin
-  Result := dtCustom; {dummy to suppress compiler warning}
   if FloatLiteral <> nil then
     Result := FloatLiteral.GetType
   else
@@ -3348,7 +3347,10 @@ begin
   if BooleanLiteral <> nil then
     Result := BooleanLiteral.GetType
   else
+  begin
     Assert(False);
+    Result := dtCustom;
+  end;
 end;
 
 function IsValidDate(const S: String): Boolean;

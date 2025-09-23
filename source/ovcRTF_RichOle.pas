@@ -210,10 +210,6 @@ type
       const chrg: TCharRange; var menu: HMENU): HRESULT; stdcall;
   end;
 
-const
-  IID_IRichEditOle: TGUID = '{00020D00-0000-0000-C000-000000000046}';
-  IID_IRichEditOleCallback: TGUID = '{00020D03-0000-0000-C000-000000000046}';
-
 {$IFDEF CPPBUILDER}{$EXTERNALSYM RichEdit_SetOleCallback}{$ENDIF}
 function RichEdit_SetOleCallback(Wnd: HWND;
   const Intf: IRichEditOleCallback): Boolean;
@@ -221,6 +217,10 @@ function RichEdit_SetOleCallback(Wnd: HWND;
 function RichEdit_GetOleInterface(Wnd: HWND; out Intf: IRichEditOle): Boolean;
 
 implementation
+
+const
+  IID_IRichEditOle: TGUID = '{00020D00-0000-0000-C000-000000000046}';
+  IID_IRichEditOleCallback: TGUID = '{00020D03-0000-0000-C000-000000000046}';
 
 function RichEdit_SetOleCallback(Wnd: HWND;
   const Intf: IRichEditOleCallback): Boolean;
