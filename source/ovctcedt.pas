@@ -334,18 +334,22 @@ procedure TOvcTCCustomString.StartEditing(RowNum : TRowNum; ColNum : TColNum;
           tstString:      SetTextBuf(PChar(PString(Data)^))
         end;
         Color := CellAttr.caColor;
-        Font := CellAttr.caFont;
-        Font.Color := CellAttr.caFontColor;
-        Left := CellRect.Left;
-        Top := CellRect.Top;
-        Width := CellRect.Right - CellRect.Left;
-        Height := CellRect.Bottom - CellRect.Top;
         TabStop := false;
         CellOwner := Self;
         MaxLength := Self.MaxLength;
         Hint := Self.Hint;
         ShowHint := Self.ShowHint;
         Parent := FTable;
+        {Font and bounds must be assigned AFTER Parent.  The editor is created
+         unparented, so it is at 96 PPI until then; anything assigned earlier is
+         rescaled when it is parented to a table on a higher-DPI form.
+         TOvcTCBaseEntryField.StartEditing already assigns in this order.}
+        Font := CellAttr.caFont;
+        Font.Color := CellAttr.caFontColor;
+        Left := CellRect.Left;
+        Top := CellRect.Top;
+        Width := CellRect.Right - CellRect.Left;
+        Height := CellRect.Bottom - CellRect.Top;
         BorderStyle := bsNone;
         Ctl3D := false;
         case CellStyle of
