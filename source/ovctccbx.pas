@@ -969,19 +969,24 @@ procedure TOvcTCCustomComboBox.StartEditing(RowNum : TRowNum; ColNum : TColNum;
         case CellStyle of
           tes3D     : FEdit.Ctl3D := true;
         end;{case}
+        FEdit.MaxLength := Self.MaxLength;
+        FEdit.Hint := Self.Hint;
+        FEdit.ShowHint := Self.ShowHint;
+        FEdit.Visible := false;
+        FEdit.CellOwner := Self;
+        FEdit.TabStop := false;
+        FEdit.Parent := FTable;
+        {Font and bounds must be assigned AFTER Parent.  The editor is created
+         unparented, so it is at 96 PPI until then; anything assigned earlier is
+         rescaled when it is parented to a table on a higher-DPI form.
+         TOvcTCBaseEntryField.StartEditing already assigns in this order.}
+        FEdit.Font := CellAttr.caFont;
+        FEdit.Font.Color := CellAttr.caFontColor;
         FEdit.Left := CellRect.Left;
         FEdit.Top := CellRect.Top;
         FEdit.Width := CellRect.Right - CellRect.Left;
         FEdit.Height := CellRect.Bottom - CellRect.Top;
-        FEdit.Font := CellAttr.caFont;
-        FEdit.Font.Color := CellAttr.caFontColor;
-        FEdit.MaxLength := Self.MaxLength;
-        FEdit.Hint := Self.Hint;
-        FEdit.ShowHint := Self.ShowHint;
         FEdit.Visible := true;
-        FEdit.CellOwner := Self;
-        FEdit.TabStop := false;
-        FEdit.Parent := FTable;
         FEdit.DropDownCount := Self.DropDownCount;
         FEdit.Sorted := Self.Sorted;
         FEdit.Style := Self.Style;

@@ -343,13 +343,17 @@ procedure TOvcTCCustomGlyph.StartEditing(RowNum : TRowNum; ColNum : TColNum;
         case CellStyle of
           tes3D     : Ctl3D := true;
         end;{case}
+        Hint := Self.Hint;
+        ShowHint := Self.ShowHint;
+        Parent := FTable;
+        {Bounds must be assigned AFTER Parent.  The editor is created
+         unparented, so it is at 96 PPI until then; anything assigned earlier is
+         rescaled when it is parented to a table on a higher-DPI form.
+         TOvcTCBaseEntryField.StartEditing already assigns in this order.}
         Left := CellRect.Left;
         Top := CellRect.Top;
         Width := CellRect.Right - CellRect.Left;
         Height := CellRect.Bottom - CellRect.Top;
-        Hint := Self.Hint;
-        ShowHint := Self.ShowHint;
-        Parent := FTable;
         Visible := true;
         TabStop := false;
 
