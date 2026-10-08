@@ -34,7 +34,15 @@ unit ovcRTF_RichOle;
 
 interface
 
-{$WEAKPACKAGEUNIT}
+
+{$IFNDEF BCB}
+  {$WEAKPACKAGEUNIT}
+{$ELSE}
+  {$IFNDEF CPU64BITS}
+    {$WEAKPACKAGEUNIT} // This breaks the ilink64
+  {$ENDIF}
+{$ENDIF}
+
 {$MINENUMSIZE 4}
 
 uses

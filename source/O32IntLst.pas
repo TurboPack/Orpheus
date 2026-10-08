@@ -38,8 +38,10 @@ uses
   System.Generics.Collections;
 
 type
-  TO32IntList = class(TList<Int32>);
-  TO32NativeList = class(TList<NativeInt>);
+  // There's a bug in ilink64 related to signed integers (fixed in 13.2).
+  // This cast is safe with the current code.
+  TO32IntList = class(TList<{$IFDEF BCB}UInt32{$ELSE}Int32{$ENDIF BCB}>);
+  //TO32NativeList = class(TList<NativeInt>);
 
 implementation
 
