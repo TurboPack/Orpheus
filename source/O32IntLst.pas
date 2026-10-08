@@ -41,7 +41,7 @@ type
   // There's a bug in ilink64 related to signed integers (fixed in 13.2).
   // This cast is safe with the current code.
   TO32IntList = class(TList<{$IFDEF BCB}UInt32{$ELSE}Int32{$ENDIF BCB}>);
-  //TO32NativeList = class(TList<NativeInt>);
+  TO32NativeList = class(TList<{$IFDEF BCB}NativeUInt{$ELSE}NativeInt{$ENDIF BCB}>);
 
 implementation
 
