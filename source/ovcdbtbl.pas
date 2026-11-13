@@ -989,6 +989,12 @@ begin
     finally
       tbRebuilding := False;
     end;
+
+    {the row and header heights too, as TOvcCustomTable does for its rows - the
+     font scales, so unscaled rows clip the text.  Set directly, for the same
+     reason as the columns: the setters lay the table out at once, mid-scale}
+    FRowHeight := MulDiv(FRowHeight, M, D);
+    FHeaderHeight := MulDiv(FHeaderHeight, M, D);
   end;
 
   {$IF CompilerVersion >= 33}
@@ -997,8 +1003,15 @@ begin
   inherited ChangeScale(M, D);
   {$IFEND}
 
-  if (M <> D) then
+  if (M <> D) then begin
+    if HandleAllocated then begin
+      {what SetRowHeight would have done, now that the bounds are final}
+      tbAdjustIntegralHeight;
+      tbUpdateBufferLimit;
+      tbUpdateVScrollBar;
+    end;
     tbColumnChanged(Self, 0, 0, taGeneral);
+  end;
 end;
 
 procedure TOvcCustomDbTable.CMColorChanged(var Msg : TMessage);
