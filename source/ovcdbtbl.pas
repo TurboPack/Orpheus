@@ -383,7 +383,13 @@ type
     procedure tbUpdateVScrollBar;
     procedure tbWriteColData(Writer : TWriter);
   protected
+    {$IF CompilerVersion >= 33}
+    {Since Delphi 10.3 the per-monitor DPI path (ScaleForPPI) calls only this
+     overload; the two-argument one reaches it through TControl.ChangeScale}
+    procedure ChangeScale(M, D : Integer; isDpiChange : Boolean); override;
+    {$ELSE}
     procedure ChangeScale(M, D : Integer); override;
+    {$IFEND}
     procedure CreateParams(var Params : TCreateParams); override;
     procedure CreateWnd; override;
     procedure DefineProperties(Filer : TFiler); override;
@@ -960,16 +966,39 @@ begin
   end;
 end;
 
+{$IF CompilerVersion >= 33}
+procedure TOvcCustomDbTable.ChangeScale(M, D : Integer; isDpiChange : Boolean);
+{$ELSE}
 procedure TOvcCustomDbTable.ChangeScale(M, D : Integer);
+{$IFEND}
 var
   I : Integer;
 begin
+  {scale the columns BEFORE the bounds, and without laying the table out in
+   between.  Scaled the other way round, the table is briefly at its new size
+   with its old column widths, and a table anchored right and bottom was seen to
+   shrink twice when moved to a lower-DPI monitor - most likely because the
+   scroll bar changing mid-scale makes the VCL re-take the anchor distances from
+   the half-scaled layout}
+  if (M <> D) then begin
+    tbRebuilding := True;
+    try
+      for I := 0 to Pred(ColumnCount) do
+        with Columns[I] do
+          Width := MulDiv(Width, M, D);
+    finally
+      tbRebuilding := False;
+    end;
+  end;
+
+  {$IF CompilerVersion >= 33}
+  inherited ChangeScale(M, D, isDpiChange);
+  {$ELSE}
   inherited ChangeScale(M, D);
+  {$IFEND}
 
   if (M <> D) then
-    for I := 0 to Pred(ColumnCount) do
-      with Columns[I] do
-        Width := MulDiv(Width, M, D);
+    tbColumnChanged(Self, 0, 0, taGeneral);
 end;
 
 procedure TOvcCustomDbTable.CMColorChanged(var Msg : TMessage);
